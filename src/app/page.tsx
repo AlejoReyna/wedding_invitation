@@ -1,20 +1,106 @@
+"use client"
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="relative grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Image
-        src="/hero.jpeg"
-        alt="Wedding background"
-        fill
-        className="object-cover -z-10"
-        priority
-      />
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        
-        
+    <div 
+      className="relative grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] animate-background-zoom overflow-hidden"
+      style={{
+        backgroundImage: `url('/hero.jpeg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Overlay para mejor contraste */}
+      <div className="absolute inset-0 bg-black/30"></div>
+      
+      <main className="relative z-10 flex flex-col items-center justify-center text-center text-white animate-zoom-in">
+        {/* Save the Date */}
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-lg md:text-2xl lg:text-3xl font-light tracking-[0.5em] uppercase mb-3 text-white/90">
+            Save the Date
+          </h1>
+          <div className="w-24 md:w-32 h-px bg-white/70 mx-auto"></div>
+        </div>
+
+        {/* Nombres de los novios */}
+        <div className="mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light tracking-wide mb-3 md:mb-4 text-white drop-shadow-lg">
+            ANDREA
+          </h2>
+          <div className="flex items-center justify-center mb-3 md:mb-4">
+            <div className="w-6 md:w-8 h-px bg-white/80"></div>
+            <span className="mx-3 md:mx-4 text-lg md:text-xl font-light">&</span>
+            <div className="w-6 md:w-8 h-px bg-white/80"></div>
+          </div>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light tracking-wide text-white drop-shadow-lg">
+            ALDO
+          </h2>
+        </div>
+
+        {/* Fecha */}
+        <div className="text-center">
+          <h3 className="text-base md:text-xl lg:text-2xl font-light tracking-[0.3em] uppercase text-white/95">
+            10 de Junio de 2025
+          </h3>
+        </div>
       </main>
-    
+
+      {/* Invitación - Parte inferior */}
+      <div className="absolute bottom-8 left-0 right-0 z-10 text-center animate-fade-in-up">
+        <div className="w-16 md:w-24 h-px bg-white/60 mx-auto mb-4"></div>
+        <p className="text-sm md:text-base lg:text-lg font-light tracking-wide italic text-white/90 px-4">
+          Acompañanos a nuestro día tan especial
+        </p>
+      </div>
+
+      <style jsx>{`
+        @keyframes zoom-in {
+          0% {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes background-zoom {
+          0% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        @keyframes fade-in-up {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-zoom-in {
+          animation: zoom-in 1.2s ease-out forwards;
+        }
+
+        .animate-background-zoom {
+          animation: background-zoom 2s ease-out forwards;
+        }
+
+        .animate-fade-in-up {
+          animation: fade-in-up 1.5s ease-out 0.3s forwards;
+          opacity: 0;
+        }
+      `}</style>
     </div>
   );
 }
