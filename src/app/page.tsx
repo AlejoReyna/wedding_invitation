@@ -16,9 +16,19 @@ export default function Home() {
       {/* Overlay para mejor contraste */}
       <div className="absolute inset-0 bg-black/30"></div>
       
+      <nav className="absolute top-0 left-0 w-full z-20 flex items-center justify-between px-6 md:px-16 py-4 bg-transparent">
+        <div className="flex-1"></div>
+        <ul className="flex space-x-6 md:space-x-12 text-white text-base md:text-lg uppercase tracking-wider">
+          <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">NOSOTROS</li>
+          <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">UBICACIÓN</li>
+          <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">REGALOS</li>
+        </ul>
+        <div className="flex-1"></div>
+      </nav>
+
       <main className="relative z-10 flex flex-col items-center justify-center text-center text-white animate-zoom-in">
         {/* Save the Date */}
-        <div className="mb-6 md:mb-8 mt-32">
+        <div className="mb-6 md:mb-8 mt-64">
           <h1 className="text-lg md:text-2xl lg:text-3xl font-light tracking-[0.5em] uppercase mb-3 text-white/90">
             Save the Date
           </h1>
@@ -47,7 +57,7 @@ export default function Home() {
       {/* Invitación - Parte inferior */}
       <div className="absolute bottom-8 left-0 right-0 z-10 text-center animate-fade-in-up">
         <div className="w-16 md:w-24 h-px bg-white/60 mx-auto mb-4"></div>
-        <p className="text-lg md:text-2xl lg:text-3xl font-light tracking-wide italic text-white/90 px-4 animate-slide-in-left">
+        <p className="text-lg md:text-2xl font-serif font-light lg:text-3xl tracking-wide text-white/90 px-4 animate-slide-in-left">
           Acompañanos a nuestro día tan especial
         </p>
       </div>
