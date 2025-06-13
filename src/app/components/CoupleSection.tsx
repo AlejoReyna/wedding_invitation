@@ -73,7 +73,7 @@ export default function CoupleSection() {
               Un viaje inesperado
             </h3>
             <div className="flex flex-col gap-4">
-            <p className="text-xl font-light text-gray-700 leading-relaxed tracking-wide">
+            <p className="text-xl font-light text-gray-700 text-justify leading-relaxed tracking-wide">
               Nuestra historia comenzó con una casualidad, un encuentro que ninguno de los dos esperaba pero que el destino ya había escrito. Entre risas y conversaciones que duraban horas, descubrimos que compartíamos sueños, pasiones y un amor por las pequeñas cosas de la vida.
             </p>
             <p className="text-xl font-light text-gray-700 leading-relaxed tracking-wide">

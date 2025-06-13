@@ -3,6 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import LocationSection from './components/LocationSection';
 import CoupleSection from './components/CoupleSection';
+import DressCodeSection from './components/DressCodeSection';
+import MessageSection from './components/MessageSection';
+import RSVPSection from './components/RSVPSection';
 
 export default function Home() {
   return (
@@ -27,6 +30,15 @@ export default function Home() {
             </li>
             <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
               <a href="#ubicacion">UBICACIÓN</a>
+            </li>
+            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
+              <a href="#dresscode">DRESS CODE</a>
+            </li>
+            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
+              <a href="#mensaje">MENSAJE</a>
+            </li>
+            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
+              <a href="#rsvp">CONFIRMAR</a>
             </li>
             <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">REGALOS</li>
           </ul>
@@ -135,6 +147,15 @@ export default function Home() {
       </div>
       <div id="ubicacion">
         <LocationSection />
+      </div>
+      <div id="dresscode">
+        <DressCodeSection />
+      </div>
+      <div id="mensaje">
+        <MessageSection />
+      </div>
+      <div id="rsvp">
+        <RSVPSection />
       </div>
     </>
   );
