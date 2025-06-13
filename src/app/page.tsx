@@ -18,23 +18,19 @@ export default function Home() {
       
       <main className="relative z-10 flex flex-col items-center justify-center text-center text-white animate-zoom-in">
         {/* Save the Date */}
-        <div className="mb-6 md:mb-8">
+        <div className="mb-6 md:mb-8 mt-32">
           <h1 className="text-lg md:text-2xl lg:text-3xl font-light tracking-[0.5em] uppercase mb-3 text-white/90">
             Save the Date
           </h1>
           <div className="w-24 md:w-32 h-px bg-white/70 mx-auto"></div>
         </div>
 
-        {/* Nombres de los novios */}
-        <div className="mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light tracking-wide mb-3 md:mb-4 text-white drop-shadow-lg">
+        {/* Nombres de los novios - ahora en una sola línea */}
+        <div className="mb-8 md:mb-12 flex flex-row items-center justify-center space-x-6 md:space-x-10">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light tracking-wide text-white drop-shadow-lg">
             ANDREA
           </h2>
-          <div className="flex items-center justify-center mb-3 md:mb-4">
-            <div className="w-6 md:w-8 h-px bg-white/80"></div>
-            <span className="mx-3 md:mx-4 text-lg md:text-xl font-light">&</span>
-            <div className="w-6 md:w-8 h-px bg-white/80"></div>
-          </div>
+          <span className="text-2xl md:text-4xl lg:text-5xl font-light">&</span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light tracking-wide text-white drop-shadow-lg">
             ALDO
           </h2>
@@ -51,7 +47,7 @@ export default function Home() {
       {/* Invitación - Parte inferior */}
       <div className="absolute bottom-8 left-0 right-0 z-10 text-center animate-fade-in-up">
         <div className="w-16 md:w-24 h-px bg-white/60 mx-auto mb-4"></div>
-        <p className="text-sm md:text-base lg:text-lg font-light tracking-wide italic text-white/90 px-4">
+        <p className="text-lg md:text-2xl lg:text-3xl font-light tracking-wide italic text-white/90 px-4 animate-slide-in-left">
           Acompañanos a nuestro día tan especial
         </p>
       </div>
@@ -88,6 +84,17 @@ export default function Home() {
           }
         }
 
+        @keyframes slide-in-left {
+          0% {
+            opacity: 0;
+            transform: translateX(-60px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
         .animate-zoom-in {
           animation: zoom-in 1.2s ease-out forwards;
         }
@@ -99,6 +106,10 @@ export default function Home() {
         .animate-fade-in-up {
           animation: fade-in-up 1.5s ease-out 0.3s forwards;
           opacity: 0;
+        }
+
+        .animate-slide-in-left {
+          animation: slide-in-left 1.2s cubic-bezier(0.77,0,0.175,1) 1.8s both;
         }
       `}</style>
     </div>
