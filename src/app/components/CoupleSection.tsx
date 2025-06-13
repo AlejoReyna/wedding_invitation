@@ -77,7 +77,7 @@ export default function CoupleSection() {
               Nuestra historia comenzó con una casualidad, un encuentro que ninguno de los dos esperaba pero que el destino ya había escrito. Entre risas y conversaciones que duraban horas, descubrimos que compartíamos sueños, pasiones y un amor por las pequeñas cosas de la vida.
             </p>
             <p className="text-xl font-light text-gray-700 leading-relaxed tracking-wide">
-              Cada día juntos ha sido una aventura, construyendo un amor basado en la confianza, el respeto y la alegría. Ahora, estamos listos para empezar nuestro "para siempre" y nos emociona celebrarlo con las personas que más queremos.
+              Cada día juntos ha sido una aventura, construyendo un amor basado en la confianza, el respeto y la alegría. Ahora, estamos listos para empezar nuestro &quot;para siempre&quot; y nos emociona celebrarlo con las personas que más queremos.
             </p>
             </div>
           </div>

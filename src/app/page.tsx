@@ -1,11 +1,10 @@
 "use client"
-import Image from 'next/image';
-import Link from 'next/link';
 import LocationSection from './components/LocationSection';
 import CoupleSection from './components/CoupleSection';
 import DressCodeSection from './components/DressCodeSection';
 import MessageSection from './components/MessageSection';
 import RSVPSection from './components/RSVPSection';
+import MinimalistFooter from './components/Footer';
 
 export default function Home() {
   return (
@@ -156,6 +155,9 @@ export default function Home() {
       </div>
       <div id="rsvp">
         <RSVPSection />
+      </div>
+      <div id="footer">
+        <MinimalistFooter />
       </div>
     </>
   );

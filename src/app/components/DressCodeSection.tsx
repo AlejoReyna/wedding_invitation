@@ -1,12 +1,12 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
-import { FaTshirt, FaShoePrints, FaPalette } from 'react-icons/fa';
+import { FaTshirt, FaPalette, FaShoePrints } from 'react-icons/fa';
 
 export default function DressCodeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const cardRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
   const [inView, setInView] = useState(false);
-  const [cardInView, setCardInView] = useState([false, false, false]);
+  const [cardInView, setCardInView] = useState<boolean[]>([]);
+  const cardRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,8 +41,9 @@ export default function DressCodeSection() {
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     cardRefs.forEach(ref => {
@@ -52,8 +53,8 @@ export default function DressCodeSection() {
     });
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
       cardRefs.forEach(ref => {
         if (ref.current) {
@@ -61,7 +62,7 @@ export default function DressCodeSection() {
         }
       });
     };
-  }, []);
+  }, [cardRefs]);
 
   const dressCodeItems = [
     {
@@ -186,7 +187,7 @@ export default function DressCodeSection() {
           </div>
           
           <blockquote className="text-xl md:text-2xl font-light italic text-stone-700 tracking-wide leading-relaxed">
-            "La elegancia está en los detalles"
+            &quot;La elegancia está en los detalles&quot;
           </blockquote>
           
           <div className="flex items-center justify-center mt-6">
