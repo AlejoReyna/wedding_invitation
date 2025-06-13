@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import LocationSection from './components/LocationSection';
+import CoupleSection from './components/CoupleSection';
 
 export default function Home() {
   return (
@@ -21,7 +22,9 @@ export default function Home() {
         <nav className="absolute top-0 left-0 w-full z-20 flex items-center justify-between px-6 md:px-16 py-4 bg-transparent">
           <div className="flex-1"></div>
           <ul className="flex space-x-6 md:space-x-12 text-white text-base md:text-lg uppercase tracking-wider">
-            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">NOSOTROS</li>
+            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
+              <a href="#nosotros">NOSOTROS</a>
+            </li>
             <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
               <a href="#ubicacion">UBICACIÓN</a>
             </li>
@@ -126,6 +129,9 @@ export default function Home() {
             animation: slide-in-left 1.2s cubic-bezier(0.77,0,0.175,1) 1.8s both;
           }
         `}</style>
+      </div>
+      <div id="nosotros">
+        <CoupleSection />
       </div>
       <div id="ubicacion">
         <LocationSection />
