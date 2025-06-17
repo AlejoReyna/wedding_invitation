@@ -1,4 +1,5 @@
 "use client"
+import { useState } from 'react';
 import LocationSection from './components/LocationSection';
 import CoupleSection from './components/CoupleSection';
 import DressCodeSection from './components/DressCodeSection';
@@ -7,6 +8,17 @@ import RSVPSection from './components/RSVPSection';
 import MinimalistFooter from './components/Footer';
 
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigationItems = [
+    { id: 'nosotros', label: 'NOSOTROS', icon: '♡' },
+    { id: 'ubicacion', label: 'UBICACIÓN', icon: '📍' },
+    { id: 'dresscode', label: 'DRESS CODE', icon: '👔' },
+    { id: 'mensaje', label: 'MENSAJE', icon: '✉' },
+    { id: 'rsvp', label: 'CONFIRMAR', icon: '✓' },
+    { id: 'regalos', label: 'REGALOS', icon: '🎁' }
+  ];
+
   return (
     <>
       <div 
@@ -21,27 +33,72 @@ export default function Home() {
         {/* Overlay para mejor contraste */}
         <div className="absolute inset-0 bg-black/30"></div>
         
-        <nav className="absolute top-0 left-0 w-full z-20 flex items-center justify-between px-6 md:px-16 py-4 bg-transparent">
-          <div className="flex-1"></div>
-          <ul className="flex space-x-6 md:space-x-12 text-white text-base md:text-lg uppercase tracking-wider">
-            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
-              <a href="#nosotros">NOSOTROS</a>
-            </li>
-            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
-              <a href="#ubicacion">UBICACIÓN</a>
-            </li>
-            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
-              <a href="#dresscode">DRESS CODE</a>
-            </li>
-            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
-              <a href="#mensaje">MENSAJE</a>
-            </li>
-            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">
-              <a href="#rsvp">CONFIRMAR</a>
-            </li>
-            <li className="hover:text-white/80 text-sm md:text-2xl transition-colors cursor-pointer tracking-[0.5em] font-light">REGALOS</li>
-          </ul>
-          <div className="flex-1"></div>
+        {/* Navegación elegante con menú hamburguesa */}
+        <nav className="absolute top-0 left-0 w-full z-30 flex items-center justify-between px-6 md:px-16 py-6">
+          {/* Logo/Iniciales lado izquierdo */}
+          <div className="text-white font-serif text-xl md:text-2xl tracking-widest">
+            A & A
+          </div>
+
+          {/* Menú hamburguesa lado derecho */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="relative w-8 h-8 flex flex-col justify-center items-center group"
+            aria-label="Menu"
+          >
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 mt-1 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 mt-1 ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+          </button>
+
+          {/* Menú deslizante elegante */}
+          <div className={`fixed top-0 right-0 h-full w-80 bg-black/90 transform transition-transform duration-500 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className="flex flex-col h-full pt-20 px-8">
+              {/* Botón cerrar */}
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="absolute top-6 right-6 text-white text-2xl hover:text-white/70 transition-colors"
+              >
+                ×
+              </button>
+
+              {/* Items del menú */}
+              <nav className="flex flex-col space-y-8 mt-8">
+                {navigationItems.map((item, index) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="group flex items-center space-x-4 text-white hover:text-white/70 transition-all duration-300"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <span className="text-xl w-8 flex justify-center opacity-60 group-hover:opacity-100 transition-opacity">
+                      {item.icon}
+                    </span>
+                    <span className="text-lg tracking-[0.2em] font-light group-hover:translate-x-2 transition-transform duration-300">
+                      {item.label}
+                    </span>
+                  </a>
+                ))}
+              </nav>
+
+              {/* Decoración inferior */}
+              <div className="mt-auto mb-8 text-center">
+                <div className="w-16 h-px bg-white/30 mx-auto mb-4"></div>
+                <p className="text-white/60 text-sm tracking-wider">
+                  10 DE JUNIO 2025
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Overlay para cerrar menú */}
+          {isMenuOpen && (
+            <div
+              className="fixed inset-0 bg-black/30 z-20"
+              onClick={() => setIsMenuOpen(false)}
+            ></div>
+          )}
         </nav>
 
         <main className="relative z-10 flex flex-col items-center justify-center text-center text-white animate-zoom-in">

@@ -39,7 +39,7 @@ export default function CoupleSection() {
       <div className="max-w-7xl mx-auto text-gray-800">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif tracking-wider uppercase text-[#4A553A] mb-4">
-            Nuestra Historia
+            Y henos aquí...
           </h2>
           <div className="w-24 h-1 bg-[#D4B996] mx-auto"></div>
         </div>
