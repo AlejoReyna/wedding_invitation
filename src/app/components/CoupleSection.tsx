@@ -51,12 +51,12 @@ export default function CoupleSection() {
   };
 
   const photos = [
-    { src: require('../../../assets/p1.JPG'), alt: 'Foto 1' },
-    { src: require('../../../assets/p2.JPG'), alt: 'Foto 2' },
-    { src: require('../../../assets/p3.JPG'), alt: 'Foto 3' },
-    { src: require('../../../assets/p4.JPG'), alt: 'Foto 4' },
-    { src: require('../../../assets/p5.JPG'), alt: 'Foto 5' },
-    { src: require('../../../assets/p6.JPG'), alt: 'Foto 6' },
+    { src: require('../../../assets/p1.jpg'), alt: 'Foto 1' },
+    { src: require('../../../assets/p2.jpg'), alt: 'Foto 2' },
+    { src: require('../../../assets/p3.jpg'), alt: 'Foto 3' },
+    { src: require('../../../assets/p4.jpg'), alt: 'Foto 4' },
+    { src: require('../../../assets/p5.jpg'), alt: 'Foto 5' },
+    { src: require('../../../assets/p6.jpg'), alt: 'Foto 6' },
   ];
 
   return (
