@@ -82,7 +82,7 @@ export default function Home() {
 
         <main className="relative z-10 flex flex-col items-center justify-center text-center text-white">
           {/* Fecha del evento - Ahora va primero */}
-          <div className="mb-2 md:mb-8 mt-64">
+          <div className="mb-2 md:mb-8 mt-52">
             <h1 className="text-2xl garamond-300 md:text-2xl lg:text-3xl font-light tracking-[0.2em] uppercase mb-1 text-white/90">
             19 de JUNIO
             </h1>
