@@ -1,0 +1,148 @@
+"use client"
+import { useState, useEffect } from 'react';
+
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+interface CountdownTimerProps {
+  targetDate: string; // Formato: "2024-06-19T00:00:00"
+  className?: string;
+}
+
+export default function CountdownTimer({ targetDate, className = "" }: CountdownTimerProps) {
+  // Este es nuestro "estado" - como una pizarra donde escribimos el tiempo restante
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  // Esta función es como nuestro "calculador de tiempo"
+  // Toma dos fechas y nos dice cuánto tiempo falta entre ellas
+  const calculateTimeLeft = (): TimeLeft => {
+    // Fecha objetivo - convertimos el texto en una fecha que JavaScript entiende
+    const targetTime = new Date(targetDate).getTime();
+    // Fecha actual - "ahora mismo"
+    const now = new Date().getTime();
+    // La diferencia nos da los milisegundos que faltan
+    const difference = targetTime - now;
+
+    let timeLeft: TimeLeft = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0
+    };
+
+    // Solo calculamos si aún falta tiempo (no queremos números negativos)
+    if (difference > 0) {
+      // Aquí hacemos la "conversión matemática":
+      // - 1 día = 24 horas = 24 * 60 * 60 * 1000 milisegundos
+      // - 1 hora = 60 minutos = 60 * 60 * 1000 milisegundos
+      // - etc.
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((difference % (1000 * 60)) / 1000)
+      };
+    }
+
+    return timeLeft;
+  };
+
+  // useEffect es como nuestro "supervisor automático"
+  // Se ejecuta cuando el componente se monta y configura nuestro "reloj"
+  useEffect(() => {
+    // Primero calculamos el tiempo inmediatamente
+    setTimeLeft(calculateTimeLeft());
+
+    // Luego configuramos un "temporizador" que actualiza cada segundo
+    // Es como decirle a JavaScript: "cada 1000 milisegundos (1 segundo), 
+    // ejecuta esta función"
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    // Esta función de "limpieza" es importante:
+    // cuando el componente se desmonta, limpiamos el temporizador
+    // para evitar que siga ejecutándose en segundo plano
+    return () => clearInterval(timer);
+  }, [targetDate]); // Se ejecuta nuevamente si cambia la fecha objetivo
+
+  // Esta función nos ayuda a mostrar números con formato consistente
+  // Por ejemplo: convierte "5" en "05" para que se vea más elegante
+  const formatNumber = (num: number): string => {
+    return num.toString().padStart(2, '0');
+  };
+
+  return (
+    <div className={`countdown-timer ${className}`}>
+      {/* Contenedor principal con diseño elegante */}
+      <div className="flex flex-col items-center justify-center text-center">
+        
+       
+
+        {/* Los números del countdown - ACTUALIZADO con garamond-300 para armonía tipográfica */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+          
+          {/* Días - Ahora usa la misma fuente que "19 de JUNIO" */}
+          <div className="flex flex-col items-center">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
+              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+                {formatNumber(timeLeft.days)}
+              </span>
+            </div>
+            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
+              Días
+            </span>
+          </div>
+
+          {/* Horas - Consistencia tipográfica aplicada */}
+          <div className="flex flex-col items-center">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
+              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+                {formatNumber(timeLeft.hours)}
+              </span>
+            </div>
+            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
+              Horas
+            </span>
+          </div>
+
+          {/* Minutos - Armonía tipográfica mantenida */}
+          <div className="flex flex-col items-center">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
+              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+                {formatNumber(timeLeft.minutes)}
+              </span>
+            </div>
+            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
+              Minutos
+            </span>
+          </div>
+
+          {/* Segundos - Completando la familia tipográfica unificada */}
+          <div className="flex flex-col items-center">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
+              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+                {formatNumber(timeLeft.seconds)}
+              </span>
+            </div>
+            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
+              Segundos
+            </span>
+          </div>
+        </div>
+
+        {/* Separador decorativo - elemento de diseño que mantiene la elegancia */}
+        <div className="w-24 h-px bg-white/30 mt-6"></div>
+      </div>
+    </div>
+  );
+}

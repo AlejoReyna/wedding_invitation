@@ -1,4 +1,19 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
+
+.garamond-300 {
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 300; /* Cambiado de <weight> a 300 para peso light */
+  font-style: normal;
+}
+
+.garamond-regular {
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 400; /* Cambiado de 300 a 400 para peso regular */
+  font-style: normal;
+}
 
 :root {
   --background: #ffffff;

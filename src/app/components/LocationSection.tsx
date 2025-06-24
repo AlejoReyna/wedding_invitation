@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useRef } from 'react';
-import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaChurch } from 'react-icons/fa';
+import Image from 'next/image';
+import mariauxImage from '../../../assets/mariaaux.jpg';
 
 export default function LocationSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -48,17 +50,42 @@ export default function LocationSection() {
           <div className="w-24 h-1 bg-[#D4B996] mx-auto"></div>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="aspect-video w-full rounded-[2rem] overflow-hidden shadow-xl border-4 border-[#D4B996] transform hover:scale-[1.02] transition-transform duration-300">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3601.1234567890123!2d-99.12345678901234!3d25.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662e3c3c3c3c3c3%3A0x3c3c3c3c3c3c3c3c!2sSimon%20Bol%C3%ADvar%20659%2C%20Del%20Maestro%2C%2067500%20Montemorelos%2C%20N.L.!5e0!3m2!1ses-419!2smx!4v1709761234567!5m2!1ses-419!2smx"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+        <div className="grid md:grid-cols-2 gap-8 items-start">
+          <div className="space-y-8">
+            {/* Venue Image Card */}
+            <div className="bg-white/90 backdrop-blur-sm p-8 rounded-[2rem] shadow-lg border border-[#D4B996]/30 transform hover:scale-[1.02] transition-all duration-300 hover:shadow-xl">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="bg-[#D4B996]/10 p-3 rounded-full">
+                  <FaChurch className="text-2xl text-[#D4B996]" />
+                </div>
+                <h3 className="text-2xl font-light tracking-wider text-gray-900">Lugar</h3>
+              </div>
+              <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-lg">
+                <Image
+                  src={mariauxImage}
+                  alt="Iglesia - Venue de la boda"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <p className="text-lg font-light tracking-wide text-gray-700 mt-4 text-center">
+                Un lugar especial para nuestra celebración
+              </p>
+            </div>
+
+            {/* Map Card */}
+            <div className="aspect-video w-full rounded-[2rem] overflow-hidden shadow-xl border-4 border-[#D4B996] transform hover:scale-[1.02] transition-transform duration-300">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3601.1234567890123!2d-99.12345678901234!3d25.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662e3c3c3c3c3c3%3A0x3c3c3c3c3c3c3c3c!2sSimon%20Bol%C3%ADvar%20659%2C%20Del%20Maestro%2C%2067500%20Montemorelos%2C%20N.L.!5e0!3m2!1ses-419!2smx!4v1709761234567!5m2!1ses-419!2smx"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
           </div>
 
           <div className="space-y-8">
