@@ -22,43 +22,43 @@ export default function CountdownTimer({ targetDate, className = "" }: Countdown
     seconds: 0
   });
 
-  // Esta función es como nuestro "calculador de tiempo"
-  // Toma dos fechas y nos dice cuánto tiempo falta entre ellas
-  const calculateTimeLeft = (): TimeLeft => {
-    // Fecha objetivo - convertimos el texto en una fecha que JavaScript entiende
-    const targetTime = new Date(targetDate).getTime();
-    // Fecha actual - "ahora mismo"
-    const now = new Date().getTime();
-    // La diferencia nos da los milisegundos que faltan
-    const difference = targetTime - now;
-
-    let timeLeft: TimeLeft = {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0
-    };
-
-    // Solo calculamos si aún falta tiempo (no queremos números negativos)
-    if (difference > 0) {
-      // Aquí hacemos la "conversión matemática":
-      // - 1 día = 24 horas = 24 * 60 * 60 * 1000 milisegundos
-      // - 1 hora = 60 minutos = 60 * 60 * 1000 milisegundos
-      // - etc.
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((difference % (1000 * 60)) / 1000)
-      };
-    }
-
-    return timeLeft;
-  };
-
   // useEffect es como nuestro "supervisor automático"
   // Se ejecuta cuando el componente se monta y configura nuestro "reloj"
   useEffect(() => {
+    // Esta función es como nuestro "calculador de tiempo"
+    // Toma dos fechas y nos dice cuánto tiempo falta entre ellas
+    const calculateTimeLeft = (): TimeLeft => {
+      // Fecha objetivo - convertimos el texto en una fecha que JavaScript entiende
+      const targetTime = new Date(targetDate).getTime();
+      // Fecha actual - "ahora mismo"
+      const now = new Date().getTime();
+      // La diferencia nos da los milisegundos que faltan
+      const difference = targetTime - now;
+
+      let timeLeft: TimeLeft = {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      };
+
+      // Solo calculamos si aún falta tiempo (no queremos números negativos)
+      if (difference > 0) {
+        // Aquí hacemos la "conversión matemática":
+        // - 1 día = 24 horas = 24 * 60 * 60 * 1000 milisegundos
+        // - 1 hora = 60 minutos = 60 * 60 * 1000 milisegundos
+        // - etc.
+        timeLeft = {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        };
+      }
+
+      return timeLeft;
+    };
+
     // Primero calculamos el tiempo inmediatamente
     setTimeLeft(calculateTimeLeft());
 

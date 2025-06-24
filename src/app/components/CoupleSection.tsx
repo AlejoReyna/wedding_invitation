@@ -80,8 +80,9 @@ export default function CoupleSection() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      const currentSection = sectionRef.current;
+      if (currentSection) {
+        observer.unobserve(currentSection);
       }
     };
   }, [isVisible]);
@@ -173,9 +174,9 @@ export default function CoupleSection() {
             : 'opacity-0 translate-y-8'
         }`}>
           <p className="garamond-regular text-xl md:text-2xl lg:text-3xl text-rose-400 leading-relaxed mb-6">
-            "En cada latido de mi corazón, en cada suspiro del viento, 
+            &quot;En cada latido de mi corazón, en cada suspiro del viento, 
             en cada rayo de sol que acaricia mi rostro, 
-            encuentro una razón más para amarte infinitamente..."
+            encuentro una razón más para amarte infinitamente...&quot;
           </p>
           <div className="flex justify-center items-center space-x-3">
             <span className="text-rose-300 text-2xl">✨</span>

@@ -1,5 +1,4 @@
 "use client"
-import { useState } from 'react';
 import LocationSection from './components/LocationSection';
 import CoupleSection from './components/CoupleSection';
 import DressCodeSection from './components/DressCodeSection';
@@ -38,7 +37,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             {/* Desktop Navigation */}
             <ul className="hidden md:flex items-center justify-center space-x-8 lg:space-x-12">
-              {navigationItems.map((item, index) => (
+              {navigationItems.map((item) => (
                 <li key={item.id} className="relative">
                   <a
                     href={`#${item.id}`}

@@ -1,12 +1,15 @@
 "use client"
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { FaTshirt, FaPalette, FaShoePrints } from 'react-icons/fa';
 
 export default function DressCodeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [cardInView, setCardInView] = useState<boolean[]>([]);
-  const cardRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
+  const cardRef1 = useRef<HTMLDivElement>(null);
+  const cardRef2 = useRef<HTMLDivElement>(null);
+  const cardRef3 = useRef<HTMLDivElement>(null);
+  const cardRefs = useMemo(() => [cardRef1, cardRef2, cardRef3], []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
