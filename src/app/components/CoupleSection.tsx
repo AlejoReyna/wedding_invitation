@@ -1,192 +1,236 @@
 "use client"
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 export default function CoupleSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [showTitle, setShowTitle] = useState(false);
-  const [showPhotos, setShowPhotos] = useState(false);
-  const [showText, setShowText] = useState(false);
+  const photoRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    let isScrolling = false;
-
-    const handleScroll = () => {
-      if (!sectionRef.current || isScrolling) return;
-
-      const section = sectionRef.current;
-      const rect = section.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Si la sección está parcialmente visible y no completamente centrada
-      if (rect.top <= windowHeight * 0.6 && rect.top > -windowHeight * 0.4) {
-        if (!isVisible) {
-          isScrolling = true;
-          setIsVisible(true);
-          
-          // Animaciones escalonadas
-          setTimeout(() => setShowTitle(true), 100);
-          setTimeout(() => setShowPhotos(true), 1100);
-          setTimeout(() => setShowText(true), 2100);
-          
-          // Scroll suave hacia la sección
-          const targetScroll = window.scrollY + rect.top;
-          
-          const smoothScroll = () => {
-            const currentScroll = window.scrollY;
-            const distance = targetScroll - currentScroll;
-            const step = distance * 0.1; // Factor de suavidad
-            
-            if (Math.abs(step) > 1) {
-              window.scrollTo(0, currentScroll + step);
-              requestAnimationFrame(smoothScroll);
-            } else {
-              window.scrollTo(0, targetScroll);
-              isScrolling = false;
-            }
-          };
-          
-          smoothScroll();
-        }
-      }
-    };
-
-    // Intersection Observer como respaldo
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-            if (!isVisible) {
-              setIsVisible(true);
-              // Animaciones escalonadas
-              setTimeout(() => setShowTitle(true), 100);
-              setTimeout(() => setShowPhotos(true), 1100);
-              setTimeout(() => setShowText(true), 2100);
-            }
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
           }
         });
       },
-      { 
-        threshold: [0.3],
-        rootMargin: '0px 0px -20% 0px'
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Observe each photo container
+    photoRefs.current.forEach((ref) => {
+      if (ref) {
+        observer.observe(ref);
+      }
+    });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      const currentSection = sectionRef.current;
-      if (currentSection) {
-        observer.unobserve(currentSection);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
+      
+      photoRefs.current.forEach((ref) => {
+        if (ref) {
+          observer.unobserve(ref);
+        }
+      });
     };
-  }, [isVisible]);
+  }, []);
+
+  // Function to add refs to our photoRefs array
+  const addPhotoRef = (index: number) => (el: HTMLDivElement) => {
+    photoRefs.current[index] = el;
+  };
 
   return (
     <section 
       ref={sectionRef}
-      className="h-screen w-full bg-white flex flex-col"
+      className="min-h-screen w-full bg-gradient-to-b from-white to-gray-50 py-32 px-4 md:px-8 opacity-0 relative overflow-hidden"
     >
-      {/* Primera fila - Título Cursi - 20% vh */}
-      <div className="h-[20vh] w-full flex items-center justify-center px-8">
-        <div className={`text-center transition-all duration-1000 transform ${
-          showTitle 
-            ? 'opacity-100 translate-y-0 scale-100' 
-            : 'opacity-0 translate-y-8 scale-95'
-        }`}>
-          <h1 className="garamond-regular text-4xl md:text-6xl lg:text-7xl text-rose-400 mb-2">
-            Nuestro Amor Eterno
-          </h1>
-          <div className="flex justify-center items-center space-x-4">
-            <div className="w-16 h-[1px] bg-rose-300"></div>
-            <span className="garamond-regular text-rose-300 text-xl">❤</span>
-            <div className="w-16 h-[1px] bg-rose-300"></div>
-          </div>
-        </div>
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 border border-gray-200 rounded-full opacity-30"></div>
+        <div className="absolute bottom-20 right-10 w-24 h-24 border border-gray-200 rounded-full opacity-20"></div>
       </div>
 
-      {/* Segunda fila - Galería de Fotos - 50% vh */}
-      <div className="h-[50vh] w-full flex items-center justify-center px-8">
-        <div className={`w-full max-w-6xl transition-all duration-1000 transform ${
-          showPhotos 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-12'
-        }`}>
-          {/* Galería en forma de corazón */}
-          <div className="relative w-full h-full flex items-center justify-center">
-            {/* Foto central grande */}
-            <div className="absolute z-10 w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-2xl transform hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full bg-gradient-to-br from-pink-200 to-rose-300 flex items-center justify-center">
-                <span className="text-rose-600 text-lg font-semibold">Nosotros</span>
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header Section */}
+        <div className="text-center mb-20">
+          <div className="inline-block">
+            <h2 className="text-2xl md:text-3xl font-light tracking-[0.3em] uppercase text-gray-600 mb-6">
+              Lorem Ipsum
+            </h2>
+            <div className="w-20 h-px bg-gray-400 mx-auto"></div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Story Content */}
+          <div className="space-y-8 animate-fade-in-up order-1 lg:order-2">
+            <div className="space-y-6">
+              <h3 className="text-3xl md:text-4xl font-serif font-light text-gray-800 leading-tight">
+                Lorem ipsum dolor
+                <span className="block text-gray-500 text-2xl md:text-3xl mt-2">
+                  sit amet consectetur
+                </span>
+              </h3>
+              
+              <div className="w-12 h-px bg-gray-400"></div>
+              
+              <div className="space-y-6 text-gray-600 leading-relaxed">
+                <p className="text-lg font-light">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc, eget aliquam massa nisl quis neque.
+                </p>
+                
+                <p className="text-lg font-light">
+                  Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
               </div>
-            </div>
-            
-            {/* Fotos formando corazón alrededor */}
-            <div className="absolute w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-3 border-white shadow-xl transform -translate-x-20 -translate-y-16 hover:scale-105 transition-all duration-300 hover:z-20">
-              <div className="w-full h-full bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center">
-                <span className="text-rose-500 text-sm">Foto 1</span>
+              
+              {/* Signature element */}
+              <div className="pt-8">
+                <div className="flex items-center space-x-4">
+                  <div className="text-2xl font-serif text-gray-400">A</div>
+                  <div className="w-8 h-px bg-gray-300"></div>
+                  <div className="text-sm tracking-[0.2em] text-gray-500 uppercase">y</div>
+                  <div className="w-8 h-px bg-gray-300"></div>
+                  <div className="text-2xl font-serif text-gray-400">A</div>
+                </div>
               </div>
-            </div>
-            
-            <div className="absolute w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-3 border-white shadow-xl transform translate-x-20 -translate-y-16 hover:scale-105 transition-all duration-300 hover:z-20">
-              <div className="w-full h-full bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center">
-                <span className="text-rose-500 text-sm">Foto 2</span>
-              </div>
-            </div>
-            
-            <div className="absolute w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-3 border-white shadow-xl transform -translate-x-32 translate-y-4 hover:scale-105 transition-all duration-300 hover:z-20">
-              <div className="w-full h-full bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center">
-                <span className="text-rose-500 text-xs">Foto 3</span>
-              </div>
-            </div>
-            
-            <div className="absolute w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-3 border-white shadow-xl transform translate-x-32 translate-y-4 hover:scale-105 transition-all duration-300 hover:z-20">
-              <div className="w-full h-full bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center">
-                <span className="text-rose-500 text-xs">Foto 4</span>
-              </div>
-            </div>
-            
-            <div className="absolute w-18 h-18 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white shadow-xl transform -translate-x-12 translate-y-20 hover:scale-105 transition-all duration-300 hover:z-20">
-              <div className="w-full h-full bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center">
-                <span className="text-rose-500 text-xs">Foto 5</span>
-              </div>
-            </div>
-            
-            <div className="absolute w-18 h-18 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white shadow-xl transform translate-x-12 translate-y-20 hover:scale-105 transition-all duration-300 hover:z-20">
-              <div className="w-full h-full bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center">
-                <span className="text-rose-500 text-xs">Foto 6</span>
+
+              {/* Photo Collage */}
+              <div 
+                ref={addPhotoRef(0)}
+                className="relative h-[30rem] md:h-[40rem] group opacity-0"
+              >
+                <div className="absolute top-0 left-0 w-3/4 h-3/4 rounded-2xl overflow-hidden shadow-xl transform group-hover:rotate-[-3deg] transition-transform duration-500 ease-in-out mx-6">
+                  <Image 
+                    src="/couple-1.jpeg" 
+                    alt="Andrea y Aldo foto 1" 
+                    fill
+                    className="object-cover filter sepia-[.30] brightness-105 contrast-105"
+                  />
+                </div>
+                <div className="absolute bottom-0 right-0 w-2/3 h-2/3 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 group-hover:rotate-[4deg] transition-transform duration-500 ease-in-out z-10">
+                  <Image 
+                    src="/couple-2.jpeg" 
+                    alt="Andrea y Aldo foto 2" 
+                    fill
+                    className="object-cover filter sepia-[.20] brightness-110"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Tercera fila - Texto Cursi - 30% vh */}
-      <div className="h-[30vh] w-full flex items-center justify-center px-8">
-        <div className={`text-center max-w-4xl transition-all duration-1000 transform ${
-          showText 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}>
-          <p className="garamond-regular text-xl md:text-2xl lg:text-3xl text-rose-400 leading-relaxed mb-6">
-            &quot;En cada latido de mi corazón, en cada suspiro del viento, 
-            en cada rayo de sol que acaricia mi rostro, 
-            encuentro una razón más para amarte infinitamente...&quot;
-          </p>
-          <div className="flex justify-center items-center space-x-3">
-            <span className="text-rose-300 text-2xl">✨</span>
-            <p className="garamond-regular text-rose-300 text-lg italic">
-              Dos almas, un solo corazón
+        {/* Additional Photo Collages */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-32">
+          {/* Second Photo Collage */}
+          <div 
+            ref={addPhotoRef(1)}
+            className="relative h-[30rem] group opacity-0"
+          >
+            <div className="absolute top-0 right-0 w-3/4 h-3/4 rounded-2xl overflow-hidden shadow-xl transform group-hover:rotate-[3deg] transition-transform duration-500 ease-in-out mx-6">
+              <Image 
+                src="/couple-2.jpeg" 
+                alt="Andrea y Aldo foto 3" 
+                fill
+                className="object-cover filter brightness-95 contrast-110"
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 w-2/3 h-2/3 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 group-hover:rotate-[-4deg] transition-transform duration-500 ease-in-out z-10">
+              <Image 
+                src="/couple-1.jpeg" 
+                alt="Andrea y Aldo foto 4" 
+                fill
+                className="object-cover filter sepia-[.15] brightness-105"
+              />
+            </div>
+          </div>
+
+          {/* Third Photo Collage */}
+          <div 
+            ref={addPhotoRef(2)}
+            className="relative h-[30rem] group opacity-0"
+          >
+            <div className="absolute top-0 left-0 w-2/3 h-2/3 rounded-2xl overflow-hidden shadow-xl transform group-hover:rotate-[-2deg] transition-transform duration-500 ease-in-out">
+              <Image 
+                src="/couple-1.jpeg" 
+                alt="Andrea y Aldo foto 5" 
+                fill
+                className="object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
+              />
+            </div>
+            <div className="absolute bottom-0 right-0 w-3/4 h-3/4 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 group-hover:rotate-[3deg] transition-transform duration-500 ease-in-out z-10">
+              <Image 
+                src="/couple-2.jpeg" 
+                alt="Andrea y Aldo foto 6" 
+                fill
+                className="object-cover filter contrast-110"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Quote */}
+        <div className="text-center mt-24 animate-fade-in-up">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-6xl text-gray-200 font-serif leading-none mb-4">"</div>
+            <p className="text-xl font-light text-gray-500 italic leading-relaxed">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
-            <span className="text-rose-300 text-2xl">✨</span>
+            <div className="w-16 h-px bg-gray-300 mx-auto mt-6"></div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fade-in-up {
+          0% {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in-up {
+          animation: fade-in-up 1.2s ease-out forwards;
+          animation-delay: 0.3s;
+          opacity: 0;
+        }
+        
+        @keyframes fade-in {
+          0% { 
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% { 
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 1s ease-out forwards;
+          animation-delay: 0.1s;
+          opacity: 0;
+        }
+      `}</style>
     </section>
   );
 }

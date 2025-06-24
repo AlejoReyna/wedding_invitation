@@ -33,30 +33,44 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/30"></div>
         
         {/* Navegación minimalista horizontal */}
-        <nav className="absolute top-0 left-0 w-full z-30 px-4 md:px-8 py-8">
+        <nav className="absolute top-0 left-0 w-full z-30 px-4 md:px-8 py-6">
           <div className="max-w-7xl mx-auto">
             {/* Desktop Navigation */}
-            <ul className="hidden md:flex items-center justify-center space-x-8 lg:space-x-12">
-              {navigationItems.map((item) => (
-                <li key={item.id} className="relative">
-                  <a
-                    href={`#${item.id}`}
-                    className="text-white/80 hover:text-white text-sm tracking-[0.2em] font-light transition-all duration-300 group"
-                  >
-                    <span className="relative">
-                      {item.label.toUpperCase()}
-                      <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300"></span>
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="hidden md:flex items-center justify-center relative">
+              {/* Links de navegación centrados */}
+              <ul className="flex items-center justify-center space-x-8 lg:space-x-12">
+                {navigationItems.map((item) => (
+                  <li key={item.id} className="relative">
+                    <a
+                      href={`#${item.id}`}
+                      className="text-white/80 hover:text-white text-sm tracking-[0.2em] font-light transition-all duration-300 group"
+                    >
+                      <span className="relative">
+                        {item.label.toUpperCase()}
+                        <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300"></span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              
+              {/* Botón píldora posicionado absolutamente a la derecha */}
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+                <a
+                  href="#rsvp"
+                  className="inline-flex items-center px-6 py-2.5 bg-white text-black text-sm font-light tracking-[0.15em] rounded-full hover:bg-white/90 transition-all duration-300 hover:scale-105"
+                >
+                  CONFIRMAR
+                </a>
+              </div>
+            </div>
 
-            {/* Mobile Navigation - Full width */}
-            <div className="md:hidden">
-              <ul className="flex items-center justify-center space-x-3 text-[10px] garamond-300 sm:text-xs">
+            {/* Mobile Navigation - Mantenemos solo los links, sin botón extra */}
+            <div className="md:hidden flex items-center justify-between">
+              {/* Links de navegación móvil */}
+              <ul className="flex items-center justify-center space-x-2 text-[10px] garamond-300 sm:text-xs flex-1">
                 <li>
-                  <a href="#nosotros" className="text-white/80 tracking-[0.12em]  hover:text-white transition-colors">NOSOTROS</a>
+                  <a href="#nosotros" className="text-white/80 tracking-[0.12em] hover:text-white transition-colors">NOSOTROS</a>
                 </li>
                 <li className="text-white/40">·</li>
                 <li>
@@ -66,15 +80,14 @@ export default function Home() {
                 <li>
                   <a href="#dresscode" className="text-white/80 tracking-[0.12em] font-light hover:text-white transition-colors">DRESS CODE</a>
                 </li>
-                <li className="text-white/40">·</li>
-                <li>
-                  <a href="#rsvp" className="text-white/80 tracking-[0.12em] font-light hover:text-white transition-colors">RSVP</a>
-                </li>
-                <li className="text-white/40">·</li>
+                <li className="text-white/40">·</li>  
                 <li>
                   <a href="#regalos" className="text-white/80 tracking-[0.12em] font-light hover:text-white transition-colors">AFTER</a>
                 </li>
               </ul>
+              
+              {/* Botón píldora compacto para móvil */}
+              
             </div>
           </div>
         </nav>
@@ -103,6 +116,15 @@ export default function Home() {
             <p className="text-xl garamond-300 md:text-2xl  lg:text-3xl tracking-wide text-white/90 px-4 animate-slide-in-left">
               SAVE THE DATE
             </p>
+
+            <div className="ml-3 mt-4">
+                <a
+                  href="#rsvp"
+                  className="inline-flex items-center px-4 py-1.5 bg-white text-black text-[10px] font-light tracking-[0.1em] rounded-full hover:bg-white/90 transition-all duration-300"
+                >
+                  Confirma tu asistencia
+                </a>
+              </div>
         </main>
 
         {/* Countdown Timer - Ahora va en la parte inferior */}
