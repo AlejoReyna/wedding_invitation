@@ -1,11 +1,18 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { StaticImageData } from 'next/image';
+import p1 from '../../../assets/p1.jpg';
+import p2 from '../../../assets/p2.jpg';
+import p3 from '../../../assets/p3.jpg';
+import p4 from '../../../assets/p4.jpg';
+import p5 from '../../../assets/p5.jpg';
+import p6 from '../../../assets/p6.jpg';
 
 export default function CoupleSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const photoRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ src: StaticImageData, alt: string } | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -23,11 +30,13 @@ export default function CoupleSection() {
     );
 
     const currentRef = sectionRef.current;
+    const currentPhotoRefs = [...photoRefs.current];
+    
     if (currentRef) {
       observer.observe(currentRef);
     }
 
-    photoRefs.current.forEach((ref) => {
+    currentPhotoRefs.forEach((ref) => {
       if (ref) {
         observer.observe(ref);
       }
@@ -38,7 +47,7 @@ export default function CoupleSection() {
         observer.unobserve(currentRef);
       }
       
-      photoRefs.current.forEach((ref) => {
+      currentPhotoRefs.forEach((ref) => {
         if (ref) {
           observer.unobserve(ref);
         }
@@ -51,12 +60,12 @@ export default function CoupleSection() {
   };
 
   const photos = [
-    { src: require('../../../assets/p1.jpg'), alt: 'Foto 1' },
-    { src: require('../../../assets/p2.jpg'), alt: 'Foto 2' },
-    { src: require('../../../assets/p3.jpg'), alt: 'Foto 3' },
-    { src: require('../../../assets/p4.jpg'), alt: 'Foto 4' },
-    { src: require('../../../assets/p5.jpg'), alt: 'Foto 5' },
-    { src: require('../../../assets/p6.jpg'), alt: 'Foto 6' },
+    { src: p1, alt: 'Foto 1' },
+    { src: p2, alt: 'Foto 2' },
+    { src: p3, alt: 'Foto 3' },
+    { src: p4, alt: 'Foto 4' },
+    { src: p5, alt: 'Foto 5' },
+    { src: p6, alt: 'Foto 6' },
   ];
 
   return (
@@ -147,7 +156,7 @@ export default function CoupleSection() {
 
                 <div className="pt-6">
                   <p className="font-serif text-2xl text-[#8b7355] italic">
-                    "El amor verdadero no es otra cosa que el deseo inevitable de ayudar al otro para que sea quien es"
+                    &ldquo;El amor verdadero no es otra cosa que el deseo inevitable de ayudar al otro para que sea quien es&rdquo;
                   </p>
                 </div>
               </div>
@@ -249,7 +258,7 @@ export default function CoupleSection() {
             className="text-center mt-24 animate-fade-in-up"
           >
             <div className="max-w-2xl mx-auto">
-              <div className="text-6xl text-[#d4c4b0]/30 font-serif leading-none mb-4">"</div>
+              <div className="text-6xl text-[#d4c4b0]/30 font-serif leading-none mb-4">&ldquo;</div>
               <p className="font-serif text-2xl md:text-3xl text-[#8b7355] italic leading-relaxed mb-8">
                 Juntos escribiremos el resto de nuestra historia, 
                 página por página, día tras día
