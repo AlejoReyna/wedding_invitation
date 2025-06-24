@@ -83,7 +83,7 @@ export default function Home() {
           {/* Fecha del evento - Ahora va primero */}
           <div className="mb-2 md:mb-8 mt-52">
             <h1 className="text-2xl garamond-300 md:text-2xl lg:text-3xl font-light tracking-[0.2em] uppercase mb-1 text-white/90">
-            19 de JUNIO
+            18 de OCTUBRE
             </h1>
           </div>
 
@@ -109,7 +109,7 @@ export default function Home() {
         <div className="absolute bottom-2 left-0 right-0 z-10 px-4">
           <div className="w-full max-w-4xl mx-auto">
             <CountdownTimer 
-              targetDate="2025-06-19T00:00:00" 
+              targetDate="2025-10-18T00:00:00" 
               className="animate-fade-in-up"
             />
           </div>
