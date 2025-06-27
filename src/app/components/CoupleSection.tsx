@@ -12,7 +12,7 @@ import p6 from '@assets/p6.jpg';
 export default function CoupleSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const photoRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [selectedImage, setSelectedImage] = useState<{ src: StaticImageData, alt: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ src: StaticImageData, alt: string, caption: string } | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -60,34 +60,74 @@ export default function CoupleSection() {
   };
 
   const photos = [
-    { src: p1, alt: 'Foto 1' },
-    { src: p2, alt: 'Foto 2' },
-    { src: p3, alt: 'Foto 3' },
-    { src: p4, alt: 'Foto 4' },
-    { src: p5, alt: 'Foto 5' },
-    { src: p6, alt: 'Foto 6' },
+    { src: p1, alt: 'Foto 1', caption: 'Nuestro primer encuentro' },
+    { src: p2, alt: 'Foto 2', caption: 'Una tarde perfecta' },
+    { src: p3, alt: 'Foto 3', caption: 'Compartiendo sueños' },
+    { src: p4, alt: 'Foto 4', caption: 'Momentos de complicidad' },
+    { src: p5, alt: 'Foto 5', caption: 'Construyendo el futuro' },
+    { src: p6, alt: 'Foto 6', caption: 'Listos para el sí' },
   ];
+
+  // Type definition for photo
+  type PhotoType = {
+    src: StaticImageData;
+    alt: string;
+    caption: string;
+  };
+
+  // Type definition for Polaroid props
+  interface PolaroidProps {
+    photo: PhotoType;
+    onClick: (photo: PhotoType) => void;
+    className?: string;
+    transform?: string;
+  }
+
+  // Polaroid component
+  const Polaroid = ({ photo, onClick, className = "", transform = "" }: PolaroidProps) => (
+    <div 
+      className={`polaroid-card cursor-pointer ${className}`}
+      style={{ transform }}
+      onClick={() => onClick(photo)}
+    >
+      <div className="polaroid-wrapper">
+        <div className="polaroid-image">
+          <Image 
+            src={photo.src} 
+            alt={photo.alt} 
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="polaroid-caption">
+          <p className="text-gray-600 text-sm font-light garamond-300">
+            {photo.caption}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <>
       <section 
         ref={sectionRef}
-        className="min-h-screen w-full bg-[#f8f7f5] py-24 px-4 md:px-8 opacity-0 relative overflow-hidden"
+        className="min-h-screen w-full bg-[#F2F2F2] py-24 px-4 md:px-8 opacity-0 relative overflow-hidden"
       >
         {/* Subtle decorative elements */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-          <div className="absolute top-40 left-20 w-20 h-20 border border-[#d4c4b0]/20 rounded-full"></div>
-          <div className="absolute bottom-40 right-20 w-16 h-16 border border-[#d4c4b0]/20 rounded-full"></div>
+          <div className="absolute top-40 left-20 w-20 h-20 border border-[#EAE4D5]/30 rounded-full"></div>
+          <div className="absolute bottom-40 right-20 w-16 h-16 border border-[#B6B09F]/20 rounded-full"></div>
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Header Section */}
           <div className="text-center mb-24">
-            <h2 className="text-sm md:text-base font-light tracking-[0.4em] uppercase text-[#8b7355] mb-8">
+            <h2 className="text-sm md:text-base font-light tracking-[0.4em] uppercase text-[#B6B09F] mb-8 garamond-300">
               NUESTRA HISTORIA
             </h2>
-            <div className="w-24 h-px bg-[#d4c4b0] mx-auto mb-8"></div>
-            <h3 className="font-serif text-4xl md:text-5xl font-light text-[#5c5c5c] tracking-wider">
+            <div className="w-24 h-px bg-[#B6B09F] mx-auto mb-8"></div>
+            <h3 className="text-4xl md:text-5xl font-light text-[#000000] tracking-wider garamond-300">
               Andrea & Aldo
             </h3>
           </div>
@@ -99,63 +139,37 @@ export default function CoupleSection() {
               ref={addPhotoRef(0)}
               className="relative h-[30rem] md:h-[40rem] group opacity-0 order-2 lg:order-1"
             >
-              <div 
-                className="absolute top-0 left-0 w-3/4 h-3/4 rounded-2xl overflow-hidden shadow-xl transform group-hover:rotate-[-3deg] transition-transform duration-500 ease-in-out mx-6 cursor-pointer hover:shadow-2xl"
-                onClick={() => setSelectedImage(photos[4])}
-              >
-                <Image 
-                  src={photos[4].src} 
-                  alt={photos[4].alt} 
-                  fill
-                  className="object-cover filter brightness-105"
-                />
-                {/* Click indicator */}
-                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <svg className="w-12 h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div 
-                className="absolute bottom-0 right-0 w-2/3 h-2/3 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 group-hover:rotate-[4deg] transition-transform duration-500 ease-in-out z-10 cursor-pointer hover:shadow-3xl"
-                onClick={() => setSelectedImage(photos[3])}
-              >
-                <Image 
-                  src={photos[3].src} 
-                  alt={photos[3].alt} 
-                  fill
-                  className="object-cover filter brightness-110"
-                />
-                {/* Click indicator */}
-                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <svg className="w-12 h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+              <Polaroid 
+                photo={photos[4]}
+                onClick={setSelectedImage}
+                className="absolute top-0 left-0 z-10 group-hover:rotate-[-2deg] transition-transform duration-500"
+                transform="rotate(-5deg)"
+              />
+              <Polaroid 
+                photo={photos[3]}
+                onClick={setSelectedImage}
+                className="absolute bottom-0 right-0 z-20 group-hover:rotate-[3deg] group-hover:scale-105 transition-transform duration-500"
+                transform="rotate(4deg)"
+              />
             </div>
             
             {/* Story Content */}
             <div className="space-y-8 animate-fade-in-up order-1 lg:order-2">
               <div className="space-y-6">
-                <p className="text-lg md:text-xl font-light text-[#6b6b6b] leading-relaxed">
+                <p className="text-lg md:text-xl font-light text-[#B6B09F] leading-relaxed garamond-300">
                   Nos conocimos una tarde de primavera en aquel pequeño café cerca del parque. 
                   Lo que comenzó como una conversación casual se convirtió en horas de risas 
                   y confidencias que marcaron el inicio de nuestra historia.
                 </p>
                 
-                <p className="text-lg md:text-xl font-light text-[#6b6b6b] leading-relaxed">
+                <p className="text-lg md:text-xl font-light text-[#B6B09F] leading-relaxed garamond-300">
                   Desde entonces, cada día ha sido una nueva aventura juntos. Hemos construido 
                   un amor basado en la confianza, el respeto mutuo y la alegría de compartir 
                   cada momento, grande o pequeño.
                 </p>
 
                 <div className="pt-6">
-                  <p className="font-serif text-2xl text-[#8b7355] italic">
+                  <p className="text-2xl text-[#000000] italic garamond-300">
                     &ldquo;El amor verdadero no es otra cosa que el deseo inevitable de ayudar al otro para que sea quien es&rdquo;
                   </p>
                 </div>
@@ -170,42 +184,18 @@ export default function CoupleSection() {
               ref={addPhotoRef(1)}
               className="relative h-[30rem] group opacity-0"
             >
-              <div 
-                className="absolute top-0 right-0 w-3/4 h-3/4 rounded-2xl overflow-hidden shadow-xl transform group-hover:rotate-[3deg] transition-transform duration-500 ease-in-out mx-6 cursor-pointer hover:shadow-2xl"
-                onClick={() => setSelectedImage(photos[2])}
-              >
-                <Image 
-                  src={photos[2].src} 
-                  alt={photos[2].alt} 
-                  fill
-                  className="object-cover filter brightness-95 contrast-110"
-                />
-                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <svg className="w-12 h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div 
-                className="absolute bottom-0 left-0 w-2/3 h-2/3 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 group-hover:rotate-[-4deg] transition-transform duration-500 ease-in-out z-10 cursor-pointer hover:shadow-3xl"
-                onClick={() => setSelectedImage(photos[1])}
-              >
-                <Image 
-                  src={photos[1].src} 
-                  alt={photos[1].alt} 
-                  fill
-                  className="object-cover filter brightness-105"
-                />
-                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <svg className="w-12 h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+              <Polaroid 
+                photo={photos[2]}
+                onClick={setSelectedImage}
+                className="absolute top-0 right-0 z-10 group-hover:rotate-[2deg] transition-transform duration-500"
+                transform="rotate(3deg)"
+              />
+              <Polaroid 
+                photo={photos[1]}
+                onClick={setSelectedImage}
+                className="absolute bottom-0 left-0 z-20 group-hover:rotate-[-3deg] group-hover:scale-105 transition-transform duration-500"
+                transform="rotate(-4deg)"
+              />
             </div>
 
             {/* Third Photo Collage */}
@@ -213,42 +203,18 @@ export default function CoupleSection() {
               ref={addPhotoRef(2)}
               className="relative h-[30rem] group opacity-0"
             >
-              <div 
-                className="absolute top-0 left-0 w-2/3 h-2/3 rounded-2xl overflow-hidden shadow-xl transform group-hover:rotate-[-2deg] transition-transform duration-500 ease-in-out cursor-pointer hover:shadow-2xl"
-                onClick={() => setSelectedImage(photos[0])}
-              >
-                <Image 
-                  src={photos[0].src} 
-                  alt={photos[0].alt} 
-                  fill
-                  className="object-cover filter brightness-105 transition-all duration-700"
-                />
-                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <svg className="w-12 h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div 
-                className="absolute bottom-0 right-0 w-3/4 h-3/4 rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 group-hover:rotate-[3deg] transition-transform duration-500 ease-in-out z-10 cursor-pointer hover:shadow-3xl"
-                onClick={() => setSelectedImage(photos[5])}
-              >
-                <Image 
-                  src={photos[5].src} 
-                  alt={photos[5].alt} 
-                  fill
-                  className="object-cover filter contrast-110"
-                />
-                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <svg className="w-12 h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+              <Polaroid 
+                photo={photos[0]}
+                onClick={setSelectedImage}
+                className="absolute top-0 left-0 z-10 group-hover:rotate-[-1deg] transition-transform duration-500"
+                transform="rotate(-2deg)"
+              />
+              <Polaroid 
+                photo={photos[5]}
+                onClick={setSelectedImage}
+                className="absolute bottom-0 right-0 z-20 group-hover:rotate-[2deg] group-hover:scale-105 transition-transform duration-500"
+                transform="rotate(3deg)"
+              />
             </div>
           </div>
          
@@ -258,68 +224,55 @@ export default function CoupleSection() {
             className="text-center mt-24 animate-fade-in-up"
           >
             <div className="max-w-2xl mx-auto">
-              <div className="text-6xl text-[#d4c4b0]/30 font-serif leading-none mb-4">&ldquo;</div>
-              <p className="font-serif text-2xl md:text-3xl text-[#8b7355] italic leading-relaxed mb-8">
+              <div className="text-6xl text-[#EAE4D5]/50 font-serif leading-none mb-4">&ldquo;</div>
+              <p className="text-2xl md:text-3xl text-[#000000] italic leading-relaxed mb-8 garamond-300">
                 Juntos escribiremos el resto de nuestra historia, 
                 página por página, día tras día
               </p>
               <div className="flex items-center justify-center space-x-4">
-                <div className="w-20 h-px bg-[#d4c4b0]"></div>
-                <span className="text-[#8b7355] text-2xl">♥</span>
-                <div className="w-20 h-px bg-[#d4c4b0]"></div>
+                <div className="w-20 h-px bg-[#B6B09F]"></div>
+                <span className="text-[#B6B09F] text-2xl">♥</span>
+                <div className="w-20 h-px bg-[#B6B09F]"></div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Polaroid-style 3D Image Viewer Modal */}
+      {/* Elegant Image Viewer Modal */}
       {selectedImage && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
           {/* Backdrop with blur */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
           
-          {/* 3D Polaroid Container */}
-          <div className="relative z-10 transform-gpu perspective-1000">
-            <div className="relative transform-gpu transition-all duration-700 ease-out animate-lift-3d">
-              {/* Card Shadow */}
-              <div className="absolute inset-0 bg-black/50 blur-3xl transform translate-y-12 scale-90" />
-              
-              {/* Polaroid Card */}
-              <div className="relative bg-white p-4 pb-20 rounded-sm shadow-2xl transform hover:rotate-[1deg] transition-transform duration-300">
-                {/* Close button */}
-                <button 
-                  className="absolute -top-4 -right-4 z-20 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors duration-300 shadow-lg border border-gray-200"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedImage(null);
-                  }}
-                >
-                  <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-                
-                {/* Image Container with Polaroid border */}
-                <div className="relative w-[80vw] max-w-2xl h-[60vh] bg-gray-100">
-                  <Image 
-                    src={selectedImage.src} 
-                    alt={selectedImage.alt} 
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                
-                {/* Polaroid Caption Area */}
-                <div className="absolute bottom-0 left-0 right-0 h-16 flex items-center justify-center">
-                  <p className="text-gray-600 font-serif text-lg italic">{selectedImage.alt}</p>
-                </div>
-                
-                {/* Tape effect */}
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-20 h-8 bg-white/60 rotate-[-5deg] shadow-sm"></div>
+          {/* Modal Container */}
+          <div className="relative z-10 max-w-4xl w-full max-h-[90vh] animate-modal-in">
+            {/* Close button */}
+            <button 
+              className="absolute -top-4 -right-4 z-20 bg-white rounded-full p-3 hover:bg-gray-100 transition-colors duration-300 shadow-lg"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImage(null);
+              }}
+            >
+              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* Image Container */}
+            <div className="bg-black rounded-lg overflow-hidden shadow-2xl">
+              <div className="relative w-full h-[80vh]">
+                <Image 
+                  src={selectedImage.src} 
+                  alt={selectedImage.alt} 
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
             </div>
           </div>
@@ -327,6 +280,57 @@ export default function CoupleSection() {
       )}
 
       <style jsx>{`
+        .polaroid-card {
+          width: 280px;
+          height: 360px;
+          transition: all 0.3s ease;
+        }
+        
+        .polaroid-card:hover {
+          transform: scale(1.05) !important;
+          z-index: 30;
+        }
+        
+        .polaroid-wrapper {
+          width: 100%;
+          height: 100%;
+          background: white;
+          border-radius: 3px;
+          box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.15),
+            inset 0 0 0 8px white,
+            inset 0 0 0 10px rgba(0,0,0,0.05);
+          padding: 20px 20px 80px 20px;
+          transition: box-shadow 0.3s ease;
+        }
+        
+        .polaroid-card:hover .polaroid-wrapper {
+          box-shadow: 
+            0 15px 40px rgba(0, 0, 0, 0.25),
+            inset 0 0 0 8px white,
+            inset 0 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .polaroid-image {
+          position: relative;
+          width: 100%;
+          height: calc(100% - 60px);
+          background: #f5f5f5;
+          overflow: hidden;
+          box-shadow: 
+            0 2px 8px rgba(0,0,0,0.1),
+            inset 0 0 0 1px rgba(0,0,0,0.1);
+        }
+        
+        .polaroid-caption {
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 0 8px;
+        }
+
         @keyframes fade-in-up {
           0% {
             opacity: 0;
@@ -343,23 +347,19 @@ export default function CoupleSection() {
           opacity: 0;
         }
         
-        @keyframes lift-3d {
+        @keyframes modal-in {
           0% {
             opacity: 0;
-            transform: translateY(100px) rotateX(-15deg) scale(0.9);
+            transform: scale(0.9) translateY(20px);
           }
           100% {
             opacity: 1;
-            transform: translateY(0) rotateX(-2deg) scale(1);
+            transform: scale(1) translateY(0);
           }
         }
         
-        .animate-lift-3d {
-          animation: lift-3d 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        
-        .perspective-1000 {
-          perspective: 1000px;
+        .animate-modal-in {
+          animation: modal-in 0.3s ease-out forwards;
         }
       `}</style>
     </>

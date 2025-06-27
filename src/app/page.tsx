@@ -5,17 +5,18 @@ import DressCodeSection from './components/DressCodeSection';
 import MessageSection from './components/MessageSection';
 import RSVPSection from './components/RSVPSection';
 import MinimalistFooter from './components/Footer';
+import ItinerarySection from './components/ItinerarySection';
 // ↓ NUEVO: Importamos nuestro countdown timer
 import CountdownTimer from '../components/CountdownTimer';
 
 export default function Home() {
   const navigationItems = [
     { id: 'nosotros', label: 'Nosotros' },
+    { id: 'itinerario', label: 'Itinerario' },
     { id: 'ubicacion', label: 'Ubicación' },
     { id: 'dresscode', label: 'Dress Code' },
     { id: 'mensaje', label: 'Mensaje' },
-    { id: 'rsvp', label: 'Confirmar' },
-    { id: 'regalos', label: 'Regalos' }
+    { id: 'rsvp', label: 'Confirmar' }
   ];
 
   return (
@@ -78,11 +79,11 @@ export default function Home() {
                 </li>
                 <li className="text-white/40">·</li>
                 <li>
-                  <a href="#dresscode" className="text-white/80 tracking-[0.12em] font-light hover:text-white transition-colors">DRESS CODE</a>
+                  <a href="#itinerario" className="text-white/80 tracking-[0.12em] font-light hover:text-white transition-colors">ITINERARIO</a>
                 </li>
-                <li className="text-white/40">·</li>  
+                <li className="text-white/40">·</li>
                 <li>
-                  <a href="#regalos" className="text-white/80 tracking-[0.12em] font-light hover:text-white transition-colors">AFTER</a>
+                  <a href="#dresscode" className="text-white/80 tracking-[0.12em] font-light hover:text-white transition-colors">DRESS CODE</a>
                 </li>
               </ul>
               
@@ -172,6 +173,9 @@ export default function Home() {
       </div>
       <div id="nosotros">
         <CoupleSection />
+      </div>
+      <div id="itinerario">
+        <ItinerarySection />
       </div>
       <div id="ubicacion">
         <LocationSection />

@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
-import { FaEnvelope } from 'react-icons/fa';
+import { FaEnvelope, FaGift, FaCreditCard } from 'react-icons/fa';
 
 export default function MessageSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -72,80 +72,164 @@ export default function MessageSection() {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen w-full bg-[#FFF5E6] py-20 px-4 md:px-8 opacity-0 relative overflow-hidden"
+      className="min-h-screen w-full bg-[#F2F2F2] py-24 px-4 md:px-8 opacity-0 relative"
     >
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-[url('/floral-pattern.png')] opacity-10"></div>
-      <div className="absolute bottom-0 right-0 w-full h-32 bg-[url('/floral-pattern.png')] opacity-10 rotate-180"></div>
-
-      <div className="max-w-4xl mx-auto text-gray-800 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-light tracking-[0.3em] uppercase text-gray-900 mb-4">
-            Mensaje
+      <div className="max-w-5xl mx-auto text-gray-800 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <h2 className="text-3xl md:text-4xl font-light tracking-[0.3em] uppercase text-[#000000] mb-6 garamond-300">
+            MENSAJE & REGALOS
           </h2>
-          <div className="w-24 h-1 bg-[#D4B996] mx-auto"></div>
+          <div className="w-16 h-px bg-[#B6B09F] mx-auto mb-6"></div>
+          <p className="text-base font-light text-[#B6B09F] tracking-wide garamond-300">
+            Comparte tus buenos deseos y conoce nuestras sugerencias
+          </p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-sm p-8 rounded-[2rem] shadow-lg border border-[#D4B996]/30">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="bg-[#D4B996]/10 p-3 rounded-full">
-              <FaEnvelope className="text-2xl text-[#D4B996]" />
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          {/* Message Form */}
+          <div className="bg-white p-8 shadow-sm border border-[#EAE4D5]/30">
+            <div className="flex items-center gap-4 mb-8">
+              <FaEnvelope className="text-xl text-[#B6B09F]" />
+              <h3 className="text-xl font-light tracking-[0.2em] text-[#000000] uppercase garamond-300">
+                Envía un mensaje
+              </h3>
             </div>
-            <h3 className="text-2xl font-light tracking-wider text-gray-900">Envía un mensaje</h3>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-[#B6B09F] font-light mb-2 garamond-300">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  className="w-full px-4 py-3 border border-[#EAE4D5] focus:outline-none focus:ring-1 focus:ring-[#B6B09F] focus:border-[#B6B09F] transition-all duration-300 bg-white garamond-300"
+                  placeholder="Tu nombre"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-[#B6B09F] font-light mb-2 garamond-300">
+                  Correo electrónico
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  className="w-full px-4 py-3 border border-[#EAE4D5] focus:outline-none focus:ring-1 focus:ring-[#B6B09F] focus:border-[#B6B09F] transition-all duration-300 bg-white garamond-300"
+                  placeholder="tu@email.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-[#B6B09F] font-light mb-2 garamond-300">
+                  Mensaje
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 border border-[#EAE4D5] focus:outline-none focus:ring-1 focus:ring-[#B6B09F] focus:border-[#B6B09F] transition-all duration-300 bg-white resize-none garamond-300"
+                  placeholder="Comparte tus buenos deseos..."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={formStatus === 'loading'}
+                className="w-full py-3 px-6 bg-[#000000] text-white font-light tracking-[0.1em] hover:bg-[#000000]/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed garamond-300 uppercase text-sm"
+              >
+                {formStatus === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
+              </button>
+
+              {formStatus === 'success' && (
+                <p className="text-green-600 text-center garamond-300">¡Mensaje enviado con éxito!</p>
+              )}
+              {formStatus === 'error' && (
+                <p className="text-red-600 text-center garamond-300">Error al enviar. Intenta de nuevo.</p>
+              )}
+            </form>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-gray-700 font-light mb-2">Nombre</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                className="w-full px-4 py-3 rounded-lg border border-[#D4B996]/30 focus:outline-none focus:ring-2 focus:ring-[#D4B996]/50 transition-all duration-300 bg-white/50"
-                placeholder="Tu nombre"
-              />
+          {/* Gift Suggestions */}
+          <div className="space-y-8">
+            {/* Gift Info Card */}
+            <div className="bg-white p-8 shadow-sm border border-[#EAE4D5]/30">
+              <div className="flex items-center gap-4 mb-8">
+                <FaGift className="text-xl text-[#B6B09F]" />
+                <h3 className="text-xl font-light tracking-[0.2em] text-[#000000] uppercase garamond-300">
+                  Regalos
+                </h3>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="text-center mb-6">
+                  <p className="text-base font-light text-[#B6B09F] garamond-300 leading-relaxed">
+                    Tu presencia es nuestro mejor regalo. Si deseas hacernos un obsequio, 
+                    te sugerimos las siguientes opciones:
+                  </p>
+                </div>
+
+                {/* Option 1: Envelope */}
+                <div className="border-l-2 border-[#EAE4D5] pl-6">
+                  <h4 className="text-base font-light text-[#000000] mb-2 garamond-300 uppercase tracking-wide">
+                    Sobre tradicional
+                  </h4>
+                  <p className="text-sm text-[#B6B09F] garamond-300">
+                    Un sobre con tu contribución será muy apreciado el día de la celebración.
+                  </p>
+                </div>
+
+                {/* Option 2: Transfer */}
+                <div className="border-l-2 border-[#EAE4D5] pl-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <FaCreditCard className="text-[#B6B09F] text-sm" />
+                    <h4 className="text-base font-light text-[#000000] garamond-300 uppercase tracking-wide">
+                      Transferencia bancaria
+                    </h4>
+                  </div>
+                  <div className="space-y-1 text-sm text-[#B6B09F] garamond-300">
+                    <p><span className="font-medium text-[#000000]">Banco:</span> BBVA</p>
+                    <p><span className="font-medium text-[#000000]">Cuenta:</span> 1234 5678 9012 3456</p>
+                    <p><span className="font-medium text-[#000000]">CLABE:</span> 012345678901234567</p>
+                    <p><span className="font-medium text-[#000000]">Titular:</span> Andrea & Aldo</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="email" className="block text-gray-700 font-light mb-2">Correo electrónico</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                className="w-full px-4 py-3 rounded-lg border border-[#D4B996]/30 focus:outline-none focus:ring-2 focus:ring-[#D4B996]/50 transition-all duration-300 bg-white/50"
-                placeholder="tu@email.com"
-              />
+            {/* Additional Note */}
+            <div className="bg-[#EAE4D5]/20 p-6 border border-[#EAE4D5]">
+              <div className="text-center">
+                <p className="text-sm font-light text-[#B6B09F] italic garamond-300 leading-relaxed">
+                  &ldquo;El regalo más valioso es compartir este momento especial con nosotros. 
+                  Cualquier contribución será destinada a nuestro nuevo hogar.&rdquo;
+                </p>
+                <div className="w-8 h-px bg-[#B6B09F] mx-auto mt-4"></div>
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="message" className="block text-gray-700 font-light mb-2">Mensaje</label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={4}
-                className="w-full px-4 py-3 rounded-lg border border-[#D4B996]/30 focus:outline-none focus:ring-2 focus:ring-[#D4B996]/50 transition-all duration-300 bg-white/50 resize-none"
-                placeholder="Escribe tu mensaje aquí..."
-              ></textarea>
+            {/* Registry Info */}
+            <div className="bg-white p-6 shadow-sm border border-[#EAE4D5]/30">
+              <div className="text-center">
+                <h4 className="text-base font-light text-[#000000] mb-3 garamond-300 uppercase tracking-wide">
+                  Mesa de regalos
+                </h4>
+                <p className="text-sm text-[#B6B09F] garamond-300 mb-4">
+                  También contamos con mesa de regalos en:
+                </p>
+                <div className="space-y-2 text-sm text-[#B6B09F] garamond-300">
+                  <p><span className="font-medium text-[#000000]">Liverpool:</span> Evento #12345</p>
+                  <p><span className="font-medium text-[#000000]">Palacio de Hierro:</span> Evento #67890</p>
+                </div>
+              </div>
             </div>
-
-            <button
-              type="submit"
-              disabled={formStatus === 'loading'}
-              className="w-full py-4 px-8 bg-[#D4B996] text-white rounded-lg font-light tracking-wider hover:bg-[#D4B996]/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {formStatus === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
-            </button>
-
-            {formStatus === 'success' && (
-              <p className="text-green-600 text-center">¡Mensaje enviado con éxito!</p>
-            )}
-            {formStatus === 'error' && (
-              <p className="text-red-600 text-center">Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.</p>
-            )}
-          </form>
+          </div>
         </div>
       </div>
 
@@ -153,7 +237,7 @@ export default function MessageSection() {
         @keyframes push-up {
           0% {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
           }
           100% {
             opacity: 1;
@@ -162,9 +246,9 @@ export default function MessageSection() {
         }
 
         .animate-push-up {
-          animation: push-up 1s ease-out forwards;
+          animation: push-up 0.8s ease-out forwards;
         }
       `}</style>
     </section>
   );
-} 
+}
