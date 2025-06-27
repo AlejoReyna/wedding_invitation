@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { StaticImageData } from 'next/image';
-import p1 from '@assets/p1.JPG';
 import p2 from '@assets/p2.JPG';
 import p3 from '@assets/p3.JPG';
 import p4 from '@assets/p4.JPG';
@@ -60,7 +59,6 @@ export default function CoupleSection() {
   };
 
   const photos = [
-    { src: p1, alt: 'Foto 1', caption: 'Nuestro primer encuentro' },
     { src: p2, alt: 'Foto 2', caption: 'Una tarde perfecta' },
     { src: p3, alt: 'Foto 3', caption: 'Compartiendo sueños' },
     { src: p4, alt: 'Foto 4', caption: 'Momentos de complicidad' },
