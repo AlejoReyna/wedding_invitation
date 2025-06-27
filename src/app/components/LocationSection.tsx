@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaChurch } from 'react-icons/fa';
 import Image from 'next/image';
-import mariauxImage from '../../../assets/mariaaux.JPG';
+import mariauxImage from '../../../assets/mariaaux.jpg';
 
 export default function LocationSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
