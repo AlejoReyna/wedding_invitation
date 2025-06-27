@@ -107,7 +107,7 @@ export default function Home() {
               ANDREA
             </h2>
             <span className="text-white/90">&</span>
-            <h2 className="text-white/90 drop-shadow-lg">
+            <h2 className="md:text-5xl lg:text-6xl  tracking-wide text-white drop-shadow-lg">
               ALDO
             </h2>
           </div>
