@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { StaticImageData } from 'next/image';
-import p1 from '@assets/p1.JPG';
+import p1 from '@assets/p1.jpg';
 import p2 from '@assets/p2.JPG';
 import p3 from '@assets/p3.JPG';
 import p4 from '@assets/p4.JPG';
