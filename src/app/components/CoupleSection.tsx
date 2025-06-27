@@ -1,17 +1,11 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { StaticImageData } from 'next/image';
-import p2 from '@assets/p2.JPG';
-import p3 from '@assets/p3.JPG';
-import p4 from '@assets/p4.JPG';
-import p5 from '@assets/p5.JPG';
-import p6 from '@assets/p6.JPG';
 
 export default function CoupleSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const photoRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [selectedImage, setSelectedImage] = useState<{ src: StaticImageData, alt: string, caption: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, caption: string } | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -59,16 +53,17 @@ export default function CoupleSection() {
   };
 
   const photos = [
-    { src: p2, alt: 'Foto 2', caption: 'Una tarde perfecta' },
-    { src: p3, alt: 'Foto 3', caption: 'Compartiendo sueños' },
-    { src: p4, alt: 'Foto 4', caption: 'Momentos de complicidad' },
-    { src: p5, alt: 'Foto 5', caption: 'Construyendo el futuro' },
-    { src: p6, alt: 'Foto 6', caption: 'Listos para el sí' },
+    { src: '/p1.JPG', alt: 'Foto 1', caption: 'Nuestro primer encuentro' },
+    { src: '/p2.JPG', alt: 'Foto 2', caption: 'Una tarde perfecta' },
+    { src: '/p3.JPG', alt: 'Foto 3', caption: 'Compartiendo sueños' },
+    { src: '/p4.JPG', alt: 'Foto 4', caption: 'Momentos de complicidad' },
+    { src: '/p5.JPG', alt: 'Foto 5', caption: 'Construyendo el futuro' },
+    { src: '/p6.JPG', alt: 'Foto 6', caption: 'Listos para el sí' },
   ];
 
   // Type definition for photo
   type PhotoType = {
-    src: StaticImageData;
+    src: string;
     alt: string;
     caption: string;
   };
