@@ -92,10 +92,10 @@ export default function Home() {
         </nav>
 
         {/* Contenido principal - Nombres en la misma fila */}
-        <div className="flex-1 flex flex-col justify-center items-center relative z-10 px-6">
+        <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-6 pt-16 md:pt-24">
           
           {/* Los nombres centrados en la misma fila */}
-          <div className="text-center mb-16 md:mb-20 animate-fade-in-center">
+          <div className="text-center  md:mb-20 animate-fade-in-center">
             {/* Nombres en la misma línea con separador vertical */}
             <div className="flex items-center justify-center space-x-8 md:space-x-16 mb-8">
               <h1 className="text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.05em] text-white drop-shadow-2xl leading-none">
@@ -111,11 +111,7 @@ export default function Home() {
             </div>
 
             {/* Save the Date */}
-            <div className="text-center mb-6">
-              <p className="text-2xl md:text-3xl garamond-300 tracking-[0.4em] text-white/85">
-                SAVE THE DATE
-              </p>
-            </div>
+           
 
             {/* Fecha debajo de Save the Date */}
             <div className="text-center">
