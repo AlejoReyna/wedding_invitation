@@ -8,11 +8,12 @@ import MinimalistFooter from './components/Footer';
 import ItinerarySection from './components/ItinerarySection';
 import CountdownTimer from '../components/CountdownTimer';
 import Navbar from './components/Navbar';
+import { ThemeProvider } from './context/ThemeContext';
 
 export default function Home() {
 
   return (
-    <>
+    <ThemeProvider>
       <Navbar />
       <div 
         className="relative flex flex-col min-h-screen overflow-hidden"
@@ -181,6 +182,6 @@ export default function Home() {
       <div id="footer">
         <MinimalistFooter />
       </div>
-    </>
+    </ThemeProvider>
   );
 }
