@@ -16,7 +16,7 @@ export default function WeddingInvitation() {
         <div className="max-w-sm mx-auto space-y-8">
           
           {/* Date */}
-          <div className="space-y-2">
+          <div className="space-y-2 mt-18">
             <h2 className="text-2xl font-light text-gray-700 leading-tight garamond-regular">
               Sábado, 18 de Octubre 2025
             </h2>
@@ -25,8 +25,8 @@ export default function WeddingInvitation() {
             </p>
           </div>
 
-          {/* Photo arrangement - doubled separation */}
-          <div className="relative my-20" style={{ height: '750px', width: '100%' }}>
+          {/* Photo arrangement - photos on same row with wide separation */}
+          <div className="relative my-4" style={{ height: '450px', width: '100%' }}>
             {/* Decorative floral corner */}
             <div className="absolute -top-4 -left-24 w-16 h-16 opacity-30">
               <svg viewBox="0 0 50 50" className="w-full h-full stroke-[#C4985B]" fill="none">
@@ -53,9 +53,9 @@ export default function WeddingInvitation() {
               </div>
             </div>
 
-            {/* Second photo - rotated right with doubled separation */}
+            {/* Second photo - rotated right, slightly lower than first photo */}
             <div 
-              className="absolute top-80 -right-32 w-84 h-108 cursor-pointer transform rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg z-10"
+              className="absolute top-8 -right-32 w-84 h-108 cursor-pointer transform rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg z-10"
               style={{ width: '320px', height: '410px' }}
               onClick={() => setSelectedImage(photos[1])}
             >
@@ -80,6 +80,19 @@ export default function WeddingInvitation() {
             </div>
           </div>
 
+          {/* Romantic text below photos */}
+          <div className="pb-4">
+            <p className="text-lg font-light text-gray-600 italic garamond-regular leading-relaxed">
+              "Dos corazones, una historia,<br />
+              un destino que nos une para siempre"
+            </p>
+            <div className="flex justify-center items-center mt-4">
+              <div className="w-12 h-px bg-[#C4985B] opacity-50"></div>
+              <div className="mx-3 text-[#C4985B] text-xl">♡</div>
+              <div className="w-12 h-px bg-[#C4985B] opacity-50"></div>
+            </div>
+          </div>
+
           {/* Event type */}
           <div>
             <p className="text-gray-500 text-base tracking-wide garamond-300">Ceremonia</p>
@@ -91,29 +104,21 @@ export default function WeddingInvitation() {
             <p className="text-lg text-gray-600 garamond-300">PM</p>
           </div>
 
-          {/* Location */}
-          <div className="space-y-1 text-gray-500 text-sm leading-relaxed garamond-300">
-            <p>Simon Bolívar 659</p>
-            <p>Del Maestro, 67500</p>
-            <p>Montemorelos, N.L.</p>
-          </div>
-
-          {/* Get template button */}
-          <div className="pt-6">
-            <button className="bg-gray-700 text-white px-6 py-2 rounded-full text-sm hover:bg-gray-800 transition-colors garamond-300">
-              Confirmar Asistencia
-            </button>
-          </div>
-
-          {/* Footer */}
-          <div className="pt-8 space-y-2">
-            <div className="flex items-center justify-center space-x-2">
-              <span className="text-xs text-gray-400">🖤</span>
-              <span className="text-xs text-gray-800 font-medium garamond-300">Made in Framer</span>
+          {/* Location - Enhanced styling */}
+          <div className="bg-white/60 backdrop-blur-sm rounded-lg p-6 border border-[#C4985B]/20 shadow-sm">
+            <div className="space-y-3">
+              <div className="flex items-center justify-center mb-4">
+                <svg className="w-5 h-5 text-[#C4985B] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+                <h3 className="text-[#C4985B] text-sm font-medium tracking-[0.1em] uppercase garamond-300">Ubicación</h3>
+              </div>
+              <div className="text-gray-600 text-base leading-relaxed garamond-regular space-y-1">
+                <p className="font-medium">Simon Bolívar 659</p>
+                <p>Del Maestro, 67500</p>
+                <p>Montemorelos, N.L.</p>
+              </div>
             </div>
-            <p className="text-xs text-gray-400 garamond-300">
-              andrea-aldo.framer.website
-            </p>
           </div>
         </div>
       </main>
