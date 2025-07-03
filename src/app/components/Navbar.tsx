@@ -1,4 +1,5 @@
 "use client"
+import { useState, useEffect } from 'react';
 
 interface NavigationItem {
   id: string;
@@ -6,6 +7,8 @@ interface NavigationItem {
 }
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  
   const navigationItems: NavigationItem[] = [
     { id: 'nosotros', label: 'Nosotros' },
     { id: 'itinerario', label: 'Itinerario' },
@@ -15,8 +18,26 @@ const Navbar = () => {
     { id: 'rsvp', label: 'Confirmar' }
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const nosotrosSection = document.getElementById('nosotros');
+      if (nosotrosSection) {
+        const rect = nosotrosSection.getBoundingClientRect();
+        // Cambiar navbar cuando la sección nosotros esté a 100px del top
+        setIsScrolled(rect.top <= 100);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/15">
+    <nav className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 backdrop-blur-sm transition-all duration-500 ${
+      isScrolled 
+        ? 'bg-white/95 shadow-lg hover:bg-white' 
+        : 'bg-white/10 hover:bg-white/15'
+    }`}>
       <div className="max-w-7xl mx-auto">
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center justify-between">
@@ -26,10 +47,16 @@ const Navbar = () => {
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className="text-white/60 hover:text-white text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group"
+                  className={`text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group ${
+                    isScrolled 
+                      ? 'text-black/70 hover:text-black' 
+                      : 'text-white/60 hover:text-white'
+                  }`}
                 >
                   {item.label.toUpperCase()}
-                  <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-500"></span>
+                  <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${
+                    isScrolled ? 'bg-black' : 'bg-white'
+                  }`}></span>
                 </a>
               </li>
             ))}
@@ -37,9 +64,15 @@ const Navbar = () => {
           
           {/* Centro - Solo líneas decorativas */}
           <div className="flex items-center space-x-8">
-            <div className="w-12 h-[1px] bg-white/30"></div>
-            <div className="w-24 h-[1px] bg-white/30"></div>
-            <div className="w-12 h-[1px] bg-white/30"></div>
+            <div className={`w-12 h-[1px] transition-colors duration-500 ${
+              isScrolled ? 'bg-black/30' : 'bg-white/30'
+            }`}></div>
+            <div className={`w-24 h-[1px] transition-colors duration-500 ${
+              isScrolled ? 'bg-black/30' : 'bg-white/30'
+            }`}></div>
+            <div className={`w-12 h-[1px] transition-colors duration-500 ${
+              isScrolled ? 'bg-black/30' : 'bg-white/30'
+            }`}></div>
           </div>
           
           {/* Grupo derecho */}
@@ -48,10 +81,16 @@ const Navbar = () => {
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className="text-white/60 hover:text-white text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group"
+                  className={`text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group ${
+                    isScrolled 
+                      ? 'text-black/70 hover:text-black' 
+                      : 'text-white/60 hover:text-white'
+                  }`}
                 >
                   {item.label.toUpperCase()}
-                  <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-500"></span>
+                  <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${
+                    isScrolled ? 'bg-black' : 'bg-white'
+                  }`}></span>
                 </a>
               </li>
             ))}
@@ -63,10 +102,21 @@ const Navbar = () => {
           <ul className="flex justify-center items-center space-x-6 text-xs">
             {navigationItems.slice(0, 3).map((item, index) => (
               <li key={item.id} className="flex items-center">
-                <a href={`#${item.id}`} className="text-white/70 garamond-300 tracking-[0.15em] hover:text-white transition-colors">
+                <a 
+                  href={`#${item.id}`} 
+                  className={`garamond-300 tracking-[0.15em] transition-colors duration-500 ${
+                    isScrolled 
+                      ? 'text-black/70 hover:text-black' 
+                      : 'text-white/70 hover:text-white'
+                  }`}
+                >
                   {item.label.toUpperCase()}
                 </a>
-                {index < 2 && <span className="text-white/30 ml-6">·</span>}
+                {index < 2 && (
+                  <span className={`ml-6 transition-colors duration-500 ${
+                    isScrolled ? 'text-black/30' : 'text-white/30'
+                  }`}>·</span>
+                )}
               </li>
             ))}
           </ul>
