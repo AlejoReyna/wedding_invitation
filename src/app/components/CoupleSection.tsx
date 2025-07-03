@@ -1,9 +1,64 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 export default function WeddingInvitation() {
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
+  const [scrollScale, setScrollScale] = useState(0.6);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Improved scroll-based zoom effect with smoother transitions
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Calculate the center point of the element
+      const elementCenter = rect.top + rect.height / 2;
+      const windowCenter = windowHeight / 2;
+      
+      // Calculate distance from element center to window center
+      const distance = Math.abs(elementCenter - windowCenter);
+      const maxDistance = windowHeight;
+      
+      // Create a smooth easing function (ease-out cubic)
+      let progress = 1 - (distance / maxDistance);
+      progress = Math.max(0, Math.min(1, progress));
+      
+      // Apply easing function for more natural movement
+      const easeOutCubic = (t: number): number => {
+        return 1 - Math.pow(1 - t, 3);
+      };
+      
+      const easedProgress = easeOutCubic(progress);
+      
+      // Scale from deeper zoom (0.6) to slightly enlarged (1.05)
+      const minScale = 0.6;  // Start with more depth
+      const maxScale = 1.05; // Less aggressive max scale
+      const scale = minScale + (easedProgress * (maxScale - minScale));
+      
+      setScrollScale(scale);
+    };
+
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    handleScroll(); // Initial call
+
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
+  }, []);
 
   const photos = [
     { src: '/p1.JPG', alt: 'Andrea & Aldo - Foto 1' },
@@ -25,8 +80,12 @@ export default function WeddingInvitation() {
             </p>
           </div>
 
-          {/* Photo arrangement - photos on same row with wide separation */}
-          <div className="relative my-4" style={{ height: '450px', width: '100%' }}>
+          {/* Photo arrangement with improved zoom effect */}
+          <div 
+            ref={sectionRef}
+            className="relative my-4" 
+            style={{ height: '450px', width: '100%' }}
+          >
             {/* Decorative floral corner */}
             <div className="absolute -top-4 -left-24 w-16 h-16 opacity-30">
               <svg viewBox="0 0 50 50" className="w-full h-full stroke-[#C4985B]" fill="none">
@@ -35,13 +94,18 @@ export default function WeddingInvitation() {
               </svg>
             </div>
 
-            {/* First photo - rotated left with doubled separation */}
+            {/* First photo - rotated left with smooth zoom */}
             <div 
-              className="absolute top-0 -left-24 w-84 h-108 cursor-pointer transform -rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg"
-              style={{ width: '320px', height: '410px' }}
+              className="absolute top-0 -left-24 w-84 h-108 cursor-pointer shadow-lg"
+              style={{ 
+                width: '320px', 
+                height: '410px',
+                transform: `scale(${scrollScale}) rotate(-12deg)`,
+                transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease'
+              }}
               onClick={() => setSelectedImage(photos[0])}
             >
-              <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm">
+              <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm hover:shadow-xl transition-shadow duration-300">
                 <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '320px' }}>
                   <Image 
                     src={photos[0].src} 
@@ -53,13 +117,18 @@ export default function WeddingInvitation() {
               </div>
             </div>
 
-            {/* Second photo - rotated right, slightly lower than first photo */}
+            {/* Second photo - rotated right with smooth zoom */}
             <div 
-              className="absolute top-8 -right-32 w-84 h-108 cursor-pointer transform rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg z-10"
-              style={{ width: '320px', height: '410px' }}
+              className="absolute top-8 -right-32 w-84 h-108 cursor-pointer shadow-lg z-10"
+              style={{ 
+                width: '320px', 
+                height: '410px',
+                transform: `scale(${scrollScale}) rotate(12deg)`,
+                transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease'
+              }}
               onClick={() => setSelectedImage(photos[1])}
             >
-              <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm">
+              <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm hover:shadow-xl transition-shadow duration-300">
                 <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '320px' }}>
                   <Image 
                     src={photos[1].src} 
