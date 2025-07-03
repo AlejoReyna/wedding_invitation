@@ -273,8 +273,8 @@ export default function WeddingInvitation() {
           {/* Romantic text below photos */}
           <div className="pb-4">
             <p className="text-lg font-light text-gray-600 italic garamond-regular leading-relaxed">
-              "Dos corazones, una historia,<br />
-              un destino que nos une para siempre"
+              &ldquo;Dos corazones, una historia,<br />
+              un destino que nos une para siempre&rdquo;
             </p>
             <div className="flex justify-center items-center mt-4">
               <div className="w-12 h-px bg-[#C4985B] opacity-50"></div>
