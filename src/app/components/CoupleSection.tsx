@@ -15,36 +15,34 @@ export default function WeddingInvitation() {
       <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-[#F8F6F3] text-center">
         <div className="max-w-sm mx-auto space-y-8">
           
-         
-
           {/* Date */}
           <div className="space-y-2">
-            <h2 className="text-2xl font-serif text-gray-700 leading-tight">
-              Sábado, 18 Octubre 2024
+            <h2 className="text-2xl font-light text-gray-700 leading-tight garamond-regular">
+              Sábado, 18 de Octubre 2025
             </h2>
-            <p className="text-[#C4985B] text-xs font-light tracking-[0.2em] uppercase">
+            <p className="text-[#C4985B] text-xs font-light tracking-[0.2em] uppercase garamond-300">
               TE INVITAMOS A NUESTRA BODA
             </p>
           </div>
 
-          {/* Photo arrangement */}
-          <div className="relative my-12" style={{ height: '540px', width: '100%' }}>
+          {/* Photo arrangement - doubled separation */}
+          <div className="relative my-20" style={{ height: '750px', width: '100%' }}>
             {/* Decorative floral corner */}
-            <div className="absolute -top-4 -left-12 w-16 h-16 opacity-30">
+            <div className="absolute -top-4 -left-24 w-16 h-16 opacity-30">
               <svg viewBox="0 0 50 50" className="w-full h-full stroke-[#C4985B]" fill="none">
                 <path d="M10,25 Q25,10 40,25 Q25,40 10,25" strokeWidth="1"/>
                 <circle cx="25" cy="25" r="2" fill="currentColor"/>
               </svg>
             </div>
 
-            {/* First photo - rotated left */}
+            {/* First photo - rotated left with doubled separation */}
             <div 
-              className="absolute top-0 -left-12 w-84 h-108 cursor-pointer transform -rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg"
-              style={{ width: '336px', height: '432px' }}
+              className="absolute top-0 -left-24 w-84 h-108 cursor-pointer transform -rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg"
+              style={{ width: '320px', height: '410px' }}
               onClick={() => setSelectedImage(photos[0])}
             >
               <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm">
-                <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '336px' }}>
+                <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '320px' }}>
                   <Image 
                     src={photos[0].src} 
                     alt={photos[0].alt} 
@@ -55,14 +53,14 @@ export default function WeddingInvitation() {
               </div>
             </div>
 
-            {/* Second photo - rotated right, more separated */}
+            {/* Second photo - rotated right with doubled separation */}
             <div 
-              className="absolute top-32 -right-16 w-84 h-108 cursor-pointer transform rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg z-10"
-              style={{ width: '336px', height: '432px' }}
+              className="absolute top-80 -right-32 w-84 h-108 cursor-pointer transform rotate-12 hover:scale-105 transition-transform duration-300 shadow-lg z-10"
+              style={{ width: '320px', height: '410px' }}
               onClick={() => setSelectedImage(photos[1])}
             >
               <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm">
-                <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '336px' }}>
+                <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '320px' }}>
                   <Image 
                     src={photos[1].src} 
                     alt={photos[1].alt} 
@@ -74,7 +72,7 @@ export default function WeddingInvitation() {
             </div>
 
             {/* Decorative floral corner bottom right */}
-            <div className="absolute -bottom-4 -right-12 w-16 h-16 opacity-30">
+            <div className="absolute -bottom-4 -right-32 w-16 h-16 opacity-30">
               <svg viewBox="0 0 50 50" className="w-full h-full stroke-[#C4985B]" fill="none">
                 <path d="M10,25 Q25,10 40,25 Q25,40 10,25" strokeWidth="1"/>
                 <circle cx="25" cy="25" r="2" fill="currentColor"/>
@@ -82,29 +80,27 @@ export default function WeddingInvitation() {
             </div>
           </div>
 
-          {/* Names */}
-         
-
           {/* Event type */}
           <div>
-            <p className="text-gray-500 text-base tracking-wide">Ceremonia</p>
+            <p className="text-gray-500 text-base tracking-wide garamond-300">Ceremonia</p>
           </div>
 
           {/* Time */}
           <div className="space-y-1">
-            <p className="text-4xl font-serif text-gray-700">09.00</p>
-            <p className="text-lg text-gray-600">am</p>
+            <p className="text-4xl font-light text-gray-700 garamond-regular">4:00</p>
+            <p className="text-lg text-gray-600 garamond-300">PM</p>
           </div>
 
           {/* Location */}
-          <div className="space-y-1 text-gray-500 text-sm leading-relaxed">
-            <p>Rose Garden Estate, 123 Main Street</p>
-            <p>Anytown, US</p>
+          <div className="space-y-1 text-gray-500 text-sm leading-relaxed garamond-300">
+            <p>Simon Bolívar 659</p>
+            <p>Del Maestro, 67500</p>
+            <p>Montemorelos, N.L.</p>
           </div>
 
           {/* Get template button */}
           <div className="pt-6">
-            <button className="bg-gray-700 text-white px-6 py-2 rounded-full text-sm hover:bg-gray-800 transition-colors">
+            <button className="bg-gray-700 text-white px-6 py-2 rounded-full text-sm hover:bg-gray-800 transition-colors garamond-300">
               Confirmar Asistencia
             </button>
           </div>
@@ -113,9 +109,9 @@ export default function WeddingInvitation() {
           <div className="pt-8 space-y-2">
             <div className="flex items-center justify-center space-x-2">
               <span className="text-xs text-gray-400">🖤</span>
-              <span className="text-xs text-gray-800 font-medium">Made in Framer</span>
+              <span className="text-xs text-gray-800 font-medium garamond-300">Made in Framer</span>
             </div>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-400 garamond-300">
               andrea-aldo.framer.website
             </p>
           </div>
