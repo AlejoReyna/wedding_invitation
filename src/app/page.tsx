@@ -7,19 +7,13 @@ import RSVPSection from './components/RSVPSection';
 import MinimalistFooter from './components/Footer';
 import ItinerarySection from './components/ItinerarySection';
 import CountdownTimer from '../components/CountdownTimer';
+import Navbar from './components/Navbar';
 
 export default function Home() {
-  const navigationItems = [
-    { id: 'nosotros', label: 'Nosotros' },
-    { id: 'itinerario', label: 'Itinerario' },
-    { id: 'ubicacion', label: 'Ubicación' },
-    { id: 'dresscode', label: 'Dress Code' },
-    { id: 'mensaje', label: 'Mensaje' },
-    { id: 'rsvp', label: 'Confirmar' }
-  ];
 
   return (
     <>
+      <Navbar />
       <div 
         className="relative flex flex-col min-h-screen overflow-hidden"
         style={{
@@ -32,67 +26,8 @@ export default function Home() {
         {/* Overlay con gradiente más sofisticado */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/35"></div>
         
-        {/* Navegación superior minimalista */}
-        <nav className="relative z-30 px-6 md:px-12 py-8">
-          <div className="max-w-7xl mx-auto">
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center justify-between">
-              {/* Grupo izquierdo */}
-              <ul className="flex items-center space-x-12">
-                {navigationItems.slice(0, 2).map((item) => (
-                  <li key={item.id}>
-                    <a
-                      href={`#${item.id}`}
-                      className="text-white/60 hover:text-white text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group"
-                    >
-                      {item.label.toUpperCase()}
-                      <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-500"></span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              
-              {/* Centro - Solo líneas decorativas */}
-              <div className="flex items-center space-x-8">
-                <div className="w-12 h-[1px] bg-white/30"></div>
-                <div className="w-24 h-[1px] bg-white/30"></div>
-                <div className="w-12 h-[1px] bg-white/30"></div>
-              </div>
-              
-              {/* Grupo derecho */}
-              <ul className="flex items-center space-x-12">
-                {navigationItems.slice(2, 4).map((item) => (
-                  <li key={item.id}>
-                    <a
-                      href={`#${item.id}`}
-                      className="text-white/60 hover:text-white text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group"
-                    >
-                      {item.label.toUpperCase()}
-                      <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-500"></span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Mobile Navigation */}
-            <div className="md:hidden text-center">
-              <ul className="flex justify-center items-center space-x-6 text-xs">
-                {navigationItems.slice(0, 3).map((item, index) => (
-                  <li key={item.id} className="flex items-center">
-                    <a href={`#${item.id}`} className="text-white/70 garamond-300 tracking-[0.15em] hover:text-white transition-colors">
-                      {item.label.toUpperCase()}
-                    </a>
-                    {index < 2 && <span className="text-white/30 ml-6">·</span>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </nav>
-
         {/* Contenido principal - Nombres en la misma fila */}
-        <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-6 pt-16 md:pt-24">
+        <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-6 pt-24 md:pt-32">
           
           {/* Los nombres centrados en la misma fila */}
           <div className="text-center  md:mb-20 animate-fade-in-center">
@@ -155,15 +90,18 @@ export default function Home() {
             
             {/* Enlaces de navegación rápida en footer */}
             <div className="hidden md:flex justify-center items-center space-x-8 mt-8 pt-6 border-t border-white/20">
-              {navigationItems.slice(4).map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className="text-white/50 hover:text-white/80 text-xs garamond-300 tracking-[0.2em] transition-colors duration-300"
-                >
-                  {item.label.toUpperCase()}
-                </a>
-              ))}
+              <a
+                href="#mensaje"
+                className="text-white/50 hover:text-white/80 text-xs garamond-300 tracking-[0.2em] transition-colors duration-300"
+              >
+                MENSAJE
+              </a>
+              <a
+                href="#rsvp"
+                className="text-white/50 hover:text-white/80 text-xs garamond-300 tracking-[0.2em] transition-colors duration-300"
+              >
+                CONFIRMAR
+              </a>
             </div>
           </div>
         </div>
