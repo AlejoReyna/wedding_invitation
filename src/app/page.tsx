@@ -33,14 +33,16 @@ export default function Home() {
           {/* Los nombres centrados en la misma fila */}
           <div className="text-center  md:mb-20 animate-fade-in-center">
             {/* Nombres en la misma línea con separador vertical */}
-            <div className="flex items-center justify-center space-x-8 md:space-x-16 mb-8">
+            <div className="flex items-center justify-center space-x-6 md:space-x-16 mb-8">
               <h1 className="text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                 ANDREA
               </h1>
+
+              <h2 className="text-2xl mt-8 md:text-6xl lg:text-7xl garamond-regular  text-white drop-shadow-2xl leading-none">
+                &
+              </h2>
               
-              {/* Separador vertical simple */}
-              <div className="w-[1px] h-16 md:h-20 bg-white/50"></div>
-              
+
               <h1 className="text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                 ALDO
               </h1>
@@ -64,13 +66,7 @@ export default function Home() {
         {/* Footer con countdown - Posición fija en la parte inferior */}
         <div className="relative z-10 pb-8 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Línea decorativa superior */}
-            <div className="flex items-center justify-center space-x-6 mb-6">
-              <div className="w-20 h-[1px] bg-white/30"></div>
-              <span className="text-white/50 text-xs garamond-300 tracking-[0.25em]">CUENTA REGRESIVA</span>
-              <div className="w-20 h-[1px] bg-white/30"></div>
-            </div>
-            
+           
             <CountdownTimer 
               targetDate="2025-10-18T00:00:00" 
               className="animate-fade-in-up animate-delay-800"
@@ -83,27 +79,12 @@ export default function Home() {
                 className="group inline-flex items-center px-6 py-3 bg-black/40 backdrop-blur-sm border border-white/30 text-white/90 hover:bg-black/60 hover:border-white/50 transition-all duration-500 text-xs"
               >
                 <span className="garamond-300 tracking-[0.15em]">CONFIRMAR ASISTENCIA</span>
-                <svg className="ml-3 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+               
               </a>
             </div>
             
             {/* Enlaces de navegación rápida en footer */}
-            <div className="hidden md:flex justify-center items-center space-x-8 mt-8 pt-6 border-t border-white/20">
-              <a
-                href="#mensaje"
-                className="text-white/50 hover:text-white/80 text-xs garamond-300 tracking-[0.2em] transition-colors duration-300"
-              >
-                MENSAJE
-              </a>
-              <a
-                href="#rsvp"
-                className="text-white/50 hover:text-white/80 text-xs garamond-300 tracking-[0.2em] transition-colors duration-300"
-              >
-                CONFIRMAR
-              </a>
-            </div>
+           
           </div>
         </div>
 

@@ -140,8 +140,6 @@ export default function CountdownTimer({ targetDate, className = "" }: Countdown
           </div>
         </div>
 
-        {/* Separador decorativo - elemento de diseño que mantiene la elegancia */}
-        <div className="w-24 h-px bg-white/30 mt-6"></div>
       </div>
     </div>
   );

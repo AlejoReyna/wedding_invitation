@@ -156,13 +156,8 @@ export default function DressCodeSection() {
       subtitle: "Opción Clásica",
       men: ["Traje negro o gris oscuro", "Camisa blanca", "Corbata elegante", "Zapatos de vestir"],
       women: ["Vestido midi o largo", "Colores sobrios", "Tacones elegantes", "Accesorios discretos"]
-    },
-    {
-      title: "Estilo Vaquero Chic",
-      subtitle: "Opción Alternativa",
-      men: ["Camisa elegante", "Jeans oscuros", "Cinturón texano", "Botas vaqueras"],
-      women: ["Vestido midi", "Botas texanas", "Accesorios country", "Colores tierra"]
     }
+    
   ];
 
   return (
@@ -250,42 +245,7 @@ export default function DressCodeSection() {
           ))}
         </div>
 
-        {/* Color palette section */}
-        <div className={`transition-all duration-1000 delay-500 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="bg-white p-8 shadow-sm border border-gray-100 text-center">
-            <h3 className="text-xl font-light tracking-[0.2em] text-gray-900 uppercase mb-6 garamond-300">
-              Paleta de Colores Sugerida
-            </h3>
-            
-            <div className="flex justify-center items-center space-x-6 mb-6">
-              {/* Color swatches */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-gray-900 rounded-full shadow-md mb-2"></div>
-                <p className="text-xs text-gray-600 garamond-300">Negro</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-gray-700 rounded-full shadow-md mb-2"></div>
-                <p className="text-xs text-gray-600 garamond-300">Gris</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-blue-900 rounded-full shadow-md mb-2"></div>
-                <p className="text-xs text-gray-600 garamond-300">Azul Marino</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-green-800 rounded-full shadow-md mb-2"></div>
-                <p className="text-xs text-gray-600 garamond-300">Verde</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-amber-900 rounded-full shadow-md mb-2"></div>
-                <p className="text-xs text-gray-600 garamond-300">Tierra</p>
-              </div>
-            </div>
-
-            <p className="text-sm text-gray-600 font-light garamond-300 max-w-2xl mx-auto">
-              Evita el blanco y colores muy llamativos. Opta por tonos elegantes que complementen la celebración.
-            </p>
-          </div>
-        </div>
+       
 
         {/* Bottom message */}
         <div className={`mt-16 text-center transition-all duration-1000 delay-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
