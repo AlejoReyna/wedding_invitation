@@ -330,7 +330,7 @@ export default function ItinerarySection() {
         <div className="max-w-6xl mx-auto relative" style={{ zIndex: 10 }}>
           <div className="flex">
             {/* Timeline Vertical Line and Points */}
-            <div className="w-20 flex flex-col items-center relative">
+            <div className="w-8 flex flex-col items-center relative ml-4"> {/* Reduced from w-20 to w-8, added ml-4 */}
               {/* Static background line */}
               <div 
                 className={`w-1 absolute left-1/2 transform -translate-x-1/2 transition-colors duration-500 rounded-full ${
@@ -402,7 +402,7 @@ export default function ItinerarySection() {
             </div>
 
             {/* Content Area - Single card that moves with the active point */}
-            <div className="flex-1 px-8 lg:px-16 relative">
+            <div className="flex-1 px-4 lg:px-8 relative"> {/* Reduced padding from px-8 lg:px-16 to px-4 lg:px-8 */}
               {/* Moving content container that follows the active point */}
               <div 
                 className="absolute w-full smooth-transform"
@@ -455,7 +455,7 @@ export default function ItinerarySection() {
             </div>
 
             {/* Right spacing */}
-            <div className="w-20"></div>
+            <div className="w-8"></div> {/* Reduced from w-20 to w-8 */}
           </div>
         </div>
       </section>
