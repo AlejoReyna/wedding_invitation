@@ -193,33 +193,7 @@ export default function LocationSection() {
           </div>
         </div>
 
-        {/* Optional Map Section */}
-        <div className={`mt-16 transition-all duration-1500 ease-out delay-700 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`}>
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-stone-100 max-w-4xl mx-auto">
-            <div className="p-6 text-center border-b border-stone-100">
-              <h4 className="text-2xl font-light text-stone-700 mb-2">
-                Ubicaciones en el mapa
-              </h4>
-              <p className="text-stone-600">
-                Visualiza ambas ubicaciones para planificar tu día
-              </p>
-            </div>
-            
-            <div className="aspect-[16/9] w-full">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3601.1234567890123!2d-99.12345678901234!3d25.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662e3c3c3c3c3c3%3A0x3c3c3c3c3c3c3c3c!2sSimon%20Bol%C3%ADvar%20659%2C%20Del%20Maestro%2C%2067500%20Montemorelos%2C%20N.L.!5e0!3m2!1ses-419!2smx!4v1709761234567!5m2!1ses-419!2smx"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-          </div>
-        </div>
+       
       </div>
 
       <style jsx>{`

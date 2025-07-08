@@ -41,41 +41,20 @@ export default function ItinerarySection() {
       title: "Ceremonia Religiosa",
       description: "Celebración de la unión sagrada en la iglesia con familiares y amigos más cercanos"
     },
-    {
-      time: "5:30 PM - 6:30 PM",
-      title: "Sesión de Fotos",
-      location: "Museo",
-      description: "Capturando los momentos más especiales del día en locaciones icónicas"
-    },
+   
     {
       time: "6:30 PM - 7:00 PM",
       title: "Ceremonia Civil",
       description: "Oficialización legal del matrimonio ante el registro civil"
     },
     {
-      time: "7:00 PM - 8:00 PM",
-      title: "Cocktail de Bienvenida",
-      location: "Terraza del Salón",
-      description: "Aperitivos y bebidas de bienvenida mientras llegan todos los invitados"
-    },
-    {
       time: "8:00 PM - 9:30 PM", 
-      title: "Cena de Gala",
+      title: "Recepción",
       description: "Deliciosa cena de tres tiempos preparada por nuestro chef especializado"
     },
     {
-      time: "9:30 PM - 10:00 PM",
-      title: "Brindis y Discursos",
-      description: "Palabras emotivas de familiares y amigos más queridos"
-    },
-    {
-      time: "10:00 PM - 12:00 AM",
-      title: "Baile y Celebración",
-      description: "¡Hora de celebrar! Música en vivo, baile y diversión hasta altas horas"
-    },
-    {
       time: "12:00 AM - 2:00 AM",
-      title: "After Party",
+      title: "After Party, quizás jaja",
       description: "Continuamos la fiesta con DJ y barra libre para los más resistentes"
     }
   ];
@@ -139,9 +118,10 @@ export default function ItinerarySection() {
   const currentItemIndex = getCurrentItemIndex();
   const currentItemProgress = getCurrentItemProgress();
 
-  // Update night mode based on progress
+  // Update night mode based on progress - transition starts from "Recepción" card
   useEffect(() => {
-    const shouldBeNight = scrollProgress > 0.75;
+    // "Recepción" is at index 2, so it starts at 2/4 = 0.5 progress
+    const shouldBeNight = scrollProgress >= 0.5;
     setIsNightMode(shouldBeNight);
   }, [scrollProgress, setIsNightMode]);
 

@@ -64,90 +64,45 @@ export default function DressCodeSection() {
     };
   }, [cardRefs]);
 
-  // SVG Components for clothing illustrations
+  // Flaticon Components for clothing illustrations
   const FormalSuit = () => (
-    <svg width="80" height="120" viewBox="0 0 80 120" className="mx-auto">
-      {/* Suit jacket */}
-      <path d="M20 30 L20 45 Q20 50 25 50 L35 50 L35 30 Z" fill="#1f2937" stroke="#374151" strokeWidth="1"/>
-      <path d="M45 30 L45 50 L55 50 Q60 50 60 45 L60 30 Z" fill="#1f2937" stroke="#374151" strokeWidth="1"/>
-      {/* Lapels */}
-      <path d="M25 30 L30 35 L35 30" fill="none" stroke="#374151" strokeWidth="1"/>
-      <path d="M45 30 L50 35 L55 30" fill="none" stroke="#374151" strokeWidth="1"/>
-      {/* Tie */}
-      <rect x="37" y="30" width="6" height="20" fill="#6b7280"/>
-      {/* Shirt */}
-      <rect x="30" y="25" width="20" height="30" fill="#f9fafb" stroke="#e5e7eb"/>
-      {/* Pants */}
-      <rect x="25" y="50" width="30" height="40" fill="#1f2937" stroke="#374151"/>
-      {/* Shoes */}
-      <ellipse cx="32" cy="95" rx="8" ry="4" fill="#000"/>
-      <ellipse cx="48" cy="95" rx="8" ry="4" fill="#000"/>
-    </svg>
+    <div className="flex items-center justify-center">
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/2022/2022794.png" 
+        alt="Tuxedo formal" 
+        className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+      />
+    </div>
   );
 
   const ElegantDress = () => (
-    <svg width="80" height="120" viewBox="0 0 80 120" className="mx-auto">
-      {/* Dress top */}
-      <path d="M25 25 Q25 20 30 20 L50 20 Q55 20 55 25 L55 40 Q55 45 50 45 L30 45 Q25 45 25 40 Z" fill="#374151" stroke="#4b5563"/>
-      {/* Dress skirt */}
-      <path d="M25 40 Q25 45 30 45 L50 45 Q55 45 55 40 L60 70 Q60 75 55 75 L25 75 Q20 75 20 70 Z" fill="#374151" stroke="#4b5563"/>
-      {/* Belt */}
-      <rect x="25" y="42" width="30" height="3" fill="#6b7280"/>
-      {/* Heels */}
-      <rect x="28" y="75" width="6" height="12" fill="#000"/>
-      <rect x="46" y="75" width="6" height="12" fill="#000"/>
-      <rect x="26" y="87" width="10" height="3" fill="#000"/>
-      <rect x="44" y="87" width="10" height="3" fill="#000"/>
-    </svg>
+    <div className="flex items-center justify-center">
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/88/88762.png" 
+        alt="Vestido de cóctel" 
+        className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+      />
+    </div>
   );
 
   const CowboyOutfit = () => (
-    <svg width="80" height="120" viewBox="0 0 80 120" className="mx-auto">
-      {/* Cowboy shirt */}
-      <rect x="25" y="25" width="30" height="35" fill="#4a90e2" stroke="#357abd"/>
-      {/* Shirt collar */}
-      <path d="M25 25 L30 30 L35 25 L45 25 L50 30 L55 25" fill="none" stroke="#357abd" strokeWidth="1"/>
-      {/* Shirt buttons */}
-      <circle cx="40" cy="30" r="1" fill="#357abd"/>
-      <circle cx="40" cy="35" r="1" fill="#357abd"/>
-      <circle cx="40" cy="40" r="1" fill="#357abd"/>
-      {/* Jeans */}
-      <rect x="25" y="60" width="30" height="40" fill="#2c3e50" stroke="#1a252f"/>
-      {/* Belt */}
-      <rect x="25" y="58" width="30" height="4" fill="#8b4513"/>
-      <rect x="38" y="58" width="4" height="4" fill="#c0c0c0"/>
-      {/* Cowboy boots */}
-      <path d="M25 100 L25 110 Q25 115 30 115 L35 115 Q40 115 40 110 L40 105 L35 100 Z" fill="#8b4513" stroke="#654321"/>
-      <path d="M40 100 L40 110 Q40 115 45 115 L50 115 Q55 115 55 110 L55 105 L50 100 Z" fill="#8b4513" stroke="#654321"/>
-      {/* Boot heels */}
-      <rect x="27" y="113" width="6" height="3" fill="#654321"/>
-      <rect x="42" y="113" width="6" height="3" fill="#654321"/>
-    </svg>
+    <div className="flex items-center justify-center">
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/492/492039.png" 
+        alt="Traje casual" 
+        className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+      />
+    </div>
   );
 
   const CowgirlOutfit = () => (
-    <svg width="80" height="120" viewBox="0 0 80 120" className="mx-auto">
-      {/* Western dress/skirt */}
-      <path d="M25 25 Q25 20 30 20 L50 20 Q55 20 55 25 L55 35 Q55 40 50 40 L30 40 Q25 40 25 35 Z" fill="#d4a574" stroke="#b8926a"/>
-      {/* Dress skirt */}
-      <path d="M25 35 Q25 40 30 40 L50 40 Q55 40 55 35 L58 65 Q58 70 53 70 L27 70 Q22 70 22 65 Z" fill="#d4a574" stroke="#b8926a"/>
-      {/* Western details */}
-      <path d="M30 25 L50 25" stroke="#b8926a" strokeWidth="0.5"/>
-      <circle cx="32" cy="28" r="0.5" fill="#b8926a"/>
-      <circle cx="48" cy="28" r="0.5" fill="#b8926a"/>
-      {/* Belt */}
-      <rect x="25" y="37" width="30" height="3" fill="#8b4513"/>
-      <rect x="38" y="37" width="4" height="3" fill="#c0c0c0"/>
-      {/* Cowboy boots */}
-      <path d="M28 70 L28 85 Q28 90 33 90 L38 90 Q43 90 43 85 L43 80 L38 70 Z" fill="#8b4513" stroke="#654321"/>
-      <path d="M43 70 L43 85 Q43 90 48 90 L53 90 Q58 90 58 85 L58 80 L53 70 Z" fill="#8b4513" stroke="#654321"/>
-      {/* Boot details */}
-      <line x1="33" y1="75" x2="33" y2="85" stroke="#654321" strokeWidth="0.5"/>
-      <line x1="48" y1="75" x2="48" y2="85" stroke="#654321" strokeWidth="0.5"/>
-      {/* Boot heels */}
-      <rect x="30" y="88" width="8" height="3" fill="#654321"/>
-      <rect x="45" y="88" width="8" height="3" fill="#654321"/>
-    </svg>
+    <div className="flex items-center justify-center">
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/1785/1785255.png" 
+        alt="Vestido elegante" 
+        className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+      />
+    </div>
   );
 
   const dressCodeItems = [
