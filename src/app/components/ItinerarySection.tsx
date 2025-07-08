@@ -105,18 +105,9 @@ export default function ItinerarySection() {
     return itineraryItems.length - 1;
   };
 
-  // Get the exact progress within current item (for smooth transitions)
-  const getCurrentItemProgress = () => {
-    const step = 1 / itineraryItems.length;
-    const currentIndex = getCurrentItemIndex();
-    const itemStartProgress = currentIndex * step;
-    const itemEndProgress = (currentIndex + 1) * step;
-    const itemProgress = (scrollProgress - itemStartProgress) / (itemEndProgress - itemStartProgress);
-    return Math.max(0, Math.min(1, itemProgress));
-  };
+
 
   const currentItemIndex = getCurrentItemIndex();
-  const currentItemProgress = getCurrentItemProgress();
 
   // Update night mode based on progress - transition starts from "Recepción" card
   useEffect(() => {
@@ -592,7 +583,7 @@ export default function ItinerarySection() {
                               isNightMode ? 'text-white/85' : 'text-[#6b6b6b]'
                             }
                           `}>
-                            "{itineraryItems[currentItemIndex]?.description}"
+                            &ldquo;{itineraryItems[currentItemIndex]?.description}&rdquo;
                           </p>
                         </div>
 

@@ -33,20 +33,25 @@ export default function Home() {
           
           {/* Los nombres centrados en la misma fila */}
           <div className="text-center  md:mb-20 animate-fade-in-center">
-            {/* Nombres en la misma línea con separador vertical */}
-            <div className="flex items-center justify-center space-x-6 md:space-x-16 mb-8">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.05em] text-white drop-shadow-2xl leading-none">
-                ANDREA
-              </h1>
+            {/* Nombres en grid con espacios iguales */}
+            <div className="grid grid-cols-3 gap-4 md:gap-8 items-center justify-center max-w-4xl mx-auto mb-8">
+              <div className="text-center">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+                  ANDREA
+                </h1>
+              </div>
 
-              <h2 className="text-2xl mt-8 md:text-6xl lg:text-7xl garamond-regular  text-white drop-shadow-2xl leading-none">
-                &
-              </h2>
-              
+              <div className="flex items-center justify-center h-full min-h-[4rem] md:min-h-[6rem] lg:min-h-[7rem]">
+                <h2 className="text-4xl md:text-6xl lg:text-7xl garamond-regular text-white drop-shadow-2xl leading-none flex items-center justify-center">
+                  &
+                </h2>
+              </div>
 
-              <h1 className="text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.05em] text-white drop-shadow-2xl leading-none">
-                ALDO
-              </h1>
+              <div className="text-center">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+                  ALDO
+                </h1>
+              </div>
             </div>
 
             {/* Save the Date */}

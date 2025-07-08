@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useRef, useState, useMemo } from 'react';
+import Image from 'next/image';
 
 export default function DressCodeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -67,9 +68,11 @@ export default function DressCodeSection() {
   // Flaticon Components for clothing illustrations
   const FormalSuit = () => (
     <div className="flex items-center justify-center">
-      <img 
+      <Image 
         src="https://cdn-icons-png.flaticon.com/512/2022/2022794.png" 
         alt="Tuxedo formal" 
+        width={64}
+        height={80}
         className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
       />
     </div>
@@ -77,9 +80,11 @@ export default function DressCodeSection() {
 
   const ElegantDress = () => (
     <div className="flex items-center justify-center">
-      <img 
+      <Image 
         src="https://cdn-icons-png.flaticon.com/512/88/88762.png" 
         alt="Vestido de cóctel" 
+        width={64}
+        height={80}
         className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
       />
     </div>
@@ -87,9 +92,11 @@ export default function DressCodeSection() {
 
   const CowboyOutfit = () => (
     <div className="flex items-center justify-center">
-      <img 
+      <Image 
         src="https://cdn-icons-png.flaticon.com/512/492/492039.png" 
         alt="Traje casual" 
+        width={64}
+        height={80}
         className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
       />
     </div>
@@ -97,9 +104,11 @@ export default function DressCodeSection() {
 
   const CowgirlOutfit = () => (
     <div className="flex items-center justify-center">
-      <img 
+      <Image 
         src="https://cdn-icons-png.flaticon.com/512/1785/1785255.png" 
         alt="Vestido elegante" 
+        width={64}
+        height={80}
         className="w-16 h-20 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
       />
     </div>
