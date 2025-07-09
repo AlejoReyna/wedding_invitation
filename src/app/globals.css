@@ -38,3 +38,91 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Animations for ItinerarySection */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sun-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes celestial-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-3px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(2px);
+  }
+}
+
+@keyframes fade-celestial {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(139, 115, 85, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(139, 115, 85, 0.6);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-sun-rotate {
+  animation: sun-rotate 20s linear infinite;
+}
+
+.animate-celestial-float {
+  animation: celestial-float 8s ease-in-out infinite;
+}
+
+.animate-fade-celestial {
+  animation: fade-celestial 2s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.theme-transition {
+  transition: background-color 1s ease-in-out, color 1s ease-in-out;
+}
+
+.celestial-transition {
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+}
+
+.smooth-transform {
+  transition: transform 0.1s ease-out;
+}

@@ -175,18 +175,17 @@ export default function WeddingInvitation() {
           
           {/* Date */}
           <div className="space-y-2 mt-18">
-            <h2 className="text-2xl font-light text-gray-700 leading-tight garamond-regular">
-              Sábado, 18 de Octubre 2025
+            <h2 className="text-4xl font-light text-gray-700 leading-tight garamond-regular">
+              Título de la view
             </h2>
             <p className="text-[#C4985B] text-xs font-light tracking-[0.2em] uppercase garamond-300">
-              TE INVITAMOS A NUESTRA BODA
             </p>
           </div>
 
           {/* Photo arrangement with improved zoom effect */}
           <div 
             ref={sectionRef}
-            className="relative my-4" 
+            className="relative my-17" 
             style={{ height: '450px', width: '100%' }}
           >
             {/* Enhanced decorative floral corner */}

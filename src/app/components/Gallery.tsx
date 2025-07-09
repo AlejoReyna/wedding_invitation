@@ -4,7 +4,6 @@ import Image from 'next/image';
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, index: number, shape: string } | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [activeHover, setActiveHover] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -57,41 +56,89 @@ export default function Gallery() {
   useEffect(() => {
     const handleScroll = () => {
       if (galleryRef.current) {
-        const scrollLeft = galleryRef.current.scrollLeft;
-        const cardWidth = 280; // Approximate card width including gap
-        const newCenterIndex = Math.round(scrollLeft / cardWidth);
-        setCenterIndex(Math.max(0, Math.min(newCenterIndex, photos.length - 1)));
+        const container = galleryRef.current;
+        const scrollLeft = container.scrollLeft;
+        const containerWidth = container.clientWidth;
+        const cardWidth = 240; // Base card width
+        const totalCardWidth = cardWidth + 16; // Gap between cards
+        const paddingLeft = 32; // pl-8 = 32px
+        
+        // Simplified calculation for scroll snap behavior
+        // Find the card whose left edge is closest to a "snap position"
+        const snapPositions = [];
+        for (let i = 0; i < photos.length; i++) {
+          const cardStart = paddingLeft + (i * totalCardWidth);
+          const snapPosition = cardStart - (containerWidth / 2) + (cardWidth / 2);
+          snapPositions.push({ index: i, position: Math.max(0, snapPosition) });
+        }
+        
+        // Find closest snap position to current scroll
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+        
+        snapPositions.forEach(({ index, position }) => {
+          const distance = Math.abs(scrollLeft - position);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+        
+        setCenterIndex(closestIndex);
       }
     };
 
     const galleryElement = galleryRef.current;
     if (galleryElement) {
       galleryElement.addEventListener('scroll', handleScroll);
+      // Run once on mount to set initial state
+      handleScroll();
       return () => galleryElement.removeEventListener('scroll', handleScroll);
     }
   }, [photos.length]);
 
+  // Center the first image with peek of next card
+  useEffect(() => {
+    const centerFirstImageWithPeek = () => {
+      if (galleryRef.current) {
+        const container = galleryRef.current;
+        const containerWidth = container.clientWidth;
+        const cardWidth = 240; // Base card width
+        const paddingLeft = 32; // pl-8 = 32px
+        
+        // Calculate the snap position for the first card with peek effect
+        // This should align with our scroll snap behavior
+        const firstCardStart = paddingLeft;
+        const snapPosition = firstCardStart - (containerWidth / 2) + (cardWidth / 2);
+        const peekOffset = 40; // Slight offset to show next card
+        const scrollPosition = Math.max(0, snapPosition + peekOffset);
+        
+        // Use scrollTo without behavior to avoid conflicts with scroll snap
+        container.scrollLeft = scrollPosition;
+        
+        // Update centerIndex after positioning
+        setTimeout(() => {
+          if (container) {
+            const event = new Event('scroll');
+            container.dispatchEvent(event);
+          }
+        }, 50);
+      }
+    };
+
+    // Add a small delay to ensure the component is fully rendered
+    const timer = setTimeout(centerFirstImageWithPeek, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   const openModal = (photo: { src: string, alt: string, shape: string }, index: number) => {
     setSelectedImage({ ...photo, index });
-    setCurrentIndex(index);
     document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setSelectedImage(null);
     document.body.style.overflow = 'auto';
-  };
-
-  const nextImage = () => {
-    const nextIndex = (currentIndex + 1) % photos.length;
-    setCurrentIndex(nextIndex);
-    setSelectedImage({ ...photos[nextIndex], index: nextIndex });
-  };
-
-  const prevImage = () => {
-    const prevIndex = (currentIndex - 1 + photos.length) % photos.length;
-    setCurrentIndex(prevIndex);
-    setSelectedImage({ ...photos[prevIndex], index: prevIndex });
   };
 
   const getShapeClipPath = (shape: string) => {
@@ -147,7 +194,7 @@ export default function Gallery() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <h2 className="text-4xl md:text-5xl lg:text-6xl garamond-regular text-[#8B7355] mb-6 tracking-wide animate-float">
-              Nuestros Momentos Mágicos
+Esta sección es para que los vean
             </h2>
             <p className="text-lg md:text-xl text-gray-600 garamond-300 max-w-2xl mx-auto leading-relaxed">
               Cada fotografía cuenta una historia única de amor eterno
@@ -218,12 +265,14 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Mobile: Full Width Horizontal Scroll */}
-          <div className="md:hidden -mx-4">
+          {/* Mobile: Full Width Horizontal Scroll with Peek */}
+          <div className="md:hidden">
             <div 
               ref={galleryRef}
-              className="flex gap-4 overflow-x-auto scrollbar-hide py-8 px-4"
-              style={{ scrollSnapType: 'x mandatory' }}
+              className="flex gap-4 overflow-x-auto scrollbar-hide py-8 pl-8 pr-4"
+              style={{ 
+                scrollSnapType: 'x mandatory'
+              }}
             >
               {photos.map((photo, index) => {
                 const isCenterCard = index === centerIndex;
@@ -291,63 +340,33 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Enhanced Modal */}
+      {/* Simple Modal - Only Image */}
       {selectedImage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div 
-            className="absolute inset-0 bg-black/90 backdrop-blur-md"
-            onClick={closeModal}
-          />
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
+          onClick={closeModal}
+        >
+          {/* Close button */}
+          <button 
+            className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 text-white transition-all duration-300 hover:scale-110"
+            onClick={(e) => {
+              e.stopPropagation();
+              closeModal();
+            }}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
           
-          <div className="relative z-10 max-w-5xl w-full mx-4 max-h-[90vh] flex flex-col">
-            {/* Close button with animation */}
-            <button 
-              className="absolute -top-12 right-0 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 text-white transition-all duration-300 hover:scale-110"
-              onClick={closeModal}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {/* Navigation with enhanced styling */}
-            <button 
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-4 text-white transition-all duration-300 hover:scale-110"
-              onClick={prevImage}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <button 
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-4 text-white transition-all duration-300 hover:scale-110"
-              onClick={nextImage}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            {/* Image with enhanced presentation */}
-            <div className="relative flex-1 rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm p-4">
-              <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                <Image 
-                  src={selectedImage.src} 
-                  alt={selectedImage.alt} 
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
-
-            {/* Enhanced counter and info */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 text-white flex items-center gap-4">
-              <span className="text-sm garamond-300">{currentIndex + 1} / {photos.length}</span>
-              <div className="w-px h-4 bg-white/40"></div>
-              <span className="text-xs garamond-300 opacity-80">Momento Especial</span>
-            </div>
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            <Image 
+              src={selectedImage.src} 
+              alt={selectedImage.alt} 
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
         </div>
       )}

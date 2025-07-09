@@ -14,7 +14,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Andrea & Aldo - Nuestra boda",
-  description: "Celebra con nosotros nuestra boda el 19 de Junio",
+  description: "Celebra con nosotros nuestra boda el 18 de Octubre",
+  themeColor: "#ffffff", // Color por defecto
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+  },
 };
 
 export default function RootLayout({

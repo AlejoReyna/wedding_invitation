@@ -12,6 +12,7 @@ const Navbar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isInRSVPSection, setIsInRSVPSection] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isNightMode } = useTheme();
   
   const navigationItems: NavigationItem[] = [
@@ -32,6 +33,7 @@ const Navbar = () => {
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         // Scrolleando hacia abajo y ya pasó los primeros 100px
         setIsVisible(false);
+        setIsMobileMenuOpen(false); // Cerrar menú móvil al hacer scroll
       } else if (currentScrollY < lastScrollY || currentScrollY <= 100) {
         // Scrolleando hacia arriba o está en el top
         setIsVisible(true);
@@ -49,7 +51,6 @@ const Navbar = () => {
       if (rsvpSection) {
         const rect = rsvpSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        // Consideramos que está en RSVP si la sección ocupa más del 50% de la ventana
         setIsInRSVPSection(rect.top <= windowHeight * 0.5 && rect.bottom >= windowHeight * 0.5);
       }
       
@@ -66,7 +67,6 @@ const Navbar = () => {
       return 'bg-black/95 shadow-lg hover:bg-black';
     }
     
-    // Si está en la sección RSVP, usar el estilo del hero
     if (isInRSVPSection) {
       return 'bg-white/10 hover:bg-white/15';
     }
@@ -81,7 +81,6 @@ const Navbar = () => {
       return 'text-white/70 hover:text-white';
     }
     
-    // Si está en la sección RSVP, usar el estilo del hero
     if (isInRSVPSection) {
       return 'text-white/60 hover:text-white';
     }
@@ -96,7 +95,6 @@ const Navbar = () => {
       return 'bg-white';
     }
     
-    // Si está en la sección RSVP, usar el estilo del hero
     if (isInRSVPSection) {
       return 'bg-white';
     }
@@ -109,7 +107,6 @@ const Navbar = () => {
       return 'bg-white/30';
     }
     
-    // Si está en la sección RSVP, usar el estilo del hero
     if (isInRSVPSection) {
       return 'bg-white/30';
     }
@@ -117,70 +114,133 @@ const Navbar = () => {
     return isScrolled ? 'bg-black/30' : 'bg-white/30';
   };
 
+  const handleNavClick = (id: string) => {
+    setIsMobileMenuOpen(false);
+    // Pequeño delay para permitir que la animación del menú termine
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 backdrop-blur-sm transition-all duration-500 ${getNavbarStyle()} ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-12 py-3 sm:py-4 backdrop-blur-sm transition-all duration-500 ${getNavbarStyle()} ${
       isVisible ? 'transform translate-y-0' : 'transform -translate-y-full'
     }`}>
       <div className="max-w-7xl mx-auto">
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center justify-between">
-          {/* Grupo izquierdo */}
-          <ul className="flex items-center space-x-12">
-            {navigationItems.slice(0, 3).map((item) => (
-              <li key={item.id}>
+        {/* Desktop Navigation - Pantallas grandes */}
+        <div className="hidden lg:flex items-center justify-center">
+          <ul className="flex items-center justify-center space-x-8 xl:space-x-12">
+            {navigationItems.map((item, index) => (
+              <li key={item.id} className="flex items-center">
                 <a
                   href={`#${item.id}`}
-                  className={`text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group ${getTextStyle()}`}
+                  className={`text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group px-2 py-1 ${getTextStyle()}`}
                 >
                   {item.label.toUpperCase()}
-                  <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${getLineStyle()}`}></span>
+                  <span className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-[1px] group-hover:w-3/4 transition-all duration-500 ${getLineStyle()}`}></span>
                 </a>
-              </li>
-            ))}
-          </ul>
-          
-          {/* Centro - Solo líneas decorativas */}
-          <div className="flex items-center space-x-8">
-            <div className={`w-12 h-[1px] transition-colors duration-500 ${getDecorativeLineStyle()}`}></div>
-            <div className={`w-24 h-[1px] transition-colors duration-500 ${getDecorativeLineStyle()}`}></div>
-            <div className={`w-12 h-[1px] transition-colors duration-500 ${getDecorativeLineStyle()}`}></div>
-          </div>
-          
-          {/* Grupo derecho */}
-          <ul className="flex items-center space-x-12">
-            {navigationItems.slice(3, 7).map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  className={`text-xs garamond-300 tracking-[0.25em] transition-all duration-500 relative group ${getTextStyle()}`}
-                >
-                  {item.label.toUpperCase()}
-                  <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${getLineStyle()}`}></span>
-                </a>
+                {/* Separador decorativo entre elementos (excepto el último) */}
+                {index < navigationItems.length - 1 && (
+                  <div className={`ml-6 xl:ml-8 w-1 h-1 rounded-full transition-colors duration-500 ${getDecorativeLineStyle()}`}></div>
+                )}
               </li>
             ))}
           </ul>
         </div>
 
+        {/* Tablet Navigation - Pantallas medianas */}
+        <div className="hidden md:flex lg:hidden items-center justify-between">
+          {/* Primera fila de elementos principales */}
+          <ul className="flex items-center space-x-6">
+            {navigationItems.slice(0, 4).map((item) => (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  className={`text-xs garamond-300 tracking-[0.2em] transition-all duration-500 relative group ${getTextStyle()}`}
+                >
+                  {item.label.toUpperCase()}
+                  <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${getLineStyle()}`}></span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          
+          {/* Elementos secundarios con menú desplegable o iconos */}
+          <div className="flex items-center space-x-6">
+            {navigationItems.slice(4).map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`text-xs garamond-300 tracking-[0.2em] transition-all duration-500 relative group ${getTextStyle()}`}
+              >
+                {item.label.toUpperCase()}
+                <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${getLineStyle()}`}></span>
+              </a>
+            ))}
+          </div>
+        </div>
+
         {/* Mobile Navigation */}
-        <div className="md:hidden text-center">
-          <ul className="flex justify-center items-center space-x-4 text-xs">
+        <div className="md:hidden flex items-center justify-between">
+          {/* Solo elementos principales en móvil */}
+          <ul className="flex items-center space-x-3 sm:space-x-4 text-xs flex-1 justify-center">
             {navigationItems.slice(0, 4).map((item, index) => (
               <li key={item.id} className="flex items-center">
                 <a 
                   href={`#${item.id}`} 
-                  className={`garamond-300 tracking-[0.15em] transition-colors duration-500 ${getTextStyle()}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.id);
+                  }}
+                  className={`garamond-300 tracking-[0.1em] sm:tracking-[0.15em] transition-colors duration-500 px-1 ${getTextStyle()}`}
                 >
                   {item.label.toUpperCase()}
                 </a>
                 {index < 3 && (
-                  <span className={`ml-4 transition-colors duration-500 ${
+                  <span className={`ml-2 sm:ml-3 transition-colors duration-500 ${
                     isNightMode ? 'text-white/30' : (isInRSVPSection ? 'text-white/30' : (isScrolled ? 'text-black/30' : 'text-white/30'))
                   }`}>·</span>
                 )}
               </li>
             ))}
           </ul>
+          
+          {/* Botón de menú hamburguesa para elementos secundarios */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className={`ml-4 p-2 transition-colors duration-500 ${getTextStyle()}`}
+            aria-label="Menú adicional"
+          >
+            <div className="flex flex-col space-y-1">
+              <div className={`w-4 h-0.5 transition-all duration-300 ${getLineStyle()} ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
+              <div className={`w-4 h-0.5 transition-all duration-300 ${getLineStyle()} ${isMobileMenuOpen ? 'opacity-0' : ''}`}></div>
+              <div className={`w-4 h-0.5 transition-all duration-300 ${getLineStyle()} ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
+            </div>
+          </button>
+        </div>
+
+        {/* Menú móvil desplegable para elementos secundarios */}
+        <div className={`md:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
+          isMobileMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+        } ${getNavbarStyle()}`}>
+          <div className="px-4 py-4 border-t border-white/10">
+            <ul className="flex flex-col space-y-3">
+              {navigationItems.slice(4).map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(item.id);
+                    }}
+                    className={`text-xs garamond-300 tracking-[0.15em] transition-colors duration-500 block py-2 ${getTextStyle()}`}
+                  >
+                    {item.label.toUpperCase()}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -194,4 +254,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;
