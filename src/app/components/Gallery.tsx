@@ -167,20 +167,20 @@ export default function Gallery() {
         overlayOpacity: 0, // Sin overlay para la carta activa
       };
     } else if (distanceFromCenter === 1) {
-      // Cards immediately adjacent to center - casi del mismo tamaño pero bloqueadas
+      // Cards immediately adjacent to center - profundidad pero menos agresiva
       return {
         zIndex: 5,
-        transform: `scale(1.05)`, // Casi del mismo tamaño
-        filter: 'brightness(0.6)',
-        overlayOpacity: 0.6, // Overlay moderado
+        transform: `scale(0.9)`, // Más pequeñas para mayor profundidad
+        filter: 'brightness(0.5)', // Menos oscuras para no afectar el background
+        overlayOpacity: 0.6, // Overlay más suave
       };
     } else {
-      // Cards further away - mismo tamaño pero muy bloqueadas
+      // Cards further away - profundidad moderada
       return {
         zIndex: 1,
-        transform: `scale(1.0)`, // Mismo tamaño base
-        filter: 'brightness(0.4)',
-        overlayOpacity: 0.8, // Overlay fuerte
+        transform: `scale(0.8)`, // Mucho más pequeñas
+        filter: 'brightness(0.35)', // Oscuras pero no tanto
+        overlayOpacity: 0.7, // Overlay moderado
       };
     }
   };
@@ -304,8 +304,8 @@ Esta sección es para que los vean
               {photos.map((photo, index) => {
                 const isCenterCard = index === centerIndex;
                 const depthStyles = getCardDepthStyles(index, isCenterCard);
-                // Tamaños más similares - la diferencia es mínima
-                const cardSize = isCenterCard ? '300px' : '280px';
+                // Tamaños con mayor diferencia para más profundidad
+                const cardSize = isCenterCard ? '300px' : '260px';
                 
                 return (
                   <div
@@ -332,9 +332,12 @@ Esta sección es para que los vean
                         </>
                       )}
                       
-                      {/* Background cards get subtle shadow */}
+                      {/* Background cards get enhanced depth shadows - más suaves */}
                       {!isCenterCard && (
-                        <div className="absolute -inset-2 bg-black/20 rounded-2xl blur-md"></div>
+                        <>
+                          <div className="absolute -inset-3 bg-black/15 rounded-3xl blur-2xl"></div>
+                          <div className="absolute -inset-2 bg-black/10 rounded-2xl blur-xl"></div>
+                        </>
                       )}
                       
                       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
@@ -347,29 +350,13 @@ Esta sección es para que los vean
                             sizes="320px"
                           />
                           
-                          {/* Dynamic overlay gradient - más dramático para cartas bloqueadas */}
+                          {/* Dynamic overlay gradient - más suave para no oscurecer el background */}
                           <div 
-                            className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30 transition-opacity duration-700"
+                            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 transition-opacity duration-700"
                             style={{ 
                               opacity: depthStyles.overlayOpacity 
                             }}
                           ></div>
-
-                          {/* Locked/Blocked indicator para cartas no centrales */}
-                          {!isCenterCard && (
-                            <div 
-                              className="absolute inset-0 flex items-center justify-center transition-opacity duration-700"
-                              style={{ 
-                                opacity: depthStyles.overlayOpacity * 0.8 
-                              }}
-                            >
-                              <div className="bg-black/60 backdrop-blur-sm rounded-full p-3">
-                                <svg className="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                              </div>
-                            </div>
-                          )}
 
                           {/* Tap indicator - only show on center card */}
                           {isCenterCard && (

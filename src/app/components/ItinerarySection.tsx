@@ -171,6 +171,42 @@ export default function ItinerarySection() {
     }
   };
 
+  // Calculate timeline constants
+  const CARD_HEIGHT = 300; // Height of each card section
+  const CARD_SPACING = 100; // Space between cards
+  const TOTAL_SECTION_HEIGHT = itineraryItems.length * (CARD_HEIGHT + CARD_SPACING);
+  
+  // Calculate the overall dot position along the continuous timeline
+  const getDotPosition = () => {
+    // Dot starts at 0 and moves through the entire timeline
+    const totalProgress = scrollProgress * TOTAL_SECTION_HEIGHT;
+    return Math.min(totalProgress, TOTAL_SECTION_HEIGHT);
+  };
+
+  // Calculate each card's position based on the dot position
+  const getCardPosition = (index: number) => {
+    const basePosition = index * (CARD_HEIGHT + CARD_SPACING);
+    const dotPosition = getDotPosition();
+    
+    // If dot hasn't reached this card yet, stay in base position
+    if (dotPosition < basePosition) {
+      return basePosition;
+    }
+    
+    // If dot is past this card's base position, calculate movement
+    const movementBeyondBase = dotPosition - basePosition;
+    
+    // For cards that aren't the last one, limit movement based on spacing
+    if (index < itineraryItems.length - 1) {
+      const nextCardBasePosition = (index + 1) * (CARD_HEIGHT + CARD_SPACING);
+      const maxMovement = nextCardBasePosition - basePosition - CARD_HEIGHT;
+      return basePosition + Math.min(movementBeyondBase, maxMovement);
+    }
+    
+    // Last card can move more freely
+    return basePosition + Math.min(movementBeyondBase, CARD_HEIGHT);
+  };
+
   // Don't render until we have window dimensions
   if (!isClient || windowHeight === 0) {
     return (
@@ -187,6 +223,8 @@ export default function ItinerarySection() {
       </section>
     );
   }
+
+  const dotPosition = getDotPosition();
 
   return (
     <section 
@@ -209,9 +247,9 @@ export default function ItinerarySection() {
         }}
       >
         <div className="relative animate-fade-celestial">
-          <div className="w-32 h-32 bg-[#d4c4b0] rounded-full opacity-80 relative"> {/* Doble de grande */}
+          <div className="w-32 h-32 bg-[#d4c4b0] rounded-full opacity-80 relative">
             <div className="absolute inset-0 animate-sun-rotate">
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6"> {/* Rayos más grandes */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6">
                 <div className="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
               </div>
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 rotate-180">
@@ -223,7 +261,6 @@ export default function ItinerarySection() {
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 rotate-90">
                 <div className="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
               </div>
-              {/* Rayos diagonales adicionales para el sol más grande */}
               <div className="absolute top-2 right-2 transform rotate-45">
                 <div className="w-0 h-0 border-l-3 border-r-3 border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
               </div>
@@ -254,7 +291,7 @@ export default function ItinerarySection() {
         }}
       >
         <div className="relative animate-fade-celestial">
-          <div className="w-24 h-24 bg-white opacity-70 rounded-full relative overflow-hidden"> {/* Ligeramente más grande que antes */}
+          <div className="w-24 h-24 bg-white opacity-70 rounded-full relative overflow-hidden">
             <div className="absolute top-3 left-5 w-2 h-2 bg-gray-300 rounded-full opacity-40"></div>
             <div className="absolute top-6 right-3 w-1.5 h-1.5 bg-gray-300 rounded-full opacity-30"></div>
             <div className="absolute bottom-4 left-3 w-1 h-1 bg-gray-300 rounded-full opacity-35"></div>
@@ -278,13 +315,8 @@ export default function ItinerarySection() {
         }`}></div>
       </div>
 
-      {/* Header - Reduced margin */}
+      {/* Header */}
       <div className="text-center mb-8 relative" style={{ zIndex: 10 }}>
-        <h2 className={`text-sm md:text-base font-light tracking-[0.4em] uppercase mb-6 ${
-          isNightMode ? 'text-white/80' : 'text-[#8b7355]'
-        }`}>
-          ITINERARIO DEL DÍA
-        </h2>
         <div className={`w-24 h-px mx-auto mb-6 ${
           isNightMode ? 'bg-white/60' : 'bg-[#d4c4b0]'
         }`}></div>
@@ -293,227 +325,204 @@ export default function ItinerarySection() {
         }`}>
           Primer Logística
         </h3>
-        <p className={`text-sm md:text-base font-light tracking-[0.4em] uppercase mb-6 mt-4 ${
-          isNightMode ? 'text-white/80' : 'text-[#8b7355]'
-        }`}>
-          Nos la vamos a pasar poca madre jaja equisde
-        </p>
       </div>
 
       {/* Timeline Container */}
       <div className="max-w-6xl mx-auto relative" style={{ zIndex: 10 }}>
-        <div className="flex">
-          {/* Timeline Visual */}
-          <div className="w-8 flex flex-col items-center relative ml-4">
-            {/* Background line */}
+        <div className="relative" style={{ height: `${TOTAL_SECTION_HEIGHT + 200}px` }}>
+          {/* Continuous Timeline Line */}
+          <div className="absolute left-8 top-0 w-8 flex justify-center" style={{ height: `${TOTAL_SECTION_HEIGHT}px` }}>
             <div 
-              className={`w-1 h-96 left-1/2 transform -translate-x-1/2 transition-colors duration-500 rounded-full ${
+              className={`w-1 transition-colors duration-500 rounded-full ${
                 isNightMode ? 'bg-white/20' : 'bg-[#d4c4b0]/40'
               }`}
+              style={{ height: '100%' }}
             ></div>
             
-            {/* Static timeline points for each item */}
-            {itineraryItems.map((item, index) => (
+            {/* Moving dot along the continuous line */}
+            <div 
+              className="absolute left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-out"
+              style={{
+                top: `${Math.min(dotPosition, TOTAL_SECTION_HEIGHT)}px`,
+                transform: 'translateX(-50%)'
+              }}
+            >
               <div 
-                key={`point-${item.time}`} 
-                className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                style={{ 
-                  top: `${(index + 1) * (96 / (itineraryItems.length + 1))}px`
+                className={`w-4 h-4 rounded-full transition-all duration-500 ${
+                  isNightMode ? 'bg-white border-2 border-white/50 scale-125' : 'bg-[#8b7355] border-2 border-[#8b7355]/50 scale-125'
+                }`}
+              />
+            </div>
+
+            {/* Static dots for each timeline point */}
+            {itineraryItems.map((_, index) => {
+              // First dot starts at 0, others are spaced accordingly
+              const dotPositionStatic = index * (CARD_HEIGHT + CARD_SPACING);
+              return (
+                <div 
+                  key={index}
+                  className="absolute left-1/2 transform -translate-x-1/2"
+                  style={{
+                    top: `${dotPositionStatic}px`
+                  }}
+                >
+                  <div 
+                    className={`w-3 h-3 rounded-full transition-all duration-500 ${
+                      index === currentItemIndex
+                        ? (isNightMode ? 'bg-white/60' : 'bg-[#8b7355]/60')
+                        : (isNightMode ? 'bg-white/20' : 'bg-[#8b7355]/20')
+                    }`}
+                    style={{ 
+                      opacity: getItemOpacity(index)
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Content Cards that move individually when dot reaches them */}
+          {itineraryItems.map((item, index) => {
+            const cardY = getCardPosition(index);
+            
+            return (
+              <div 
+                key={`item-${item.time}`} 
+                className="absolute left-20 transition-all duration-300 ease-out"
+                style={{
+                  top: `${cardY}px`,
+                  width: 'calc(100% - 120px)',
+                  height: `${CARD_HEIGHT}px`
                 }}
               >
-                <div 
-                  className={`w-4 h-4 rounded-full transition-all duration-500 ${
-                    index === currentItemIndex
-                      ? (isNightMode ? 'bg-white border-2 border-white/50' : 'bg-[#8b7355] border-2 border-[#8b7355]/50')
-                      : (isNightMode ? 'bg-white/40' : 'bg-[#8b7355]/40')
-                  }`}
-                  style={{ 
-                    opacity: getItemOpacity(index)
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Content Area - Simple layout showing current item */}
-          <div className="flex-1 px-4 lg:px-8 relative">
-            <div className="max-w-3xl w-full">
-              {/* Current Item Card */}
-              <div className={`
-                relative transform transition-all duration-500 ease-out
-                rounded-2xl p-8 lg:p-12 backdrop-blur-sm border shadow-2xl
-                ${
-                  isNightMode 
-                    ? 'bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 border-white/20 shadow-black/50' 
-                    : 'bg-gradient-to-br from-white/95 via-cream-50/90 to-white/95 border-[#d4c4b0]/30 shadow-[#8b7355]/20'
-                }
-              `}>
-                {/* Decorative Corner Ornaments */}
-                <div className="absolute top-4 left-4 w-8 h-8 opacity-30">
-                  <div className={`w-full h-0.5 absolute top-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`h-full w-0.5 absolute left-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`absolute top-1 left-1 w-1 h-1 rounded-full ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                </div>
-                
-                <div className="absolute top-4 right-4 w-8 h-8 opacity-30">
-                  <div className={`w-full h-0.5 absolute top-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`h-full w-0.5 absolute right-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`absolute top-1 right-1 w-1 h-1 rounded-full ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                </div>
-                
-                <div className="absolute bottom-4 left-4 w-8 h-8 opacity-30">
-                  <div className={`w-full h-0.5 absolute bottom-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`h-full w-0.5 absolute left-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`absolute bottom-1 left-1 w-1 h-1 rounded-full ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                </div>
-                
-                <div className="absolute bottom-4 right-4 w-8 h-8 opacity-30">
-                  <div className={`w-full h-0.5 absolute bottom-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`h-full w-0.5 absolute right-0 ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                  <div className={`absolute bottom-1 right-1 w-1 h-1 rounded-full ${
-                    isNightMode ? 'bg-white' : 'bg-[#8b7355]'
-                  }`}></div>
-                </div>
-
-                {/* Card Content */}
-                <div className="relative z-10">
-                  {/* Decorative Header */}
-                  <div className="text-center mb-6">
-                    <div className={`w-16 h-px mx-auto mb-4 ${
-                      isNightMode ? 'bg-white/60' : 'bg-[#8b7355]/60'
-                    }`}></div>
-                    <div className={`w-2 h-2 mx-auto rounded-full mb-4 ${
-                      isNightMode ? 'bg-white/60' : 'bg-[#8b7355]/60'
-                    }`}></div>
-                  </div>
-
-                  {/* Time Badge */}
-                  <div className="text-center mb-6">
-                    <span className={`
-                      inline-block px-6 py-2 rounded-full text-sm font-medium tracking-[0.2em] uppercase
-                      transition-colors duration-500 border
+                <div className="max-w-3xl w-full h-full flex items-center">
+                  {/* Item Card */}
+                  <div 
+                    className={`
+                      relative transform transition-all duration-500 ease-out
+                      rounded-lg p-6 lg:p-8 border-2 w-full
                       ${
-                        isNightMode 
-                          ? 'bg-white/10 text-white/90 border-white/20' 
-                          : 'bg-[#8b7355]/10 text-[#8b7355] border-[#8b7355]/20'
+                        index === currentItemIndex
+                          ? (isNightMode 
+                              ? 'bg-slate-900/40 border-white/30 shadow-xl scale-105' 
+                              : 'bg-white/90 border-[#8b7355]/40 shadow-xl scale-105')
+                          : (isNightMode 
+                              ? 'bg-slate-900/20 border-white/10 shadow-md' 
+                              : 'bg-white/60 border-[#d4c4b0]/30 shadow-md')
                       }
-                    `}>
-                      {itineraryItems[currentItemIndex]?.time}
-                    </span>
-                  </div>
-
-                  {/* Title with Ornamental Design */}
-                  <div className="text-center mb-8">
-                    <h2 className={`
-                      garamond-regular text-3xl lg:text-4xl xl:text-5xl font-light mb-4 leading-tight 
-                      transition-colors duration-500 tracking-wide
-                      ${
-                        isNightMode ? 'text-white' : 'text-[#5c5c5c]'
-                      }
-                    `}>
-                      {itineraryItems[currentItemIndex]?.title}
-                    </h2>
-                    
-                    {/* Decorative flourish under title */}
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className={`w-8 h-px ${
-                        isNightMode ? 'bg-white/40' : 'bg-[#8b7355]/40'
-                      }`}></div>
-                      <div className={`w-1 h-1 rounded-full ${
-                        isNightMode ? 'bg-white/60' : 'bg-[#8b7355]/60'
-                      }`}></div>
-                      <div className={`w-12 h-px ${
-                        isNightMode ? 'bg-white/40' : 'bg-[#8b7355]/40'
-                      }`}></div>
-                      <div className={`w-1 h-1 rounded-full ${
-                        isNightMode ? 'bg-white/60' : 'bg-[#8b7355]/60'
-                      }`}></div>
-                      <div className={`w-8 h-px ${
-                        isNightMode ? 'bg-white/40' : 'bg-[#8b7355]/40'
-                      }`}></div>
-                    </div>
-                  </div>
-
-                  {/* Description in elegant typography */}
-                  <div className="text-center mb-8">
-                    <p className={`
-                      text-lg lg:text-xl leading-relaxed font-light italic
-                      transition-colors duration-500 max-w-2xl mx-auto
-                      ${
-                        isNightMode ? 'text-white/85' : 'text-[#6b6b6b]'
-                      }
-                    `}>
-                      &ldquo;{itineraryItems[currentItemIndex]?.description}&rdquo;
-                    </p>
-                  </div>
-
-                  {/* Location with elegant icon */}
-                  {itineraryItems[currentItemIndex]?.location && (
-                    <div className="text-center">
-                      <div className={`
-                        inline-flex items-center justify-center space-x-3 px-6 py-3
-                        rounded-lg transition-colors duration-500 border
-                        ${
-                          isNightMode 
-                            ? 'bg-white/5 text-white/80 border-white/10' 
-                            : 'bg-[#8b7355]/5 text-[#8b7355] border-[#8b7355]/10'
-                        }
-                      `}>
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span className="font-medium tracking-wide">
-                          {itineraryItems[currentItemIndex]?.location}
-                        </span>
+                    `}
+                    style={{ 
+                      opacity: getItemOpacity(index)
+                    }}
+                  >
+                    {/* Icon for each event */}
+                    <div className="flex justify-center mb-4">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                        isNightMode ? 'bg-white/10' : 'bg-[#8b7355]/10'
+                      }`}>
+                        {/* Icons based on event type */}
+                        {item.title.includes('Ceremonia Religiosa') && (
+                          <svg className={`w-6 h-6 ${
+                            isNightMode ? 'text-white/80' : 'text-[#8b7355]'
+                          }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v18m-6-9h12" />
+                          </svg>
+                        )}
+                        
+                        {item.title.includes('Ceremonia Civil') && (
+                          <svg className={`w-6 h-6 ${
+                            isNightMode ? 'text-white/80' : 'text-[#8b7355]'
+                          }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        )}
+                        
+                        {item.title.includes('Recepción') && (
+                          <svg className={`w-6 h-6 ${
+                            isNightMode ? 'text-white/80' : 'text-[#8b7355]'
+                          }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                          </svg>
+                        )}
+                        
+                        {item.title.includes('After Party') && (
+                          <svg className={`w-6 h-6 ${
+                            isNightMode ? 'text-white/80' : 'text-[#8b7355]'
+                          }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                          </svg>
+                        )}
                       </div>
                     </div>
-                  )}
 
-                  {/* Bottom decorative element */}
-                  <div className="text-center mt-8">
-                    <div className={`w-2 h-2 mx-auto rounded-full mb-4 ${
-                      isNightMode ? 'bg-white/60' : 'bg-[#8b7355]/60'
-                    }`}></div>
-                    <div className={`w-16 h-px mx-auto ${
-                      isNightMode ? 'bg-white/60' : 'bg-[#8b7355]/60'
-                    }`}></div>
+                    {/* Time Badge */}
+                    <div className="text-center mb-4">
+                      <span className={`
+                        inline-block px-4 py-1.5 rounded-full text-xs font-medium tracking-[0.1em] uppercase
+                        transition-colors duration-500
+                        ${
+                          isNightMode 
+                            ? 'bg-white/5 text-white/70 border border-white/10' 
+                            : 'bg-[#8b7355]/5 text-[#8b7355]/80 border border-[#8b7355]/15'
+                        }
+                      `}>
+                        {item.time}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <div className="text-center mb-3">
+                      <h2 className={`
+                        text-xl lg:text-2xl font-medium mb-2 leading-tight 
+                        transition-colors duration-500
+                        ${
+                          isNightMode ? 'text-white' : 'text-[#5c5c5c]'
+                        }
+                      `}>
+                        {item.title}
+                      </h2>
+                    </div>
+
+                    {/* Description */}
+                    <div className="text-center">
+                      <p className={`
+                        text-sm lg:text-base leading-relaxed font-light
+                        transition-colors duration-500
+                        ${
+                          isNightMode ? 'text-white/75' : 'text-[#6b6b6b]'
+                        }
+                      `}>
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Location if exists */}
+                    {item.location && (
+                      <div className="text-center mt-4">
+                        <div className={`
+                          inline-flex items-center justify-center space-x-2 px-3 py-1.5
+                          rounded-md transition-colors duration-500 text-xs
+                          ${
+                            isNightMode 
+                              ? 'bg-white/5 text-white/60' 
+                              : 'bg-[#8b7355]/5 text-[#8b7355]/70'
+                          }
+                        `}>
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          <span className="font-medium">
+                            {item.location}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-
-                {/* Subtle pattern overlay */}
-                <div className="absolute inset-0 pointer-events-none rounded-2xl">
-                  <div className={`absolute inset-0 rounded-2xl opacity-5 ${
-                    isNightMode 
-                      ? 'bg-gradient-to-br from-white/10 to-transparent' 
-                      : 'bg-gradient-to-br from-[#8b7355]/10 to-transparent'
-                  }`}></div>
-                </div>
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
