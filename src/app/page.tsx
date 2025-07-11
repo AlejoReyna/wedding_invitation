@@ -37,68 +37,54 @@ export default function Home() {
         {/* Overlay con gradiente más sofisticado */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/35"></div>
         
-        {/* Contenido principal - Nombres en la misma fila */}
-        <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-4 sm:px-6 pt-28 sm:pt-32 md:pt-36 lg:pt-40">
+        {/* Contenido principal - Layout como en la imagen de referencia */}
+        <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-4 sm:px-6 pt-20 sm:pt-24 md:pt-28">
           
-          {/* Los nombres centrados en la misma fila */}
-          <div className="text-center md:mb-20 animate-fade-in-center">
-            {/* Nombres optimizados para móvil */}
-            <div className="flex items-center justify-center max-w-6xl mx-auto mb-8 px-2">
+          {/* Fecha principal arriba - como en la imagen */}
+          <div className="text-center mb-4 sm:mb-6 md:mb-8 animate-fade-in-center">
+            <span className="text-white/85 text-lg sm:text-xl md:text-2xl lg:text-3xl garamond-300 tracking-[0.2em] sm:tracking-[0.3em] block">
+              SÁBADO 18 DE OCTUBRE
+            </span>
+          </div>
+
+          {/* Los nombres centrados - como en la imagen */}
+          <div className="text-center animate-fade-in-center">
+            {/* Nombres optimizados para móvil - sin ampersand */}
+            <div className="flex flex-col items-center justify-center max-w-6xl mx-auto mb-6 px-2">
               {/* Nombre ANDREA */}
-              <div className="flex-1 text-center min-w-0 pr-4 sm:pr-6 md:pr-8">
-                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none whitespace-nowrap">
+              <div className="text-center mb-4">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ANDREA
                 </h1>
               </div>
 
-              {/* Símbolo & con espaciado perfecto */}
-              <div className="flex items-center justify-center flex-shrink-0">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl garamond-regular text-white/80 drop-shadow-2xl leading-none">
-                  &
-                </h2>
-              </div>
-
               {/* Nombre ALDO */}
-              <div className="flex-1 text-center min-w-0 pl-4 sm:pl-6 md:pl-8">
-                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none whitespace-nowrap">
+              <div className="text-center">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ALDO
                 </h1>
               </div>
             </div>
 
-            {/* Fecha principal con espaciado mejorado */}
-            <div className="text-center mt-6 sm:mt-8 md:mt-12">
-              <span className="text-white/85 text-base sm:text-lg md:text-xl lg:text-2xl garamond-300 tracking-[0.2em] sm:tracking-[0.3em] block">
-                18 DE OCTUBRE
-              </span>
-              <span className="text-white/65 text-sm sm:text-base md:text-lg garamond-300 tracking-[0.15em] sm:tracking-[0.2em] mt-2 block">
-                2025
-              </span>
+            {/* Botón de confirmar asistencia debajo de los nombres - más pequeño */}
+            <div className="mt-6 sm:mt-8">
+              <a
+                href="#rsvp"
+                className="group inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 bg-black/40 backdrop-blur-sm border border-white/30 text-white/90 hover:bg-black/60 hover:border-white/50 transition-all duration-500 text-xs sm:text-sm"
+              >
+                <span className="garamond-300 tracking-[0.1em] sm:tracking-[0.12em]">CONFIRMAR ASISTENCIA</span>
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Footer con countdown - Posición fija en la parte inferior */}
+        {/* Footer con countdown - Posición fija en la parte inferior como en la imagen */}
         <div className="relative z-10 pb-6 sm:pb-8 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
-           
             <CountdownTimer 
               targetDate="2025-10-18T00:00:00" 
               className="animate-fade-in-up animate-delay-800"
             />
-            
-            {/* Botón de confirmar asistencia */}
-            <div className="mt-6 sm:mt-8">
-              <a
-                href="#rsvp"
-                className="group inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-black/40 backdrop-blur-sm border border-white/30 text-white/90 hover:bg-black/60 hover:border-white/50 transition-all duration-500 text-xs sm:text-sm"
-              >
-                <span className="garamond-300 tracking-[0.1em] sm:tracking-[0.15em]">CONFIRMAR ASISTENCIA</span>
-              </a>
-            </div>
-            
-            {/* Enlaces de navegación rápida en footer */}
-           
           </div>
         </div>
 
