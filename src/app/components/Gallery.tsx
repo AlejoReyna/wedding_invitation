@@ -59,30 +59,28 @@ export default function Gallery() {
         const container = galleryRef.current;
         const scrollLeft = container.scrollLeft;
         const containerWidth = container.clientWidth;
-        const cardWidth = 240; // Base card width
-        const totalCardWidth = cardWidth + 16; // Gap between cards
-        const paddingLeft = 32; // pl-8 = 32px
         
-        // Simplified calculation for scroll snap behavior
-        // Find the card whose left edge is closest to a "snap position"
-        const snapPositions = [];
-        for (let i = 0; i < photos.length; i++) {
-          const cardStart = paddingLeft + (i * totalCardWidth);
-          const snapPosition = cardStart - (containerWidth / 2) + (cardWidth / 2);
-          snapPositions.push({ index: i, position: Math.max(0, snapPosition) });
-        }
+        // Mejorada detección del centro
+        const centerX = scrollLeft + (containerWidth / 2);
         
-        // Find closest snap position to current scroll
         let closestIndex = 1; // Default to second photo
         let closestDistance = Infinity;
         
-        snapPositions.forEach(({ index, position }) => {
-          const distance = Math.abs(scrollLeft - position);
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestIndex = index;
+        // Calcular posición de cada carta y encontrar la más cercana al centro
+        for (let i = 0; i < photos.length; i++) {
+          const cardElement = container.children[i] as HTMLElement;
+          if (cardElement) {
+            const cardLeft = cardElement.offsetLeft;
+            const cardWidth = cardElement.offsetWidth;
+            const cardCenter = cardLeft + (cardWidth / 2);
+            
+            const distance = Math.abs(centerX - cardCenter);
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestIndex = i;
+            }
           }
-        });
+        }
         
         setCenterIndex(closestIndex);
       }
@@ -92,42 +90,42 @@ export default function Gallery() {
     if (galleryElement) {
       galleryElement.addEventListener('scroll', handleScroll);
       // Run once on mount to set initial state
-      handleScroll();
+      setTimeout(handleScroll, 100);
       return () => galleryElement.removeEventListener('scroll', handleScroll);
     }
   }, [photos.length]);
 
-  // Center the SECOND image (index 1) with peek of other cards
+  // Center the SECOND image (index 1) with proper positioning
   useEffect(() => {
     const centerSecondImageWithPeek = () => {
       if (galleryRef.current) {
         const container = galleryRef.current;
         const containerWidth = container.clientWidth;
-        const cardWidth = 240; // Base card width
-        const totalCardWidth = cardWidth + 16; // Gap between cards
-        const paddingLeft = 32; // pl-8 = 32px
         
-        // Calculate the snap position for the SECOND card (index 1)
-        const secondCardStart = paddingLeft + (1 * totalCardWidth);
-        const snapPosition = secondCardStart - (containerWidth / 2) + (cardWidth / 2);
-        const scrollPosition = Math.max(0, snapPosition);
-        
-        // Use scrollTo without behavior to avoid conflicts with scroll snap
-        container.scrollLeft = scrollPosition;
-        
-        // Update centerIndex after positioning
+        // Esperar a que las cartas se rendericen
         setTimeout(() => {
-          setCenterIndex(1);
-          if (container) {
-            const event = new Event('scroll');
-            container.dispatchEvent(event);
+          const secondCard = container.children[1] as HTMLElement;
+          if (secondCard) {
+            const cardLeft = secondCard.offsetLeft;
+            const cardWidth = secondCard.offsetWidth;
+            const cardCenter = cardLeft + (cardWidth / 2);
+            const scrollPosition = cardCenter - (containerWidth / 2);
+            
+            container.scrollLeft = Math.max(0, scrollPosition);
+            
+            // Update centerIndex after positioning
+            setTimeout(() => {
+              setCenterIndex(1);
+              const event = new Event('scroll');
+              container.dispatchEvent(event);
+            }, 100);
           }
-        }, 50);
+        }, 200);
       }
     };
 
-    // Add a small delay to ensure the component is fully rendered
-    const timer = setTimeout(centerSecondImageWithPeek, 100);
+    // Add a delay to ensure the component is fully rendered
+    const timer = setTimeout(centerSecondImageWithPeek, 300);
     return () => clearTimeout(timer);
   }, []);
 
@@ -166,20 +164,23 @@ export default function Gallery() {
         zIndex: 10,
         transform: `scale(1.1)`,
         filter: 'brightness(1.1)',
+        overlayOpacity: 0, // Sin overlay para la carta activa
       };
     } else if (distanceFromCenter === 1) {
-      // Cards immediately adjacent to center
+      // Cards immediately adjacent to center - casi del mismo tamaño pero bloqueadas
       return {
         zIndex: 5,
-        transform: `scale(0.95)`,
-        filter: 'brightness(0.9)',
+        transform: `scale(1.05)`, // Casi del mismo tamaño
+        filter: 'brightness(0.6)',
+        overlayOpacity: 0.6, // Overlay moderado
       };
     } else {
-      // Cards further away
+      // Cards further away - mismo tamaño pero muy bloqueadas
       return {
         zIndex: 1,
-        transform: `scale(0.85)`,
-        filter: 'brightness(0.7)',
+        transform: `scale(1.0)`, // Mismo tamaño base
+        filter: 'brightness(0.4)',
+        overlayOpacity: 0.8, // Overlay fuerte
       };
     }
   };
@@ -295,20 +296,21 @@ Esta sección es para que los vean
           <div className="md:hidden">
             <div 
               ref={galleryRef}
-              className="flex gap-4 overflow-x-auto scrollbar-hide py-8 pl-8 pr-4"
+              className="flex gap-4 overflow-x-auto scrollbar-hide py-8 px-4"
               style={{ 
                 scrollSnapType: 'x mandatory'
               }}
             >
               {photos.map((photo, index) => {
                 const isCenterCard = index === centerIndex;
-                const cardSize = isCenterCard ? '320px' : '240px';
                 const depthStyles = getCardDepthStyles(index, isCenterCard);
+                // Tamaños más similares - la diferencia es mínima
+                const cardSize = isCenterCard ? '300px' : '280px';
                 
                 return (
                   <div
                     key={index}
-                    className="flex-shrink-0 relative cursor-pointer transition-all duration-500"
+                    className="flex-shrink-0 relative cursor-pointer transition-all duration-700"
                     onClick={() => openModal(photo, index)}
                     style={{ 
                       scrollSnapAlign: 'center',
@@ -320,7 +322,7 @@ Esta sección es para que los vean
                     }}
                   >
                     {/* Enhanced floating card with depth */}
-                    <div className="relative transform transition-all duration-500 hover:scale-105 active:scale-95">
+                    <div className="relative transform transition-all duration-700 hover:scale-105 active:scale-95">
                       {/* Multiple layers for depth effect */}
                       {isCenterCard && (
                         <>
@@ -332,7 +334,7 @@ Esta sección es para que los vean
                       
                       {/* Background cards get subtle shadow */}
                       {!isCenterCard && (
-                        <div className="absolute -inset-2 bg-black/10 rounded-2xl blur-md"></div>
+                        <div className="absolute -inset-2 bg-black/20 rounded-2xl blur-md"></div>
                       )}
                       
                       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
@@ -345,8 +347,29 @@ Esta sección es para que los vean
                             sizes="320px"
                           />
                           
-                          {/* Dynamic overlay gradient - stronger for background cards */}
-                          <div className={`absolute inset-0 bg-gradient-to-t from-black/${isCenterCard ? '30' : '50'} via-transparent to-transparent`}></div>
+                          {/* Dynamic overlay gradient - más dramático para cartas bloqueadas */}
+                          <div 
+                            className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30 transition-opacity duration-700"
+                            style={{ 
+                              opacity: depthStyles.overlayOpacity 
+                            }}
+                          ></div>
+
+                          {/* Locked/Blocked indicator para cartas no centrales */}
+                          {!isCenterCard && (
+                            <div 
+                              className="absolute inset-0 flex items-center justify-center transition-opacity duration-700"
+                              style={{ 
+                                opacity: depthStyles.overlayOpacity * 0.8 
+                              }}
+                            >
+                              <div className="bg-black/60 backdrop-blur-sm rounded-full p-3">
+                                <svg className="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                              </div>
+                            </div>
+                          )}
 
                           {/* Tap indicator - only show on center card */}
                           {isCenterCard && (
