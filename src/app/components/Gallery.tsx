@@ -293,7 +293,7 @@ Texto bien romanticote que les dejo de tarea a mis queridos clientes y familiare
           </div>
 
           {/* Mobile: Enhanced Horizontal Scroll with Depth Effect */}
-          <div className="md:hidden">
+          <div className="md:hidden -mx-4">
             <div 
               ref={galleryRef}
               className="flex gap-4 overflow-x-auto scrollbar-hide py-8 px-4"
