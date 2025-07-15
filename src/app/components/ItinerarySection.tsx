@@ -11,14 +11,12 @@ interface ItineraryItem {
 
 export default function ItinerarySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { isNightMode, setIsNightMode } = useTheme();
+  const { isNightMode } = useTheme();
   
-  // Enhanced scroll-based animation state
+  // Scroll-based animation state
   const [scrollProgress, setScrollProgress] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
   const [isClient, setIsClient] = useState(false);
-  const [isSectionVisible, setIsSectionVisible] = useState(false);
-  const [hasInitialized, setHasInitialized] = useState(false);
 
   // Set up client-side state and window dimensions
   useEffect(() => {
@@ -30,19 +28,10 @@ export default function ItinerarySection() {
     updateWindowHeight();
     window.addEventListener('resize', updateWindowHeight);
     
-    // Ensure we start in day mode and wait a bit before allowing theme changes
-    setIsNightMode(false);
-    
-    // Allow theme changes after a short delay to prevent immediate activation
-    const timer = setTimeout(() => {
-      setHasInitialized(true);
-    }, 1000);
-    
     return () => {
       window.removeEventListener('resize', updateWindowHeight);
-      clearTimeout(timer);
     };
-  }, [setIsNightMode]);
+  }, []);
   
   // Extended itinerary with more items
   const itineraryItems: ItineraryItem[] = [
@@ -69,7 +58,7 @@ export default function ItinerarySection() {
     }
   ];
 
-  // Calculate scroll progress for content transitions only
+  // Calculate scroll progress for content animations
   const updateScrollProgress = useCallback(() => {
     if (!sectionRef.current || !isClient || windowHeight === 0) return;
 
@@ -79,14 +68,6 @@ export default function ItinerarySection() {
     // Calculate how much of the section has been scrolled through
     const sectionTop = rect.top;
     const sectionBottom = rect.bottom;
-    
-    // Check if section is significantly visible AND user is actively scrolling within it
-    const isVisible = (
-      sectionTop <= windowHeight * 0.3 && // Section header is well into viewport
-      sectionBottom >= windowHeight * 0.7 && // Section extends well below viewport
-      scrollProgress > 0.1 // User has scrolled into the section content
-    );
-    setIsSectionVisible(isVisible);
     
     let progress = 0;
     
@@ -104,7 +85,7 @@ export default function ItinerarySection() {
     const clampedProgress = Math.max(0, Math.min(1, progress));
     setScrollProgress(clampedProgress);
     
-  }, [isClient, windowHeight, scrollProgress]);
+  }, [isClient, windowHeight]);
 
   // Determine current active item based on scroll progress
   const getCurrentItemIndex = () => {
@@ -118,27 +99,6 @@ export default function ItinerarySection() {
   };
 
   const currentItemIndex = getCurrentItemIndex();
-
-  // Update night mode based on progress - transition starts from "Recepción" card
-  // Only control night mode when the section is visible and being actively scrolled
-  useEffect(() => {
-    if (!hasInitialized) {
-      // Don't change theme until component has fully initialized
-      return;
-    }
-    
-    if (!isSectionVisible) {
-      // Reset to day mode when section is not prominently visible
-      setIsNightMode(false);
-      return;
-    }
-    
-    // Even stricter: only activate night mode when significantly into "Recepción" card
-    // "Recepción" is at index 2, so it starts at 2/4 = 0.5 progress
-    // But add extra threshold to prevent premature activation
-    const shouldBeNight = scrollProgress >= 0.6; // Increased from 0.5 to 0.6
-    setIsNightMode(shouldBeNight);
-  }, [scrollProgress, setIsNightMode, isSectionVisible, hasInitialized]);
 
   // Listen to normal page scroll
   useEffect(() => {
@@ -217,7 +177,7 @@ export default function ItinerarySection() {
           </h2>
           <div className="w-24 h-px mx-auto mb-6 bg-[#d4c4b0]"></div>
           <h3 className="garamond-regular text-3xl md:text-4xl lg:text-5xl font-light tracking-wider text-[#5c5c5c]">
-            Primer Logística
+            Itinerario del día
           </h3>
         </div>
       </section>
@@ -323,7 +283,7 @@ export default function ItinerarySection() {
         <h3 className={`garamond-regular text-3xl md:text-4xl lg:text-5xl font-light tracking-wider ${
           isNightMode ? 'text-white' : 'text-[#5c5c5c]'
         }`}>
-          Primer Logística
+          Itinerario del día
         </h3>
       </div>
 

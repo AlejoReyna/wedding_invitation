@@ -217,14 +217,14 @@ export default function Gallery() {
         
         <div className="relative z-10 max-w-7xl mx-auto">
           {/* Header with floating animation */}
-          <div className={`text-center mb-16 transition-all duration-1000 ${
+          <div className={`text-center  transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <h2 className="text-4xl md:text-5xl lg:text-6xl garamond-regular text-[#8B7355] mb-6 tracking-wide animate-float">
-¡Nos casamos!
+              ¡Nos casamos!
             </h2>
             <p className="text-lg md:text-xl text-gray-600 garamond-300 max-w-2xl mx-auto leading-relaxed">
-Texto bien romanticote que les dejo de tarea a mis queridos clientes y familiares 
+              Texto bien romanticote que les dejo de tarea a mis queridos clientes y familiares 
             </p>
             <FloralDivider />
           </div>
