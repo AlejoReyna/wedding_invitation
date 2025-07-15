@@ -152,9 +152,7 @@ export default function Home() {
         `}</style>
       </section>
       
-      <div id="nosotros">
-        <CoupleSection />
-      </div>
+      
       <div id="galeria">
         <Gallery />
       </div>

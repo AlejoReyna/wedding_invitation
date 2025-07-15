@@ -183,6 +183,8 @@ export default function WeddingInvitation() {
           </div>
 
           {/* Photo arrangement with improved zoom effect */}
+          
+          
           <div 
             ref={sectionRef}
             className="relative my-17" 
@@ -204,52 +206,7 @@ export default function WeddingInvitation() {
               </svg>
             </div>
 
-            {/* First photo - rotated left with smooth zoom */}
-            <div 
-              className="absolute top-0 -left-24 w-84 h-108 cursor-pointer shadow-lg"
-              style={{ 
-                width: '320px', 
-                height: '410px',
-                transform: `scale(${scrollScale}) rotate(-12deg)`,
-                transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease'
-              }}
-              onClick={() => setSelectedImage(photos[0])}
-            >
-              <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm hover:shadow-xl transition-shadow duration-300">
-                <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '320px' }}>
-                  <Image 
-                    src={photos[0].src} 
-                    alt={photos[0].alt} 
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Second photo - rotated right with smooth zoom */}
-            <div 
-              className="absolute top-8 -right-32 w-84 h-108 cursor-pointer shadow-lg z-10"
-              style={{ 
-                width: '320px', 
-                height: '410px',
-                transform: `scale(${scrollScale}) rotate(12deg)`,
-                transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease'
-              }}
-              onClick={() => setSelectedImage(photos[1])}
-            >
-              <div className="w-full h-full bg-white p-4 pt-4 pb-12 rounded-sm hover:shadow-xl transition-shadow duration-300">
-                <div className="relative w-full h-84 bg-gray-200 overflow-hidden" style={{ height: '320px' }}>
-                  <Image 
-                    src={photos[1].src} 
-                    alt={photos[1].alt} 
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
+            
             {/* Enhanced decorative floral corner bottom right */}
             <div className="absolute -bottom-8 -right-36 w-20 h-20 opacity-40">
               <svg viewBox="0 0 80 80" className="w-full h-full" fill="none">
@@ -282,41 +239,6 @@ export default function WeddingInvitation() {
             </div>
           </div>
 
-          {/* Event type */}
-          <div>
-            <p className="text-gray-500 text-base tracking-wide garamond-300">Ceremonia</p>
-          </div>
-
-          {/* Time */}
-          <div className="space-y-1">
-            <p className="text-4xl font-light text-gray-700 garamond-regular">4:00</p>
-            <p className="text-lg text-gray-600 garamond-300">PM</p>
-          </div>
-
-          {/* Location - Enhanced styling with subtle floral accent */}
-          <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-6 border border-[#C4985B]/20 shadow-sm">
-            {/* Subtle floral accent for the location box */}
-            <div className="absolute -top-2 -right-2 w-8 h-8 opacity-20">
-              <svg viewBox="0 0 32 32" className="w-full h-full" fill="none">
-                <path d="M8,16 Q16,8 24,16 Q16,24 8,16" stroke="#8B7355" strokeWidth="1"/>
-                <circle cx="16" cy="16" r="1.5" fill="#C4985B"/>
-              </svg>
-            </div>
-            
-            <div className="space-y-3">
-              <div className="flex items-center justify-center mb-4">
-                <svg className="w-5 h-5 text-[#C4985B] mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-                <h3 className="text-[#C4985B] text-sm font-medium tracking-[0.1em] uppercase garamond-300">Ubicación</h3>
-              </div>
-              <div className="text-gray-600 text-base leading-relaxed garamond-regular space-y-1">
-                <p className="font-medium">Simon Bolívar 659</p>
-                <p>Del Maestro, 67500</p>
-                <p>Montemorelos, N.L.</p>
-              </div>
-            </div>
-          </div>
         </div>
       </main>
 

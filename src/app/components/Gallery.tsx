@@ -221,10 +221,10 @@ export default function Gallery() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <h2 className="text-4xl md:text-5xl lg:text-6xl garamond-regular text-[#8B7355] mb-6 tracking-wide animate-float">
-Esta sección es para que los vean
+¡Nos casamos!
             </h2>
             <p className="text-lg md:text-xl text-gray-600 garamond-300 max-w-2xl mx-auto leading-relaxed">
-              Cada fotografía cuenta una historia única de amor eterno
+Texto bien romanticote que les dejo de tarea a mis queridos clientes y familiares 
             </p>
             <FloralDivider />
           </div>
