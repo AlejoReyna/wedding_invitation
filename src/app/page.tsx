@@ -45,7 +45,7 @@ export default function Home() {
           
           {/* Fecha principal arriba - con efecto de opacidad sutil */}
           <div className="text-center mb-4 sm:mb-6 md:mb-8 animate-fade-in-center">
-            <span className="text-white/60 text-lg sm:text-xl md:text-2xl lg:text-3xl garamond-300 tracking-[0.2em] sm:tracking-[0.3em] block">
+            <span className="text-white/60 text-lg sm:text-xl md:text-xl lg:text-2xl garamond-300 tracking-[0.2em] sm:tracking-[0.3em] block">
               SÁBADO 18 DE OCTUBRE
             </span>
           </div>
@@ -53,31 +53,31 @@ export default function Home() {
           {/* Los nombres centrados - como en la imagen */}
           <div className="text-center animate-fade-in-center">
             {/* Nombres optimizados para móvil - con ampersand en el medio */}
-            <div className="flex flex-col items-center justify-center max-w-6xl mx-auto mb-6 px-2">
+            <div className="flex flex-row items-center justify-center max-w-6xl mx-auto mb-3 px-2">
               {/* Nombre ANDREA */}
               <div className="text-center mb-2">
-                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+                <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ANDREA
                 </h1>
               </div>
 
               {/* Símbolo & */}
-              <div className="text-center mb-2">
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl garamond-regular text-white/80 drop-shadow-2xl leading-none">
+              <div className="text-center mb-2 mx-8">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl garamond-regular text-white/80 drop-shadow-2xl leading-none">
                   &
                 </h2>
               </div>
 
               {/* Nombre ALDO */}
               <div className="text-center">
-                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+                <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ALDO
                 </h1>
               </div>
             </div>
 
             {/* Botón de confirmar asistencia debajo de los nombres - más pequeño */}
-            <div className="mt-6 sm:mt-8">
+            <div>
               <a
                 href="#rsvp"
                 className="group inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 bg-black/40 backdrop-blur-sm border border-white/30 text-white/90 hover:bg-black/60 hover:border-white/50 transition-all duration-500 text-xs sm:text-sm"

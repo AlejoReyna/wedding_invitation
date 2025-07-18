@@ -1,0 +1,22 @@
+"use client"
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+
+export default function Gallery() {
+  const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, index: number, shape: string } | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [centerIndex, setCenterIndex] = useState(1);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  const photos = [
+    { src: '/p1.JPG', alt: 'Andrea & Aldo - Momento especial 1', shape: 'circle' },
+    { src: '/p2.JPG', alt: 'Andrea & Aldo - Momento especial 2', shape: 'diamond' },
+    { src: '/p3.JPG', alt: 'Andrea & Aldo - Momento especial 3', shape: 'heart' },
+    { src: '/p4.JPG', alt: 'Andrea & Aldo - Momento especial 4', shape: 'hexagon' },
+    { src: '/p5.JPG', alt: 'Andrea & Aldo - Momento especial 5', shape: 'star' },
+    { src: '/p6.JPG', alt: 'Andrea & Aldo - Momento especial 6', shape: 'circle' },
+  ];
+
+  // ... (rest of the component code will be added in the next steps)
+}
