@@ -176,7 +176,7 @@ export default function Gallery() {
                   style={{
                     scrollSnapAlign: 'center',
                   }}
-                  onClick={() => openModal(photo, index)}
+                  onClick={() => openModal({ ...photo, shape: 'rectangle' }, index)}
                 >
                   <div className="relative h-full w-full transform transition-all duration-700 hover:scale-105">
                     {/* Depth effect for center card */}
