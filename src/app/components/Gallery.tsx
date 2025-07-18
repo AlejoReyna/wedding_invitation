@@ -124,7 +124,7 @@ export default function Gallery() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#8B7355] mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] mb-6">
             Nuestra Galería
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
@@ -134,7 +134,7 @@ export default function Gallery() {
         </div>
 
         {/* Carousel Container */}
-        <div className="relative mt-12">
+        <div className="relative">
           {/* Left Navigation Arrow */}
           <button 
             onClick={() => {

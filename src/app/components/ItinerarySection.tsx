@@ -16,20 +16,22 @@ export default function ItinerarySection() {
   // Scroll-based animation state
   const [scrollProgress, setScrollProgress] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
   const [isClient, setIsClient] = useState(false);
 
   // Set up client-side state and window dimensions
   useEffect(() => {
     setIsClient(true);
-    const updateWindowHeight = () => {
+    const updateWindowDimensions = () => {
       setWindowHeight(window.innerHeight);
+      setWindowWidth(window.innerWidth);
     };
     
-    updateWindowHeight();
-    window.addEventListener('resize', updateWindowHeight);
+    updateWindowDimensions();
+    window.addEventListener('resize', updateWindowDimensions);
     
     return () => {
-      window.removeEventListener('resize', updateWindowHeight);
+      window.removeEventListener('resize', updateWindowDimensions);
     };
   }, []);
   
@@ -50,11 +52,6 @@ export default function ItinerarySection() {
       time: "8:00 PM - 9:30 PM", 
       title: "Recepción",
       description: "Deliciosa cena de tres tiempos preparada por nuestro chef especializado"
-    },
-    {
-      time: "12:00 AM - 2:00 AM",
-      title: "After Party, quizás jaja",
-      description: "Continuamos la fiesta con DJ y barra libre para los más resistentes"
     }
   ];
 
@@ -131,14 +128,14 @@ export default function ItinerarySection() {
     }
   };
 
-  // Calculate timeline constants
-  const CARD_HEIGHT = 300; // Height of each card section
-  const CARD_SPACING = 100; // Space between cards
+  // Calculate timeline constants - responsivos
+  const isMobile = windowWidth < 768;
+  const CARD_HEIGHT = isMobile ? 280 : 300;
+  const CARD_SPACING = isMobile ? 80 : 100;
   const TOTAL_SECTION_HEIGHT = itineraryItems.length * (CARD_HEIGHT + CARD_SPACING);
   
   // Calculate the overall dot position along the continuous timeline
   const getDotPosition = () => {
-    // Dot starts at 0 and moves through the entire timeline
     const totalProgress = scrollProgress * TOTAL_SECTION_HEIGHT;
     return Math.min(totalProgress, TOTAL_SECTION_HEIGHT);
   };
@@ -148,22 +145,18 @@ export default function ItinerarySection() {
     const basePosition = index * (CARD_HEIGHT + CARD_SPACING);
     const dotPosition = getDotPosition();
     
-    // If dot hasn't reached this card yet, stay in base position
     if (dotPosition < basePosition) {
       return basePosition;
     }
     
-    // If dot is past this card's base position, calculate movement
     const movementBeyondBase = dotPosition - basePosition;
     
-    // For cards that aren't the last one, limit movement based on spacing
     if (index < itineraryItems.length - 1) {
       const nextCardBasePosition = (index + 1) * (CARD_HEIGHT + CARD_SPACING);
       const maxMovement = nextCardBasePosition - basePosition - CARD_HEIGHT;
       return basePosition + Math.min(movementBeyondBase, maxMovement);
     }
     
-    // Last card can move more freely
     return basePosition + Math.min(movementBeyondBase, CARD_HEIGHT);
   };
 
@@ -189,56 +182,58 @@ export default function ItinerarySection() {
   return (
     <section 
       ref={sectionRef}
-      className={`w-full py-16 md:py-24 px-4 md:px-8 relative overflow-hidden transition-all duration-1000 ease-in-out ${
+      className={`w-full py-16 md:py-24 px-4 md:px-8 relative transition-all duration-1000 ease-in-out ${
         isNightMode ? 'bg-[#1a1a1a]' : 'bg-[#f8f7f5]'
       }`}
-      style={{ minHeight: '100vh' }}
+      style={{ 
+        minHeight: '100vh',
+        overflowX: 'hidden' // Prevenir scroll horizontal
+      }}
     >
-      {/* Celestial Elements */}
-      {/* Sol que aparece durante el día */}
+      {/* Celestial Elements - Mejor posicionamiento */}
       <div 
         className={`absolute celestial-transition animate-celestial-float ${
           isNightMode ? 'opacity-0 scale-75' : 'opacity-100 scale-100'
         }`} 
         style={{ 
           zIndex: 1,
-          top: '20%',
-          right: '10%'
+          top: '10%',
+          right: '5%',
+          maxWidth: '120px' // Limitar tamaño en móviles
         }}
       >
         <div className="relative animate-fade-celestial">
-          <div className="w-32 h-32 bg-[#d4c4b0] rounded-full opacity-80 relative">
+          <div className="w-20 h-20 md:w-32 md:h-32 bg-[#d4c4b0] rounded-full opacity-80 relative">
             <div className="absolute inset-0 animate-sun-rotate">
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-6">
-                <div className="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-3 md:-translate-y-6">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-4 md:border-l-4 md:border-r-4 md:border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
               </div>
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 rotate-180">
-                <div className="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 md:translate-y-6 rotate-180">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-4 md:border-l-4 md:border-r-4 md:border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
               </div>
-              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 -rotate-90">
-                <div className="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
+              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-3 md:-translate-x-6 -rotate-90">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-4 md:border-l-4 md:border-r-4 md:border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
               </div>
-              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 rotate-90">
-                <div className="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-3 md:translate-x-6 rotate-90">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-4 md:border-l-4 md:border-r-4 md:border-b-8 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-60"></div>
               </div>
-              <div className="absolute top-2 right-2 transform rotate-45">
-                <div className="w-0 h-0 border-l-3 border-r-3 border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
+              <div className="absolute top-1 right-1 md:top-2 md:right-2 transform rotate-45">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-3 md:border-l-3 md:border-r-3 md:border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
               </div>
-              <div className="absolute top-2 left-2 transform -rotate-45">
-                <div className="w-0 h-0 border-l-3 border-r-3 border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
+              <div className="absolute top-1 left-1 md:top-2 md:left-2 transform -rotate-45">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-3 md:border-l-3 md:border-r-3 md:border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
               </div>
-              <div className="absolute bottom-2 right-2 transform rotate-135">
-                <div className="w-0 h-0 border-l-3 border-r-3 border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
+              <div className="absolute bottom-1 right-1 md:bottom-2 md:right-2 transform rotate-135">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-3 md:border-l-3 md:border-r-3 md:border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
               </div>
-              <div className="absolute bottom-2 left-2 transform -rotate-135">
-                <div className="w-0 h-0 border-l-3 border-r-3 border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
+              <div className="absolute bottom-1 left-1 md:bottom-2 md:left-2 transform -rotate-135">
+                <div className="w-0 h-0 border-l-2 border-r-2 border-b-3 md:border-l-3 md:border-r-3 md:border-b-6 border-l-transparent border-r-transparent border-b-[#d4c4b0] opacity-40"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Luna que aparece cuando es modo nocturno */}
       <div 
         className={`absolute celestial-transition animate-celestial-float ${
           isNightMode ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
@@ -246,31 +241,32 @@ export default function ItinerarySection() {
         style={{ 
           zIndex: 1, 
           animationDelay: '2s',
-          top: '30%',
-          left: '10%'
+          top: '15%',
+          left: '5%',
+          maxWidth: '96px' // Limitar tamaño
         }}
       >
         <div className="relative animate-fade-celestial">
-          <div className="w-24 h-24 bg-white opacity-70 rounded-full relative overflow-hidden">
-            <div className="absolute top-3 left-5 w-2 h-2 bg-gray-300 rounded-full opacity-40"></div>
-            <div className="absolute top-6 right-3 w-1.5 h-1.5 bg-gray-300 rounded-full opacity-30"></div>
-            <div className="absolute bottom-4 left-3 w-1 h-1 bg-gray-300 rounded-full opacity-35"></div>
-            <div className="absolute bottom-3 right-4 w-3 h-3 bg-gray-300 rounded-full opacity-25"></div>
-            <div className="absolute top-4 left-2 w-1 h-1 bg-gray-300 rounded-full opacity-30"></div>
+          <div className="w-16 h-16 md:w-24 md:h-24 bg-white opacity-70 rounded-full relative overflow-hidden">
+            <div className="absolute top-2 left-3 md:top-3 md:left-5 w-1.5 h-1.5 md:w-2 md:h-2 bg-gray-300 rounded-full opacity-40"></div>
+            <div className="absolute top-3 right-2 md:top-6 md:right-3 w-1 h-1 md:w-1.5 md:h-1.5 bg-gray-300 rounded-full opacity-30"></div>
+            <div className="absolute bottom-2 left-2 md:bottom-4 md:left-3 w-0.5 h-0.5 md:w-1 md:h-1 bg-gray-300 rounded-full opacity-35"></div>
+            <div className="absolute bottom-2 right-2 md:bottom-3 md:right-4 w-2 h-2 md:w-3 md:h-3 bg-gray-300 rounded-full opacity-25"></div>
+            <div className="absolute top-2 left-1 md:top-4 md:left-2 w-0.5 h-0.5 md:w-1 md:h-1 bg-gray-300 rounded-full opacity-30"></div>
           </div>
-          <div className="absolute -top-1 -left-1 w-1 h-1 bg-white rounded-full opacity-60"></div>
-          <div className="absolute top-1 right-6 w-0.5 h-0.5 bg-white rounded-full opacity-50"></div>
-          <div className="absolute top-6 -right-2 w-0.5 h-0.5 bg-white rounded-full opacity-70"></div>
-          <div className="absolute bottom-2 left-8 w-0.5 h-0.5 bg-white rounded-full opacity-60"></div>
+          <div className="absolute -top-0.5 -left-0.5 md:-top-1 md:-left-1 w-0.5 h-0.5 md:w-1 md:h-1 bg-white rounded-full opacity-60"></div>
+          <div className="absolute top-0.5 right-3 md:top-1 md:right-6 w-0.5 h-0.5 bg-white rounded-full opacity-50"></div>
+          <div className="absolute top-3 -right-1 md:top-6 md:-right-2 w-0.5 h-0.5 bg-white rounded-full opacity-70"></div>
+          <div className="absolute bottom-1 left-4 md:bottom-2 md:left-8 w-0.5 h-0.5 bg-white rounded-full opacity-60"></div>
         </div>
       </div>
 
-      {/* Decorative Background Elements */}
+      {/* Decorative Background Elements - Mejor posicionamiento */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 2 }}>
-        <div className={`absolute top-20 right-10 w-24 h-24 border rounded-full ${
+        <div className={`absolute top-20 right-4 md:right-10 w-16 h-16 md:w-24 md:h-24 border rounded-full ${
           isNightMode ? 'border-white/20' : 'border-[#d4c4b0]/20'
         }`}></div>
-        <div className={`absolute bottom-32 left-8 w-16 h-16 border rounded-full ${
+        <div className={`absolute bottom-32 left-4 md:left-8 w-12 h-12 md:w-16 md:h-16 border rounded-full ${
           isNightMode ? 'border-white/20' : 'border-[#d4c4b0]/20'
         }`}></div>
       </div>
@@ -287,11 +283,11 @@ export default function ItinerarySection() {
         </h3>
       </div>
 
-      {/* Timeline Container */}
-      <div className="max-w-6xl mx-auto relative" style={{ zIndex: 10 }}>
+      {/* Timeline Container - Corregido para evitar overflow */}
+      <div className="max-w-6xl mx-auto relative px-2" style={{ zIndex: 10 }}>
         <div className="relative" style={{ height: `${TOTAL_SECTION_HEIGHT + 200}px` }}>
-          {/* Continuous Timeline Line */}
-          <div className="absolute left-8 top-0 w-8 flex justify-center" style={{ height: `${TOTAL_SECTION_HEIGHT}px` }}>
+          {/* Timeline Column */}
+          <div className="absolute left-4 md:left-8 top-0 w-8 flex justify-center" style={{ height: `${TOTAL_SECTION_HEIGHT}px` }}>
             <div 
               className={`w-1 transition-colors duration-500 rounded-full ${
                 isNightMode ? 'bg-white/20' : 'bg-[#d4c4b0]/40'
@@ -299,7 +295,7 @@ export default function ItinerarySection() {
               style={{ height: '100%' }}
             ></div>
             
-            {/* Moving dot along the continuous line */}
+            {/* Moving dot */}
             <div 
               className="absolute left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-out"
               style={{
@@ -314,9 +310,8 @@ export default function ItinerarySection() {
               />
             </div>
 
-            {/* Static dots for each timeline point */}
+            {/* Static dots */}
             {itineraryItems.map((_, index) => {
-              // First dot starts at 0, others are spaced accordingly
               const dotPositionStatic = index * (CARD_HEIGHT + CARD_SPACING);
               return (
                 <div 
@@ -341,26 +336,28 @@ export default function ItinerarySection() {
             })}
           </div>
 
-          {/* Content Cards that move individually when dot reaches them */}
+          {/* Content Cards - Posicionamiento corregido */}
           {itineraryItems.map((item, index) => {
             const cardY = getCardPosition(index);
+            const timelineOffset = isMobile ? 56 : 80; // Espacio para la timeline
+            const contentWidth = `calc(100% - ${timelineOffset + 16}px)`; // 16px margen derecho
             
             return (
               <div 
                 key={`item-${item.time}`} 
-                className="absolute left-20 transition-all duration-300 ease-out"
+                className="absolute transition-all duration-300 ease-out"
                 style={{
                   top: `${cardY}px`,
-                  width: 'calc(100% - 120px)',
-                  height: `${CARD_HEIGHT}px`
+                  left: `${timelineOffset}px`,
+                  width: contentWidth,
+                  maxWidth: contentWidth
                 }}
               >
-                <div className="max-w-3xl w-full h-full flex items-center">
-                  {/* Item Card */}
+                <div className="w-full h-full flex items-center">
                   <div 
                     className={`
                       relative transform transition-all duration-500 ease-out
-                      rounded-lg p-6 lg:p-8 border-2 w-full
+                      rounded-lg p-4 md:p-6 lg:p-8 border-2 w-full
                       ${
                         index === currentItemIndex
                           ? (isNightMode 
@@ -372,17 +369,18 @@ export default function ItinerarySection() {
                       }
                     `}
                     style={{ 
-                      opacity: getItemOpacity(index)
+                      opacity: getItemOpacity(index),
+                      height: `${CARD_HEIGHT}px`,
+                      maxWidth: '100%' // Asegurar que no se desborde
                     }}
                   >
-                    {/* Icon for each event */}
-                    <div className="flex justify-center mb-4">
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                    {/* Icon */}
+                    <div className="flex justify-center mb-3 md:mb-4">
+                      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center ${
                         isNightMode ? 'bg-white/10' : 'bg-[#8b7355]/10'
                       }`}>
-                        {/* Icons based on event type */}
                         {item.title.includes('Ceremonia Religiosa') && (
-                          <svg className={`w-6 h-6 ${
+                          <svg className={`w-5 h-5 md:w-6 md:h-6 ${
                             isNightMode ? 'text-white/80' : 'text-[#8b7355]'
                           }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v18m-6-9h12" />
@@ -390,7 +388,7 @@ export default function ItinerarySection() {
                         )}
                         
                         {item.title.includes('Ceremonia Civil') && (
-                          <svg className={`w-6 h-6 ${
+                          <svg className={`w-5 h-5 md:w-6 md:h-6 ${
                             isNightMode ? 'text-white/80' : 'text-[#8b7355]'
                           }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -398,7 +396,7 @@ export default function ItinerarySection() {
                         )}
                         
                         {item.title.includes('Recepción') && (
-                          <svg className={`w-6 h-6 ${
+                          <svg className={`w-5 h-5 md:w-6 md:h-6 ${
                             isNightMode ? 'text-white/80' : 'text-[#8b7355]'
                           }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
@@ -406,7 +404,7 @@ export default function ItinerarySection() {
                         )}
                         
                         {item.title.includes('After Party') && (
-                          <svg className={`w-6 h-6 ${
+                          <svg className={`w-5 h-5 md:w-6 md:h-6 ${
                             isNightMode ? 'text-white/80' : 'text-[#8b7355]'
                           }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
@@ -416,9 +414,9 @@ export default function ItinerarySection() {
                     </div>
 
                     {/* Time Badge */}
-                    <div className="text-center mb-4">
+                    <div className="text-center mb-3 md:mb-4">
                       <span className={`
-                        inline-block px-4 py-1.5 rounded-full text-xs font-medium tracking-[0.1em] uppercase
+                        inline-block px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs font-medium tracking-[0.1em] uppercase
                         transition-colors duration-500
                         ${
                           isNightMode 
@@ -431,9 +429,9 @@ export default function ItinerarySection() {
                     </div>
 
                     {/* Title */}
-                    <div className="text-center mb-3">
+                    <div className="text-center mb-2 md:mb-3">
                       <h2 className={`
-                        text-xl lg:text-2xl font-medium mb-2 leading-tight 
+                        text-lg md:text-xl lg:text-2xl font-medium mb-2 leading-tight 
                         transition-colors duration-500
                         ${
                           isNightMode ? 'text-white' : 'text-[#5c5c5c]'
@@ -444,9 +442,9 @@ export default function ItinerarySection() {
                     </div>
 
                     {/* Description */}
-                    <div className="text-center">
+                    <div className="text-center px-2">
                       <p className={`
-                        text-sm lg:text-base leading-relaxed font-light
+                        text-sm md:text-base leading-relaxed font-light
                         transition-colors duration-500
                         ${
                           isNightMode ? 'text-white/75' : 'text-[#6b6b6b]'
@@ -456,9 +454,9 @@ export default function ItinerarySection() {
                       </p>
                     </div>
 
-                    {/* Location if exists */}
+                    {/* Location */}
                     {item.location && (
-                      <div className="text-center mt-4">
+                      <div className="text-center mt-3 md:mt-4">
                         <div className={`
                           inline-flex items-center justify-center space-x-2 px-3 py-1.5
                           rounded-md transition-colors duration-500 text-xs
@@ -468,11 +466,11 @@ export default function ItinerarySection() {
                               : 'bg-[#8b7355]/5 text-[#8b7355]/70'
                           }
                         `}>
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
-                          <span className="font-medium">
+                          <span className="font-medium truncate">
                             {item.location}
                           </span>
                         </div>

@@ -62,7 +62,7 @@ export default function Home() {
               </div>
 
               {/* Símbolo & */}
-              <div className="text-center mb-2 mx-8">
+              <div className="text-center mb-2 mx-4 md:mx-8">
                 <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl garamond-regular text-white/80 drop-shadow-2xl leading-none">
                   &
                 </h2>
