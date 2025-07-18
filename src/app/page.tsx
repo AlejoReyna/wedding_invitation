@@ -25,6 +25,7 @@ export default function Home() {
       <Navbar />
       <ScrollIndicator />
       <section 
+        id="hero-section"
         ref={heroSectionRef}
         className="relative flex flex-col min-h-screen overflow-hidden"
         style={{

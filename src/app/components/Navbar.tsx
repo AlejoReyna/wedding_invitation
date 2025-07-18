@@ -11,12 +11,11 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isInRSVPSection, setIsInRSVPSection] = useState(false);
+  const [isInFooterSection, setIsInFooterSection] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isNightMode } = useTheme();
   
   const navigationItems: NavigationItem[] = [
-    { id: 'nosotros', label: 'Nosotros' },
     { id: 'galeria', label: 'Galería' },
     { id: 'itinerario', label: 'Itinerario' },
     { id: 'ubicacion', label: 'Ubicación' },
@@ -28,36 +27,39 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
-      // Detectar dirección del scroll
+
+      // Lógica para ocultar/mostrar la navbar al hacer scroll
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolleando hacia abajo y ya pasó los primeros 100px
         setIsVisible(false);
-        setIsMobileMenuOpen(false); // Cerrar menú móvil al hacer scroll
-      } else if (currentScrollY < lastScrollY || currentScrollY <= 100) {
-        // Scrolleando hacia arriba o está en el top
+        setIsMobileMenuOpen(false);
+      } else {
         setIsVisible(true);
       }
-      
-      // Determinar si está scrolleado para cambiar el estilo
-      const nosotrosSection = document.getElementById('nosotros');
-      if (nosotrosSection) {
-        const rect = nosotrosSection.getBoundingClientRect();
-        setIsScrolled(rect.top <= 100);
-      }
-      
-      // Detectar si está en la sección RSVP
-      const rsvpSection = document.getElementById('rsvp');
-      if (rsvpSection) {
-        const rect = rsvpSection.getBoundingClientRect();
+
+      // Lógica para el fondo de la navbar
+      const heroSection = document.querySelector('section'); // Asumiendo que la primera sección es hero
+      const footerSection = document.getElementById('footer');
+
+      if (heroSection && footerSection) {
+        const heroRect = heroSection.getBoundingClientRect();
+        const footerRect = footerSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        setIsInRSVPSection(rect.top <= windowHeight * 0.5 && rect.bottom >= windowHeight * 0.5);
+
+        // Es transparente si el final de la sección hero aún está visible
+        const isHeroVisible = heroRect.bottom > 100;
+        setIsScrolled(!isHeroVisible);
+
+        // Es transparente si el inicio del footer está a menos del 50% de la altura de la ventana
+        const isFooterVisible = footerRect.top < windowHeight * 0.5;
+        setIsInFooterSection(isFooterVisible);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Llamar una vez al inicio para establecer el estado inicial
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
@@ -67,13 +69,13 @@ const Navbar = () => {
       return 'bg-black/95 shadow-lg hover:bg-black';
     }
     
-    if (isInRSVPSection) {
+    // En la sección hero (cuando no está scrolled), usar fondo transparente
+    if (!isScrolled || isInFooterSection) {
       return 'bg-white/10 hover:bg-white/15';
     }
     
-    return isScrolled 
-      ? 'bg-white/95 shadow-lg hover:bg-white' 
-      : 'bg-white/10 hover:bg-white/15';
+    // En todas las demás secciones, usar fondo blanco
+    return 'bg-white/95 shadow-lg hover:bg-white';
   };
 
   const getTextStyle = () => {
@@ -81,13 +83,13 @@ const Navbar = () => {
       return 'text-white/70 hover:text-white';
     }
     
-    if (isInRSVPSection) {
+    // En la sección hero (cuando no está scrolled), usar texto blanco
+    if (!isScrolled || isInFooterSection) {
       return 'text-white/60 hover:text-white';
     }
     
-    return isScrolled 
-      ? 'text-black/70 hover:text-black' 
-      : 'text-white/60 hover:text-white';
+    // En todas las demás secciones, usar texto #543c24
+    return 'text-[#543c24]/70 hover:text-[#543c24]';
   };
 
   const getLineStyle = () => {
@@ -95,11 +97,13 @@ const Navbar = () => {
       return 'bg-white';
     }
     
-    if (isInRSVPSection) {
+    // En la sección hero (cuando no está scrolled), usar línea blanca
+    if (!isScrolled || isInFooterSection) {
       return 'bg-white';
     }
     
-    return isScrolled ? 'bg-black' : 'bg-white';
+    // En todas las demás secciones, usar línea #543c24
+    return 'bg-[#543c24]';
   };
 
   const getDecorativeLineStyle = () => {
@@ -107,11 +111,13 @@ const Navbar = () => {
       return 'bg-white/30';
     }
     
-    if (isInRSVPSection) {
+    // En la sección hero (cuando no está scrolled), usar línea decorativa blanca
+    if (!isScrolled || isInFooterSection) {
       return 'bg-white/30';
     }
     
-    return isScrolled ? 'bg-black/30' : 'bg-white/30';
+    // En todas las demás secciones, usar línea decorativa #543c24
+    return 'bg-[#543c24]/30';
   };
 
   const handleNavClick = (id: string) => {
@@ -198,7 +204,7 @@ const Navbar = () => {
                 </a>
                 {index < 3 && (
                   <span className={`ml-2 sm:ml-3 transition-colors duration-500 ${
-                    isNightMode ? 'text-white/30' : (isInRSVPSection ? 'text-white/30' : (isScrolled ? 'text-black/30' : 'text-white/30'))
+                    isNightMode ? 'text-white/30' : (!isScrolled || isInFooterSection ? 'text-white/30' : 'text-[#543c24]/30')
                   }`}>·</span>
                 )}
               </li>
