@@ -1,6 +1,6 @@
 "use client"
 import LocationSection from './components/LocationSection';
-import CoupleSection from './components/CoupleSection';
+
 import DressCodeSection from './components/DressCodeSection';
 import MessageSection from './components/MessageSection';
 import RSVPSection from './components/RSVPSection';

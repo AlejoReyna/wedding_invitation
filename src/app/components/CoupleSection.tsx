@@ -1,69 +1,15 @@
 "use client"
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 
 export default function WeddingInvitation() {
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
-  const [scrollScale, setScrollScale] = useState(0.6);
+
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Improved scroll-based zoom effect with smoother transitions
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
 
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculate the center point of the element
-      const elementCenter = rect.top + rect.height / 2;
-      const windowCenter = windowHeight / 2;
-      
-      // Calculate distance from element center to window center
-      const distance = Math.abs(elementCenter - windowCenter);
-      const maxDistance = windowHeight;
-      
-      // Create a smooth easing function (ease-out cubic)
-      let progress = 1 - (distance / maxDistance);
-      progress = Math.max(0, Math.min(1, progress));
-      
-      // Apply easing function for more natural movement
-      const easeOutCubic = (t: number): number => {
-        return 1 - Math.pow(1 - t, 3);
-      };
-      
-      const easedProgress = easeOutCubic(progress);
-      
-      // Scale from deeper zoom (0.6) to slightly enlarged (1.05)
-      const minScale = 0.6;  // Start with more depth
-      const maxScale = 1.05; // Less aggressive max scale
-      const scale = minScale + (easedProgress * (maxScale - minScale));
-      
-      setScrollScale(scale);
-    };
 
-    // Throttle scroll events for better performance
-    let ticking = false;
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
 
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-    handleScroll(); // Initial call
-
-    return () => window.removeEventListener('scroll', throttledHandleScroll);
-  }, []);
-
-  const photos = [
-    { src: '/p1.JPG', alt: 'Andrea & Aldo - Foto 1' },
-    { src: '/p2.JPG', alt: 'Andrea & Aldo - Foto 2' },
-  ];
 
   // Hand-drawn floral SVG pattern
   const FloralPattern = () => (

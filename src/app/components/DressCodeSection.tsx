@@ -48,8 +48,8 @@ export default function DressCodeSection() {
   const ElegantDress = () => (
     <div className="flex items-center justify-center">
       <Image 
-
-alt="Vestido de cóctel" 
+        src="https://cdn-icons-png.flaticon.com/512/1785/1785264.png"
+        alt="Vestido de cóctel" 
         width={48}
         height={60}
         className="w-12 h-15 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
