@@ -36,7 +36,7 @@ export default function DressCodeSection() {
   const FormalSuit = () => (
     <div className="flex items-center justify-center">
       <Image 
-        src="https://cdn-icons-png.flaticon.com/512/2022/2022794.png" 
+        src="https://cdn-icons-png.flaticon.com/512/1785/1785255.png" 
         alt="Tuxedo formal" 
         width={48}
         height={60}
@@ -48,8 +48,8 @@ export default function DressCodeSection() {
   const ElegantDress = () => (
     <div className="flex items-center justify-center">
       <Image 
-        src="https://cdn-icons-png.flaticon.com/512/88/88762.png" 
-        alt="Vestido de cóctel" 
+
+alt="Vestido de cóctel" 
         width={48}
         height={60}
         className="w-12 h-15 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
@@ -72,14 +72,13 @@ export default function DressCodeSection() {
           </div>
 
           {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-light tracking-[0.4em] uppercase text-gray-900 mb-12 garamond-300">
+          <h2 className="text-3xl md:text-4xl font-light tracking-[0.4em] uppercase text-gray-900 mb-6 garamond-300">
             DRESS CODE
           </h2>
 
           {/* Description */}
-          <p className="text-lg md:text-xl font-light text-gray-700 leading-relaxed tracking-wide garamond-300 max-w-lg mx-auto">
-            Vístanse para brillar en esta noche mágica. Elegancia y sofisticación son la clave. 
-            Caballeros en traje, damas en vestido de gala o elegante.
+          <p className="text-lg md:text-xl font-light text-gray-700 leading-relaxed tracking-wide garamond-300 max-w-lg mx-6">
+            Lo importante es que estés cómodo (: 
           </p>
 
         </div>

@@ -9,7 +9,7 @@ import ItinerarySection from './components/ItinerarySection';
 import CountdownTimer from '../components/CountdownTimer';
 import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
-import ScrollIndicator from './components/ScrollIndicator';
+
 import { ThemeProvider } from './context/ThemeContext';
 import { useNotchColor } from '../hooks/useNotchColor';
 
@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <ThemeProvider>
       <Navbar />
-      <ScrollIndicator />
+      
       <section 
         id="hero-section"
         ref={heroSectionRef}

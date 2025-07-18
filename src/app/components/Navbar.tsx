@@ -37,7 +37,7 @@ const Navbar = () => {
       }
 
       // Lógica para el fondo de la navbar
-      const heroSection = document.querySelector('section'); // Asumiendo que la primera sección es hero
+      const heroSection = document.getElementById('hero-section');
       const footerSection = document.getElementById('footer');
 
       if (heroSection && footerSection) {
@@ -45,12 +45,11 @@ const Navbar = () => {
         const footerRect = footerSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
-        // Es transparente si el final de la sección hero aún está visible
-        const isHeroVisible = heroRect.bottom > 100;
-        setIsScrolled(!isHeroVisible);
+        // Se considera que se ha hecho scroll cuando la parte inferior de la sección hero está por encima de la navbar (100px)
+        setIsScrolled(heroRect.bottom < 100);
 
-        // Es transparente si el inicio del footer está a menos del 50% de la altura de la ventana
-        const isFooterVisible = footerRect.top < windowHeight * 0.5;
+        // Es transparente si el inicio del footer está a menos del 80% de la altura de la ventana
+        const isFooterVisible = footerRect.top < windowHeight * 0.8;
         setIsInFooterSection(isFooterVisible);
       }
 
@@ -68,13 +67,18 @@ const Navbar = () => {
     if (isNightMode) {
       return 'bg-black/95 shadow-lg hover:bg-black';
     }
-    
-    // En la sección hero (cuando no está scrolled), usar fondo transparente
-    if (!isScrolled || isInFooterSection) {
+
+    // Si está en la sección del footer, es transparente
+    if (isInFooterSection) {
+      return 'bg-white/10 hover:bg-white/15';
+    }
+
+    // Si no ha hecho scroll (está en hero), es transparente
+    if (!isScrolled) {
       return 'bg-white/10 hover:bg-white/15';
     }
     
-    // En todas las demás secciones, usar fondo blanco
+    // En todas las demás secciones, es blanco
     return 'bg-white/95 shadow-lg hover:bg-white';
   };
 
