@@ -78,7 +78,7 @@ export default function LocationSection() {
                 
                 {/* Title */}
                 <h3 className="text-3xl md:text-4xl font-light italic text-stone-800 mb-4" style={{fontFamily: 'Georgia, serif'}}>
-                  La Ceremonia
+                  Ceremonia
                 </h3>
                 
                 {/* Time */}
@@ -143,7 +143,7 @@ export default function LocationSection() {
                 
                 {/* Title */}
                 <h3 className="text-3xl md:text-4xl font-light italic text-stone-800 mb-4" style={{fontFamily: 'Georgia, serif'}}>
-                  La Recepción
+                  Recepción
                 </h3>
                 
                 {/* Time */}
