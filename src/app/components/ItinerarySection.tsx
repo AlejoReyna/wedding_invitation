@@ -292,7 +292,7 @@ export default function ItinerarySection() {
               className={`w-1 transition-colors duration-500 rounded-full ${
                 isNightMode ? 'bg-white/20' : 'bg-[#d4c4b0]/40'
               }`}
-              style={{ height: '100%' }}
+              style={{ height: '90%' }}
             ></div>
             
             {/* Moving dot */}
