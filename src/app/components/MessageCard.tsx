@@ -47,131 +47,138 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
   };
 
   return (
-    <div className={`relative ${className}`}>
-      {/* Decorative background elements */}
-      <div className="absolute -top-4 -left-4 w-20 h-20 bg-gradient-to-br from-[#d5b7af]/20 to-[#c59c8e]/20 rounded-full blur-xl"></div>
-      <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-[#b97a5d]/20 to-[#845845]/20 rounded-full blur-xl"></div>
-      
-      <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-[0_20px_50px_rgba(133,88,69,0.15)] border border-[#d5b7af]/30 overflow-hidden">
-        {/* Decorative corner elements */}
-        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#d5b7af]/10 to-transparent rounded-full transform translate-x-8 -translate-y-8"></div>
-        <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-[#c59c8e]/10 to-transparent rounded-full transform -translate-x-6 translate-y-6"></div>
+    <div className={`group ${className}`}>
+      <div className="bg-white overflow-hidden border-l-4 border-[#d5b7af] shadow-elegant hover:shadow-elegant-hover hover:border-[#b97a5d] transition-all duration-700 transform hover:-translate-y-2">
         
-        {/* Decorative header elements */}
-        <div className="relative mb-8">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#b97a5d] to-transparent"></div>
-            <div className="relative">
-              <FaHeart className="text-2xl text-[#b97a5d] drop-shadow-sm" />
-              <div className="absolute inset-0 animate-pulse">
-                <FaHeart className="text-2xl text-[#d5b7af]/50" />
-              </div>
-            </div>
-            <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#b97a5d] to-transparent"></div>
-          </div>
+        {/* Content Section */}
+        <div className="p-10 md:p-12 relative">
           
-          <p className="text-center text-sm text-[#845845]/70 garamond-300 font-light italic">
-            Comparte tus buenos deseos con nosotros
-          </p>
+          {/* Decorative Element */}
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-[#c59c8e]"></div>
+          
+          {/* Header Section */}
+          <div className="text-center mb-8">
+            {/* Title */}
+            <h3 className="text-3xl md:text-4xl font-light text-[#707556] mb-6 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
+              Mensaje
+            </h3>
+            
+            {/* Subtitle */}
+            <div className="mb-8">
+              <p className="text-[#845845]/80 text-lg tracking-[0.15em] font-light garamond-300">
+                Comparte tus buenos deseos
+              </p>
+            </div>
+            
+            {/* Divider */}
+            <div className="flex justify-center items-center mb-8">
+              <div className="w-8 h-px bg-[#c59c8e]"></div>
+              <div className="w-2 h-2 border border-[#c59c8e] transform rotate-45 mx-4"></div>
+              <div className="w-8 h-px bg-[#c59c8e]"></div>
+            </div>
+          </div>
+
+          {/* Form Section */}
+          <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+            <div className="space-y-6">
+              <div className="group/input">
+                <label htmlFor="name" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
+                  Nombre
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full px-5 py-4 rounded-2xl border-2 border-[#d5b7af]/30 focus:outline-none focus:border-[#b97a5d] focus:ring-4 focus:ring-[#d5b7af]/20 transition-all duration-300 bg-white/80 garamond-300 text-[#707556] placeholder-[#c59c8e]/60"
+                    placeholder="Tu nombre completo"
+                  />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#d5b7af]/5 to-[#c59c8e]/5 pointer-events-none opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+
+              <div className="group/input">
+                <label htmlFor="email" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
+                  Correo electrónico
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full px-5 py-4 rounded-2xl border-2 border-[#d5b7af]/30 focus:outline-none focus:border-[#b97a5d] focus:ring-4 focus:ring-[#d5b7af]/20 transition-all duration-300 bg-white/80 garamond-300 text-[#707556] placeholder-[#c59c8e]/60"
+                    placeholder="tu@email.com"
+                  />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#d5b7af]/5 to-[#c59c8e]/5 pointer-events-none opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+
+              <div className="group/input">
+                <label htmlFor="message" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
+                  Mensaje
+                </label>
+                <div className="relative">
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    className="w-full px-5 py-4 rounded-2xl border-2 border-[#d5b7af]/30 focus:outline-none focus:border-[#b97a5d] focus:ring-4 focus:ring-[#d5b7af]/20 transition-all duration-300 bg-white/80 resize-none garamond-300 text-[#707556] placeholder-[#c59c8e]/60"
+                    placeholder="Comparte tus buenos deseos y bendiciones para nuestra nueva vida juntos..."
+                  ></textarea>
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#d5b7af]/5 to-[#c59c8e]/5 pointer-events-none opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Button */}
+            <div className="pt-6">
+              <button
+                type="submit"
+                disabled={formStatus === 'loading'}
+                className="group/btn w-full inline-flex items-center justify-center gap-3 px-8 py-4 border border-[#c59c8e] hover:border-[#b97a5d] text-[#707556] hover:text-[#845845] transition-all duration-400 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <div className="absolute inset-0 bg-[#d5b7af]/10 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-400"></div>
+                <FaEnvelope className="text-lg relative z-10 transform group-hover/btn:rotate-12 transition-transform duration-300" />
+                <span className="font-light tracking-[0.1em] uppercase text-sm relative z-10 garamond-300">
+                  {formStatus === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
+                </span>
+              </button>
+            </div>
+
+            {/* Status messages */}
+            <div className="min-h-[24px] flex items-center justify-center pt-4">
+              {formStatus === 'success' && (
+                <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-2 rounded-full garamond-300 text-sm">
+                  <FaHeart className="text-xs" />
+                  <span>¡Mensaje enviado con éxito!</span>
+                </div>
+              )}
+              {formStatus === 'error' && (
+                <div className="flex items-center gap-2 text-red-600 bg-red-50 px-4 py-2 rounded-full garamond-300 text-sm">
+                  <span>Error al enviar. Intenta de nuevo.</span>
+                </div>
+              )}
+            </div>
+          </form>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-          <div className="space-y-6">
-            <div className="group">
-              <label htmlFor="name" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
-                Nombre
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="w-full px-5 py-4 rounded-2xl border-2 border-[#d5b7af]/30 focus:outline-none focus:border-[#b97a5d] focus:ring-4 focus:ring-[#d5b7af]/20 transition-all duration-300 bg-white/80 garamond-300 text-[#707556] placeholder-[#c59c8e]/60"
-                  placeholder="Tu nombre completo"
-                />
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#d5b7af]/5 to-[#c59c8e]/5 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            </div>
-
-            <div className="group">
-              <label htmlFor="email" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
-                Correo electrónico
-              </label>
-              <div className="relative">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-5 py-4 rounded-2xl border-2 border-[#d5b7af]/30 focus:outline-none focus:border-[#b97a5d] focus:ring-4 focus:ring-[#d5b7af]/20 transition-all duration-300 bg-white/80 garamond-300 text-[#707556] placeholder-[#c59c8e]/60"
-                  placeholder="tu@email.com"
-                />
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#d5b7af]/5 to-[#c59c8e]/5 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            </div>
-
-            <div className="group">
-              <label htmlFor="message" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
-                Mensaje
-              </label>
-              <div className="relative">
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={5}
-                  className="w-full px-5 py-4 rounded-2xl border-2 border-[#d5b7af]/30 focus:outline-none focus:border-[#b97a5d] focus:ring-4 focus:ring-[#d5b7af]/20 transition-all duration-300 bg-white/80 resize-none garamond-300 text-[#707556] placeholder-[#c59c8e]/60"
-                  placeholder="Comparte tus buenos deseos y bendiciones para nuestra nueva vida juntos..."
-                ></textarea>
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#d5b7af]/5 to-[#c59c8e]/5 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-4">
-            <button
-              type="submit"
-              disabled={formStatus === 'loading'}
-              className="group relative w-full py-4 px-8 bg-gradient-to-r from-[#845845] to-[#b97a5d] text-white font-light tracking-[0.1em] rounded-2xl hover:from-[#707556] hover:to-[#845845] transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed garamond-300 uppercase text-sm shadow-[0_10px_30px_rgba(133,88,69,0.3)] hover:shadow-[0_15px_40px_rgba(112,117,86,0.4)] hover:-translate-y-1 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative flex items-center justify-center gap-2">
-                <FaEnvelope className="text-sm" />
-                <span>{formStatus === 'loading' ? 'Enviando...' : 'Enviar mensaje'}</span>
-              </div>
-            </button>
-          </div>
-
-          {/* Status messages */}
-          <div className="min-h-[24px] flex items-center justify-center">
-            {formStatus === 'success' && (
-              <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-2 rounded-full garamond-300 text-sm">
-                <FaHeart className="text-xs" />
-                <span>¡Mensaje enviado con éxito!</span>
-              </div>
-            )}
-            {formStatus === 'error' && (
-              <div className="flex items-center gap-2 text-red-600 bg-red-50 px-4 py-2 rounded-full garamond-300 text-sm">
-                <span>Error al enviar. Intenta de nuevo.</span>
-              </div>
-            )}
-          </div>
-        </form>
       </div>
 
       <style jsx>{`
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.5;
-          }
+        .shadow-elegant {
+          box-shadow: 
+            0 4px 6px -1px rgba(133, 88, 69, 0.1),
+            0 20px 25px -5px rgba(133, 88, 69, 0.1),
+            0 0 0 1px rgba(133, 88, 69, 0.05);
         }
         
-        .animate-pulse {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .shadow-elegant-hover {
+          box-shadow: 
+            0 10px 15px -3px rgba(133, 88, 69, 0.1),
+            0 25px 50px -12px rgba(133, 88, 69, 0.15),
+            0 0 0 1px rgba(133, 88, 69, 0.05);
         }
       `}</style>
     </div>

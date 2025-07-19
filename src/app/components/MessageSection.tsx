@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
-import { FaGift, FaCreditCard, FaHeart, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGift, FaCreditCard, FaHeart, FaMapMarkerAlt, FaPenFancy } from 'react-icons/fa';
 import MessageCard from './MessageCard';
 
 export default function MessageSection() {
@@ -62,33 +62,77 @@ export default function MessageSection() {
       </div>
 
       <div className="max-w-6xl mx-auto text-gray-800 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-20">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#b97a5d] to-transparent"></div>
-            <FaHeart className="text-3xl text-[#b97a5d]" />
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#b97a5d] to-transparent"></div>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl font-light tracking-[0.2em] uppercase text-[#707556] mb-6 garamond-300 relative">
-            Mensaje & Regalos
-            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-[#b97a5d] via-[#c59c8e] to-[#d5b7af]"></div>
-          </h2>
-          
-          <p className="text-lg font-light text-[#845845]/80 tracking-wide garamond-300 max-w-2xl mx-auto leading-relaxed">
-            Comparte tus buenos deseos y conoce nuestras sugerencias para celebrar juntos
-          </p>
-        </div>
+       
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Message Form */}
-          <div className="order-1">
+        {/* Grid Container - 50% 50% */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start max-w-[920px] mx-auto">
+          
+          {/* Left Column - Message Invitation */}
+          <div className="group order-1">
+            <div className="p-10 md:p-12 text-center relative bg-[#fefcf8]/95 backdrop-blur-sm rounded-3xl shadow-[0_20px_50px_rgba(133,88,69,0.15)] border border-[#d5b7af]/30">
+              {/* Icon */}
+              <div className="flex justify-center mb-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#d5b7af] to-[#c59c8e] rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                  <FaPenFancy className="text-white text-xl" />
+                </div>
+              </div>
+              
+              {/* Title */}
+              <h3 className="text-4xl md:text-5xl font-light text-[#707556] mb-6 tracking-wide garamond-300">
+                Comparte tus Deseos
+              </h3>
+              
+              {/* Divider */}
+              <div className="flex justify-center items-center mb-8">
+                <div className="w-8 h-px bg-[#c59c8e]"></div>
+                <div className="w-2 h-2 border border-[#c59c8e] transform rotate-45 mx-4"></div>
+                <div className="w-8 h-px bg-[#c59c8e]"></div>
+              </div>
+              
+              {/* Message Content */}
+              <div className="space-y-6 mb-10">
+                <p className="text-[#845845] text-xl font-medium tracking-wide garamond-300">
+                  Déjanos un mensaje especial
+                </p>
+                <p className="text-[#845845]/80 text-base leading-relaxed garamond-300">
+                  Tus palabras de amor y buenos deseos serán un tesoro que guardaremos para siempre en nuestros corazones.
+                </p>
+                <p className="text-[#845845]/70 text-base italic garamond-300">
+                  Escribe desde el corazón y comparte la alegría de este momento tan especial con nosotros.
+                </p>
+              </div>
+              
+              {/* Decorative Quote */}
+              <div className="bg-gradient-to-r from-[#d5b7af]/10 to-[#c59c8e]/10 rounded-xl p-6 border border-[#d5b7af]/30 mb-8">
+                <p className="text-[#845845]/80 text-base italic garamond-300 leading-relaxed">
+                  &ldquo;Las palabras del corazón son el regalo más hermoso que podemos recibir&rdquo;
+                </p>
+              </div>
+              
+              {/* Call to Action */}
+              <div className="space-y-3">
+                <div className="w-12 h-px bg-gradient-to-r from-[#b97a5d] to-[#c59c8e] mx-auto"></div>
+                <p className="text-[#707556] text-base font-medium tracking-[0.1em] uppercase garamond-300">
+                  Completa el formulario
+                </p>
+                <div className="flex items-center justify-center gap-2 text-[#845845]/60">
+                  <FaHeart className="text-sm" />
+                  <span className="text-sm tracking-wide">Con amor, Andrea & Aldo</span>
+                  <FaHeart className="text-sm" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Message Form */}
+          <div className="order-2">
             <MessageCard className="transform hover:scale-[1.02] transition-transform duration-300" />
           </div>
 
-          {/* Gift Suggestions */}
+          {/* COMMENTED OUT - Gift Suggestions Section */}
+          {/* 
           <div className="space-y-8 order-2">
-            {/* Quote Card */}
+            
             <div className="relative">
               <div className="bg-gradient-to-br from-[#d5b7af]/20 to-[#c59c8e]/20 rounded-3xl p-8 border border-[#d5b7af]/30 backdrop-blur-sm">
                 <div className="text-center relative">
@@ -106,14 +150,14 @@ export default function MessageSection() {
               </div>
             </div>
 
-            {/* Gift Info Card */}
+            
             <div className="relative">
-              {/* Decorative background elements */}
+              
               <div className="absolute -top-2 -left-2 w-16 h-16 bg-gradient-to-br from-[#d5b7af]/20 to-[#c59c8e]/20 rounded-full blur-xl"></div>
               <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-gradient-to-br from-[#b97a5d]/20 to-[#845845]/20 rounded-full blur-xl"></div>
               
               <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-[0_20px_50px_rgba(133,88,69,0.15)] border border-[#d5b7af]/30 overflow-hidden">
-                {/* Decorative corner */}
+                
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#d5b7af]/10 to-transparent rounded-full transform translate-x-6 -translate-y-6"></div>
                 
                 <div className="relative z-10">
@@ -136,7 +180,7 @@ export default function MessageSection() {
                       </p>
                     </div>
 
-                    {/* Option 1: Envelope */}
+                    
                     <div className="bg-gradient-to-r from-[#d5b7af]/10 to-[#c59c8e]/10 rounded-2xl p-6 border border-[#d5b7af]/20">
                       <div className="flex items-start gap-4">
                         <div className="bg-white rounded-full p-3 shadow-md">
@@ -154,7 +198,7 @@ export default function MessageSection() {
                       </div>
                     </div>
 
-                    {/* Option 2: Transfer */}
+                    
                     <div className="bg-gradient-to-r from-[#c59c8e]/10 to-[#b97a5d]/10 rounded-2xl p-6 border border-[#c59c8e]/20">
                       <div className="flex items-start gap-4">
                         <div className="bg-white rounded-full p-3 shadow-md">
@@ -190,7 +234,7 @@ export default function MessageSection() {
               </div>
             </div>
 
-            {/* Registry Info */}
+            
             <div className="relative">
               <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-[0_15px_40px_rgba(133,88,69,0.1)] border border-[#d5b7af]/30 overflow-hidden">
                 <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-[#d5b7af]/10 to-transparent rounded-full transform translate-x-4 -translate-y-4"></div>
@@ -225,10 +269,25 @@ export default function MessageSection() {
               </div>
             </div>
           </div>
+          */}
         </div>
       </div>
 
       <style jsx>{`
+        .shadow-elegant {
+          box-shadow: 
+            0 4px 6px -1px rgba(133, 88, 69, 0.1),
+            0 20px 25px -5px rgba(133, 88, 69, 0.1),
+            0 0 0 1px rgba(133, 88, 69, 0.05);
+        }
+        
+        .shadow-elegant-hover {
+          box-shadow: 
+            0 10px 15px -3px rgba(133, 88, 69, 0.1),
+            0 25px 50px -12px rgba(133, 88, 69, 0.15),
+            0 0 0 1px rgba(133, 88, 69, 0.05);
+        }
+
         @keyframes push-up {
           0% {
             opacity: 0;
