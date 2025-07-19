@@ -126,7 +126,7 @@ export default function Gallery() {
         <div className="text-center overflow-hidden">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] mb-6 relative inline-block">
             <span className="relative inline-block overflow-hidden">
-              <span className="inline-block animate-reveal-from-left">¡Nos casamos!</span>
+              <span className="inline-block animate-reveal-from-left">¡ Nos casamos !</span>
               <span className="absolute left-0 top-0 w-full h-full bg-[#F8F6F3] animate-slide-right origin-left"></span>
             </span>
           </h2>
