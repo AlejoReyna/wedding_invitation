@@ -3,22 +3,21 @@ import React, { useState, useRef, useEffect } from 'react';
 
 interface ItineraryItem {
   time: string;
-  displayTime: string; // Tiempo para mostrar grande (ej: "04:30")
+  displayTime: string;
   title: string;
   description: string;
   location?: string;
 }
 
 export default function ItinerarySection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [hasViewedAll, setHasViewedAll] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isLocked, setIsLocked] = useState(false);
+  const [hasCompletedNavigation, setHasCompletedNavigation] = useState(false);
   const [viewedItems, setViewedItems] = useState<Set<number>>(new Set([0]));
-  const [isInViewport, setIsInViewport] = useState(false);
-  const touchStartX = useRef<number>(0);
-  const touchEndX = useRef<number>(0);
-  const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number>(0);
+  const touchEndY = useRef<number>(0);
+  const savedScrollPosition = useRef<number>(0);
 
   const itineraryItems: ItineraryItem[] = [
     {
@@ -44,285 +43,311 @@ export default function ItinerarySection() {
     }
   ];
 
-  // Intersection Observer para detectar cuando la sección está en viewport
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Solo activar si la sección está completamente visible (90% o más)
-        const isFullyVisible = entry.intersectionRatio >= 0.9;
-        setIsInViewport(isFullyVisible);
-      },
-      {
-        threshold: [0.8, 0.9, 1.0], // Múltiples thresholds para mejor control
-        rootMargin: '0px' // Sin margen para ser más preciso
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Control del scroll del body
-  useEffect(() => {
-    let scrollPosition = 0;
+  // Función para bloquear scroll
+  const lockScroll = () => {
+    if (isLocked) return;
     
-    if (isInViewport && !hasViewedAll) {
-      // Guardar posición actual antes de bloquear
-      scrollPosition = window.pageYOffset;
-      
-      // Bloquear scroll con un pequeño delay para evitar conflictos
-      const timer = setTimeout(() => {
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollPosition}px`;
-        document.body.style.width = '100%';
-        document.body.style.left = '0';
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    } else if (!isInViewport || hasViewedAll) {
-      // Liberar scroll
-      const savedPosition = parseInt(document.body.style.top || '0') * -1;
-      
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.left = '';
-      
-      // Restaurar posición solo si hay una guardada
-      if (savedPosition > 0) {
-        window.scrollTo(0, savedPosition);
-      }
+    savedScrollPosition.current = window.pageYOffset;
+    
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollPosition.current}px`;
+    document.body.style.width = '100%';
+    document.body.style.left = '0';
+    
+    setIsLocked(true);
+  };
+
+  // Función para desbloquear scroll
+  const unlockScroll = (shouldRestorePosition = true) => {
+    if (!isLocked) return;
+
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.left = '';
+
+    if (shouldRestorePosition && !hasCompletedNavigation) {
+      window.scrollTo(0, savedScrollPosition.current);
     }
+
+    setIsLocked(false);
+  };
+
+  // Detector de posición mejorado
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current || hasCompletedNavigation) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // La sección está completamente visible
+      const isFullyVisible = rect.top <= 10 && rect.bottom >= windowHeight - 10;
+
+      if (isFullyVisible && !isLocked) {
+        lockScroll();
+      } else if (!isFullyVisible && isLocked && !hasCompletedNavigation) {
+        // Solo unlock si nos movemos significativamente fuera
+        if (rect.top > 100 || rect.bottom < windowHeight - 100) {
+          unlockScroll();
+        }
+      }
+    };
+
+    const throttledScroll = throttle(handleScroll, 50);
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    
+    // Check inicial
+    setTimeout(handleScroll, 100);
 
     return () => {
-      // Cleanup al desmontar el componente
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.left = '';
+      window.removeEventListener('scroll', throttledScroll);
     };
-  }, [isInViewport, hasViewedAll]);
+  }, [isLocked, hasCompletedNavigation]);
 
-  // Verificar si se han visto todos los elementos
+  // Throttle helper
+  function throttle(func: Function, limit: number) {
+    let inThrottle: boolean;
+    return function(this: any, ...args: any[]) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
+
+  // Cleanup al desmontar
   useEffect(() => {
-    if (viewedItems.size === itineraryItems.length && !hasViewedAll) {
-      setHasViewedAll(true);
-      // Delay más corto para liberar el scroll
+    return () => {
+      if (isLocked) {
+        unlockScroll(false);
+      }
+    };
+  }, []);
+
+  // Verificar completion
+  useEffect(() => {
+    if (viewedItems.size === itineraryItems.length && !hasCompletedNavigation) {
       setTimeout(() => {
-        setIsInViewport(false);
-      }, 500);
+        setHasCompletedNavigation(true);
+        setTimeout(() => {
+          unlockScroll(false); // No restaurar posición al completar
+        }, 500);
+      }, 2000);
     }
-  }, [viewedItems, hasViewedAll, itineraryItems.length]);
-
-  // Handle touch events for swiping
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) return;
-    
-    const distance = touchStartX.current - touchEndX.current;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe && currentIndex < itineraryItems.length - 1) {
-      nextItem();
-    }
-
-    if (isRightSwipe && currentIndex > 0) {
-      prevItem();
-    }
-  };
+  }, [viewedItems, hasCompletedNavigation, itineraryItems.length]);
 
   // Navigation functions
   const nextItem = () => {
-    if (currentIndex < itineraryItems.length - 1 && !isTransitioning) {
-      setIsTransitioning(true);
-      const newIndex = currentIndex + 1;
-      setCurrentIndex(newIndex);
+    if (activeIndex < itineraryItems.length - 1) {
+      const newIndex = activeIndex + 1;
+      setActiveIndex(newIndex);
       setViewedItems(prev => new Set([...prev, newIndex]));
     }
   };
 
   const prevItem = () => {
-    if (currentIndex > 0 && !isTransitioning) {
-      setIsTransitioning(true);
-      const newIndex = currentIndex - 1;
-      setCurrentIndex(newIndex);
+    if (activeIndex > 0) {
+      const newIndex = activeIndex - 1;
+      setActiveIndex(newIndex);
       setViewedItems(prev => new Set([...prev, newIndex]));
     }
   };
 
   const goToItem = (index: number) => {
-    if (index !== currentIndex && !isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentIndex(index);
-      setViewedItems(prev => new Set([...prev, index]));
+    if (hasCompletedNavigation) return;
+    setActiveIndex(index);
+    setViewedItems(prev => new Set([...prev, index]));
+  };
+
+  // Wheel handler
+  const handleWheel = (e: React.WheelEvent) => {
+    if (!isLocked || hasCompletedNavigation) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (Math.abs(e.deltaY) > 10) {
+      if (e.deltaY > 0) {
+        nextItem();
+      } else {
+        prevItem();
+      }
     }
   };
 
-  // Reset transition state after animation
-  useEffect(() => {
-    if (isTransitioning) {
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [isTransitioning]);
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isLocked || hasCompletedNavigation) return;
+    touchStartY.current = e.touches[0].clientY;
+  };
 
-  // Keyboard navigation
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isLocked || hasCompletedNavigation) return;
+    e.preventDefault();
+    touchEndY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isLocked || hasCompletedNavigation) return;
+    
+    const distance = touchStartY.current - touchEndY.current;
+    if (Math.abs(distance) > 50) {
+      if (distance > 0) {
+        nextItem();
+      } else {
+        prevItem();
+      }
+    }
+  };
+
+  // Keyboard handler
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Solo activar navegación si estamos en la sección Y el scroll está bloqueado
-      if (!isInViewport || hasViewedAll) return;
+      if (!isLocked || hasCompletedNavigation) return;
       
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        prevItem();
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        nextItem();
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        setHasViewedAll(true);
-        setIsInViewport(false);
+      switch(e.key) {
+        case 'ArrowUp':
+        case 'ArrowLeft':
+          e.preventDefault();
+          prevItem();
+          break;
+        case 'ArrowDown':
+        case 'ArrowRight':
+          e.preventDefault();
+          nextItem();
+          break;
+        case 'Escape':
+          e.preventDefault();
+          completeNavigation();
+          break;
       }
     };
 
-    // Solo agregar listener si el scroll está bloqueado
-    if (isInViewport && !hasViewedAll) {
+    if (isLocked && !hasCompletedNavigation) {
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [currentIndex, isInViewport, hasViewedAll]);
+  }, [isLocked, hasCompletedNavigation, activeIndex]);
 
-  const currentItem = itineraryItems[currentIndex];
+  const completeNavigation = () => {
+    setHasCompletedNavigation(true);
+    unlockScroll(false);
+  };
+
+  const currentItem = itineraryItems[activeIndex];
 
   return (
     <section 
       ref={sectionRef}
-      className="w-full py-16 md:py-24 px-4 md:px-8 bg-[#f8f7f5] min-h-screen relative overflow-hidden"
+      className="w-full h-screen px-4 md:px-8 bg-[#f8f7f5] relative overflow-hidden"
+      onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      style={{ touchAction: isLocked ? 'none' : 'auto' }}
     >
       {/* Header */}
-      <div className="text-center mb-12">
-        <h2 className="text-sm md:text-base font-light tracking-[0.4em] uppercase mb-6 text-[#8b7355]">
+      <div className="text-center py-8">
+        <h2 className="text-sm md:text-base font-light tracking-[0.4em] uppercase mb-4 text-[#8b7355]">
           ITINERARIO DEL DÍA
         </h2>
-        <div className="w-24 h-px mx-auto mb-6 bg-[#d4c4b0]"></div>
-        <h3 className="garamond-regular text-3xl md:text-4xl lg:text-5xl font-light tracking-wider text-[#5c5c5c] mb-12">
+        <div className="w-24 h-px mx-auto mb-4 bg-[#d4c4b0]"></div>
+        <h3 className="garamond-regular text-2xl md:text-3xl lg:text-4xl font-light tracking-wider text-[#5c5c5c]">
           Schedule
         </h3>
       </div>
 
       {/* Progress Indicator */}
-      <div className="max-w-md mx-auto mb-8">
-        <div className="flex justify-between items-center text-xs text-[#8b7355] mb-2">
-          <span>{currentIndex + 1} de {itineraryItems.length}</span>
-          <span className={`transition-all duration-500 ${hasViewedAll ? 'text-green-600' : ''}`}>
-            {hasViewedAll ? '✓ Completado' : 'Navegando...'}
-          </span>
+      <div className="text-center mb-6">
+        <div className="text-xs text-[#8b7355] mb-2">
+          {activeIndex + 1} de {itineraryItems.length}
+          {hasCompletedNavigation && <span className="ml-2 text-green-600">✓ Completado</span>}
         </div>
-        <div className="h-1 bg-[#d4c4b0] rounded-full overflow-hidden">
+        <div className="max-w-48 mx-auto h-1 bg-[#d4c4b0] rounded-full overflow-hidden">
           <div 
-            className="h-full bg-[#8b7355] rounded-full transition-all duration-500 ease-out"
-            style={{ width: `${((currentIndex + 1) / itineraryItems.length) * 100}%` }}
+            className="h-full bg-[#8b7355] transition-all duration-500 ease-out rounded-full"
+            style={{ width: `${((activeIndex + 1) / itineraryItems.length) * 100}%` }}
           />
         </div>
       </div>
 
       {/* Main Content Container */}
-      <div 
-        ref={containerRef}
-        className="max-w-6xl mx-auto relative swipe-container"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Content Area with Divider */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[400px] relative">
+      <div className="max-w-6xl mx-auto h-[calc(100vh-300px)] relative">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 h-full items-center">
+          
           {/* Time Display - Left Side */}
-          <div className="flex flex-col items-center lg:items-end justify-center order-1 lg:order-1 relative">
-            <div 
-              className={`transition-all duration-500 ease-in-out transform ${
-                isTransitioning ? 'scale-95 opacity-0' : 'scale-100 opacity-100'
-              }`}
-            >
-              <div className="text-8xl md:text-9xl lg:text-[12rem] font-thin tracking-wider text-[#5c5c5c] leading-none time-display">
+          <div className="flex flex-col items-center lg:items-end justify-center order-1 lg:order-1">
+            <div className="transition-all duration-700 ease-out transform" key={activeIndex}>
+              <div className="text-6xl md:text-8xl lg:text-[10rem] font-thin tracking-wider text-[#5c5c5c] leading-none time-display">
                 {currentItem.displayTime}
               </div>
-              <div className="text-lg md:text-xl text-[#8b7355] font-light tracking-widest mt-4 text-center lg:text-right">
+              <div className="text-base md:text-lg text-[#8b7355] font-light tracking-widest mt-2 text-center lg:text-right transition-all duration-500">
                 {currentItem.time}
               </div>
             </div>
           </div>
 
-          {/* Vertical Divider - Visible solo en desktop */}
+          {/* Vertical Divider - Desktop */}
           <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
             <div className="w-px h-64 bg-gradient-to-b from-transparent via-[#d4c4b0] to-transparent"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="w-3 h-3 bg-[#8b7355] rounded-full border-2 border-[#f8f7f5]"></div>
+              <div className="w-3 h-3 bg-[#8b7355] rounded-full border-2 border-[#f8f7f5] divider-dot animate-pulse"></div>
             </div>
           </div>
 
-          {/* Horizontal Divider - Visible solo en móvil */}
-          <div className="lg:hidden flex justify-center items-center my-8 order-2">
+          {/* Horizontal Divider - Mobile */}
+          <div className="lg:hidden flex justify-center items-center order-2">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#d4c4b0] to-transparent"></div>
             <div className="mx-4">
-              <div className="w-3 h-3 bg-[#8b7355] rounded-full border-2 border-[#f8f7f5]"></div>
+              <div className="w-3 h-3 bg-[#8b7355] rounded-full border-2 border-[#f8f7f5] animate-pulse"></div>
             </div>
             <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#d4c4b0] to-transparent"></div>
           </div>
 
-          {/* Event Details - Right Side */}
+          {/* Content Display - Right Side */}
           <div className="flex flex-col justify-center order-3 lg:order-2">
-            <div 
-              className={`transition-all duration-500 ease-in-out transform ${
-                isTransitioning ? 'translate-x-8 opacity-0' : 'translate-x-0 opacity-100'
-              }`}
-            >
-              <h4 className="text-2xl md:text-3xl lg:text-4xl font-light text-[#5c5c5c] mb-6 tracking-wide">
+            <div className="transition-all duration-700 ease-out transform" key={`content-${activeIndex}`}>
+              <h4 className="text-xl md:text-2xl lg:text-3xl font-light text-[#5c5c5c] mb-4 tracking-wide">
                 {currentItem.title}
               </h4>
-              <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-4 max-w-lg">
+              <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-3 max-w-lg">
                 {currentItem.description}
               </p>
               {currentItem.location && (
-                <p className="text-sm md:text-base text-[#8b7355] font-light tracking-wide">
+                <p className="text-xs md:text-sm text-[#8b7355] font-light tracking-wide">
                   📍 {currentItem.location}
                 </p>
               )}
+              
+              {/* Indicador de item activo */}
+              <div className="mt-4">
+                <div className="w-8 h-0.5 bg-[#8b7355] rounded-full active-indicator transition-all duration-300"></div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Navigation Dots */}
-        <div className="flex justify-center mt-12 space-x-3">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3">
           {itineraryItems.map((_, index) => (
             <button
               key={index}
               onClick={() => goToItem(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 nav-dot relative ${
-                index === currentIndex 
+              disabled={hasCompletedNavigation}
+              className={`w-3 h-3 rounded-full transition-all duration-300 nav-dot ${
+                index === activeIndex 
                   ? 'bg-[#8b7355] scale-125' 
                   : viewedItems.has(index)
                   ? 'bg-[#8b7355] opacity-50'
                   : 'bg-[#d4c4b0] hover:bg-[#8b7355]'
-              }`}
-              aria-label={`Go to event ${index + 1}`}
+              } ${hasCompletedNavigation ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              aria-label={`Go to ${itineraryItems[index].title}`}
             >
-              {viewedItems.has(index) && index !== currentIndex && (
+              {viewedItems.has(index) && index !== activeIndex && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-1 h-1 bg-white rounded-full"></div>
                 </div>
@@ -331,45 +356,51 @@ export default function ItinerarySection() {
           ))}
         </div>
 
-        {/* Swipe Indicators */}
-        <div className="absolute inset-y-0 left-0 flex items-center justify-center w-16 pointer-events-none">
-          <div className={`text-[#d4c4b0] transition-opacity duration-300 swipe-indicator ${
-            currentIndex > 0 ? 'opacity-50' : 'opacity-20'
+        {/* Navigation Arrows */}
+        <div className="absolute inset-y-0 left-0 flex items-center">
+          <div className={`p-2 text-[#d4c4b0] transition-all duration-300 ${
+            activeIndex > 0 && !hasCompletedNavigation ? 'opacity-70 hover:opacity-100' : 'opacity-20'
           }`}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
             </svg>
           </div>
         </div>
 
-        <div className="absolute inset-y-0 right-0 flex items-center justify-center w-16 pointer-events-none">
-          <div className={`text-[#d4c4b0] transition-opacity duration-300 swipe-indicator ${
-            currentIndex < itineraryItems.length - 1 ? 'opacity-50' : 'opacity-20'
+        <div className="absolute inset-y-0 right-0 flex items-center">
+          <div className={`p-2 text-[#d4c4b0] transition-all duration-300 ${
+            activeIndex < itineraryItems.length - 1 && !hasCompletedNavigation ? 'opacity-70 hover:opacity-100' : 'opacity-20'
           }`}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
             </svg>
           </div>
         </div>
       </div>
 
-      {/* Navigation Instructions */}
-      <div className="text-center mt-8">
-        <p className="text-sm text-[#8b7355] font-light">
-          {!hasViewedAll ? (
-            <>
-              Swipe left/right or use arrow keys to navigate • Press ESC to continue
-            </>
+      {/* Instructions */}
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
+        <p className="text-xs text-[#8b7355] font-light">
+          {!hasCompletedNavigation ? (
+            isLocked ? 'Navigate: Scroll, swipe, arrows • ESC to skip' : 'Scroll down to start timeline'
           ) : (
-            'Navigation completed - scroll unlocked'
+            'Timeline completed - continue scrolling'
           )}
         </p>
       </div>
 
       {/* Scroll Lock Indicator */}
-      {isInViewport && !hasViewedAll && (
-        <div className="fixed bottom-4 right-4 z-50 bg-[#8b7355] text-white px-3 py-2 rounded-full text-xs shadow-lg animate-pulse">
-          Scroll locked - Complete navigation
+      {isLocked && !hasCompletedNavigation && (
+        <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
+          <div className="bg-[#8b7355] text-white px-3 py-2 rounded-full text-xs shadow-lg animate-pulse">
+            🔒 Timeline Navigation Mode
+          </div>
+          <button
+            onClick={completeNavigation}
+            className="bg-white/90 text-[#8b7355] px-3 py-1 rounded-full text-xs shadow-lg hover:bg-white transition-all duration-200 border border-[#8b7355]/20"
+          >
+            Exit Timeline
+          </button>
         </div>
       )}
     </section>

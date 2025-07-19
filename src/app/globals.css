@@ -438,3 +438,246 @@ body {
   background-size: 200% 100%;
   animation: shimmer 3s ease-in-out infinite;
 }
+
+/* =====================================================
+   Estilos para Scroll-Based Itinerary
+   ===================================================== */
+
+/* Scroll suave optimizado */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Animaciones para el scroll spy */
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Optimización para el sticky content */
+.sticky-content {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Mejoras para la transición del tiempo */
+.time-transition {
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animación del progress bar superior */
+@keyframes progressSlide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.progress-slide {
+  animation: progressSlide 0.5s ease-out;
+}
+
+/* Indicadores laterales mejorados */
+.progress-dot {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 150%;
+  height: 150%;
+  background: rgba(139, 115, 85, 0.2);
+  border-radius: inherit;
+  transition: transform 0.3s ease;
+}
+
+.progress-dot.active::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Optimización para el scroll en móviles */
+@media (max-width: 768px) {
+  .time-display {
+    font-size: 4rem !important;
+  }
+  
+  .sticky-content {
+    position: relative;
+    top: auto;
+    transform: none;
+  }
+}
+
+/* Efectos de parallax sutil */
+.parallax-content {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Animación del scroll indicator */
+@keyframes scrollBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  40% {
+    transform: translateY(-8px) translateX(-50%);
+  }
+  60% {
+    transform: translateY(-4px) translateX(-50%);
+  }
+}
+
+.scroll-indicator {
+  animation: scrollBounce 2s infinite;
+}
+
+/* Mejoras para la visibilidad del divisor */
+.divider-dot {
+  position: relative;
+  z-index: 10;
+}
+
+.divider-dot::before {
+  animation-duration: 3s;
+}
+
+/* Transiciones optimizadas para contenido */
+.content-item {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+}
+
+.content-item.active {
+  transform: translateY(0) scale(1.02);
+}
+
+.content-item.inactive {
+  transform: translateY(30px) scale(0.98);
+  opacity: 0.6;
+}
+
+/* Mejoras para el header sticky */
+.sticky-header {
+  backdrop-filter: blur(10px);
+  background: rgba(248, 247, 245, 0.9);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.1);
+}
+
+/* Sombras suaves para depth */
+.depth-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación para el indicador activo */
+@keyframes activeIndicator {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    width: 3rem;
+    opacity: 1;
+  }
+}
+
+.active-indicator {
+  animation: activeIndicator 0.6s ease-out;
+}
+
+/* =====================================================
+   Scrollbar personalizado para contenedor
+   ===================================================== */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #d4c4b0;
+  border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #8b7355;
+  border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #6d5a42;
+}
+
+/* Firefox */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #8b7355 #d4c4b0;
+}
+
+/* Contenedor de scroll optimizado */
+.scroll-container {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Animaciones mejoradas para contenido */
+.content-item {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+}
+
+.content-item.active {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.content-item.inactive {
+  transform: translateY(20px) scale(0.97);
+  opacity: 0.4;
+}
+
+/* Optimización para móviles del contenedor 100vh */
+@media (max-width: 768px) {
+  .mobile-vh-fix {
+    height: 100svh; /* Safe area viewport height */
+  }
+  
+  .time-display {
+    font-size: 3.5rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .time-display {
+    font-size: 3rem !important;
+  }
+}
