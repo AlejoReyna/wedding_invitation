@@ -19,8 +19,8 @@ export default function LocationSection() {
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: '-30px'
+        threshold: 0.15,
+        rootMargin: '-20px'
       }
     );
 
@@ -44,8 +44,8 @@ export default function LocationSection() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className={`text-center mb-20 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-        }`}>
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`} style={{ transitionDelay: '200ms' }}>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.4em] uppercase text-stone-800 mb-6 garamond-300 relative">
             Evento principal
             <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
@@ -53,12 +53,14 @@ export default function LocationSection() {
         </div>
 
         {/* Cards Container */}
-        <div className="grid md:grid-cols-2 gap-12 max-w-[920px] mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-[920px] mx-auto">
           
           {/* Ceremonia Card */}
-          <div className={`group transition-all duration-2000 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-          }`} style={{ transitionDelay: '400ms' }}>
+          <div className={`group transition-all duration-2500 ease-out ${
+            isVisible 
+              ? 'opacity-100 translate-y-0 md:translate-x-4' 
+              : 'opacity-0 translate-y-8 translate-x-0'
+          }`} style={{ transitionDelay: '600ms' }}>
             <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2">
               
               {/* Image Section */}
@@ -135,9 +137,11 @@ export default function LocationSection() {
           </div>
 
           {/* Recepción Card */}
-          <div className={`group transition-all duration-2000 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-          }`} style={{ transitionDelay: '700ms' }}>
+          <div className={`group transition-all duration-2500 ease-out ${
+            isVisible 
+              ? 'opacity-100 translate-y-0 md:-translate-x-4' 
+              : 'opacity-0 translate-y-8 translate-x-0'
+          }`} style={{ transitionDelay: '800ms' }}>
             <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2">
               
               {/* Image Section */}
@@ -230,14 +234,25 @@ export default function LocationSection() {
             0 0 0 1px rgba(0, 0, 0, 0.05);
         }
         
-        @keyframes slideInUp {
-          from {
+        @keyframes fadeInSeparate {
+          0% {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px) translateX(0);
           }
-          to {
+          70% {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) translateX(0);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) translateX(var(--final-x, 0));
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .md\\:translate-x-4,
+          .md\\:-translate-x-4 {
+            transform: translateY(0) translateX(0) !important;
           }
         }
       `}</style>
