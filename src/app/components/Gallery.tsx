@@ -123,9 +123,12 @@ export default function Gallery() {
     <div className="relative min-h-screen bg-gradient-to-br from-[#F8F6F3] via-[#F5F3F0] to-[#F0EDE8] py-16 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] mb-6">
-            Nuestra Galería
+        <div className="text-center overflow-hidden">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] mb-6 relative inline-block">
+            <span className="relative inline-block overflow-hidden">
+              <span className="inline-block animate-reveal-from-left">¡Nos casamos!</span>
+              <span className="absolute left-0 top-0 w-full h-full bg-[#F8F6F3] animate-slide-right origin-left"></span>
+            </span>
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
             Algunos momentos especiales juntos

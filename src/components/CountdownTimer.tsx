@@ -91,52 +91,52 @@ export default function CountdownTimer({ targetDate, className = "" }: Countdown
         {/* Los números del countdown - ACTUALIZADO con garamond-300 para armonía tipográfica */}
         <div className="flex flex-wrap justify-center gap-4 md:gap-8">
           
-          {/* Días - Ahora usa la misma fuente que "19 de JUNIO" */}
+          {/* Días */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
-              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+              <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.days)}
-              </span>
+              </div>
+              <div className="text-xs md:text-sm text-white/70 mt-1 uppercase tracking-wider garamond-300">
+                Días
+              </div>
             </div>
-            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
-              Días
-            </span>
           </div>
 
-          {/* Horas - Consistencia tipográfica aplicada */}
+          {/* Horas */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
-              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+              <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.hours)}
-              </span>
+              </div>
+              <div className="text-xs md:text-sm text-white/70 mt-1 uppercase tracking-wider garamond-300">
+                Horas
+              </div>
             </div>
-            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
-              Horas
-            </span>
           </div>
 
-          {/* Minutos - Armonía tipográfica mantenida */}
+          {/* Minutos */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
-              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+              <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.minutes)}
-              </span>
+              </div>
+              <div className="text-xs md:text-sm text-white/70 mt-1 uppercase tracking-wider garamond-300">
+                Minutos
+              </div>
             </div>
-            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
-              Minutos
-            </span>
           </div>
 
-          {/* Segundos - Completando la familia tipográfica unificada */}
+          {/* Segundos */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[60px] md:min-w-[80px]">
-              <span className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+              <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.seconds)}
-              </span>
+              </div>
+              <div className="text-xs md:text-sm text-white/70 mt-1 uppercase tracking-wider garamond-300">
+                Segundos
+              </div>
             </div>
-            <span className="text-xs md:text-sm text-white/70 mt-2 uppercase tracking-wider garamond-300">
-              Segundos
-            </span>
           </div>
         </div>
 
