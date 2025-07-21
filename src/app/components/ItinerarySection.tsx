@@ -55,8 +55,8 @@ export default function ItinerarySection() {
         {/* Vertical Line */}
         <div className="absolute left-8 md:left-1/2 md:transform md:-translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#d4c4b0] via-[#8b7355] to-[#d4c4b0]"></div>
 
-        {/* Events */}
-        <div className="space-y-32 md:space-y-40">
+                 {/* Events */}
+         <div className="space-y-45 md:space-y-56">
           {itineraryItems.map((item, index) => (
             <div key={index} className="relative">
               {/* Timeline Dot */}
