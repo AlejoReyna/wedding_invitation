@@ -93,7 +93,7 @@ export default function CountdownTimer({ targetDate, className = "" }: Countdown
           
           {/* Días */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+            <div className="bg-white/10 backdrop-blur-sm  p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
               <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.days)}
               </div>
@@ -105,7 +105,7 @@ export default function CountdownTimer({ targetDate, className = "" }: Countdown
 
           {/* Horas */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+            <div className="bg-white/10 backdrop-blur-sm  p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
               <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.hours)}
               </div>
@@ -117,7 +117,7 @@ export default function CountdownTimer({ targetDate, className = "" }: Countdown
 
           {/* Minutos */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+            <div className="bg-white/10 backdrop-blur-sm  p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
               <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.minutes)}
               </div>
@@ -129,7 +129,7 @@ export default function CountdownTimer({ targetDate, className = "" }: Countdown
 
           {/* Segundos */}
           <div className="flex flex-col items-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
+            <div className="bg-white/10 backdrop-blur-sm  p-3 md:p-4 min-w-[70px] md:min-w-[90px] text-center">
               <div className="text-2xl md:text-4xl font-light text-white tracking-wide garamond-300">
                 {formatNumber(timeLeft.seconds)}
               </div>

@@ -2,6 +2,51 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaGift, FaCreditCard, FaHeart, FaMapMarkerAlt, FaGem, FaHandHoldingHeart } from 'react-icons/fa';
 
+// Componente GiftCard premium
+function GiftCard({ icon: Icon, title, subtitle, content, details, accentColor = "#8a6a5a", className = "" }) {
+  return (
+    <div className={`bg-white/95 backdrop-blur-lg border-[#8a6a5a]/30 p-10 ${className}`}>
+      {/* Header premium con líneas decorativas */}
+      <div className="text-center mb-8 relative">
+        {/* Línea decorativa superior */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-px bg-[#8a6a5a]"></div>
+        
+        <div className="pt-6">
+          <div className="w-16 h-16 mx-auto mb-4" style={{ backgroundColor: accentColor }}>
+            <div className="w-full h-full flex items-center justify-center">
+              <Icon className="text-white text-xl" />
+            </div>
+          </div>
+          <h3 className="text-3xl font-light text-[#4a2a1a] mb-3 tracking-wider">{title}</h3>
+          <p className="text-[#6a4a3a] text-base font-medium">{subtitle}</p>
+        </div>
+        
+        {/* Línea decorativa inferior */}
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-px bg-[#8a6a5a]"></div>
+      </div>
+      
+      <div className="space-y-6">
+        <p className="text-[#4a2a1a] text-lg leading-relaxed font-medium text-center">
+          {content}
+        </p>
+        
+        {details && (
+          <div className="bg-gradient-to-r from-[#f5f1ef] to-[#f0ebe8] border border-[#8a6a5a]/30 p-6">
+            <div className="space-y-4 text-[#4a2a1a]">
+              {details.map((detail, index) => (
+                <div key={index} className="flex justify-between items-center">
+                  <span className="text-[#4a2a1a]/70 font-light tracking-wide uppercase text-sm">{detail.label}:</span>
+                  <span className="font-medium font-mono">{detail.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function GiftSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -40,198 +85,167 @@ export default function GiftSection() {
     };
   }, []);
 
+  const bankDetails = [
+    { label: "Banco", value: "BBVA" },
+    { label: "Cuenta", value: "1234 5678 9012 3456" },
+    { label: "CLABE", value: "012345678901234567" },
+    { label: "Titular", value: "Andrea & Aldo" }
+  ];
+
   return (
     <section 
       ref={sectionRef}
-      className={`min-h-screen w-full bg-gradient-to-b from-[#e4c2b9] via-[#dfb9b0] to-[#d9b0a6] py-16 md:py-24 px-4 md:px-8 relative overflow-hidden transition-all duration-1200 ease-out ${
-        isVisible ? 'opacity-100 animate-sophisticated-enter' : 'opacity-0'
+      className={`min-h-screen w-full relative overflow-hidden transition-all duration-1000 ease-out ${
+        isVisible ? 'opacity-100 animate-elegant-fade-in' : 'opacity-0'
       }`}
+      style={{
+        backgroundColor: '#e4c2b9' // Color sólido mezclado sin degradados
+      }}
     >
-      {/* Subtle background patterns */}
-      <div className="absolute inset-0 opacity-15">
-        <div className="absolute top-1/5 right-1/4 w-72 h-72 bg-gradient-radial from-[#d0a598]/40 via-[#d0a598]/15 to-transparent blur-3xl animate-drift"></div>
-        <div className="absolute bottom-1/4 left-1/6 w-96 h-96 bg-gradient-radial from-[#c69684]/35 via-[#c69684]/12 to-transparent blur-3xl animate-drift-reverse"></div>
-        <div className="absolute top-2/3 right-1/6 w-80 h-80 bg-gradient-radial from-[#9a6b59]/25 via-[#9a6b59]/8 to-transparent blur-2xl animate-drift-slow"></div>
+      {/* Elegant background patterns */}
+      <div className="absolute inset-0 opacity-12">
+        <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-[#d0a598]/20 rounded-full blur-3xl animate-gentle-float"></div>
+        <div className="absolute bottom-1/3 right-1/5 w-80 h-80 bg-[#c69684]/15 rounded-full blur-3xl animate-gentle-float-delay"></div>
+        <div className="absolute top-2/3 left-2/3 w-64 h-64 bg-[#9a6b59]/10 rounded-full blur-2xl animate-gentle-float-slow"></div>
+        <div className="absolute top-1/6 right-1/3 w-72 h-72 bg-[#dfb9b0]/18 rounded-full blur-3xl animate-gentle-float"></div>
+        <div className="absolute bottom-1/6 left-1/3 w-88 h-88 bg-[#d9b0a6]/12 rounded-full blur-3xl animate-gentle-float-delay"></div>
       </div>
 
-      {/* Elegant border accents */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#d0a598]/60 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#d0a598]/60 to-transparent"></div>
-      
-      {/* Floating refined elements */}
-      <div className="absolute top-24 left-16 text-[#d0a598]/30 animate-sophisticated-float">
-        <FaGem className="text-2xl transform rotate-12" />
+      {/* Decorative border elements */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d0a598] to-transparent opacity-70"></div>
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d0a598] to-transparent opacity-70"></div>
+
+      {/* Floating decorative elements */}
+      <div className="absolute top-20 right-16 text-[#c69684]/50 animate-elegant-float">
+        <FaGem className="text-4xl transform rotate-12" />
       </div>
-      <div className="absolute bottom-28 right-20 text-[#c69684]/35 animate-sophisticated-float-delay">
-        <FaHandHoldingHeart className="text-3xl transform -rotate-6" />
+      <div className="absolute bottom-32 left-20 text-[#9a6b59]/45 animate-elegant-float-reverse">
+        <FaHandHoldingHeart className="text-3xl transform -rotate-12" />
+      </div>
+      <div className="absolute top-1/2 right-1/4 text-[#d0a598]/40 animate-elegant-float-delay">
+        <FaHeart className="text-2xl transform rotate-6" />
       </div>
 
-      <div className="max-w-7xl mx-auto text-[#8d5641] relative z-10">
-        {/* Sophisticated header */}
-        <div className="text-center mb-20 relative">
+      <div className="max-w-7xl mx-auto text-[#8d5641] relative z-10 py-16 md:py-24 px-4 md:px-8">
+        {/* Main content grid - Invertida: Cards izquierda, Texto derecha */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center max-w-6xl mx-auto min-h-[70vh]">
           
-          
-          {/* Minimalist divider */}
-          <div className="flex items-center justify-center mt-10 mb-8">
-            <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#d0a598] to-transparent"></div>
-            <div className="mx-8 w-1 h-1 bg-[#c69684]"></div>
-            <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#d0a598] to-transparent"></div>
-          </div>
-        </div>
-
-        {/* Main content */}
-        <div className="max-w-4xl mx-auto space-y-16">
-          
-          {/* Elegant introduction */}
-          <div className="text-center space-y-8">
-            <div className="max-w-3xl mx-auto">
-              <p className="text-[#8d5641]/90 leading-relaxed tracking-wide">
-                <span className="font-serif font-light text-5xl md:text-7xl">Tu presencia</span>
-                <span className="font-sans font-thin text-3xl md:text-7xl text-[#b8856f] tracking-[0.2em]"> es nuestro tesoro más preciado</span>
-              </p>
-              <div className="w-16 h-px bg-[#c69684] mx-auto my-6"></div>
-              <p className="text-lg text-[#8d5641]/75 leading-relaxed font-light">
-                Si deseas honrarnos con un obsequio, te ofrecemos estas opciones con profunda gratitud
-              </p>
-            </div>
-          </div>
-
-          {/* Gift options cards */}
-          <div className="space-y-8">
+          {/* Left Column - Gift Cards */}
+          <div className="order-2 lg:order-1 space-y-8">
             
-            {/* Traditional envelope - Rectangular card */}
-            <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#d0a598]/20 via-[#c69684]/15 to-[#d0a598]/20 blur-sm opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-              
-              <div className="relative bg-white/90 backdrop-blur border border-[#d0a598]/40 shadow-sophisticated p-10 md:p-12 overflow-hidden">
-                {/* Subtle corner accent */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#d0a598]/10 to-transparent"></div>
-                
-                <div className="relative z-10 flex flex-col md:flex-row items-start gap-8">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#d0a598] to-[#c69684] flex items-center justify-center shadow-lg">
-                      <FaHeart className="text-white text-xl" />
-                    </div>
-                  </div>
-                  
-                  <div className="flex-1 space-y-4">
-                    <h3 className="text-2xl font-light text-[#8d5641] tracking-wide">
-                      <span className="font-serif italic">Sobre</span>
-                      <span className="font-sans font-extralight text-lg text-[#b8856f] ml-3 tracking-[0.15em] uppercase">
-                        Tradicional
-                      </span>
-                    </h3>
-                    
-                    <div className="w-12 h-px bg-[#c69684]"></div>
-                    
-                    <p className="text-[#8d5641]/80 text-lg leading-relaxed font-light">
-                      Un sobre con tu contribución será recibido con profundo agradecimiento el día de nuestra celebración. 
-                      Es la forma más tradicional y querida de acompañarnos en este momento especial.
-                    </p>
-                  </div>
-                </div>
+            {/* Traditional envelope - Tarjeta premium */}
+            <div className="relative transform hover:scale-[1.01] transition-all duration-700 ease-out">
+              {/* Subtle glow effect */}
+              <div className="absolute -inset-8 bg-gradient-to-br from-[#d0a598]/30 via-[#c69684]/20 to-[#8d5641]/25 blur-2xl opacity-60"></div>
+              <div className="relative">
+                <GiftCard
+                  icon={FaHeart}
+                  title="Sobre"
+                  subtitle="Tradicional"
+                  content="Un sobre con tu contribución será recibido con profundo agradecimiento el día de nuestra celebración. Es la forma más tradicional y querida de acompañarnos."
+                  accentColor="#d0a598"
+                  className="shadow-premium border-[#d0a598]/40 backdrop-blur-xl"
+                />
               </div>
             </div>
 
-            {/* Bank transfer - Rectangular card */}
-            <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#c69684]/20 via-[#b8856f]/15 to-[#c69684]/20 blur-sm opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-              
-              <div className="relative bg-white/90 backdrop-blur border border-[#c69684]/40 shadow-sophisticated p-10 md:p-12 overflow-hidden">
-                {/* Subtle corner accent */}
-                <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-[#c69684]/10 to-transparent"></div>
-                
-                <div className="relative z-10 space-y-8">
-                  
-                  {/* Header */}
-                  <div className="flex flex-col md:flex-row items-start gap-8">
-                    <div className="flex-shrink-0">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#c69684] to-[#b8856f] flex items-center justify-center shadow-lg">
-                        <FaCreditCard className="text-white text-xl" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1 space-y-4">
-                      <h3 className="text-2xl font-light text-[#8d5641] tracking-wide">
-                        <span className="font-serif italic">Transferencia</span>
-                        <span className="font-sans font-extralight text-lg text-[#b8856f] ml-3 tracking-[0.15em] uppercase">
-                          Bancaria
-                        </span>
-                      </h3>
-                      
-                      <div className="w-12 h-px bg-[#b8856f]"></div>
-                      
-                      <p className="text-[#8d5641]/80 text-lg leading-relaxed font-light">
-                        Para tu comodidad, puedes realizar una transferencia bancaria directa a nuestra cuenta.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Bank details */}
-                  <div className="bg-gradient-to-r from-[#f5f1ef] to-[#f0ebe8] border border-[#d0a598]/30 p-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#8d5641]">
-                      <div className="space-y-3">
-                        <div className="flex justify-between items-center">
-                          <span className="text-[#8d5641]/70 font-light tracking-wide uppercase text-sm">Banco:</span>
-                          <span className="font-medium">BBVA</span>
-                        </div>
-                        <div className="w-full h-px bg-[#d0a598]/30"></div>
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-[#8d5641]/70 font-light tracking-wide uppercase text-sm">Cuenta:</span>
-                          <span className="font-medium font-mono">1234 5678 9012 3456</span>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-3">
-                        <div className="flex justify-between items-center">
-                          <span className="text-[#8d5641]/70 font-light tracking-wide uppercase text-sm">CLABE:</span>
-                          <span className="font-medium font-mono">012345678901234567</span>
-                        </div>
-                        <div className="w-full h-px bg-[#d0a598]/30"></div>
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-[#8d5641]/70 font-light tracking-wide uppercase text-sm">Titular:</span>
-                          <span className="font-medium">Andrea & Aldo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            {/* Bank transfer - Tarjeta premium */}
+            <div className="relative transform hover:scale-[1.01] transition-all duration-700 ease-out">
+              {/* Subtle glow effect */}
+              <div className="absolute -inset-8 bg-gradient-to-br from-[#c69684]/30 via-[#b8856f]/20 to-[#8d5641]/25 blur-2xl opacity-60"></div>
+              <div className="relative">
+                <GiftCard
+                  icon={FaCreditCard}
+                  title="Transferencia"
+                  subtitle="Bancaria"
+                  content="Para tu comodidad, puedes realizar una transferencia bancaria directa a nuestra cuenta."
+                  details={bankDetails}
+                  accentColor="#c69684"
+                  className="shadow-premium border-[#c69684]/40 backdrop-blur-xl"
+                />
               </div>
             </div>
           </div>
 
-          {/* Elegant closing message */}
-          <div className="text-center mt-20">
-            <div className="inline-flex items-center gap-6 px-10 py-6 bg-white/40 backdrop-blur border border-[#d0a598]/30">
-              <FaGem className="text-[#c69684] text-lg" />
-              <span className="text-[#8d5641]/80 text-sm font-light tracking-[0.2em] uppercase">
-                Con infinito amor y gratitud
-              </span>
-              <FaGem className="text-[#c69684] text-lg" />
+          {/* Right Column - Elegant Gift Message - Centrado Verticalmente */}
+          <div className="order-1 lg:order-2 relative flex flex-col justify-center h-full">
+            <div className="text-center">
+              
+              {/* Elegant title con tipografía mejorada */}
+              <h2 className="text-5xl md:text-7xl font-light text-[#8d5641] mb-8 tracking-wider leading-tight">
+                <span className="font-serif italic font-medium">Tu presencia</span>
+                <span className="block font-sans font-light text-4xl md:text-6xl mt-4 text-[#b8856f]">
+                  ES NUESTRO TESORO
+                </span>
+              </h2>
+              
+              {/* Ornamental divider */}
+              <div className="flex items-center justify-center mt-10 mb-8">
+                <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#c69684] to-transparent"></div>
+                <div className="mx-8 w-4 h-4 border-2 border-[#c69684] transform rotate-45 bg-gradient-to-br from-[#e4c2b9] to-[#d0a598]"></div>
+                <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#c69684] to-transparent"></div>
+              </div>
+              
+              {/* Content sections con mejor contraste */}
+              <div className="space-y-10 mb-12">
+                <div className="space-y-6">
+                  <p className="text-[#8d5641] text-3xl md:text-4xl font-semibold tracking-wide leading-relaxed">
+                    Más preciado
+                  </p>
+                  <div className="w-16 h-px bg-[#b8856f] mx-auto"></div>
+                  <p className="text-[#8d5641]/90 text-xl md:text-2xl leading-relaxed max-w-lg mx-auto font-medium">
+                    Si deseas honrarnos con un obsequio, te ofrecemos estas opciones con profunda gratitud
+                  </p>
+                </div>
+              </div>
+
+              {/* Elegant closing message */}
+              <div className="mt-16">
+                <div className="inline-flex items-center gap-6 px-10 py-6 bg-white/40 backdrop-blur border border-[#d0a598]/30">
+                  <FaGem className="text-[#c69684] text-lg" />
+                  <span className="text-[#8d5641]/80 text-sm font-light tracking-[0.2em] uppercase">
+                    Con infinito amor y gratitud
+                  </span>
+                  <FaGem className="text-[#c69684] text-lg" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        .shadow-sophisticated {
+        .shadow-elegant {
           box-shadow: 
-            0 8px 25px -5px rgba(141, 86, 65, 0.12),
-            0 20px 40px -10px rgba(141, 86, 65, 0.08),
-            0 0 0 1px rgba(208, 165, 152, 0.15);
+            0 15px 35px -5px rgba(141, 86, 65, 0.25),
+            0 25px 60px -5px rgba(141, 86, 65, 0.15),
+            0 0 0 1px rgba(208, 165, 152, 0.2);
+        }
+        
+        .shadow-elegant-strong {
+          box-shadow: 
+            0 20px 45px -5px rgba(141, 86, 65, 0.3),
+            0 35px 80px -10px rgba(141, 86, 65, 0.2),
+            0 0 0 1px rgba(208, 165, 152, 0.25);
+        }
+
+        .shadow-premium {
+          box-shadow: 
+            0 25px 50px -12px rgba(141, 86, 65, 0.4),
+            0 40px 100px -15px rgba(141, 86, 65, 0.3),
+            0 0 0 1px rgba(208, 165, 152, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .bg-gradient-radial {
           background: radial-gradient(circle, var(--tw-gradient-stops));
         }
 
-        @keyframes sophisticated-enter {
+        @keyframes elegant-fade-in {
           0% {
             opacity: 0;
-            transform: translateY(60px) scale(0.92);
-            filter: blur(12px);
+            transform: translateY(40px) scale(0.95);
+            filter: blur(10px);
           }
           100% {
             opacity: 1;
@@ -240,79 +254,92 @@ export default function GiftSection() {
           }
         }
 
-        @keyframes sophisticated-float {
+        @keyframes elegant-float {
           0%, 100% {
             transform: translateY(0px) rotate(12deg);
           }
           50% {
-            transform: translateY(-20px) rotate(18deg);
+            transform: translateY(-15px) rotate(18deg);
           }
         }
 
-        @keyframes sophisticated-float-delay {
+        @keyframes elegant-float-reverse {
           0%, 100% {
-            transform: translateY(0px) rotate(-6deg);
+            transform: translateY(0px) rotate(-12deg);
           }
           50% {
-            transform: translateY(-15px) rotate(-12deg);
+            transform: translateY(-12px) rotate(-18deg);
           }
         }
 
-        @keyframes drift {
+        @keyframes elegant-float-delay {
+          0%, 100% {
+            transform: translateY(0px) rotate(6deg);
+          }
+          50% {
+            transform: translateY(-10px) rotate(12deg);
+          }
+        }
+
+        @keyframes gentle-float {
           0%, 100% {
             transform: translateY(0px) translateX(0px) scale(1);
           }
           33% {
-            transform: translateY(-30px) translateX(15px) scale(1.08);
+            transform: translateY(-20px) translateX(10px) scale(1.05);
           }
           66% {
-            transform: translateY(15px) translateX(-20px) scale(0.92);
+            transform: translateY(10px) translateX(-10px) scale(0.95);
           }
         }
 
-        @keyframes drift-reverse {
+        @keyframes gentle-float-delay {
           0%, 100% {
             transform: translateY(0px) translateX(0px) scale(1);
           }
           33% {
-            transform: translateY(20px) translateX(-25px) scale(1.05);
+            transform: translateY(15px) translateX(-15px) scale(1.02);
           }
           66% {
-            transform: translateY(-15px) translateX(20px) scale(0.95);
+            transform: translateY(-10px) translateX(15px) scale(0.98);
           }
         }
 
-        @keyframes drift-slow {
+        @keyframes gentle-float-slow {
           0%, 100% {
             transform: translateY(0px) translateX(0px) scale(1);
           }
           50% {
-            transform: translateY(-12px) translateX(12px) scale(1.02);
+            transform: translateY(-8px) translateX(8px) scale(1.01);
           }
         }
 
-        .animate-sophisticated-enter {
-          animation: sophisticated-enter 1.2s ease-out forwards;
+        .animate-elegant-fade-in {
+          animation: elegant-fade-in 1s ease-out forwards;
         }
 
-        .animate-sophisticated-float {
-          animation: sophisticated-float 5s ease-in-out infinite;
+        .animate-elegant-float {
+          animation: elegant-float 4s ease-in-out infinite;
         }
 
-        .animate-sophisticated-float-delay {
-          animation: sophisticated-float-delay 5.5s ease-in-out infinite 2s;
+        .animate-elegant-float-reverse {
+          animation: elegant-float-reverse 4.5s ease-in-out infinite;
         }
 
-        .animate-drift {
-          animation: drift 12s ease-in-out infinite;
+        .animate-elegant-float-delay {
+          animation: elegant-float-delay 3.5s ease-in-out infinite 2s;
         }
 
-        .animate-drift-reverse {
-          animation: drift-reverse 15s ease-in-out infinite 4s;
+        .animate-gentle-float {
+          animation: gentle-float 8s ease-in-out infinite;
         }
 
-        .animate-drift-slow {
-          animation: drift-slow 18s ease-in-out infinite 8s;
+        .animate-gentle-float-delay {
+          animation: gentle-float-delay 10s ease-in-out infinite 3s;
+        }
+
+        .animate-gentle-float-slow {
+          animation: gentle-float-slow 12s ease-in-out infinite 5s;
         }
       `}</style>
     </section>

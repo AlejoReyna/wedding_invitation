@@ -265,12 +265,15 @@ export default function ItinerarySection() {
   return (
     <section 
       ref={sectionRef}
-      className="w-full h-screen px-4 md:px-8 bg-[#f8f7f5] relative overflow-hidden"
+      className="w-full h-screen px-4 md:px-8 relative overflow-hidden"
       onWheel={handleWheel}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      style={{ touchAction: isLocked ? 'none' : 'auto' }}
+      style={{ 
+        touchAction: isLocked ? 'none' : 'auto',
+        backgroundColor: '#dfb9b0' // Color sólido mezclado
+      }}
     >
       {/* Header */}
       <div className="text-center py-8">

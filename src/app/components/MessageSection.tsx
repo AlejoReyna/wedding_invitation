@@ -5,7 +5,7 @@ import { FaGift, FaCreditCard, FaHeart, FaMapMarkerAlt, FaPenFancy, FaQuoteLeft,
 // Componente MessageCard simulado para el ejemplo
 function MessageCard({ className }) {
   return (
-    <div className={`bg-white/95 backdrop-blur-lg border-2 border-[#8a6a5a]/30 p-10 ${className}`}>
+    <div className={`bg-white/95 backdrop-blur-lg border-[#8a6a5a]/30 p-10 ${className}`}>
       {/* Header premium con líneas decorativas */}
       <div className="text-center mb-8 relative">
         {/* Línea decorativa superior */}

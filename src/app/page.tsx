@@ -91,7 +91,7 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-4xl mx-auto text-center mt-8">
             <CountdownTimer 
               targetDate="2025-10-18T00:00:00" 
               className="animate-fade-in-up animate-delay-800"
@@ -100,15 +100,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer con countdown - Posición fija en la parte inferior como en la imagen */}
-        <div className="relative z-10 pb-2 sm:pb-3 px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <CountdownTimer 
-              targetDate="2025-10-18T00:00:00" 
-              className="animate-fade-in-up animate-delay-800"
-            />
-          </div>
-        </div>
+       
 
         <style jsx>{`
           @keyframes fade-in-center {
