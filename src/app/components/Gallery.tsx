@@ -5,7 +5,36 @@ import Image from 'next/image';
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, index: number, shape?: string } | null>(null);
   const [centerIndex, setCenterIndex] = useState(1);
+  const [isVisible, setIsVisible] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '-20px'
+      }
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
 
   const photos = [
     { src: '/p1.JPG', alt: 'Andrea & Aldo - Momento especial 1' },
@@ -23,13 +52,11 @@ export default function Gallery() {
         const scrollLeft = container.scrollLeft;
         const containerWidth = container.clientWidth;
         
-        // Mejorada detección del centro con ajuste para móvil
         const centerX = scrollLeft + (containerWidth / 2);
         
-        let closestIndex = 1; // Default to second photo
+        let closestIndex = 1;
         let closestDistance = Infinity;
         
-        // Calcular posición de cada carta y encontrar la más cercana al centro
         for (let i = 0; i < photos.length; i++) {
           const cardElement = container.children[i] as HTMLElement;
           if (cardElement) {
@@ -53,7 +80,6 @@ export default function Gallery() {
     if (galleryElement) {
       galleryElement.addEventListener('scroll', handleScroll);
       
-      // Ejecutar una vez al montar y luego periódicamente para asegurar el centrado
       const initialCheck = () => {
         setTimeout(handleScroll, 100);
         setTimeout(handleScroll, 500);
@@ -66,14 +92,12 @@ export default function Gallery() {
     }
   }, [photos.length]);
 
-  // Center the SECOND image (index 1) with proper positioning
   useEffect(() => {
     const centerSecondImageWithPeek = () => {
       if (galleryRef.current) {
         const container = galleryRef.current;
         const containerWidth = container.clientWidth;
         
-        // Esperar a que las cartas se rendericen
         setTimeout(() => {
           const secondCard = container.children[1] as HTMLElement;
           if (secondCard) {
@@ -81,15 +105,13 @@ export default function Gallery() {
             const cardWidth = secondCard.offsetWidth;
             const cardCenter = cardLeft + (cardWidth / 2);
             
-            // Ajuste específico para móvil
             const isMobile = window.innerWidth < 768;
-            const offsetAdjustment = isMobile ? 0 : 0; // Sin ajuste adicional
+            const offsetAdjustment = isMobile ? 0 : 0;
             
             const scrollPosition = cardCenter - (containerWidth / 2) + offsetAdjustment;
             
             container.scrollLeft = Math.max(0, scrollPosition);
             
-            // Update centerIndex after positioning
             setTimeout(() => {
               setCenterIndex(1);
               const event = new Event('scroll');
@@ -100,10 +122,8 @@ export default function Gallery() {
       }
     };
 
-    // Add a delay to ensure the component is fully rendered
     const timer = setTimeout(centerSecondImageWithPeek, 400);
     
-    // También ejecutar en resize para mantener el centrado
     const handleResize = () => {
       setTimeout(centerSecondImageWithPeek, 200);
     };
@@ -139,7 +159,6 @@ export default function Gallery() {
     }
     
     if (distance === 1) {
-      // Cartas adyacentes: menor escala y profundidad media
       return {
         transform: 'perspective(1000px) translateZ(20px) scale(0.9)',
         zIndex: 40,
@@ -149,7 +168,6 @@ export default function Gallery() {
     }
     
     if (distance === 2) {
-      // Cartas más lejanas: menor escala y menos profundidad
       return {
         transform: 'perspective(1000px) translateZ(-20px) scale(0.8)',
         zIndex: 30,
@@ -158,7 +176,6 @@ export default function Gallery() {
       };
     }
     
-    // Cartas muy lejanas: máximo alejamiento
     return {
       transform: 'perspective(1000px) translateZ(-60px) scale(0.7)',
       zIndex: 20,
@@ -167,33 +184,117 @@ export default function Gallery() {
     };
   };
 
-  const FloralDivider = () => (
-    <div className="flex items-center justify-center my-8">
-      <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#C4985B] to-transparent"></div>
-      <div className="mx-4 text-[#C4985B] text-2xl animate-pulse">❀</div>
-      <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#C4985B] to-transparent"></div>
-    </div>
+  // Decorative floral elements matching the project style
+  const FloralDecoration = ({ className = "" }) => (
+    <svg className={`w-full h-full ${className}`} viewBox="0 0 80 80" fill="none">
+      <path 
+        d="M10,40 Q25,20 40,40 Q55,60 70,40 Q55,20 40,40 Q25,60 10,40" 
+        stroke="#8B7355" 
+        strokeWidth="1.2"
+        fill="none"
+        opacity="0.6"
+      />
+      <path d="M25,35 Q30,25 35,35 Q30,45 25,35" fill="#9B8366" opacity="0.5"/>
+      <path d="M45,45 Q50,35 55,45 Q50,55 45,45" fill="#C4985B" opacity="0.4"/>
+      <circle cx="40" cy="40" r="2.5" fill="#D4A971" opacity="0.6"/>
+      <circle cx="32" cy="38" r="1" fill="#8B7355" opacity="0.4"/>
+      <circle cx="48" cy="42" r="1" fill="#8B7355" opacity="0.4"/>
+    </svg>
   );
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-[#F7F3E9] via-[#F4F1E8] to-[#F0EBDD] py-16 px-4">
-      <div className="mx-auto">
-        {/* Header */}
-        <div className="text-center overflow-hidden">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8B7355] mb-6 relative inline-block">
-            <span className="relative inline-block overflow-hidden">
-              <span className="inline-block animate-reveal-from-left">¡ Nos casamos !</span>
-              <span className="absolute left-0 top-0 w-full h-full bg-[#F7F3E9] animate-slide-right origin-left"></span>
-            </span>
-          </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Algunos momentos especiales juntos
+    <section 
+      ref={sectionRef}
+      className="min-h-screen w-full py-24 px-4 md:px-8 relative overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
+      }}
+    >
+      {/* Subtle organic texture overlay */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div 
+          className="absolute inset-0" 
+          style={{
+            backgroundImage: `radial-gradient(circle at 30% 20%, rgba(196, 152, 91, 0.15) 0%, transparent 60%),
+                              radial-gradient(circle at 70% 60%, rgba(139, 115, 85, 0.12) 0%, transparent 60%),
+                              radial-gradient(circle at 50% 90%, rgba(180, 147, 113, 0.1) 0%, transparent 60%)`
+          }}
+        />
+      </div>
+
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="galleryPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+              <path 
+                d="M20,20 Q40,30 60,20 Q80,10 100,25" 
+                stroke="#8B7355" 
+                strokeWidth="0.5" 
+                fill="none" 
+                opacity="0.3"
+              />
+              <circle cx="30" cy="25" r="1" fill="#C4985B" opacity="0.2"/>
+              <circle cx="70" cy="22" r="0.8" fill="#9B8366" opacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#galleryPattern)"/>
+        </svg>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header with elegant styling */}
+        <div className={`text-center mb-16 transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`} style={{ transitionDelay: '200ms' }}>
+          
+          {/* Decorative top element */}
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-16 opacity-40">
+              <FloralDecoration />
+            </div>
+          </div>
+
+          {/* Subtitle */}
+          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
+            ALGUNOS MOMENTOS ESPECIALES
           </p>
-          <FloralDivider />
+          
+          {/* Decorative line */}
+          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
+          
+          {/* Main title */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
+            ¡Nos Casamos!
+          </h2>
+          
+          {/* Description */}
+          <p className="text-stone-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-light mb-8">
+            Juntos escribiendo nuestra historia de amor
+          </p>
+          
+          {/* Bottom decorative element */}
+          <div className="flex justify-center items-center mt-6">
+            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
+            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
+            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
+          </div>
+        </div>
+
+        {/* Side decorative elements */}
+        <div className="absolute left-8 top-1/3 w-12 h-12 opacity-20 hidden lg:block">
+          <FloralDecoration />
+        </div>
+        
+        <div className="absolute right-8 top-2/3 w-12 h-12 opacity-20 hidden lg:block">
+          <FloralDecoration className="transform rotate-180" />
         </div>
 
         {/* Carousel Container */}
-        <div className="relative" style={{ perspective: '1500px' }}>
+        <div className={`relative transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ perspective: '1500px', transitionDelay: '600ms' }}>
+          
           {/* Left Navigation Arrow */}
           <button 
             onClick={() => {
@@ -204,13 +305,11 @@ export default function Gallery() {
                 });
               }
             }}
-            className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110"
+            className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
             aria-label="Previous photo"
-            style={{
-              backdropFilter: 'blur(12px)',
-            }}
+            style={{ backdropFilter: 'blur(12px)' }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -244,34 +343,30 @@ export default function Gallery() {
                     {/* Enhanced depth effect for center card */}
                     {isCenterCard && (
                       <>
-                        {/* Outer glow layers */}
-                        <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/30 via-[#D4C9B8]/20 to-[#8B7355]/30 rounded-[2.5rem] blur-3xl"></div>
-                        <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/25 via-[#F8F6F3]/15 to-[#8B7355]/25 rounded-[2rem] blur-2xl"></div>
-                        <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/20 to-[#8B7355]/20 rounded-3xl blur-xl"></div>
-                        
-                        {/* Highlight border */}
-                        <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/40 via-transparent to-[#8B7355]/40 rounded-3xl"></div>
+                        <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/20 via-[#D4C9B8]/15 to-[#8B7355]/20 rounded-[2.5rem] blur-3xl"></div>
+                        <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/15 via-[#F8F6F3]/10 to-[#8B7355]/15 rounded-[2rem] blur-2xl"></div>
+                        <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/15 to-[#8B7355]/15 rounded-3xl blur-xl"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/30 via-transparent to-[#8B7355]/30 rounded-3xl"></div>
                       </>
                     )}
                     
                     {/* Shadow effects for non-center cards */}
                     {!isCenterCard && (
                       <div 
-                        className="absolute inset-0 bg-black/10 rounded-3xl"
+                        className="absolute inset-0 bg-black/5 rounded-3xl"
                         style={{
-                          boxShadow: '0 8px 32px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.1)'
+                          boxShadow: '0 8px 32px rgba(139, 115, 85, 0.1), 0 4px 16px rgba(139, 115, 85, 0.05)'
                         }}
                       ></div>
                     )}
                     
                     {/* Image container */}
                     <div className="relative rounded-3xl overflow-hidden h-full">
-                      {/* Enhanced shadow for center card */}
                       {isCenterCard && (
-                        <div className="absolute -inset-2 bg-gradient-to-br from-black/10 via-transparent to-black/20 rounded-3xl shadow-2xl"></div>
+                        <div className="absolute -inset-2 bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10 rounded-3xl shadow-elegant"></div>
                       )}
                       
-                      <div className="relative w-full h-full bg-white rounded-3xl overflow-hidden shadow-2xl">
+                      <div className="relative w-full h-full bg-white rounded-3xl overflow-hidden shadow-elegant">
                         <Image
                           src={photo.src}
                           alt={photo.alt}
@@ -280,29 +375,27 @@ export default function Gallery() {
                           sizes="(max-width: 768px) 18rem, 24rem"
                           priority={index < 3}
                           style={{
-                            filter: isCenterCard ? 'brightness(1.05) contrast(1.1) saturate(1.1)' : 'brightness(0.9) contrast(0.95) saturate(0.9)'
+                            filter: isCenterCard ? 'brightness(1.05) contrast(1.1) saturate(1.1)' : 'brightness(0.95) contrast(0.98) saturate(0.95)'
                           }}
                         />
                         
-                        {/* Enhanced overlay for depth */}
                         <div className={`absolute inset-0 transition-all duration-700 ${
                           isCenterCard 
                             ? 'bg-gradient-to-br from-transparent via-transparent to-[#8B7355]/5'
-                            : 'bg-gradient-to-br from-black/10 via-black/5 to-black/20'
+                            : 'bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10'
                         }`}></div>
                         
                         {/* Tap indicator for center card */}
                         {isCenterCard && (
-                          <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-full p-3 shadow-lg animate-bounce">
-                            <svg className="w-5 h-5 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-elegant">
+                            <svg className="w-4 h-4 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                             </svg>
                           </div>
                         )}
                         
-                        {/* Reflection effect for center card */}
                         {isCenterCard && (
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 pointer-events-none"></div>
                         )}
                       </div>
                     </div>
@@ -322,20 +415,20 @@ export default function Gallery() {
                 });
               }
             }}
-            className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110"
+            className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
             aria-label="Next photo"
-            style={{
-              backdropFilter: 'blur(12px)',
-            }}
+            style={{ backdropFilter: 'blur(12px)' }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
 
         {/* Enhanced scroll indicator */}
-        <div className="flex justify-center mt-8 space-x-3">
+        <div className={`flex justify-center mt-8 space-x-3 transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '800ms' }}>
           {photos.map((_, index) => (
             <button
               key={index}
@@ -352,7 +445,7 @@ export default function Gallery() {
               className={`transition-all duration-300 rounded-full ${
                 index === centerIndex 
                   ? 'w-8 h-3 bg-gradient-to-r from-[#C4985B] to-[#8B7355] shadow-lg' 
-                  : 'w-3 h-3 bg-[#D4C9B8] hover:bg-[#C4985B]/60'
+                  : 'w-3 h-3 bg-stone-300 hover:bg-[#C4985B]/60'
               }`}
               aria-label={`Go to photo ${index + 1}`}
             />
@@ -360,11 +453,19 @@ export default function Gallery() {
         </div>
 
         {/* Bottom quote */}
-        <div className="text-center mt-16">
-          <p className="text-lg text-gray-600 italic max-w-lg mx-auto">
+        <div className={`text-center mt-16 transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '1000ms' }}>
+          <p className="text-lg text-stone-600 italic max-w-lg mx-auto garamond-300 leading-relaxed">
             &ldquo;En cada mirada encontramos el infinito, en cada sonrisa, la eternidad&rdquo;
           </p>
-          <FloralDivider />
+          
+          {/* Bottom decorative element */}
+          <div className="flex justify-center mt-8">
+            <div className="w-20 h-20 opacity-30">
+              <FloralDecoration />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -375,7 +476,7 @@ export default function Gallery() {
           onClick={closeModal}
         >
           <button 
-            className="absolute top-6 right-6 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-4 text-white transition-all duration-300 hover:scale-110 shadow-2xl"
+            className="absolute top-6 right-6 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-4 text-white transition-all duration-300 hover:scale-110 shadow-elegant"
             onClick={(e) => {
               e.stopPropagation();
               closeModal();
@@ -387,7 +488,7 @@ export default function Gallery() {
           </button>
           
           <div className="relative w-full h-full flex items-center justify-center p-8">
-            <div className="relative max-w-5xl max-h-full rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative max-w-5xl max-h-full rounded-2xl overflow-hidden shadow-elegant">
               <Image 
                 src={selectedImage.src} 
                 alt={selectedImage.alt} 
@@ -400,6 +501,31 @@ export default function Gallery() {
           </div>
         </div>
       )}
-    </div>
+
+      <style jsx>{`
+        .shadow-elegant {
+          box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .shadow-elegant-hover {
+          box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 25px 50px -12px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+    </section>
   );
 }
