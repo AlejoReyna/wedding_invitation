@@ -353,40 +353,8 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Tablet Navigation - Pantallas medianas */}
-        <div className="hidden md:flex lg:hidden items-center justify-between">
-          {/* Primera fila de elementos principales */}
-          <ul className="flex items-center space-x-6">
-            {navigationItems.slice(0, 4).map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  className={`text-xs garamond-300 tracking-[0.2em] transition-all duration-500 relative group ${getTextStyle()}`}
-                >
-                  {item.label.toUpperCase()}
-                  <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${getLineStyle()}`}></span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          
-          {/* Elementos secundarios con menú desplegable o iconos */}
-          <div className="flex items-center space-x-6">
-            {navigationItems.slice(4).map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={`text-xs garamond-300 tracking-[0.2em] transition-all duration-500 relative group ${getTextStyle()}`}
-              >
-                {item.label.toUpperCase()}
-                <span className={`absolute -bottom-2 left-0 w-0 h-[1px] group-hover:w-full transition-all duration-500 ${getLineStyle()}`}></span>
-              </a>
-            ))}
-          </div>
-        </div>
-
         {/* Mobile Navigation */}
-        <div className="md:hidden flex items-center justify-between">
+        <div className="lg:hidden flex items-center justify-between">
           {/* Solo elementos principales en móvil */}
           <ul className="flex items-center space-x-3 sm:space-x-4 text-xs flex-1 justify-center">
             {navigationItems.slice(0, 4).map((item, index) => (
@@ -429,7 +397,7 @@ const Navbar = () => {
         </div>
 
         {/* Menú móvil desplegable para elementos secundarios */}
-        <div className={`md:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
+        <div className={`lg:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
           isMobileMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
         } ${getNavbarStyle()}`}>
           <div className="px-4 py-4 border-t border-white/10">
