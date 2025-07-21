@@ -123,7 +123,7 @@ export default function LocationSection() {
         </div>
 
         {/* Cards Container - keeping cards exactly the same */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-[920px] mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-20 max-w-[1500px] mx-auto">
           
           {/* Ceremonia Card */}
           <div className={`group transition-all duration-2500 ease-out ${
