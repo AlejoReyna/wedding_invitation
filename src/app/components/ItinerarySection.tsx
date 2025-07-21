@@ -1,5 +1,6 @@
 "use client"
-import { useEffect, useRef, useState } from 'react';
+import ItineraryItemCard from './ItineraryItemCard';
+import { useRef } from 'react';
 
 interface ItineraryItem {
   time: string;
@@ -11,34 +12,6 @@ interface ItineraryItem {
 
 export default function ItinerarySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-        rootMargin: '-20px'
-      }
-    );
-
-    const currentRef = sectionRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
 
   // Decorative floral elements matching the project style
   const FloralDecoration = ({ className = "" }) => (
@@ -72,6 +45,13 @@ export default function ItinerarySection() {
       title: "Recepción",
       description: "Únete a nosotros para una elegante celebración llena de música, baile y momentos inolvidables que crearemos juntos.",
       location: "Museo de Montemorelos"
+    },
+    {
+      time: "11:00 PM - 1:00 AM",
+      displayTime: "11:00",
+      title: "Tornafiesta",
+      description: "Para los que aún tienen energía, continuaremos la celebración con música y bocadillos de medianoche.",
+      location: "Salón Terraza, Museo de Montemorelos"
     }
   ];
 
@@ -117,9 +97,7 @@ export default function ItinerarySection() {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header with elegant styling */}
-        <div className={`text-center mb-20 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`} style={{ transitionDelay: '200ms' }}>
+        <div className="text-center mb-20 transition-all duration-2000 ease-out opacity-100 translate-y-0" style={{ transitionDelay: '200ms' }}>
           
           {/* Decorative top element */}
           <div className="flex justify-center mb-8">
@@ -166,116 +144,13 @@ export default function ItinerarySection() {
           {/* Events */}
           <div className="space-y-24 md:space-y-32">
             {itineraryItems.map((item, index) => (
-              <div key={index} className={`relative transition-all duration-2500 ease-out ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
-              }`} style={{ transitionDelay: `${800 + index * 200}ms` }}>
-                
-                {/* Timeline Dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-[#8B7355] rounded-full border-4 border-white shadow-elegant z-10">
-                  <div className="absolute inset-2 bg-[#C4985B] rounded-full"></div>
-                </div>
-
-                {/* Event Card */}
-                <div className={`${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 ml-auto'} w-5/12 hidden md:block`}>
-                  <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2">
-                    
-                    {/* Content Section */}
-                    <div className="p-8 md:p-10 relative">
-                      
-                      {/* Decorative Element */}
-                      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-stone-300"></div>
-                      
-                      {/* Time Display */}
-                      <div className="mb-6">
-                        <div className="text-4xl md:text-5xl font-light tracking-wider text-[#8B7355] leading-none mb-2" style={{fontFamily: 'Georgia, serif'}}>
-                          {item.displayTime}
-                        </div>
-                        <div className="text-sm text-stone-600 font-light tracking-[0.1em] uppercase">
-                          {item.time}
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-2xl md:text-3xl font-light text-stone-800 mb-4 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
-                        {item.title}
-                      </h3>
-
-                      {/* Location */}
-                      {item.location && (
-                        <div className="mb-6 flex items-center gap-2 text-[#8B7355] justify-center">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                          </svg>
-                          <span className="text-sm font-light tracking-[0.1em]">{item.location}</span>
-                        </div>
-                      )}
-
-                      {/* Divider */}
-                      <div className="flex justify-center items-center mb-6">
-                        <div className="w-8 h-px bg-stone-300"></div>
-                        <div className="w-2 h-2 border border-stone-300 transform rotate-45 mx-4"></div>
-                        <div className="w-8 h-px bg-stone-300"></div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-stone-600 text-sm md:text-base leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Mobile Card */}
-                <div className="md:hidden ml-16">
-                  <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant">
-                    <div className="p-6 relative">
-                      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-6 bg-stone-300"></div>
-                      
-                      <div className="mb-4">
-                        <div className="text-3xl font-light tracking-wider text-[#8B7355] leading-none mb-1" style={{fontFamily: 'Georgia, serif'}}>
-                          {item.displayTime}
-                        </div>
-                        <div className="text-xs text-stone-600 font-light tracking-[0.1em] uppercase">
-                          {item.time}
-                        </div>
-                      </div>
-
-                      <h3 className="text-xl font-light text-stone-800 mb-3 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
-                        {item.title}
-                      </h3>
-
-                      {item.location && (
-                        <div className="mb-4 flex items-center gap-2 text-[#8B7355]">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                          </svg>
-                          <span className="text-xs font-light tracking-[0.1em]">{item.location}</span>
-                        </div>
-                      )}
-
-                      <div className="flex justify-center items-center mb-4">
-                        <div className="w-6 h-px bg-stone-300"></div>
-                        <div className="w-1.5 h-1.5 border border-stone-300 transform rotate-45 mx-3"></div>
-                        <div className="w-6 h-px bg-stone-300"></div>
-                      </div>
-
-                      <p className="text-stone-600 text-sm leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <ItineraryItemCard key={index} item={item} index={index} />
             ))}
           </div>
         </div>
 
         {/* Bottom decorative element */}
-        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '1200ms' }}>
+        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out opacity-100 translate-y-0`} style={{ transitionDelay: '1200ms' }}>
           <div className="w-20 h-20 opacity-30">
             <FloralDecoration />
           </div>
