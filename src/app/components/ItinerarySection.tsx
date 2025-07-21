@@ -186,23 +186,11 @@ export default function ItinerarySection() {
     }
   };
 
-  // Content area wheel handler - allow internal scrolling
+  // Content area wheel handler - allow normal scrolling
   const handleContentWheel = (e: React.WheelEvent) => {
-    const target = e.currentTarget as HTMLDivElement;
-    const { scrollTop, scrollHeight, clientHeight } = target;
-    
-    // If we're at the top and scrolling up, or at bottom and scrolling down,
-    // allow the main navigation to take over
-    const isAtTop = scrollTop === 0;
-    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-    
-    if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
-      // Don't stop propagation, let main handler manage navigation
-      return;
-    }
-    
-    e.stopPropagation(); // Prevent event from bubbling to main handler
-    // Allow default scrolling behavior within the content area
+    // Always stop propagation to prevent main navigation
+    e.stopPropagation();
+    // Allow normal scrolling behavior within the content area
   };
 
   // Touch handlers with improved gesture detection
@@ -274,7 +262,6 @@ export default function ItinerarySection() {
   };
 
   const currentItem = itineraryItems[activeIndex];
-
   return (
     <section 
       ref={sectionRef}
@@ -296,33 +283,17 @@ export default function ItinerarySection() {
         </h3>
       </div>
 
-      {/* Progress Indicator */}
-      <div className="text-center mb-6">
-        <div className="text-xs text-[#8b7355] mb-2">
-          {activeIndex + 1} de {itineraryItems.length}
-          {hasCompletedNavigation && <span className="ml-2 text-green-600">✓ Completado</span>}
-        </div>
-        <div className="max-w-48 mx-auto h-1 bg-[#d4c4b0] rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-[#8b7355] transition-all duration-500 ease-out rounded-full"
-            style={{ width: `${((activeIndex + 1) / itineraryItems.length) * 100}%` }}
-          />
-        </div>
-      </div>
-
       {/* Main Content Container */}
-      <div className="max-w-6xl mx-auto h-[calc(100vh-300px)] relative">
+      <div className="max-w-6xl mx-auto h-[calc(100vh-250px)] relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 h-full items-center">
           
           {/* Time Display - Left Side */}
           <div className="flex flex-col items-center lg:items-end justify-center order-1 lg:order-1">
             <div className="transition-all duration-700 ease-out transform" key={activeIndex}>
-              <div className="font-serif text-6xl md:text-8xl lg:text-[10rem] font-thin tracking-wider text-[#5c5c5c] leading-none time-display italic">
+              <div className="font-serif text-6xl md:text-8xl lg:text-[10rem] font-thin tracking-wider text-[#5c5c5c] leading-none time-display italic garamond-regular">
                 {currentItem.displayTime}
               </div>
-              <div className="font-serif text-base md:text-lg text-[#8b7355] font-light tracking-widest mt-2 text-center lg:text-right transition-all duration-500 italic">
-                {currentItem.time}
-              </div>
+             
             </div>
           </div>
 
@@ -352,36 +323,39 @@ export default function ItinerarySection() {
               
               {/* Scrollable Content Area */}
               <div 
-                className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-[#8b7355] scrollbar-track-[#d4c4b0] pr-2"
+                className="h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-[#8b7355] scrollbar-track-[#d4c4b0] pr-2 border border-[#d4c4b0]/30 rounded-lg p-4 bg-white/50"
                 onWheel={handleContentWheel}
               >
-                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-4 italic">
                   {currentItem.description}
                 </p>
-                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-4 italic">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
-                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-4 italic">
                   Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-4 italic">
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                 </p>
-                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
-                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-4 italic">
+                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+                </p>
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-4 italic">
+                  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+                </p>
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-4 italic">
+                  Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio nam libero tempore.
+                </p>
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-0 italic">
+                  Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
                 </p>
               </div>
               
-              {currentItem.location && (
-                <p className="font-serif text-xs md:text-sm text-[#8b7355] font-light tracking-wide italic mt-4">
-                  📍 {currentItem.location}
-                </p>
-              )}
+              
               
               {/* Indicador de item activo */}
-              <div className="mt-4">
-                <div className="w-8 h-0.5 bg-[#8b7355] rounded-full active-indicator transition-all duration-300"></div>
-              </div>
+             
             </div>
           </div>
         </div>
@@ -437,7 +411,7 @@ export default function ItinerarySection() {
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
         <p className="text-xs text-[#8b7355] font-light">
           {!hasCompletedNavigation ? (
-            isLocked ? 'Navigate: Scroll, swipe, arrows • ESC to skip' : 'Scroll down to start timeline'
+            isLocked ? 'Navigate events: Scroll outside text area, swipe, arrows • Scroll inside text area to read • ESC to skip' : 'Scroll down to start timeline'
           ) : (
             'Timeline completed - continue scrolling'
           )}
