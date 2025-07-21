@@ -69,15 +69,7 @@ export default function GiftSection() {
       <div className="max-w-7xl mx-auto text-[#8d5641] relative z-10">
         {/* Sophisticated header */}
         <div className="text-center mb-20 relative">
-          <div className="inline-block relative">
-            <div className="absolute -inset-6 bg-gradient-to-r from-[#d0a598]/15 via-[#c69684]/8 to-[#d0a598]/15 blur-xl"></div>
-            <h2 className="relative text-5xl md:text-7xl font-extralight text-[#8d5641] tracking-widest mb-6">
-              <span className="font-serif italic font-light">Regalos</span>
-              <span className="block font-sans font-thin text-3xl md:text-4xl mt-3 text-[#b8856f] tracking-[0.3em]">
-                & CONTRIBUCIONES
-              </span>
-            </h2>
-          </div>
+          
           
           {/* Minimalist divider */}
           <div className="flex items-center justify-center mt-10 mb-8">
@@ -93,8 +85,9 @@ export default function GiftSection() {
           {/* Elegant introduction */}
           <div className="text-center space-y-8">
             <div className="max-w-3xl mx-auto">
-              <p className="text-2xl font-light text-[#8d5641]/90 leading-relaxed tracking-wide">
-                Tu presencia es nuestro tesoro más preciado
+              <p className="text-[#8d5641]/90 leading-relaxed tracking-wide">
+                <span className="font-serif font-light text-5xl md:text-7xl">Tu presencia</span>
+                <span className="font-sans font-thin text-3xl md:text-7xl text-[#b8856f] tracking-[0.2em]"> es nuestro tesoro más preciado</span>
               </p>
               <div className="w-16 h-px bg-[#c69684] mx-auto my-6"></div>
               <p className="text-lg text-[#8d5641]/75 leading-relaxed font-light">
