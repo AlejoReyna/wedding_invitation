@@ -3,6 +3,7 @@ import LocationSection from './components/LocationSection';
 
 import DressCodeSection from './components/DressCodeSection';
 import MessageSection from './components/MessageSection';
+import GiftSection from './components/GiftSection';
 import RSVPSection from './components/RSVPSection';
 import MinimalistFooter from './components/Footer';
 import ItinerarySection from './components/ItinerarySection';
@@ -168,6 +169,9 @@ export default function Home() {
       </div>
       <div id="mensaje">
         <MessageSection />
+      </div>
+      <div id="regalos">
+        <GiftSection />
       </div>
       <div id="rsvp">
         <RSVPSection />

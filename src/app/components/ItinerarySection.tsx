@@ -18,6 +18,7 @@ export default function ItinerarySection() {
   const touchStartY = useRef<number>(0);
   const touchEndY = useRef<number>(0);
   const savedScrollPosition = useRef<number>(0);
+  const lastWheelTime = useRef<number>(0);
 
   const itineraryItems: ItineraryItem[] = [
     {
@@ -163,14 +164,20 @@ export default function ItinerarySection() {
     setViewedItems(prev => new Set([...prev, index]));
   };
 
-  // Wheel handler
+  // Wheel handler with improved threshold and debouncing
   const handleWheel = (e: React.WheelEvent) => {
     if (!isLocked || hasCompletedNavigation) return;
     
     e.preventDefault();
     e.stopPropagation();
     
-    if (Math.abs(e.deltaY) > 10) {
+    const now = Date.now();
+    // Debounce wheel events to prevent multiple rapid triggers
+    if (now - lastWheelTime.current < 300) return;
+    
+    // Increased threshold for more deliberate scrolling
+    if (Math.abs(e.deltaY) > 30) {
+      lastWheelTime.current = now;
       if (e.deltaY > 0) {
         nextItem();
       } else {
@@ -179,7 +186,26 @@ export default function ItinerarySection() {
     }
   };
 
-  // Touch handlers
+  // Content area wheel handler - allow internal scrolling
+  const handleContentWheel = (e: React.WheelEvent) => {
+    const target = e.currentTarget as HTMLDivElement;
+    const { scrollTop, scrollHeight, clientHeight } = target;
+    
+    // If we're at the top and scrolling up, or at bottom and scrolling down,
+    // allow the main navigation to take over
+    const isAtTop = scrollTop === 0;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    
+    if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+      // Don't stop propagation, let main handler manage navigation
+      return;
+    }
+    
+    e.stopPropagation(); // Prevent event from bubbling to main handler
+    // Allow default scrolling behavior within the content area
+  };
+
+  // Touch handlers with improved gesture detection
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!isLocked || hasCompletedNavigation) return;
     touchStartY.current = e.touches[0].clientY;
@@ -187,15 +213,24 @@ export default function ItinerarySection() {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isLocked || hasCompletedNavigation) return;
-    e.preventDefault();
-    touchEndY.current = e.touches[0].clientY;
+    
+    // Only prevent default if it's a significant vertical movement
+    const currentY = e.touches[0].clientY;
+    const deltaY = Math.abs(touchStartY.current - currentY);
+    
+    if (deltaY > 10) {
+      e.preventDefault();
+    }
+    
+    touchEndY.current = currentY;
   };
 
   const handleTouchEnd = () => {
     if (!isLocked || hasCompletedNavigation) return;
     
     const distance = touchStartY.current - touchEndY.current;
-    if (Math.abs(distance) > 50) {
+    // Increased threshold for more deliberate swipes
+    if (Math.abs(distance) > 80) {
       if (distance > 0) {
         nextItem();
       } else {
@@ -252,11 +287,11 @@ export default function ItinerarySection() {
     >
       {/* Header */}
       <div className="text-center py-8">
-        <h2 className="text-sm md:text-base font-light tracking-[0.4em] uppercase mb-4 text-[#8b7355]">
+        <h2 className="text-sm md:text-base font-light tracking-[0.4em] uppercase mb-4 text-[#8b7355] italic">
           ITINERARIO DEL DÍA
         </h2>
         <div className="w-24 h-px mx-auto mb-4 bg-[#d4c4b0]"></div>
-        <h3 className="garamond-regular text-2xl md:text-3xl lg:text-4xl font-light tracking-wider text-[#5c5c5c]">
+        <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl font-light tracking-wider text-[#5c5c5c] italic">
           Schedule
         </h3>
       </div>
@@ -282,10 +317,10 @@ export default function ItinerarySection() {
           {/* Time Display - Left Side */}
           <div className="flex flex-col items-center lg:items-end justify-center order-1 lg:order-1">
             <div className="transition-all duration-700 ease-out transform" key={activeIndex}>
-              <div className="text-6xl md:text-8xl lg:text-[10rem] font-thin tracking-wider text-[#5c5c5c] leading-none time-display">
+              <div className="font-serif text-6xl md:text-8xl lg:text-[10rem] font-thin tracking-wider text-[#5c5c5c] leading-none time-display italic">
                 {currentItem.displayTime}
               </div>
-              <div className="text-base md:text-lg text-[#8b7355] font-light tracking-widest mt-2 text-center lg:text-right transition-all duration-500">
+              <div className="font-serif text-base md:text-lg text-[#8b7355] font-light tracking-widest mt-2 text-center lg:text-right transition-all duration-500 italic">
                 {currentItem.time}
               </div>
             </div>
@@ -311,14 +346,34 @@ export default function ItinerarySection() {
           {/* Content Display - Right Side */}
           <div className="flex flex-col justify-center order-3 lg:order-2">
             <div className="transition-all duration-700 ease-out transform" key={`content-${activeIndex}`}>
-              <h4 className="text-xl md:text-2xl lg:text-3xl font-light text-[#5c5c5c] mb-4 tracking-wide">
+              <h4 className="font-serif text-xl md:text-2xl lg:text-3xl font-light text-[#5c5c5c] mb-4 tracking-wide italic">
                 {currentItem.title}
               </h4>
-              <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-3 max-w-lg">
-                {currentItem.description}
-              </p>
+              
+              {/* Scrollable Content Area */}
+              <div 
+                className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-[#8b7355] scrollbar-track-[#d4c4b0] pr-2"
+                onWheel={handleContentWheel}
+              >
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                  {currentItem.description}
+                </p>
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+                <p className="font-serif text-sm md:text-base text-gray-600 leading-relaxed mb-3 italic">
+                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                </p>
+              </div>
+              
               {currentItem.location && (
-                <p className="text-xs md:text-sm text-[#8b7355] font-light tracking-wide">
+                <p className="font-serif text-xs md:text-sm text-[#8b7355] font-light tracking-wide italic mt-4">
                   📍 {currentItem.location}
                 </p>
               )}
