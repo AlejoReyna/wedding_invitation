@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaGift, FaCreditCard, FaHeart, FaMapMarkerAlt, FaPenFancy, FaQuoteLeft, FaFeatherAlt } from 'react-icons/fa';
 
 // Componente MessageCard simulado para el ejemplo
-function MessageCard({ className }) {
+function MessageCard({ className }: { className?: string }) {
   return (
     <div className={`bg-white/95 backdrop-blur-lg border-[#8a6a5a]/30 p-10 ${className}`}>
       {/* Header premium con líneas decorativas */}
@@ -99,6 +99,7 @@ export default function MessageSection() {
 
   return (
     <section 
+      id="mensaje"
       ref={sectionRef}
       className={`min-h-screen w-full relative overflow-hidden transition-all duration-1000 ease-out ${
         isVisible ? 'opacity-100 animate-elegant-fade-in' : 'opacity-0'

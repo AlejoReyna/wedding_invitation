@@ -119,8 +119,13 @@ export default function RSVPSection() {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      {/* Overlay con opacidad reducida */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60"></div>
+      {/* Overlay con opacidad reducida basado en #707652 */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(112, 118, 82, 0.7), rgba(112, 118, 82, 0.8), rgba(112, 118, 82, 0.85))'
+        }}
+      ></div>
 
       {/* Main content - centered */}
       <div className="text-center relative z-10 max-w-2xl mx-auto">

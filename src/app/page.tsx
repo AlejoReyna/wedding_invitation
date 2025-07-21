@@ -166,9 +166,11 @@ export default function Home() {
       <div id="ubicacion">
         <LocationSection />
       </div>
+      {/*
       <div id="dresscode">
         <DressCodeSection />
       </div>
+      */}
       <div id="mensaje">
         <MessageSection />
       </div>
