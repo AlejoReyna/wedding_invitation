@@ -73,53 +73,28 @@ export default function MessageSection() {
       <div className="max-w-7xl mx-auto text-[#8d5641] relative z-10">
         {/* Elegant header section */}
         <div className="text-center mb-16 relative">
-          <div className="inline-block relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-[#cc9b8c]/20 via-[#c37658]/10 to-[#cc9b8c]/20 rounded-full blur-lg"></div>
-            <h2 className="relative text-5xl md:text-7xl font-light text-[#8d5641] tracking-wider mb-4">
-              <span className="font-serif italic">Comparte</span>
-              <span className="block font-sans font-extralight text-4xl md:text-5xl mt-2 text-[#c37658]">
-                TUS DESEOS
-              </span>
-            </h2>
-          </div>
+         
           
           {/* Elegant divider */}
+          {/* 
           <div className="flex items-center justify-center mt-8 mb-6">
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
             <div className="mx-6 w-3 h-3 border-2 border-[#cc9b8c] transform rotate-45 bg-[#dfb9b0]"></div>
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
           </div>
-          
-          <p className="text-xl text-[#8d5641]/80 font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
-            Tus palabras de amor serán el tesoro más preciado de nuestra celebración
-          </p>
+          */}
+         
         </div>
 
         {/* Main content grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start max-w-6xl mx-auto">
           
           {/* Left Column - Elegant Message Invitation */}
-          <div className="group order-1 relative">
-            {/* Subtle background decoration */}
-            <div className="absolute -inset-6 bg-gradient-to-br from-[#cc9b8c]/20 via-transparent to-[#c37658]/15 rounded-3xl blur-2xl group-hover:blur-xl transition-all duration-700"></div>
-            
-            <div className="relative bg-white/95 backdrop-blur-lg rounded-3xl shadow-elegant p-12 md:p-16 text-center border border-[#cc9b8c]/30 overflow-hidden">
-              {/* Decorative corner elements */}
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-[#cc9b8c]/20 to-transparent rounded-br-full"></div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-[#c37658]/20 to-transparent rounded-tl-full"></div>
-              
-              {/* Elegant icon */}
-              <div className="flex justify-center mb-10 relative z-10">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#cc9b8c] to-[#c37658] rounded-2xl blur-md opacity-40 scale-110"></div>
-                  <div className="relative w-20 h-20 bg-gradient-to-br from-[#cc9b8c] to-[#c37658] rounded-2xl flex items-center justify-center shadow-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                    <FaPenFancy className="text-white text-2xl" />
-                  </div>
-                </div>
-              </div>
+          <div className="order-1 relative">
+            <div className="text-center">
               
               {/* Elegant title */}
-              <h3 className="text-4xl md:text-5xl font-light text-[#8d5641] mb-8 tracking-wider relative z-10">
+              <h3 className="text-4xl md:text-5xl font-light text-[#8d5641] mb-8 tracking-wider">
                 <span className="font-serif italic">Déjanos</span>
                 <span className="block font-sans font-extralight text-3xl md:text-4xl mt-2 text-[#c37658]">
                   UN MENSAJE
@@ -127,55 +102,28 @@ export default function MessageSection() {
               </h3>
               
               {/* Ornamental divider */}
-              <div className="flex justify-center items-center mb-10 relative z-10">
-                <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
-                <div className="mx-4 flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-[#cc9b8c] rounded-full"></div>
-                  <div className="w-3 h-3 border border-[#c37658] transform rotate-45"></div>
-                  <div className="w-2 h-2 bg-[#cc9b8c] rounded-full"></div>
-                </div>
-                <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
-              </div>
+              <div className="flex items-center justify-center mt-8 mb-6">
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
+            <div className="mx-6 w-3 h-3 border-2 border-[#cc9b8c] transform rotate-45 bg-[#dfb9b0]"></div>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
+          </div>
               
               {/* Content sections */}
-              <div className="space-y-8 mb-12 relative z-10">
-                <div className="bg-gradient-to-r from-[#dfb9b0]/30 via-[#cc9b8c]/20 to-[#dfb9b0]/30 rounded-2xl p-8 border border-[#cc9b8c]/20">
-                  <p className="text-[#8d5641] text-xl font-medium tracking-wide leading-relaxed">
+              <div className="space-y-8 mb-12">
+                <div className="space-y-6">
+                  <p className="text-[#8d5641] text-2xl font-medium tracking-wide leading-relaxed">
                     Escribe desde el corazón
                   </p>
-                  <div className="w-8 h-px bg-[#c37658] mx-auto mt-4 mb-4"></div>
-                  <p className="text-[#8d5641]/80 text-lg leading-relaxed">
+                  <div className="w-12 h-px bg-[#c37658] mx-auto"></div>
+                  <p className="text-[#8d5641]/90 text-xl leading-relaxed max-w-lg mx-auto">
                     Tus palabras de amor y buenos deseos serán un tesoro que guardaremos para siempre
                   </p>
                 </div>
                 
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#cc9b8c]/10 to-[#c37658]/10 rounded-xl transform rotate-1"></div>
-                  <div className="relative bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-[#cc9b8c]/30">
-                    <FaQuoteLeft className="text-[#c37658]/60 text-2xl mb-3" />
-                    <p className="text-[#8d5641]/90 text-lg italic leading-relaxed">
-                      Las palabras del corazón son el regalo más hermoso que podemos recibir en este día tan especial
-                    </p>
-                  </div>
-                </div>
+                
               </div>
               
-              {/* Call to action */}
-              <div className="space-y-4 relative z-10">
-                <div className="flex items-center justify-center">
-                  <div className="w-8 h-px bg-gradient-to-r from-transparent via-[#c37658] to-transparent"></div>
-                  <div className="mx-4 w-2 h-2 bg-[#c37658] rounded-full"></div>
-                  <div className="w-8 h-px bg-gradient-to-r from-transparent via-[#c37658] to-transparent"></div>
-                </div>
-                <p className="text-[#8d5641] text-lg font-medium tracking-[0.15em] uppercase">
-                  Completa el formulario
-                </p>
-                <div className="flex items-center justify-center gap-3 text-[#8d5641]/70">
-                  <FaHeart className="text-[#c37658] text-sm" />
-                  <span className="text-base tracking-wide font-light">Con amor, Andrea & Aldo</span>
-                  <FaHeart className="text-[#c37658] text-sm" />
-                </div>
-              </div>
+             
             </div>
           </div>
 
@@ -189,16 +137,7 @@ export default function MessageSection() {
           </div>
         </div>
 
-        {/* Bottom decorative section */}
-        <div className="mt-20 text-center">
-          <div className="inline-flex items-center gap-4 px-8 py-4 bg-white/40 backdrop-blur-lg rounded-full border border-[#cc9b8c]/30">
-            <FaHeart className="text-[#c37658] text-lg" />
-            <span className="text-[#8d5641]/80 text-sm font-light tracking-wider uppercase">
-              Gracias por ser parte de nuestro día especial
-            </span>
-            <FaHeart className="text-[#c37658] text-lg" />
-          </div>
-        </div>
+        
       </div>
 
       <style jsx>{`
