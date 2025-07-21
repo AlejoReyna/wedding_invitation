@@ -1,7 +1,6 @@
 "use client"
 import LocationSection from './components/LocationSection';
 
-import DressCodeSection from './components/DressCodeSection';
 import MessageSection from './components/MessageSection';
 import GiftSection from './components/GiftSection';
 import RSVPSection from './components/RSVPSection';
@@ -37,70 +36,75 @@ export default function Home() {
         }}
       >
         {/* Overlay con gradiente más sofisticado */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/35"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/40"></div>
         
-        {/* Overlay adicional para efecto de opacidad en la parte superior - 30% del vh - oscuro e intenso */}
-        <div className="absolute inset-x-0 top-0 h-[30vh] bg-gradient-to-b from-black/50 via-black/30 to-transparent"></div>
+        {/* Overlay adicional para efecto de opacidad en la parte superior */}
+        <div className="absolute inset-x-0 top-0 h-[25vh] bg-gradient-to-b from-black/60 via-black/30 to-transparent"></div>
         
-        {/* Contenido principal - Layout como en la imagen de referencia */}
-        <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-4 sm:px-6 pt-20 sm:pt-24 md:pt-28">
+        {/* Contenido principal posicionado más arriba */}
+        <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-4 sm:px-6 pt-16 sm:pt-20 md:pt-24">
           
-          {/* Fecha principal arriba - con efecto de opacidad sutil */}
-          <div className="text-center mb-4 sm:mb-6 md:mb-8 animate-fade-in-center">
-            <span className="text-white/60 text-lg sm:text-xl md:text-xl lg:text-2xl garamond-300 tracking-[0.2em] sm:tracking-[0.3em] block">
+          {/* Fecha principal arriba */}
+          <div className="text-center mb-4 sm:mb-6 md:mb-8 animate-fade-in-center animate-delay-300">
+            <span className="text-white/70 text-base sm:text-lg md:text-xl lg:text-2xl garamond-300 tracking-[0.25em] sm:tracking-[0.35em] block">
               SÁBADO 18 DE OCTUBRE
             </span>
           </div>
 
-          {/* Los nombres centrados - como en la imagen */}
-          <div className="text-center animate-fade-in-center">
-            {/* Nombres optimizados para móvil - con ampersand en el medio */}
-            <div className="flex flex-row items-center justify-center max-w-6xl mx-auto mb-3 px-2">
+          {/* Los nombres centrados - tamaño más moderado */}
+          <div className="text-center animate-fade-in-center animate-delay-600 mb-4 sm:mb-6 md:mb-2">
+            {/* Nombres con tamaños más apropiados */}
+            <div className="flex flex-row items-center justify-center max-w-5xl mx-auto mb-4 sm:mb-6 px-2">
               {/* Nombre ANDREA */}
-              <div className="text-center mb-2">
-                <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+              <div className="text-center">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ANDREA
                 </h1>
               </div>
 
               {/* Símbolo & */}
-              <div className="text-center mb-2 mx-4 md:mx-8">
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl garamond-regular text-white/80 drop-shadow-2xl leading-none">
+              <div className="text-center mx-4 md:mx-6 lg:mx-8">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl garamond-regular text-white/90 drop-shadow-2xl leading-none">
                   &
                 </h2>
               </div>
 
               {/* Nombre ALDO */}
               <div className="text-center">
-                <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ALDO
                 </h1>
               </div>
-
-              
             </div>
-            
-
-            {/* Botón de confirmar asistencia debajo de los nombres - más pequeño */}
-            <div>
-              <a
-                href="#rsvp"
-                className="group inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 bg-black/40 backdrop-blur-sm border border-white/30 text-white/90 hover:bg-black/60 hover:border-white/50 transition-all duration-500 text-xs sm:text-sm"
-              >
-                <span className="garamond-300 tracking-[0.1em] sm:tracking-[0.12em]">CONFIRMAR ASISTENCIA</span>
-              </a>
-            </div>
-
-            <div className="max-w-4xl mx-auto text-center mt-8">
-            <CountdownTimer 
-              targetDate="2025-10-18T00:00:00" 
-              className="animate-fade-in-up animate-delay-800"
-            />
           </div>
+
+          {/* Texto descriptivo debajo de los nombres */}
+          <div className="text-center animate-fade-in-center animate-delay-900 mb-6 sm:mb-8 md:mb-10">
+            <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase text-white/80 italic garamond-300">
+              ACOMPÁÑANOS A CELEBRAR NUESTRO AMOR ETERNO
+            </p>
+          </div>
+
+          {/* Botón de confirmar asistencia */}
+          <div className="text-center animate-fade-in-center animate-delay-1200">
+            <a
+              href="#rsvp"
+              className="group inline-flex items-center px-6 sm:px-8 py-2.5 sm:py-3 bg-black/50 backdrop-blur-sm border border-white/40 text-white/95 hover:bg-black/70 hover:border-white/60 transition-all duration-500 text-sm sm:text-base"
+            >
+              <span className="garamond-300 tracking-[0.15em] sm:tracking-[0.2em]">CONFIRMAR ASISTENCIA</span>
+            </a>
           </div>
         </div>
 
-       
+        {/* Countdown timer posicionado más abajo sobre la pareja */}
+        <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20">
+          <div className="max-w-4xl mx-auto text-center">
+            <CountdownTimer 
+              targetDate="2025-10-18T00:00:00" 
+              className="animate-fade-in-up animate-delay-1500"
+            />
+          </div>
+        </div>
 
         <style jsx>{`
           @keyframes fade-in-center {
@@ -126,7 +130,7 @@ export default function Home() {
           }
 
           .animate-fade-in-center {
-            animation: fade-in-center 1.5s ease-out forwards;
+            animation: fade-in-center 1.2s ease-out forwards;
             opacity: 0;
           }
 
@@ -135,12 +139,24 @@ export default function Home() {
             opacity: 0;
           }
 
-          .animate-delay-500 {
-            animation-delay: 0.5s;
+          .animate-delay-300 {
+            animation-delay: 0.3s;
           }
 
-          .animate-delay-800 {
-            animation-delay: 0.8s;
+          .animate-delay-600 {
+            animation-delay: 0.6s;
+          }
+
+          .animate-delay-900 {
+            animation-delay: 0.9s;
+          }
+
+          .animate-delay-1200 {
+            animation-delay: 1.2s;
+          }
+
+          .animate-delay-1500 {
+            animation-delay: 1.5s;
           }
 
           /* Clases de fuente originales mantenidas */
@@ -152,6 +168,13 @@ export default function Home() {
           .garamond-regular {
             font-family: 'EB Garamond', serif;
             font-weight: 400;
+          }
+
+          /* Mejoras para responsive en textos muy grandes */
+          @media (max-width: 640px) {
+            h1 {
+              line-height: 0.85;
+            }
           }
         `}</style>
       </section>

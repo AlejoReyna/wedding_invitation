@@ -1,10 +1,10 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
-import { FaGift, FaCreditCard, FaHeart } from 'react-icons/fa';
+import { FaCreditCard, FaEnvelope } from 'react-icons/fa';
 
 // Componente GiftCard premium
 interface GiftCardProps {
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string }>;
   title: string;
   subtitle: string;
   content: string;
@@ -14,49 +14,47 @@ interface GiftCardProps {
 
 function GiftCard({ icon: Icon, title, subtitle, content, details, className = "" }: GiftCardProps) {
   return (
-    <div className={`bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2 ${className}`}>
+    <div className={`overflow-hidden rounded-lg shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 h-full ${className}`}
+         style={{ 
+           background: 'linear-gradient(145deg, #f7f4e9 0%, #f5f1e4 50%, #f3efdd 100%)',
+           backgroundImage: `radial-gradient(circle at 20% 30%, rgba(139, 115, 85, 0.05) 0%, transparent 60%),
+                             radial-gradient(circle at 80% 70%, rgba(196, 152, 91, 0.03) 0%, transparent 60%)`
+         }}>
       
       {/* Content Section */}
-      <div className="p-10 md:p-12 text-center relative">
+      <div className="p-8 md:p-10 text-center relative h-full flex flex-col justify-between">
         
-        {/* Decorative Element */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-stone-300"></div>
-        
-        {/* Icon */}
-        <div className="w-16 h-16 mx-auto mb-6 bg-[#8B7355] flex items-center justify-center">
-          <Icon className="text-white text-xl" />
+        {/* Top section with icon and title */}
+        <div className="flex-grow">
+          {/* Icon */}
+          <div className="w-16 h-16 mx-auto mb-6 bg-[#8B7355] flex items-center justify-center rounded-md shadow-lg">
+            <Icon className="text-white text-xl" />
+          </div>
+          
+          {/* Title */}
+          <h3 className="text-2xl md:text-3xl font-light text-stone-800 mb-3 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
+            {title}
+          </h3>
+          
+          {/* Subtitle */}
+          <p className="text-stone-600 text-sm font-light tracking-[0.15em] uppercase mb-6">
+            {subtitle}
+          </p>
+          
+          {/* Content */}
+          <p className="text-stone-700 text-base leading-relaxed mb-6">
+            {content}
+          </p>
         </div>
         
-        {/* Title */}
-        <h3 className="text-3xl md:text-4xl font-light text-stone-800 mb-4 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
-          {title}
-        </h3>
-        
-        {/* Subtitle */}
-        <p className="text-stone-600 text-base font-light tracking-[0.15em] uppercase mb-8">
-          {subtitle}
-        </p>
-        
-        {/* Divider */}
-        <div className="flex justify-center items-center mb-8">
-          <div className="w-8 h-px bg-stone-300"></div>
-          <div className="w-2 h-2 border border-stone-300 transform rotate-45 mx-4"></div>
-          <div className="w-8 h-px bg-stone-300"></div>
-        </div>
-        
-        {/* Content */}
-        <p className="text-stone-600 text-base md:text-lg leading-relaxed mb-8">
-          {content}
-        </p>
-        
-        {/* Details */}
+        {/* Bottom section with details */}
         {details && (
-          <div className="bg-stone-50 border border-stone-200 p-6">
-            <div className="space-y-4 text-stone-700">
+          <div className="bg-white/60 backdrop-blur-sm border border-stone-300/50 rounded-lg p-6 shadow-inner">
+            <div className="space-y-3 text-stone-700">
               {details.map((detail: { label: string; value: string }, index: number) => (
                 <div key={index} className="flex justify-between items-center">
-                  <span className="text-stone-600 font-light tracking-[0.1em] uppercase text-sm">{detail.label}:</span>
-                  <span className="font-medium font-mono text-stone-800">{detail.value}</span>
+                  <span className="text-stone-600 font-medium tracking-[0.1em] uppercase text-xs">{detail.label}:</span>
+                  <span className="font-semibold font-mono text-stone-800 text-sm">{detail.value}</span>
                 </div>
               ))}
             </div>
@@ -212,7 +210,7 @@ export default function GiftSection() {
         </div>
 
         {/* Gift Cards Container */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-20 max-w-[1200px] mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-20 max-w-[1200px] mx-auto items-stretch">
           
           {/* Envelope Card */}
           <div className={`group transition-all duration-2500 ease-out ${
@@ -221,7 +219,7 @@ export default function GiftSection() {
               : 'opacity-0 translate-y-8 translate-x-0'
           }`} style={{ transitionDelay: '600ms' }}>
             <GiftCard
-              icon={FaHeart}
+              icon={FaEnvelope}
               title="Sobre"
               subtitle="Tradicional"
               content="Un sobre con tu contribución será recibido con profundo agradecimiento el día de nuestra celebración. Es la forma más tradicional y querida de acompañarnos."
