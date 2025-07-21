@@ -4,30 +4,20 @@ import { FaWhatsapp, FaCalendarPlus } from 'react-icons/fa';
 
 export default function RSVPSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [displayedText, setDisplayedText] = useState('');
-  const [showLine, setShowLine] = useState(false);
-  const [showWelcomeText, setShowWelcomeText] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
-  const [startAnimation, setStartAnimation] = useState(false);
-  
-  const fullText = 'Nos encantaría celebrar este momento especial contigo';
-  const typingSpeed = 50; // milisegundos por letra - más natural
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
-            // Iniciar animación de texto después de que la sección aparezca
-            setTimeout(() => {
-              setStartAnimation(true);
-            }, 600);
+            setIsVisible(true);
           }
         });
       },
       {
-        threshold: 0.3,
+        threshold: 0.15,
+        rootMargin: '-20px'
       }
     );
 
@@ -43,39 +33,27 @@ export default function RSVPSection() {
     };
   }, []);
 
-  // Animación secuencial de texto
-  useEffect(() => {
-    if (!startAnimation) return;
-
-    let currentIndex = 0;
-    const typewriterInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setDisplayedText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typewriterInterval);
-        // Mostrar línea después de completar el texto
-        setTimeout(() => {
-          setShowLine(true);
-          // Mostrar texto de bienvenida
-          setTimeout(() => {
-            setShowWelcomeText(true);
-            // Mostrar botones
-            setTimeout(() => {
-              setShowButtons(true);
-            }, 500);
-          }, 400);
-        }, 300);
-      }
-    }, typingSpeed);
-
-    return () => clearInterval(typewriterInterval);
-  }, [startAnimation, fullText, typingSpeed]);
+  // Decorative floral elements matching the project style
+  const FloralDecoration = ({ className = "" }) => (
+    <svg className={`w-full h-full ${className}`} viewBox="0 0 80 80" fill="none">
+      <path 
+        d="M10,40 Q25,20 40,40 Q55,60 70,40 Q55,20 40,40 Q25,60 10,40" 
+        stroke="rgba(255,255,255,0.6)" 
+        strokeWidth="1.2"
+        fill="none"
+        opacity="0.6"
+      />
+      <path d="M25,35 Q30,25 35,35 Q30,45 25,35" fill="rgba(255,255,255,0.5)" opacity="0.5"/>
+      <path d="M45,45 Q50,35 55,45 Q50,55 45,45" fill="rgba(255,255,255,0.4)" opacity="0.4"/>
+      <circle cx="40" cy="40" r="2.5" fill="rgba(255,255,255,0.6)" opacity="0.6"/>
+      <circle cx="32" cy="38" r="1" fill="rgba(255,255,255,0.4)" opacity="0.4"/>
+      <circle cx="48" cy="42" r="1" fill="rgba(255,255,255,0.4)" opacity="0.4"/>
+    </svg>
+  );
 
   const addToCalendar = () => {
-    // Crear evento de calendario en formato ICS
-    const startDate = '20241018T170000'; // 18 de octubre 2024, 5:00 PM
-    const endDate = '20241019T020000';   // 19 de octubre 2024, 2:00 AM
+    const startDate = '20241018T170000';
+    const endDate = '20241019T020000';
     
     const icsContent = [
       'BEGIN:VCALENDAR',
@@ -86,10 +64,10 @@ export default function RSVPSection() {
       `DTEND:${endDate}`,
       'SUMMARY:Boda de Andrea y Aldo',
       'DESCRIPTION:Celebración de la boda de Andrea y Aldo',
-      'LOCATION:Venue de la boda', // Puedes cambiar esto por la ubicación real
+      'LOCATION:Montemorelos, N.L.',
       'STATUS:CONFIRMED',
       'BEGIN:VALARM',
-      'TRIGGER:-PT24H', // Recordatorio 24 horas antes
+      'TRIGGER:-PT24H',
       'DESCRIPTION:Recordatorio: Boda de Andrea y Aldo mañana',
       'ACTION:DISPLAY',
       'END:VALARM',
@@ -97,7 +75,6 @@ export default function RSVPSection() {
       'END:VCALENDAR'
     ].join('\r\n');
 
-    // Crear blob y descargar
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
@@ -111,7 +88,7 @@ export default function RSVPSection() {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen w-full flex items-center justify-center px-4 opacity-0 relative overflow-hidden"
+      className="min-h-screen w-full relative overflow-hidden flex items-center justify-center"
       style={{
         backgroundImage: `url('/hero.jpeg')`,
         backgroundSize: 'cover',
@@ -119,119 +96,140 @@ export default function RSVPSection() {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      {/* Overlay con opacidad reducida */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60"></div>
+      {/* Elegant overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/60"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-black/10 to-black/20"></div>
+      
+      {/* Subtle texture overlay */}
+      <div className="absolute inset-0 opacity-20">
+        <div 
+          className="absolute inset-0" 
+          style={{
+            backgroundImage: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 70%),
+                              radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.12) 0%, transparent 70%)`
+          }}
+        />
+      </div>
 
-      {/* Main content - centered */}
-      <div className="text-center relative z-10 max-w-2xl mx-auto">
-       
+      {/* Side decorative elements */}
+      <div className="absolute left-8 top-1/4 w-16 h-16 opacity-20 hidden lg:block">
+        <FloralDecoration />
+      </div>
+      
+      <div className="absolute right-8 bottom-1/4 w-16 h-16 opacity-20 hidden lg:block">
+        <FloralDecoration className="transform rotate-180" />
+      </div>
+
+      <div className="max-w-4xl mx-auto text-center relative z-10 px-4">
         
-        {/* Texto animado */}
-        <div className="mb-6">
-          <p className="text-xl md:text-2xl font-light text-white garamond-300 leading-relaxed tracking-[0.1em] min-h-[3rem] flex items-center justify-center">
-            <span className="typewriter-text">
-              {displayedText}
-              {startAnimation && displayedText.length < fullText.length && (
-                <span className="animate-pulse">|</span>
-              )}
-            </span>
+        {/* Header with elegant styling */}
+        <div className={`mb-12 transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`} style={{ transitionDelay: '200ms' }}>
+          
+          {/* Decorative top element */}
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-16 opacity-40">
+              <FloralDecoration />
+            </div>
+          </div>
+
+          {/* Subtitle */}
+          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-white/80 italic garamond-300">
+            CONFIRMA TU ASISTENCIA
+          </p>
+          
+          {/* Decorative line */}
+          <div className="w-24 h-px mx-auto mb-6 bg-white/60"></div>
+          
+          {/* Main title */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-white mb-8 garamond-300 relative">
+            RSVP
+          </h2>
+          
+          {/* Bottom decorative element */}
+          <div className="flex justify-center items-center mt-6">
+            <div className="w-8 h-px bg-white/40"></div>
+            <div className="mx-3 text-white/60 text-lg">♡</div>
+            <div className="w-8 h-px bg-white/40"></div>
+          </div>
+        </div>
+        
+        {/* Main message with fade in */}
+        <div className={`mb-12 transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '600ms' }}>
+          <p className="text-xl md:text-2xl font-light text-white leading-relaxed tracking-[0.1em] garamond-300">
+            Nos encantaría celebrar este momento especial contigo
           </p>
         </div>
 
-        {/* Línea decorativa */}
-        {showLine && (
-          <div className="animate-line-appear mb-6">
-            <div className="w-48 md:w-64 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto"></div>
-          </div>
-        )}
-
-        {/* Texto de bienvenida */}
-        {showWelcomeText && (
-          <div className="animate-fade-in-up mb-10">
-            <p className="text-lg md:text-xl font-light text-white/90 garamond-300 tracking-wide">
-              ¡Te esperamos!
-            </p>
-          </div>
-        )}
-        
-        {/* Botones */}
-        {showButtons && (
-          <div className="flex flex-col gap-4 items-center animate-fade-in-up animation-delay-300">
-            <button 
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-light tracking-[0.1em] hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all duration-300 garamond-300 uppercase text-sm group rounded-sm"
-              onClick={() => {
-                window.open('https://wa.me/528123456789?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Andrea%20y%20Aldo', '_blank');
-              }}
-            >
-              <FaWhatsapp className="text-lg group-hover:scale-110 transition-transform duration-300" />
-              <span>Confirmar por WhatsApp</span>
-            </button>
+        {/* Content card */}
+        <div className={`transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '800ms' }}>
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 shadow-elegant max-w-2xl mx-auto">
             
-            <button 
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-light tracking-[0.1em] hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all duration-300 garamond-300 uppercase text-sm group rounded-sm"
-              onClick={addToCalendar}
-            >
-              <FaCalendarPlus className="text-lg group-hover:scale-110 transition-transform duration-300" />
-              <span>Agendar en Calendario</span>
-            </button>
+            {/* Content Section */}
+            <div className="p-10 md:p-12 text-center relative">
+              
+              {/* Decorative Element */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-white/30"></div>
+              
+              {/* Welcome message */}
+              <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-10 garamond-300">
+                ¡Te esperamos!
+              </p>
+              
+              {/* Divider */}
+              <div className="flex justify-center items-center mb-10">
+                <div className="w-8 h-px bg-white/30"></div>
+                <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
+                <div className="w-8 h-px bg-white/30"></div>
+              </div>
+              
+              {/* Buttons */}
+              <div className="flex flex-col gap-6 items-center">
+                <button 
+                  className="group inline-flex items-center gap-3 px-10 py-4 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  onClick={() => {
+                    window.open('https://wa.me/528123456789?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Andrea%20y%20Aldo', '_blank');
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                  <FaWhatsapp className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
+                  <span className="relative z-10">Confirmar por WhatsApp</span>
+                </button>
+                
+                <button 
+                  className="group inline-flex items-center gap-3 px-10 py-4 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  onClick={addToCalendar}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                  <FaCalendarPlus className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
+                  <span className="relative z-10">Agendar en Calendario</span>
+                </button>
+              </div>
+            </div>
           </div>
-        )}
+        </div>
+
+        {/* Bottom decorative element */}
+        <div className={`flex justify-center mt-12 transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '1000ms' }}>
+          <div className="w-20 h-20 opacity-30">
+            <FloralDecoration />
+          </div>
+        </div>
       </div>
 
       <style jsx>{`
-        @keyframes fade-in {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fade-in-up {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes line-appear {
-          0% {
-            opacity: 0;
-            transform: scaleX(0);
-          }
-          100% {
-            opacity: 1;
-            transform: scaleX(1);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fade-in 1s ease-out forwards;
-        }
-
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-        }
-
-        .animate-line-appear {
-          animation: line-appear 0.8s ease-out forwards;
-        }
-
-        .animation-delay-300 {
-          animation-delay: 0.2s;
-          opacity: 0;
-          animation-fill-mode: forwards;
-        }
-
-        .typewriter-text {
-          font-family: inherit;
+        .shadow-elegant {
+          box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.3),
+            0 20px 25px -5px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         }
       `}</style>
     </section>

@@ -57,8 +57,22 @@ export default function LocationSection() {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen w-full bg-[#F8F6F3] py-24 px-4 md:px-8 relative overflow-hidden"
+      className="min-h-screen w-full py-24 px-4 md:px-8 relative overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
+      }}
     >
+      {/* Subtle organic texture overlay */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div 
+          className="absolute inset-0" 
+          style={{
+            backgroundImage: `radial-gradient(circle at 30% 20%, rgba(196, 152, 91, 0.15) 0%, transparent 60%),
+                              radial-gradient(circle at 70% 60%, rgba(139, 115, 85, 0.12) 0%, transparent 60%),
+                              radial-gradient(circle at 50% 90%, rgba(180, 147, 113, 0.1) 0%, transparent 60%)`
+          }}
+        />
+      </div>
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-20">
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
