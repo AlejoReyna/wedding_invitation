@@ -1,7 +1,63 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
 import { FaGift, FaCreditCard, FaHeart, FaMapMarkerAlt, FaPenFancy, FaQuoteLeft, FaFeatherAlt } from 'react-icons/fa';
-import MessageCard from './MessageCard';
+
+// Componente MessageCard simulado para el ejemplo
+function MessageCard({ className }) {
+  return (
+    <div className={`bg-white/95 backdrop-blur-lg border-2 border-[#8a6a5a]/30 p-10 ${className}`}>
+      {/* Header premium con líneas decorativas */}
+      <div className="text-center mb-8 relative">
+        {/* Línea decorativa superior */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-px bg-[#8a6a5a]"></div>
+        
+        <div className="pt-6">
+          <h3 className="text-3xl font-light text-[#4a2a1a] mb-3 tracking-wider">Mensaje</h3>
+          <p className="text-[#6a4a3a] text-base font-medium">Comparte tus buenos deseos</p>
+        </div>
+        
+        {/* Línea decorativa inferior */}
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-px bg-[#8a6a5a]"></div>
+      </div>
+      
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-semibold text-[#4a2a1a] mb-3 tracking-wide uppercase">Nombre</label>
+          <input 
+            type="text" 
+            placeholder="Tu nombre completo"
+            className="w-full p-4 border-2 border-[#c4a494]/50 bg-white/80 focus:outline-none focus:ring-0 focus:border-[#8a6a5a] focus:bg-white transition-all duration-300 font-medium text-[#4a2a1a]"
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-semibold text-[#4a2a1a] mb-3 tracking-wide uppercase">Correo electrónico</label>
+          <input 
+            type="email" 
+            placeholder="tu@email.com"
+            className="w-full p-4 border-2 border-[#c4a494]/50 bg-white/80 focus:outline-none focus:ring-0 focus:border-[#8a6a5a] focus:bg-white transition-all duration-300 font-medium text-[#4a2a1a]"
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-semibold text-[#4a2a1a] mb-3 tracking-wide uppercase">Mensaje</label>
+          <textarea 
+            rows={5}
+            placeholder="Comparte tus buenos deseos y bendiciones para nuestra nueva vida juntos..."
+            className="w-full p-4 border-2 border-[#c4a494]/50 bg-white/80 focus:outline-none focus:ring-0 focus:border-[#8a6a5a] focus:bg-white transition-all duration-300 resize-none font-medium text-[#4a2a1a]"
+          />
+        </div>
+        
+        <div className="pt-4">
+          <button className="w-full bg-[#6a4a3a] hover:bg-[#5a3a2a] text-white font-semibold py-4 transition-all duration-300 flex items-center justify-center gap-3 tracking-wider uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            <FaPenFancy className="text-base" />
+            ENVIAR MENSAJE
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function MessageSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -44,115 +100,107 @@ export default function MessageSection() {
   return (
     <section 
       ref={sectionRef}
-      className={`min-h-screen w-full bg-[#dfb9b0] py-16 md:py-24 px-4 md:px-8 relative overflow-hidden transition-all duration-1000 ease-out ${
+      className={`min-h-screen w-full relative overflow-hidden transition-all duration-1000 ease-out ${
         isVisible ? 'opacity-100 animate-elegant-fade-in' : 'opacity-0'
       }`}
+      style={{
+        backgroundColor: '#d4b5a8' // Color sólido que mezcla los tonos originales
+      }}
     >
       {/* Elegant background patterns */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-gradient-radial from-[#cc9b8c]/30 via-[#cc9b8c]/10 to-transparent rounded-full blur-3xl animate-gentle-float"></div>
-        <div className="absolute bottom-1/3 right-1/5 w-80 h-80 bg-gradient-radial from-[#c37658]/25 via-[#c37658]/8 to-transparent rounded-full blur-3xl animate-gentle-float-delay"></div>
-        <div className="absolute top-2/3 left-2/3 w-64 h-64 bg-gradient-radial from-[#8d5641]/15 via-[#8d5641]/5 to-transparent rounded-full blur-2xl animate-gentle-float-slow"></div>
+      <div className="absolute inset-0 opacity-12">
+        <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-[#8a5a4a]/20 rounded-full blur-3xl animate-gentle-float"></div>
+        <div className="absolute bottom-1/3 right-1/5 w-80 h-80 bg-[#7a4a3a]/15 rounded-full blur-3xl animate-gentle-float-delay"></div>
+        <div className="absolute top-2/3 left-2/3 w-64 h-64 bg-[#5a3a2a]/10 rounded-full blur-2xl animate-gentle-float-slow"></div>
+        <div className="absolute top-1/6 right-1/3 w-72 h-72 bg-[#a4746a]/18 rounded-full blur-3xl animate-gentle-float"></div>
+        <div className="absolute bottom-1/6 left-1/3 w-88 h-88 bg-[#9a6a5a]/12 rounded-full blur-3xl animate-gentle-float-delay"></div>
       </div>
 
       {/* Decorative border elements */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent opacity-60"></div>
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent opacity-60"></div>
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#8a5a4a] to-transparent opacity-70"></div>
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#8a5a4a] to-transparent opacity-70"></div>
 
       {/* Floating decorative elements */}
-      <div className="absolute top-20 right-16 text-[#cc9b8c]/40 animate-elegant-float">
-        <FaFeatherAlt className="text-3xl transform rotate-12" />
+      <div className="absolute top-20 right-16 text-[#7a4a3a]/50 animate-elegant-float">
+        <FaFeatherAlt className="text-4xl transform rotate-12" />
       </div>
-      <div className="absolute bottom-32 left-20 text-[#c37658]/35 animate-elegant-float-reverse">
-        <FaHeart className="text-2xl transform -rotate-12" />
+      <div className="absolute bottom-32 left-20 text-[#6a3a2a]/45 animate-elegant-float-reverse">
+        <FaHeart className="text-3xl transform -rotate-12" />
       </div>
-      <div className="absolute top-1/2 right-1/4 text-[#cc9b8c]/30 animate-elegant-float-delay">
-        <FaQuoteLeft className="text-xl transform rotate-6" />
+      <div className="absolute top-1/2 right-1/4 text-[#8a5a4a]/40 animate-elegant-float-delay">
+        <FaQuoteLeft className="text-2xl transform rotate-6" />
       </div>
 
-      <div className="max-w-7xl mx-auto text-[#8d5641] relative z-10">
-        {/* Elegant header section */}
-        <div className="text-center mb-16 relative">
-         
-          
-          {/* Elegant divider */}
-          {/* 
-          <div className="flex items-center justify-center mt-8 mb-6">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
-            <div className="mx-6 w-3 h-3 border-2 border-[#cc9b8c] transform rotate-45 bg-[#dfb9b0]"></div>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
-          </div>
-          */}
-         
-        </div>
-
+      <div className="max-w-7xl mx-auto text-[#4a2a1a] relative z-10 py-16 md:py-24 px-4 md:px-8">
         {/* Main content grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center max-w-6xl mx-auto min-h-[70vh]">
           
-          {/* Left Column - Elegant Message Invitation */}
-          <div className="order-1 relative">
+          {/* Left Column - Elegant Message Invitation - Centrado Verticalmente */}
+          <div className="order-1 relative flex flex-col justify-center h-full">
             <div className="text-center">
               
-              {/* Elegant title */}
-              <h3 className="text-4xl md:text-5xl font-light text-[#8d5641] mb-8 tracking-wider">
-                <span className="font-serif italic">Déjanos</span>
-                <span className="block font-sans font-extralight text-3xl md:text-4xl mt-2 text-[#c37658]">
+              {/* Elegant title con tipografía mejorada */}
+              <h3 className="text-5xl md:text-7xl font-light text-[#3a1a0a] mb-8 tracking-wider leading-tight">
+                <span className="font-serif italic font-medium">Déjanos</span>
+                <span className="block font-sans font-light text-4xl md:text-6xl mt-4 text-[#5a2a1a]">
                   UN MENSAJE
                 </span>
               </h3>
               
               {/* Ornamental divider */}
-              <div className="flex items-center justify-center mt-8 mb-6">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
-            <div className="mx-6 w-3 h-3 border-2 border-[#cc9b8c] transform rotate-45 bg-[#dfb9b0]"></div>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#cc9b8c] to-transparent"></div>
-          </div>
+              <div className="flex items-center justify-center mt-10 mb-8">
+                <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#6a3a2a] to-transparent"></div>
+                <div className="mx-8 w-4 h-4 border-2 border-[#6a3a2a] transform rotate-45 bg-gradient-to-br from-[#dfb9b0] to-[#cc9b8c]"></div>
+                <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#6a3a2a] to-transparent"></div>
+              </div>
               
-              {/* Content sections */}
-              <div className="space-y-8 mb-12">
+              {/* Content sections con mejor contraste */}
+              <div className="space-y-10 mb-12">
                 <div className="space-y-6">
-                  <p className="text-[#8d5641] text-2xl font-medium tracking-wide leading-relaxed">
+                  <p className="text-[#3a1a0a] text-3xl md:text-4xl font-semibold tracking-wide leading-relaxed">
                     Escribe desde el corazón
                   </p>
-                  <div className="w-12 h-px bg-[#c37658] mx-auto"></div>
-                  <p className="text-[#8d5641]/90 text-xl leading-relaxed max-w-lg mx-auto">
+                  <div className="w-16 h-px bg-[#5a2a1a] mx-auto"></div>
+                  <p className="text-[#4a2a1a] text-xl md:text-2xl leading-relaxed max-w-lg mx-auto font-medium">
                     Tus palabras de amor y buenos deseos serán un tesoro que guardaremos para siempre
                   </p>
                 </div>
-                
-                
               </div>
-              
-             
             </div>
           </div>
 
           {/* Right Column - Message Form */}
-          <div className="order-2 relative">
+          <div className="order-2 relative flex flex-col justify-center h-full">
             {/* Subtle glow effect */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-[#cc9b8c]/30 via-transparent to-[#c37658]/20 rounded-3xl blur-2xl opacity-60"></div>
-            <div className="relative transform hover:scale-[1.02] transition-all duration-500">
-              <MessageCard className="shadow-elegant-strong border border-[#cc9b8c]/30" />
+            <div className="absolute -inset-8 bg-gradient-to-br from-[#8a5a4a]/30 via-[#6a4a3a]/20 to-[#4a2a1a]/25 blur-2xl opacity-60"></div>
+            <div className="relative transform hover:scale-[1.01] transition-all duration-700 ease-out">
+              <MessageCard className="shadow-premium border-[#8a6a5a]/40 backdrop-blur-xl" />
             </div>
           </div>
         </div>
-
-        
       </div>
 
       <style jsx>{`
         .shadow-elegant {
           box-shadow: 
-            0 10px 25px -5px rgba(141, 86, 65, 0.15),
-            0 20px 50px -5px rgba(141, 86, 65, 0.1),
-            0 0 0 1px rgba(204, 155, 140, 0.1);
+            0 15px 35px -5px rgba(74, 42, 26, 0.25),
+            0 25px 60px -5px rgba(74, 42, 26, 0.15),
+            0 0 0 1px rgba(138, 90, 74, 0.2);
         }
         
         .shadow-elegant-strong {
           box-shadow: 
-            0 15px 35px -5px rgba(141, 86, 65, 0.2),
-            0 25px 60px -10px rgba(141, 86, 65, 0.15),
-            0 0 0 1px rgba(204, 155, 140, 0.15);
+            0 20px 45px -5px rgba(74, 42, 26, 0.3),
+            0 35px 80px -10px rgba(74, 42, 26, 0.2),
+            0 0 0 1px rgba(138, 90, 74, 0.25);
+        }
+
+        .shadow-premium {
+          box-shadow: 
+            0 25px 50px -12px rgba(74, 42, 26, 0.4),
+            0 40px 100px -15px rgba(74, 42, 26, 0.3),
+            0 0 0 1px rgba(138, 90, 74, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .bg-gradient-radial {

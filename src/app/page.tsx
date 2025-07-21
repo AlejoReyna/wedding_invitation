@@ -76,7 +76,10 @@ export default function Home() {
                   ALDO
                 </h1>
               </div>
+
+              
             </div>
+            
 
             {/* Botón de confirmar asistencia debajo de los nombres - más pequeño */}
             <div>
@@ -87,6 +90,13 @@ export default function Home() {
                 <span className="garamond-300 tracking-[0.1em] sm:tracking-[0.12em]">CONFIRMAR ASISTENCIA</span>
               </a>
             </div>
+
+            <div className="max-w-4xl mx-auto text-center">
+            <CountdownTimer 
+              targetDate="2025-10-18T00:00:00" 
+              className="animate-fade-in-up animate-delay-800"
+            />
+          </div>
           </div>
         </div>
 
