@@ -36,23 +36,93 @@ export default function LocationSection() {
     };
   }, []);
 
+  // Decorative floral elements matching the project style
+  const FloralDecoration = ({ className = "" }) => (
+    <svg className={`w-full h-full ${className}`} viewBox="0 0 80 80" fill="none">
+      <path 
+        d="M10,40 Q25,20 40,40 Q55,60 70,40 Q55,20 40,40 Q25,60 10,40" 
+        stroke="#8B7355" 
+        strokeWidth="1.2"
+        fill="none"
+        opacity="0.6"
+      />
+      <path d="M25,35 Q30,25 35,35 Q30,45 25,35" fill="#9B8366" opacity="0.5"/>
+      <path d="M45,45 Q50,35 55,45 Q50,55 45,45" fill="#C4985B" opacity="0.4"/>
+      <circle cx="40" cy="40" r="2.5" fill="#D4A971" opacity="0.6"/>
+      <circle cx="32" cy="38" r="1" fill="#8B7355" opacity="0.4"/>
+      <circle cx="48" cy="42" r="1" fill="#8B7355" opacity="0.4"/>
+    </svg>
+  );
+
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen w-full bg-gradient-to-br from-rose-50 via-neutral-50 to-stone-50 py-24 px-4 md:px-8"
+      className="min-h-screen w-full bg-[#F8F6F3] py-24 px-4 md:px-8 relative overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="locationPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+              <path 
+                d="M20,20 Q40,30 60,20 Q80,10 100,25" 
+                stroke="#8B7355" 
+                strokeWidth="0.5" 
+                fill="none" 
+                opacity="0.3"
+              />
+              <circle cx="30" cy="25" r="1" fill="#C4985B" opacity="0.2"/>
+              <circle cx="70" cy="22" r="0.8" fill="#9B8366" opacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#locationPattern)"/>
+        </svg>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header with elegant styling */}
         <div className={`text-center mb-20 transition-all duration-2000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`} style={{ transitionDelay: '200ms' }}>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.4em] uppercase text-stone-800 mb-6 garamond-300 relative">
-            Evento principal
-            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
+          
+          {/* Decorative top element */}
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-16 opacity-40">
+              <FloralDecoration />
+            </div>
+          </div>
+
+          {/* Subtitle */}
+          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
+            DONDE NOS ENCONTRAREMOS
+          </p>
+          
+          {/* Decorative line */}
+          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
+          
+          {/* Main title */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
+            Ubicaciones
           </h2>
+          
+          {/* Bottom decorative element */}
+          <div className="flex justify-center items-center mt-6">
+            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
+            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
+            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
+          </div>
         </div>
 
-        {/* Cards Container */}
+        {/* Side decorative elements */}
+        <div className="absolute left-8 top-1/3 w-12 h-12 opacity-20 hidden lg:block">
+          <FloralDecoration />
+        </div>
+        
+        <div className="absolute right-8 top-2/3 w-12 h-12 opacity-20 hidden lg:block">
+          <FloralDecoration className="transform rotate-180" />
+        </div>
+
+        {/* Cards Container - keeping cards exactly the same */}
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-[920px] mx-auto">
           
           {/* Ceremonia Card */}
@@ -215,6 +285,15 @@ export default function LocationSection() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Bottom decorative element */}
+        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '1000ms' }}>
+          <div className="w-20 h-20 opacity-30">
+            <FloralDecoration />
           </div>
         </div>
       </div>
