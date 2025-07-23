@@ -243,26 +243,24 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Subtitle */}
-          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
-            ALGUNOS MOMENTOS ESPECIALES
-          </p>
           
-          {/* Decorative line */}
-          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
+          
+          
           
           {/* Main title */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-4 garamond-300 relative">
             ¡Nos Casamos!
           </h2>
+          {/* Decorative line */}
+          <div className="w-80 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
           
           {/* Description */}
-          <p className="text-stone-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-light mb-8">
-            Juntos escribiendo nuestra historia de amor
+          <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-8 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
+Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </p>
           
           {/* Bottom decorative element */}
-          <div className="flex justify-center items-center mt-6">
+          <div className="flex justify-center items-center">
             <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
             <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
             <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
