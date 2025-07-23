@@ -22,6 +22,31 @@ export default function ItinerarySection() {
   const [isSectionVisible, setIsSectionVisible] = useState(false);
   const [hasInitialized, setHasInitialized] = useState(false);
 
+  // Define itinerary items first so we can use them in other functions
+  const itineraryItems: ItineraryItem[] = [
+    {
+      time: "4:00 PM - 5:00 PM",
+      displayTime: "04:00",
+      title: "Ceremonia",
+      description: "",
+      location: "Iglesia del Sagrado Corazón"
+    },
+    {
+      time: "6:00 PM - 7:00 PM",
+      displayTime: "06:00",
+      title: "Ceremonia Civil",
+      description: "",
+      location: "Museo de Montemorelos"
+    },
+    {
+      time: "7:00 PM - 1:00 AM",
+      displayTime: "07:00",
+      title: "Recepción",
+      description: "",
+      location: "Salón Terraza, Museo de Montemorelos"
+    }
+  ];
+
   // Set up client-side state and window dimensions
   useEffect(() => {
     setIsClient(true);
@@ -46,6 +71,26 @@ export default function ItinerarySection() {
     };
   }, [setIsNightMode]);
 
+  // Calculate which specific card we're currently viewing
+  const getCurrentCardIndex = useCallback(() => {
+    if (!sectionRef.current || !isClient || windowHeight === 0) return -1;
+
+    const rect = sectionRef.current.getBoundingClientRect();
+    const sectionTop = rect.top;
+    
+    // Calculate based on viewport center position
+    const viewportCenter = windowHeight / 2;
+    const relativeCenter = viewportCenter - sectionTop;
+    
+    // Estimate card height and spacing (each card takes roughly 1/3 of section)
+    const cardHeight = rect.height / itineraryItems.length;
+    const currentIndex = Math.floor(relativeCenter / cardHeight);
+    
+    return Math.max(0, Math.min(currentIndex, itineraryItems.length - 1));
+  }, [isClient, windowHeight, itineraryItems.length]);
+
+  const currentCardIndex = getCurrentCardIndex();
+
   // Calculate scroll progress for content transitions only
   const updateScrollProgress = useCallback(() => {
     if (!sectionRef.current || !isClient || windowHeight === 0) return;
@@ -56,14 +101,6 @@ export default function ItinerarySection() {
     // Calculate how much of the section has been scrolled through
     const sectionTop = rect.top;
     const sectionBottom = rect.bottom;
-    
-    // Check if section is significantly visible AND user is actively scrolling within it
-    const isVisible = (
-      sectionTop <= windowHeight * 0.3 && // Section header is well into viewport
-      sectionBottom >= windowHeight * 0.7 && // Section extends well below viewport
-      scrollProgress > 0.1 // User has scrolled into the section content
-    );
-    setIsSectionVisible(isVisible);
     
     let progress = 0;
     
@@ -79,30 +116,71 @@ export default function ItinerarySection() {
     }
     
     const clampedProgress = Math.max(0, Math.min(1, progress));
+    
+    // Check if section is significantly visible AND user is actively scrolling within it
+    const isVisible = (
+      sectionTop <= windowHeight * 0.3 && // Section header is well into viewport
+      sectionBottom >= windowHeight * 0.7 && // Section extends well below viewport
+      clampedProgress > 0.2 // User has scrolled significantly into the section content
+    );
+    
+    // DEBUGGING LOGS
+    console.log('=== ITINERARY SCROLL DEBUG ===');
+    console.log('windowHeight:', windowHeight);
+    console.log('sectionHeight:', sectionHeight);
+    console.log('sectionTop:', sectionTop);
+    console.log('sectionBottom:', sectionBottom);
+    console.log('clampedProgress:', clampedProgress);
+    console.log('currentCardIndex:', currentCardIndex);
+    console.log('current card:', itineraryItems[currentCardIndex]?.title || 'none');
+    console.log('isVisible conditions:');
+    console.log('  - sectionTop <= windowHeight * 0.3:', sectionTop <= windowHeight * 0.3, '(', sectionTop, '<=', windowHeight * 0.3, ')');
+    console.log('  - sectionBottom >= windowHeight * 0.7:', sectionBottom >= windowHeight * 0.7, '(', sectionBottom, '>=', windowHeight * 0.7, ')');
+    console.log('  - clampedProgress > 0.2:', clampedProgress > 0.2);
+    console.log('isVisible result:', isVisible);
+    console.log('==============================');
+    
+    setIsSectionVisible(isVisible);
     setScrollProgress(clampedProgress);
     
-  }, [isClient, windowHeight, scrollProgress]);
+  }, [isClient, windowHeight, currentCardIndex, itineraryItems]);
 
-  // Update night mode based on progress - transition starts from "Recepción" card
-  // Only control night mode when the section is visible and being actively scrolled
+  // Update night mode based on current card - activate when reaching "Recepción" card
   useEffect(() => {
+    // DEBUGGING LOGS FOR NIGHT MODE
+    console.log('=== NIGHT MODE DEBUG ===');
+    console.log('hasInitialized:', hasInitialized);
+    console.log('isSectionVisible:', isSectionVisible);
+    console.log('currentCardIndex:', currentCardIndex);
+    console.log('current card title:', itineraryItems[currentCardIndex]?.title || 'none');
+    console.log('scrollProgress:', scrollProgress);
+    console.log('current isNightMode:', isNightMode);
+    
     if (!hasInitialized) {
-      // Don't change theme until component has fully initialized
+      console.log('NIGHT MODE: Not initialized yet, skipping');
       return;
     }
     
     if (!isSectionVisible) {
-      // Reset to day mode when section is not prominently visible
+      console.log('NIGHT MODE: Section not visible, setting to day mode');
       setIsNightMode(false);
       return;
     }
     
-    // Even stricter: only activate night mode when significantly into "Recepción" card
-    // "Recepción" is at index 2, so it starts at 2/3 = 0.67 progress
-    // But add extra threshold to prevent premature activation
-    const shouldBeNight = scrollProgress >= 0.7; // Increased threshold for Recepción card
-    setIsNightMode(shouldBeNight);
-  }, [scrollProgress, setIsNightMode, isSectionVisible, hasInitialized]);
+    // Check if we're currently viewing the "Recepción" card (index 2)
+    const currentCard = itineraryItems[currentCardIndex];
+    const isReceptionCard = currentCard?.title === 'Recepción';
+    
+    console.log('NIGHT MODE: isReceptionCard:', isReceptionCard, 'for card:', currentCard?.title);
+    
+    if (isReceptionCard !== isNightMode) {
+      console.log('NIGHT MODE: Changing mode from', isNightMode, 'to', isReceptionCard);
+      setIsNightMode(isReceptionCard);
+    } else {
+      console.log('NIGHT MODE: No change needed, staying', isNightMode);
+    }
+    console.log('========================');
+  }, [currentCardIndex, setIsNightMode, isSectionVisible, hasInitialized, isNightMode, itineraryItems, scrollProgress]);
 
   // Listen to normal page scroll
   useEffect(() => {
@@ -137,30 +215,6 @@ export default function ItinerarySection() {
       <circle cx="48" cy="42" r="1" fill="#8B7355" opacity="0.4"/>
     </svg>
   );
-
-  const itineraryItems: ItineraryItem[] = [
-    {
-      time: "4:00 PM - 5:00 PM",
-      displayTime: "04:00",
-      title: "Ceremonia",
-      description: "",
-      location: "Iglesia del Sagrado Corazón"
-    },
-    {
-      time: "6:00 PM - 7:00 PM",
-      displayTime: "06:00",
-      title: "Ceremonia Civil",
-      description: "",
-      location: "Museo de Montemorelos"
-    },
-    {
-      time: "7:00 PM - 1:00 AM",
-      displayTime: "07:00",
-      title: "Recepción",
-      description: "",
-      location: "Salón Terraza, Museo de Montemorelos"
-    }
-  ];
 
   return (
     <section 
