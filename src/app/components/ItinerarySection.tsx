@@ -36,21 +36,21 @@ export default function ItinerarySection() {
       time: "4:00 PM - 5:00 PM",
       displayTime: "04:00",
       title: "Ceremonia",
-      description: "Te invitamos a acompañarnos en este momento tan especial donde intercambiaremos votos de amor y compromiso, rodeados de nuestros seres queridos.",
+      description: "",
       location: "Iglesia del Sagrado Corazón"
     },
     {
-      time: "6:00 PM - 11:00 PM",
+      time: "6:00 PM - 7:00 PM",
       displayTime: "06:00",
-      title: "Recepción",
-      description: "Únete a nosotros para una elegante celebración llena de música, baile y momentos inolvidables que crearemos juntos.",
+      title: "Ceremonia Civil",
+      description: "",
       location: "Museo de Montemorelos"
     },
     {
-      time: "11:00 PM - 1:00 AM",
-      displayTime: "11:00",
-      title: "Tornafiesta",
-      description: "Para los que aún tienen energía, continuaremos la celebración con música y bocadillos de medianoche.",
+      time: "7:00 PM - 1:00 AM",
+      displayTime: "07:00",
+      title: "Recepción",
+      description: "",
       location: "Salón Terraza, Museo de Montemorelos"
     }
   ];

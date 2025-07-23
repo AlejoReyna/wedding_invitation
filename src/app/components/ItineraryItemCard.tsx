@@ -101,9 +101,11 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 <div className="w-8 h-px bg-stone-300"></div>
               </div>
               {/* Description */}
-              <p className="text-stone-600 text-sm md:text-base leading-relaxed flex-grow min-h-[6rem]">
-                {item.description}
-              </p>
+              {item.description && item.description.trim() !== "" && (
+                <p className="text-stone-600 text-sm md:text-base leading-relaxed flex-grow">
+                  {item.description}
+                </p>
+              )}
             </div>
           </div>
         </div>
