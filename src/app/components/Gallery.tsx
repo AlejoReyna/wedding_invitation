@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, index: number, shape?: string } | null>(null);
-  const [centerIndex, setCenterIndex] = useState(1);
+  const [centerIndex, setCenterIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -54,7 +54,7 @@ export default function Gallery() {
         
         const centerX = scrollLeft + (containerWidth / 2);
         
-        let closestIndex = 1;
+        let closestIndex = 0;
         let closestDistance = Infinity;
         
         for (let i = 0; i < photos.length; i++) {
@@ -93,39 +93,27 @@ export default function Gallery() {
   }, [photos.length]);
 
   useEffect(() => {
-    const centerSecondImageWithPeek = () => {
+    const centerFirstImageWithPeek = () => {
       if (galleryRef.current) {
         const container = galleryRef.current;
-        const containerWidth = container.clientWidth;
         
         setTimeout(() => {
-          const secondCard = container.children[1] as HTMLElement;
-          if (secondCard) {
-            const cardLeft = secondCard.offsetLeft;
-            const cardWidth = secondCard.offsetWidth;
-            const cardCenter = cardLeft + (cardWidth / 2);
-            
-            const isMobile = window.innerWidth < 768;
-            const offsetAdjustment = isMobile ? 0 : 0;
-            
-            const scrollPosition = cardCenter - (containerWidth / 2) + offsetAdjustment;
-            
-            container.scrollLeft = Math.max(0, scrollPosition);
-            
-            setTimeout(() => {
-              setCenterIndex(1);
-              const event = new Event('scroll');
-              container.dispatchEvent(event);
-            }, 150);
-          }
+          // Simplemente scroll a la posición 0 para mostrar la primera imagen
+          container.scrollLeft = 0;
+          
+          setTimeout(() => {
+            setCenterIndex(0);
+            const event = new Event('scroll');
+            container.dispatchEvent(event);
+          }, 150);
         }, 300);
       }
     };
 
-    const timer = setTimeout(centerSecondImageWithPeek, 400);
+    const timer = setTimeout(centerFirstImageWithPeek, 400);
     
     const handleResize = () => {
-      setTimeout(centerSecondImageWithPeek, 200);
+      setTimeout(centerFirstImageWithPeek, 200);
     };
     
     window.addEventListener('resize', handleResize);
@@ -317,11 +305,13 @@ export default function Gallery() {
           {/* Carousel */}
           <div 
             ref={galleryRef}
-            className="flex gap-4 md:gap-8 lg:gap-12 overflow-x-auto scrollbar-hide py-12 px-4 md:px-8 -mx-4 md:-mx-8"
+            className="flex gap-4 md:gap-8 lg:gap-12 overflow-x-auto scrollbar-hide py-12 -mx-4 md:-mx-8"
             style={{
               scrollSnapType: 'x mandatory',
               scrollPadding: '0 1rem',
               transformStyle: 'preserve-3d',
+              paddingLeft: 'calc(50vw - 8rem)', // Mobile: 50vw - 8rem (16rem/2), Desktop se ajusta automáticamente
+              paddingRight: 'calc(50vw - 8rem)', 
             }}
           >
             {photos.map((photo, index) => {
