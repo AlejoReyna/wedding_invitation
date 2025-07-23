@@ -121,22 +121,6 @@ const Navbar = () => {
       return 'bg-black/95 shadow-lg hover:bg-black';
     }
 
-    // Si la sección de RSVP está visible, la navbar cambia a un color verde específico.
-    // Esta condición tiene prioridad sobre las demás secciones.
-    if (isInRSVPSection) {
-      return 'bg-[#818368]/95 shadow-lg hover:bg-[#818368]';
-    }
-
-    // Si la sección de Mensaje está visible, la navbar cambia a un color específico.
-    if (isInMessageSection) {
-      return 'bg-[#d0aca4]/95 shadow-lg hover:bg-[#d0aca4]';
-    }
-
-    // Si la sección de Regalos está visible, la navbar cambia a un color rosado.
-    if (isInGiftSection) {
-      return 'bg-[#e8c4bc]/95 shadow-lg hover:bg-[#e8c4bc]';
-    }
-
     // Si está en la sección del footer, es transparente
     if (isInFooterSection) {
       return 'bg-white/10 hover:bg-white/15';
@@ -234,8 +218,7 @@ const Navbar = () => {
       return 'bg-white/30';
     }
     
-    // En todas las demás secciones, usar línea decorativa #543c24
-    return 'bg-[#543c24]/30';
+  
   };
 
   const handleNavClick = (id: string) => {

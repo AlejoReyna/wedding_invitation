@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
 import { FaWhatsapp, FaCalendarPlus } from 'react-icons/fa';
+import MessageSection from './MessageSection';
 
 export default function RSVPSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -88,7 +89,7 @@ export default function RSVPSection() {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen w-full relative overflow-hidden flex items-center justify-center"
+      className="min-h-screen w-full relative overflow-hidden flex items-center justify-center py-12"
       style={{
         backgroundImage: `url('/hero.jpeg')`,
         backgroundSize: 'cover',
@@ -120,10 +121,11 @@ export default function RSVPSection() {
         <FloralDecoration className="transform rotate-180" />
       </div>
 
-      <div className="max-w-4xl mx-auto text-center relative z-10 px-4">
+      {/* Main Container with Grid Layout */}
+      <div className="max-w-7xl mx-auto relative z-10 px-4 w-full">
         
-        {/* Header with elegant styling */}
-        <div className={`mb-12 transition-all duration-2000 ease-out ${
+        {/* Header Section */}
+        <div className={`text-center mb-16 transition-all duration-2000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`} style={{ transitionDelay: '200ms' }}>
           
@@ -154,68 +156,79 @@ export default function RSVPSection() {
             <div className="w-8 h-px bg-white/40"></div>
           </div>
         </div>
-        
-        {/* Main message with fade in */}
-        <div className={`mb-12 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '600ms' }}>
-          <p className="text-xl md:text-2xl font-light text-white leading-relaxed tracking-[0.1em] garamond-300">
-            Nos encantaría celebrar este momento especial contigo
-          </p>
-        </div>
 
-        {/* Content card */}
-        <div className={`transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '800ms' }}>
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 shadow-elegant max-w-2xl mx-auto">
+        {/* Grid Layout: 1 row, 2 columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          
+          {/* Left Column: Text Content */}
+          <div className={`transition-all duration-2000 ease-out ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`} style={{ transitionDelay: '600ms' }}>
             
-            {/* Content Section */}
-            <div className="p-10 md:p-12 text-center relative">
-              
-              {/* Decorative Element */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-white/30"></div>
-              
-              {/* Welcome message */}
-              <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-10 garamond-300">
-                ¡Te esperamos!
+            {/* Main message */}
+            <div className="mb-12">
+              <p className="text-xl md:text-2xl font-light text-white leading-relaxed tracking-[0.1em] garamond-300 text-center lg:text-left">
+                Nos encantaría celebrar este momento especial contigo
               </p>
+            </div>
+
+            {/* Content card */}
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 shadow-elegant">
               
-              {/* Divider */}
-              <div className="flex justify-center items-center mb-10">
-                <div className="w-8 h-px bg-white/30"></div>
-                <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
-                <div className="w-8 h-px bg-white/30"></div>
-              </div>
-              
-              {/* Buttons */}
-              <div className="flex flex-col gap-6 items-center">
-                <button 
-                  className="group inline-flex items-center gap-3 px-10 py-4 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                  onClick={() => {
-                    window.open('https://wa.me/528123456789?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Andrea%20y%20Aldo', '_blank');
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-                  <FaWhatsapp className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
-                  <span className="relative z-10">Confirmar por WhatsApp</span>
-                </button>
+              {/* Content Section */}
+              <div className="p-8 md:p-10 text-center relative">
                 
-                <button 
-                  className="group inline-flex items-center gap-3 px-10 py-4 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                  onClick={addToCalendar}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-                  <FaCalendarPlus className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
-                  <span className="relative z-10">Agendar en Calendario</span>
-                </button>
+                {/* Decorative Element */}
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-white/30"></div>
+                
+                {/* Welcome message */}
+                <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-8 garamond-300">
+                  ¡Te esperamos!
+                </p>
+                
+                {/* Divider */}
+                <div className="flex justify-center items-center mb-8">
+                  <div className="w-8 h-px bg-white/30"></div>
+                  <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
+                  <div className="w-8 h-px bg-white/30"></div>
+                </div>
+                
+                {/* Buttons */}
+                <div className="flex flex-col gap-4 items-center">
+                  <button 
+                    className="group inline-flex items-center gap-3 px-8 py-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full justify-center"
+                    onClick={() => {
+                      window.open('https://wa.me/528123456789?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Andrea%20y%20Aldo', '_blank');
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                    <FaWhatsapp className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
+                    <span className="relative z-10">Confirmar por WhatsApp</span>
+                  </button>
+                  
+                  <button 
+                    className="group inline-flex items-center gap-3 px-8 py-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full justify-center"
+                    onClick={addToCalendar}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                    <FaCalendarPlus className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
+                    <span className="relative z-10">Agendar en Calendario</span>
+                  </button>
+                </div>
               </div>
             </div>
+          </div>
+
+          {/* Right Column: Message Block */}
+          <div className={`transition-all duration-2000 ease-out ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`} style={{ transitionDelay: '800ms' }}>
+            <MessageSection />
           </div>
         </div>
 
         {/* Bottom decorative element */}
-        <div className={`flex justify-center mt-12 transition-all duration-2000 ease-out ${
+        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ transitionDelay: '1000ms' }}>
           <div className="w-20 h-20 opacity-30">
@@ -230,6 +243,13 @@ export default function RSVPSection() {
             0 4px 6px -1px rgba(0, 0, 0, 0.3),
             0 20px 25px -5px rgba(0, 0, 0, 0.2),
             0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .shadow-elegant-hover {
+          box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.4),
+            0 25px 50px -12px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.2);
         }
       `}</style>
     </section>

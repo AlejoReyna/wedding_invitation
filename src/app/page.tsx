@@ -57,21 +57,21 @@ export default function Home() {
             <div className="flex flex-row items-center justify-center max-w-5xl mx-auto mb-4  px-2">
               {/* Nombre ANDREA */}
               <div className="text-center">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ANDREA
                 </h1>
               </div>
 
               {/* Símbolo & */}
               <div className="text-center mx-4 md:mx-6 lg:mx-8">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl garamond-regular text-white/90 drop-shadow-2xl leading-none">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl garamond-regular text-white/90 drop-shadow-2xl leading-none">
                   &
                 </h2>
               </div>
 
               {/* Nombre ALDO */}
               <div className="text-center">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
                   ALDO
                 </h1>
               </div>

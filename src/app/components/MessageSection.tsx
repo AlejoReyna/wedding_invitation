@@ -1,236 +1,75 @@
 "use client"
-import { useEffect, useRef, useState } from 'react';
 import { FaPenFancy } from 'react-icons/fa';
 
-// Componente MessageCard
-function MessageCard({ className }: { className?: string }) {
+// Componente MessageCard adaptado al estilo RSVP
+export default function MessageSection({ className }: { className?: string }) {
   return (
-    <div className={`bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2 ${className}`}>
+    <div className={`bg-white/10 backdrop-blur-md border border-white/20 shadow-elegant hover:shadow-elegant-hover hover:border-white/40 transition-all duration-700 transform hover:-translate-y-2 ${className}`}>
       
       {/* Content Section */}
-      <div className="p-10 md:p-12 relative">
+      <div className="p-8 md:p-10 relative">
         
         {/* Decorative Element */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-stone-300"></div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-white/30"></div>
         
         {/* Title */}
-        <h3 className="text-3xl md:text-4xl font-light text-stone-800 mb-6 tracking-wide text-center" style={{fontFamily: 'Georgia, serif'}}>
+        <h3 className="text-2xl md:text-3xl font-light text-white mb-6 tracking-wide text-center garamond-300">
           Mensaje
         </h3>
         
         {/* Subtitle */}
-        <p className="text-stone-600 text-base font-light tracking-[0.15em] uppercase mb-8 text-center">
+        <p className="text-white/80 text-sm font-light tracking-[0.15em] uppercase mb-6 text-center">
           Comparte tus buenos deseos
         </p>
         
         {/* Divider */}
-        <div className="flex justify-center items-center mb-8">
-          <div className="w-8 h-px bg-stone-300"></div>
-          <div className="w-2 h-2 border border-stone-300 transform rotate-45 mx-4"></div>
-          <div className="w-8 h-px bg-stone-300"></div>
+        <div className="flex justify-center items-center mb-6">
+          <div className="w-8 h-px bg-white/30"></div>
+          <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
+          <div className="w-8 h-px bg-white/30"></div>
         </div>
         
         {/* Form */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
-            <label className="block text-sm font-light text-stone-700 mb-3 tracking-[0.1em] uppercase">
+            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase">
               Nombre
             </label>
             <input 
               type="text" 
               placeholder="Tu nombre completo"
-              className="w-full p-4 border-2 border-stone-200 bg-white focus:outline-none focus:border-[#8B7355] transition-all duration-300 text-stone-800"
+              className="w-full p-3 border border-white/30 bg-white/10 backdrop-blur-sm focus:outline-none focus:border-white/50 transition-all duration-300 text-white placeholder-white/50"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-light text-stone-700 mb-3 tracking-[0.1em] uppercase">
+            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase">
               Correo electrónico
             </label>
             <input 
               type="email" 
               placeholder="tu@email.com"
-              className="w-full p-4 border-2 border-stone-200 bg-white focus:outline-none focus:border-[#8B7355] transition-all duration-300 text-stone-800"
+              className="w-full p-3 border border-white/30 bg-white/10 backdrop-blur-sm focus:outline-none focus:border-white/50 transition-all duration-300 text-white placeholder-white/50"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-light text-stone-700 mb-3 tracking-[0.1em] uppercase">
+            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase">
               Mensaje
             </label>
             <textarea 
-              rows={5}
+              rows={4}
               placeholder="Comparte tus buenos deseos y bendiciones para nuestra nueva vida juntos..."
-              className="w-full p-4 border-2 border-stone-200 bg-white focus:outline-none focus:border-[#8B7355] transition-all duration-300 resize-none text-stone-800"
+              className="w-full p-3 border border-white/30 bg-white/10 backdrop-blur-sm focus:outline-none focus:border-white/50 transition-all duration-300 resize-none text-white placeholder-white/50"
             />
           </div>
           
-          <div className="pt-4">
-            <button className="group/btn inline-flex items-center gap-3 px-8 py-4 border border-stone-300 hover:border-stone-500 text-stone-700 hover:text-stone-900 transition-all duration-400 relative overflow-hidden w-full justify-center">
-              <div className="absolute inset-0 bg-stone-100 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-400"></div>
-              <FaPenFancy className="text-lg relative z-10 transform group-hover/btn:rotate-12 transition-transform duration-300" />
-              <span className="font-light tracking-[0.1em] uppercase text-sm relative z-10">Enviar Mensaje</span>
+          <div className="pt-2">
+            <button className="group/btn inline-flex items-center gap-3 px-6 py-3 border border-white/30 hover:border-white/50 text-white hover:text-white transition-all duration-400 relative overflow-hidden w-full justify-center">
+              <div className="absolute inset-0 bg-white/10 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-400"></div>
+              <FaPenFancy className="text-sm relative z-10 transform group-hover/btn:rotate-12 transition-transform duration-300" />
+              <span className="font-light tracking-[0.1em] uppercase text-xs relative z-10">Enviar Mensaje</span>
             </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function MessageSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-        rootMargin: '-20px'
-      }
-    );
-
-    const currentRef = sectionRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
-  // Decorative floral elements matching the project style
-  const FloralDecoration = ({ className = "" }) => (
-    <svg className={`w-full h-full ${className}`} viewBox="0 0 80 80" fill="none">
-      <path 
-        d="M10,40 Q25,20 40,40 Q55,60 70,40 Q55,20 40,40 Q25,60 10,40" 
-        stroke="#8B7355" 
-        strokeWidth="1.2"
-        fill="none"
-        opacity="0.6"
-      />
-      <path d="M25,35 Q30,25 35,35 Q30,45 25,35" fill="#9B8366" opacity="0.5"/>
-      <path d="M45,45 Q50,35 55,45 Q50,55 45,45" fill="#C4985B" opacity="0.4"/>
-      <circle cx="40" cy="40" r="2.5" fill="#D4A971" opacity="0.6"/>
-      <circle cx="32" cy="38" r="1" fill="#8B7355" opacity="0.4"/>
-      <circle cx="48" cy="42" r="1" fill="#8B7355" opacity="0.4"/>
-    </svg>
-  );
-
-  return (
-    <section 
-      id="mensaje"
-      ref={sectionRef}
-      className="min-h-screen w-full py-24 px-4 md:px-8 relative overflow-hidden"
-      style={{ 
-        background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
-      }}
-    >
-      {/* Subtle organic texture overlay */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div 
-          className="absolute inset-0" 
-          style={{
-            backgroundImage: `radial-gradient(circle at 30% 20%, rgba(196, 152, 91, 0.15) 0%, transparent 60%),
-                              radial-gradient(circle at 70% 60%, rgba(139, 115, 85, 0.12) 0%, transparent 60%),
-                              radial-gradient(circle at 50% 90%, rgba(180, 147, 113, 0.1) 0%, transparent 60%)`
-          }}
-        />
-      </div>
-
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-20">
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <pattern id="messagePattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-              <path 
-                d="M20,20 Q40,30 60,20 Q80,10 100,25" 
-                stroke="#8B7355" 
-                strokeWidth="0.5" 
-                fill="none" 
-                opacity="0.3"
-              />
-              <circle cx="30" cy="25" r="1" fill="#C4985B" opacity="0.2"/>
-              <circle cx="70" cy="22" r="0.8" fill="#9B8366" opacity="0.3"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#messagePattern)"/>
-        </svg>
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Header with elegant styling */}
-        <div className={`text-center mb-20 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`} style={{ transitionDelay: '200ms' }}>
-          
-          {/* Decorative top element */}
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 opacity-40">
-              <FloralDecoration />
-            </div>
-          </div>
-
-          {/* Subtitle */}
-          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
-            ESCRIBE DESDE EL CORAZÓN
-          </p>
-          
-          {/* Decorative line */}
-          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
-          
-          {/* Main title */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
-            Mensaje
-          </h2>
-          
-          {/* Message */}
-          <p className="text-stone-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-light mb-8">
-            Tus palabras de amor y buenos deseos serán un tesoro que guardaremos para siempre.
-          </p>
-          
-          {/* Bottom decorative element */}
-          <div className="flex justify-center items-center mt-6">
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-          </div>
-        </div>
-
-        {/* Side decorative elements */}
-        <div className="absolute left-8 top-1/3 w-12 h-12 opacity-20 hidden lg:block">
-          <FloralDecoration />
-        </div>
-        
-        <div className="absolute right-8 top-2/3 w-12 h-12 opacity-20 hidden lg:block">
-          <FloralDecoration className="transform rotate-180" />
-        </div>
-
-        {/* Message Form Container */}
-        <div className="max-w-2xl mx-auto">
-          <div className={`transition-all duration-2500 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`} style={{ transitionDelay: '600ms' }}>
-            <MessageCard />
-          </div>
-        </div>
-
-        {/* Bottom decorative element */}
-        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '800ms' }}>
-          <div className="w-20 h-20 opacity-30">
-            <FloralDecoration />
           </div>
         </div>
       </div>
@@ -238,18 +77,18 @@ export default function MessageSection() {
       <style jsx>{`
         .shadow-elegant {
           box-shadow: 
-            0 4px 6px -1px rgba(0, 0, 0, 0.1),
-            0 20px 25px -5px rgba(0, 0, 0, 0.1),
-            0 0 0 1px rgba(0, 0, 0, 0.05);
+            0 4px 6px -1px rgba(0, 0, 0, 0.3),
+            0 20px 25px -5px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         }
         
         .shadow-elegant-hover {
           box-shadow: 
-            0 10px 15px -3px rgba(0, 0, 0, 0.1),
-            0 25px 50px -12px rgba(0, 0, 0, 0.15),
-            0 0 0 1px rgba(0, 0, 0, 0.05);
+            0 10px 15px -3px rgba(0, 0, 0, 0.4),
+            0 25px 50px -12px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.2);
         }
       `}</style>
-    </section>
+    </div>
   );
 }

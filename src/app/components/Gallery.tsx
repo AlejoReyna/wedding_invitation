@@ -37,12 +37,13 @@ export default function Gallery() {
   }, []);
 
   const photos = [
-    { src: '/p1.JPG', alt: 'Andrea & Aldo - Momento especial 1' },
-    { src: '/p2.JPG', alt: 'Andrea & Aldo - Momento especial 2' },
-    { src: '/p3.JPG', alt: 'Andrea & Aldo - Momento especial 3' },
-    { src: '/p4.JPG', alt: 'Andrea & Aldo - Momento especial 4' },
-    { src: '/p5.JPG', alt: 'Andrea & Aldo - Momento especial 5' },
-    { src: '/p6.JPG', alt: 'Andrea & Aldo - Momento especial 6' },
+    { src: '/carousel/c-1.jpeg', alt: 'Andrea & Aldo - Recuerdo 1' },
+    { src: '/carousel/c-2.jpeg', alt: 'Andrea & Aldo - Recuerdo 2' },
+    { src: '/carousel/c-3.jpeg', alt: 'Andrea & Aldo - Recuerdo 3' },
+    { src: '/carousel/c-4.jpeg', alt: 'Andrea & Aldo - Recuerdo 4' },
+    { src: '/carousel/c-5.jpeg', alt: 'Andrea & Aldo - Recuerdo 5' },
+    { src: '/carousel/c-6.jpeg', alt: 'Andrea & Aldo - Recuerdo 6' },
+    { src: '/carousel/c-7.jpeg', alt: 'Andrea & Aldo - Recuerdo 7' },
   ];
 
   useEffect(() => {
