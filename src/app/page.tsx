@@ -45,16 +45,16 @@ export default function Home() {
         <div className="flex-1 flex flex-col justify-start items-center relative z-10 px-4 sm:px-6 pt-16 sm:pt-20 md:pt-24">
           
           {/* Fecha principal arriba */}
-          <div className="text-center mb-4 sm:mb-6 md:mb-8 animate-fade-in-center animate-delay-300">
+          <div className="text-center mb-4 sm:mb-6 md:mb-8 animate-fade-in-center animate-delay-300 mt-6 md:mt-0">
             <span className="text-white/70 text-base sm:text-lg md:text-xl lg:text-2xl garamond-300 tracking-[0.25em] sm:tracking-[0.35em] block">
               SÁBADO 18 DE OCTUBRE
             </span>
           </div>
 
           {/* Los nombres centrados - tamaño más moderado */}
-          <div className="text-center animate-fade-in-center animate-delay-600 mb-4 sm:mb-6 md:mb-2">
+          <div className="text-center animate-fade-in-center animate-delay-600">
             {/* Nombres con tamaños más apropiados */}
-            <div className="flex flex-row items-center justify-center max-w-5xl mx-auto mb-4 sm:mb-6 px-2">
+            <div className="flex flex-row items-center justify-center max-w-5xl mx-auto mb-4  px-2">
               {/* Nombre ANDREA */}
               <div className="text-center">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl garamond-regular tracking-[0.03em] sm:tracking-[0.05em] text-white drop-shadow-2xl leading-none">
@@ -80,8 +80,8 @@ export default function Home() {
 
           {/* Texto descriptivo debajo de los nombres */}
           <div className="text-center animate-fade-in-center animate-delay-900 mb-6 sm:mb-8 md:mb-10">
-            <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase text-white/80 italic garamond-300">
-              ACOMPÁÑANOS A CELEBRAR NUESTRO AMOR ETERNO
+            <p className="text-xs mx-auto max-w-5xl px-2 md:text-sm font-light tracking-[0.2em] uppercase text-white/80 italic garamond-300">
+              ACOMPÁÑANOS A CELEBRAR 
             </p>
           </div>
 

@@ -272,9 +272,9 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Mobile Navigation */}
-        <div className="lg:hidden flex items-center justify-between">
-          {/* Solo elementos principales en móvil */}
+        {/* Mobile Navigation - MD and above */}
+        <div className="hidden md:flex lg:hidden items-center justify-between">
+          {/* Solo elementos principales en móvil md+ */}
           <ul className="flex items-center space-x-3 sm:space-x-4 text-xs flex-1 justify-center">
             {navigationItems.slice(0, 4).map((item, index) => (
               <li key={item.id} className="flex items-center">
@@ -315,8 +315,49 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Menú móvil desplegable para elementos secundarios */}
-        <div className={`lg:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
+        {/* Small Mobile Navigation - Solo logo y hamburguesa */}
+        <div className="md:hidden flex items-center justify-between w-full">
+          {/* Logo placeholder */}
+          <div className="flex items-center">
+            <div className={`w-8 h-8 rounded-full border-2 transition-colors duration-500 ${
+              isNightMode ? 'border-white/50' : 
+              isInRSVPSection ? 'border-white/50' : 
+              isInMessageSection ? 'border-white/50' : 
+              isInGiftSection ? 'border-white/50' : 
+              (!isScrolled || isInFooterSection ? 'border-white/50' : 'border-[#543c24]/50')
+            } flex items-center justify-center`}>
+              <span className={`text-xs garamond-300 transition-colors duration-500 ${
+                isNightMode ? 'text-white/70' : 
+                isInRSVPSection ? 'text-white/70' : 
+                isInMessageSection ? 'text-white/70' : 
+                isInGiftSection ? 'text-white/70' : 
+                (!isScrolled || isInFooterSection ? 'text-white/70' : 'text-[#543c24]/70')
+              }`}>L</span>
+            </div>
+          </div>
+          
+          {/* Botón de menú hamburguesa */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className={`p-2 transition-colors duration-500 ${getTextStyle()}`}
+            aria-label="Menú de navegación"
+          >
+            <div className="flex flex-col space-y-1.5">
+              <div className={`w-6 h-0.5 transition-all duration-300 ${getLineStyle()} ${
+                isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+              }`}></div>
+              <div className={`w-6 h-0.5 transition-all duration-300 ${getLineStyle()} ${
+                isMobileMenuOpen ? 'opacity-0' : ''
+              }`}></div>
+              <div className={`w-6 h-0.5 transition-all duration-300 ${getLineStyle()} ${
+                isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+              }`}></div>
+            </div>
+          </button>
+        </div>
+
+        {/* Menú móvil desplegable para MD+ - elementos secundarios */}
+        <div className={`hidden md:block lg:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
           isMobileMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
         } ${getNavbarStyle()}`}>
           <div className="px-4 py-4 border-t border-white/10">
@@ -338,6 +379,110 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
+
+        {/* Menú móvil elegante para SM - 50% ancho */}
+        <div className={`md:hidden fixed top-0 right-0 h-full w-1/2 backdrop-blur-xl transition-all duration-500 ease-out z-50 ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        } ${
+          isNightMode ? 'bg-black border-l border-white/20' : 
+          isInRSVPSection ? 'bg-[#818368] border-l border-white/20' : 
+          isInMessageSection ? 'bg-[#d0aca4] border-l border-white/20' : 
+          isInGiftSection ? 'bg-[#e8c4bc] border-l border-white/20' : 
+          (!isScrolled || isInFooterSection ? 'bg-black/95 border-l border-white/20' : 'bg-white border-l border-[#543c24]/20')
+        }`}>
+          <div className="flex flex-col h-full">
+            {/* Header del menú */}
+            <div className="flex items-center justify-between p-6 border-b border-current/10">
+              <h2 className={`text-sm garamond-300 tracking-[0.2em] transition-colors duration-500 ${
+                isNightMode ? 'text-white/70' : 
+                isInRSVPSection ? 'text-white/70' : 
+                isInMessageSection ? 'text-white/70' : 
+                isInGiftSection ? 'text-white/70' : 
+                (!isScrolled || isInFooterSection ? 'text-white/70' : 'text-[#543c24]/70')
+              }`}>MENÚ</h2>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`p-2 transition-colors duration-500 ${getTextStyle()}`}
+                aria-label="Cerrar menú"
+              >
+                <div className="relative w-5 h-5">
+                  <div className={`absolute top-1/2 left-0 w-full h-0.5 rotate-45 transition-colors duration-500 ${getLineStyle()}`}></div>
+                  <div className={`absolute top-1/2 left-0 w-full h-0.5 -rotate-45 transition-colors duration-500 ${getLineStyle()}`}></div>
+                </div>
+              </button>
+            </div>
+            
+            {/* Lista de navegación */}
+            <div className="flex-1 py-8">
+              <ul className="space-y-6">
+                {navigationItems.map((item, index) => (
+                  <li key={item.id} className="px-6">
+                    <a
+                      href={`#${item.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavClick(item.id);
+                      }}
+                      className={`block text-sm garamond-300 tracking-[0.2em] transition-all duration-500 py-3 border-b border-current/10 group ${
+                        isNightMode ? 'text-white/60 hover:text-white border-white/10' : 
+                        isInRSVPSection ? 'text-white/60 hover:text-white border-white/10' : 
+                        isInMessageSection ? 'text-white/60 hover:text-white border-white/10' : 
+                        isInGiftSection ? 'text-white/60 hover:text-white border-white/10' : 
+                        (!isScrolled || isInFooterSection ? 'text-white/60 hover:text-white border-white/10' : 'text-[#543c24]/60 hover:text-[#543c24] border-[#543c24]/10')
+                      }`}
+                    >
+                      <span className="relative">
+                        {item.label.toUpperCase()}
+                        <span className={`absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500 ${
+                          isNightMode ? 'bg-white' : 
+                          isInRSVPSection ? 'bg-white' : 
+                          isInMessageSection ? 'bg-white' : 
+                          isInGiftSection ? 'bg-white' : 
+                          (!isScrolled || isInFooterSection ? 'bg-white' : 'bg-[#543c24]')
+                        }`}></span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Elemento decorativo en el footer */}
+            <div className="p-6 border-t border-current/10">
+              <div className="flex items-center justify-center space-x-2">
+                <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
+                  isNightMode ? 'bg-white/30' : 
+                  isInRSVPSection ? 'bg-white/30' : 
+                  isInMessageSection ? 'bg-white/30' : 
+                  isInGiftSection ? 'bg-white/30' : 
+                  (!isScrolled || isInFooterSection ? 'bg-white/30' : 'bg-[#543c24]/30')
+                }`}></div>
+                <div className={`w-8 h-0.5 transition-colors duration-500 ${
+                  isNightMode ? 'bg-white/30' : 
+                  isInRSVPSection ? 'bg-white/30' : 
+                  isInMessageSection ? 'bg-white/30' : 
+                  isInGiftSection ? 'bg-white/30' : 
+                  (!isScrolled || isInFooterSection ? 'bg-white/30' : 'bg-[#543c24]/30')
+                }`}></div>
+                <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
+                  isNightMode ? 'bg-white/30' : 
+                  isInRSVPSection ? 'bg-white/30' : 
+                  isInMessageSection ? 'bg-white/30' : 
+                  isInGiftSection ? 'bg-white/30' : 
+                  (!isScrolled || isInFooterSection ? 'bg-white/30' : 'bg-[#543c24]/30')
+                }`}></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Overlay para cerrar el menú en SM */}
+        {isMobileMenuOpen && (
+          <div 
+            className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-500"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
       </div>
 
       <style jsx>{`
