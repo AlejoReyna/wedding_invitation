@@ -106,25 +106,14 @@ export default function ItinerarySection() {
             </div>
           </div>
 
-          {/* Subtitle */}
-          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
-            ITINERARIO DEL DÍA
-          </p>
+        
           
-          {/* Decorative line */}
-          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
-          
-          {/* Main title */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
-            Cronograma
+          {/* Main title replaced with 'Itinerario del Día', color from subtitle, font size from Cronograma */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.1em] uppercase mb-8 garamond-300 relative text-[#8B7355]">
+            Itinerario del Día
           </h2>
-          
-          {/* Bottom decorative element */}
-          <div className="flex justify-center items-center mt-6">
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-          </div>
+          {/* Decorative line below the main title */}
+          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
         </div>
 
         {/* Side decorative elements */}

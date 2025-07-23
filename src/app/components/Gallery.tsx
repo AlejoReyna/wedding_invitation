@@ -255,16 +255,10 @@ export default function Gallery() {
           <div className="w-80 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
           
           {/* Description */}
-          <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-8 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-4 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
 Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </p>
           
-          {/* Bottom decorative element */}
-          <div className="flex justify-center items-center">
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-          </div>
         </div>
 
         {/* Side decorative elements */}
