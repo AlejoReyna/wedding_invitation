@@ -1,7 +1,6 @@
 "use client"
 import LocationSection from './components/LocationSection';
 
-import MessageSection from './components/MessageSection';
 import GiftSection from './components/GiftSection';
 import RSVPSection from './components/RSVPSection';
 import MinimalistFooter from './components/Footer';
@@ -9,6 +8,7 @@ import ItinerarySection from './components/ItinerarySection';
 import CountdownTimer from '../components/CountdownTimer';
 import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
+import ParentsSection from './components/ParentsSection';
 
 import { ThemeProvider } from './context/ThemeContext';
 import { useNotchColor } from '../hooks/useNotchColor';
@@ -79,8 +79,8 @@ export default function Home() {
           </div>
 
           {/* Texto descriptivo debajo de los nombres */}
-          <div className="text-center animate-fade-in-center animate-delay-900 mb-6 sm:mb-8 md:mb-10">
-            <p className="text-xs mx-auto max-w-5xl px-2 md:text-sm font-light tracking-[0.2em] uppercase text-white/80 italic garamond-300">
+          <div className="text-center animate-fade-in-center animate-delay-900 mb-6 sm:mb-4 ">
+            <p className="text-xs mx-auto max-w-5xl px-2 md:text-lg font-light tracking-[0.2em] uppercase text-white/80 italic garamond-300">
               ACOMPÁÑANOS A CELEBRAR 
             </p>
           </div>
@@ -183,6 +183,7 @@ export default function Home() {
       <div id="galeria">
         <Gallery />
       </div>
+      <ParentsSection />
       <div id="itinerario">
         <ItinerarySection />
       </div>

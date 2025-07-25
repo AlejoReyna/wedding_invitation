@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import church from '../../../assets/church.png';
+import legalDocument from '../../../assets/legal-document.png';
+import nightClub from '../../../assets/night-club.png';
 
 interface ItineraryItem {
   time: string;
@@ -119,7 +122,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                       case 'Ceremonia':
                         return (
                           <Image 
-                            src={require('../../../assets/church.png')} 
+                            src={church} 
                             alt="Ceremonia" 
                             width={40} 
                             height={40} 
@@ -129,7 +132,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                       case 'Ceremonia Civil':
                         return (
                           <Image 
-                            src={require('../../../assets/legal-document.png')} 
+                            src={legalDocument} 
                             alt="Ceremonia Civil" 
                             width={40} 
                             height={40} 
@@ -139,7 +142,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                       case 'Recepción':
                         return (
                           <Image 
-                            src={require('../../../assets/night-club.png')} 
+                            src={nightClub} 
                             alt="Recepción" 
                             width={40} 
                             height={40} 

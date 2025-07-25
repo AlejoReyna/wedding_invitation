@@ -124,37 +124,10 @@ export default function RSVPSection() {
       {/* Main Container with Grid Layout */}
       <div className="max-w-7xl mx-auto relative z-10 px-4 w-full">
         
-        {/* Header Section */}
+        {/* Header Section - simplified */}
         <div className={`text-center mb-16 transition-all duration-2000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`} style={{ transitionDelay: '200ms' }}>
-          
-          {/* Decorative top element */}
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 opacity-40">
-              <FloralDecoration />
-            </div>
-          </div>
-
-          {/* Subtitle */}
-          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-white/80 italic garamond-300">
-            CONFIRMA TU ASISTENCIA
-          </p>
-          
-          {/* Decorative line */}
-          <div className="w-24 h-px mx-auto mb-6 bg-white/60"></div>
-          
-          {/* Main title */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-white mb-8 garamond-300 relative">
-            RSVP
-          </h2>
-          
-          {/* Bottom decorative element */}
-          <div className="flex justify-center items-center mt-6">
-            <div className="w-8 h-px bg-white/40"></div>
-            <div className="mx-3 text-white/60 text-lg">♡</div>
-            <div className="w-8 h-px bg-white/40"></div>
-          </div>
         </div>
 
         {/* Grid Layout: 1 row, 2 columns */}
@@ -166,53 +139,53 @@ export default function RSVPSection() {
           }`} style={{ transitionDelay: '600ms' }}>
             
             {/* Main message */}
-            <div className="mb-12">
-              <p className="text-xl md:text-2xl font-light text-white leading-relaxed tracking-[0.1em] garamond-300 text-center lg:text-left">
+            <div className="mb-6 text-center">
+              {/* Confirma tu asistencia title */}
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-white mb-8 garamond-300 relative">
+                CONFIRMA TU ASISTENCIA
+              </h2>
+              
+              <p className="text-lg md:text-xl font-light text-white/90 italic garamond-300 max-w-lg mx-auto leading-relaxed">
                 Nos encantaría celebrar este momento especial contigo
               </p>
             </div>
 
-            {/* Content card */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 shadow-elegant">
+            {/* Content without card container */}
+            <div className="p-8 md:p-10 text-center relative">
               
-              {/* Content Section */}
-              <div className="p-8 md:p-10 text-center relative">
+              {/* Welcome message */}
+              <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-8 garamond-300">
+                ¡Te esperamos!
+              </p>
+              
+              {/* Divider */}
+              <div className="flex justify-center items-center mb-8">
+                <div className="w-8 h-px bg-white/30"></div>
+                <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
+                <div className="w-8 h-px bg-white/30"></div>
+              </div>
+              
+              {/* Buttons */}
+              <div className="flex flex-col gap-4 items-center">
+                <button 
+                  className="group inline-flex items-center gap-3 px-8 py-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full justify-center"
+                  onClick={() => {
+                    window.open('https://wa.me/528123456789?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Andrea%20y%20Aldo', '_blank');
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                  <FaWhatsapp className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
+                  <span className="relative z-10">Confirmar por WhatsApp</span>
+                </button>
                 
-                
-                {/* Welcome message */}
-                <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-8 garamond-300">
-                  ¡Te esperamos!
-                </p>
-                
-                {/* Divider */}
-                <div className="flex justify-center items-center mb-8">
-                  <div className="w-8 h-px bg-white/30"></div>
-                  <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
-                  <div className="w-8 h-px bg-white/30"></div>
-                </div>
-                
-                {/* Buttons */}
-                <div className="flex flex-col gap-4 items-center">
-                  <button 
-                    className="group inline-flex items-center gap-3 px-8 py-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full justify-center"
-                    onClick={() => {
-                      window.open('https://wa.me/528123456789?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Andrea%20y%20Aldo', '_blank');
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-                    <FaWhatsapp className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
-                    <span className="relative z-10">Confirmar por WhatsApp</span>
-                  </button>
-                  
-                  <button 
-                    className="group inline-flex items-center gap-3 px-8 py-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full justify-center"
-                    onClick={addToCalendar}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-                    <FaCalendarPlus className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
-                    <span className="relative z-10">Agendar en Calendario</span>
-                  </button>
-                </div>
+                <button 
+                  className="group inline-flex items-center gap-3 px-8 py-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full justify-center"
+                  onClick={addToCalendar}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                  <FaCalendarPlus className="text-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300" />
+                  <span className="relative z-10">Agendar en Calendario</span>
+                </button>
               </div>
             </div>
           </div>

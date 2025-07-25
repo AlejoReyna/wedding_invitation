@@ -105,26 +105,17 @@ export default function LocationSection() {
               <FloralDecoration />
             </div>
           </div>
-
-          {/* Subtitle */}
-          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
-            DONDE NOS ENCONTRAREMOS
-          </p>
-          
-          {/* Decorative line */}
-          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
           
           {/* Main title */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
             Ubicaciones
           </h2>
+
+          {/* Decorative line */}
+          <div className="w-100 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
+
           
-          {/* Bottom decorative element */}
-          <div className="flex justify-center items-center mt-6">
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-          </div>
+       
         </div>
 
         {/* Side decorative elements */}
@@ -161,7 +152,7 @@ export default function LocationSection() {
                 {/* Overlay Content */}
                 <div className="absolute bottom-6 left-6 text-white opacity-100 transition-all duration-500 transform translate-y-0">
                   <div className="w-12 h-px bg-white mb-3"></div>
-                  <p className="text-sm tracking-[0.2em] uppercase font-light">Iglesia 'Sagrado corazón de Jesús'</p>
+                  <p className="text-sm tracking-[0.2em] uppercase font-light">Iglesia &apos;Sagrado corazón de Jesús&apos;</p>
                 </div>
               </div>
 
@@ -239,7 +230,7 @@ export default function LocationSection() {
                 {/* Overlay Content */}
                 <div className="absolute bottom-6 left-6 text-white opacity-100 transition-all duration-500 transform translate-y-0">
                   <div className="w-12 h-px bg-white mb-3"></div>
-                  <p className="text-sm tracking-[0.2em] uppercase font-light">Salón del museo 'Valle del Pilón'</p>
+                  <p className="text-sm tracking-[0.2em] uppercase font-light">Salón del museo &apos;Valle del Pilón&apos;</p>
                 </div>
               </div>
 

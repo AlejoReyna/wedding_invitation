@@ -398,7 +398,7 @@ const Navbar = () => {
             {/* Lista de navegación */}
             <div className="flex-1 py-8">
               <ul className="space-y-6">
-                {navigationItems.map((item, index) => (
+                {navigationItems.map((item) => (
                   <li key={item.id} className="px-6">
                     <a
                       href={`#${item.id}`}

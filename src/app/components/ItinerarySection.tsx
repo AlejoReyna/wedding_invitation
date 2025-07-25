@@ -1,6 +1,6 @@
 "use client"
 import ItineraryItemCard from './ItineraryItemCard';
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
 interface ItineraryItem {
@@ -23,7 +23,7 @@ export default function ItinerarySection() {
   const [hasInitialized, setHasInitialized] = useState(false);
 
   // Define itinerary items first so we can use them in other functions
-  const itineraryItems: ItineraryItem[] = [
+  const itineraryItems: ItineraryItem[] = useMemo(() => [
     {
       time: "4:00 PM - 5:00 PM",
       displayTime: "04:00",
@@ -45,7 +45,7 @@ export default function ItinerarySection() {
       description: "",
       location: "Salón Terraza, Museo de Montemorelos"
     }
-  ];
+  ], []);
 
   // Set up client-side state and window dimensions
   useEffect(() => {
