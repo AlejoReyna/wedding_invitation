@@ -96,31 +96,23 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
           index === 2 ? 'md:w-[33rem] ml-auto' : // Recepción: contenido más ancho, alineado a la derecha
           `md:w-[22rem] ${!isRightSide ? 'ml-auto' : ''}`
         }`}>
-          <div className="bg-gradient-to-br from-white via-[#947e63]/5 to-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl border border-[#947e63]/20 transition-all duration-700 transform hover:-translate-y-3 hover:scale-[1.02] group">
-            
-            {/* Decorative Header Border */}
-            <div className="h-1 bg-gradient-to-r from-transparent via-[#947e63]/50 to-transparent"></div>
+          <div className="bg-white rounded-lg overflow-hidden shadow-2xl hover:shadow-3xl border-2 border-[#D4AF37] transition-all duration-700 transform hover:-translate-y-3 hover:scale-[1.02] group">
             
             {/* Content Section */}
-            <div className={`p-8 md:p-12 relative ${isRightSide ? 'text-left' : 'text-center md:text-left'}`}>
-              
-              {/* Ornamental Top Decoration */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="w-16 h-4 bg-gradient-to-r from-transparent via-[#947e63]/40 to-transparent rounded-full"></div>
-              </div>
+            <div className="p-8 md:p-12 relative">
 
-              {/* Time Display */}
+              {/* Time Display - Maintained original alignment */}
               <div className="mb-8">
-                <div className={`text-5xl md:text-6xl font-extralight tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-[#947e63] to-[#947e63]/80 leading-none mb-3 ${isRightSide ? 'text-left' : 'text-center md:text-left'}`} style={{ fontFamily: 'Playfair Display, serif' }}>
+                <div className={`text-5xl md:text-6xl font-extralight tracking-widest text-[#947e63] leading-none mb-3 ${isRightSide ? 'text-left' : 'text-center md:text-left'}`} style={{ fontFamily: 'Playfair Display, serif' }}>
                   {item.displayTime}
                 </div>
                 <div className={`flex ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
-                  <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#947e63]/50 to-transparent"></div>
+                  <div className="w-12 h-0.5 bg-[#D4AF37]"></div>
                 </div>
               </div>
 
-              {/* Event Icon */}
-              <div className={`flex ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'} mb-8`}>
+              {/* Event Icon - Centered */}
+              <div className="flex justify-center mb-8">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#947e63]/20 to-[#947e63]/30 flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-500">
                   {(() => {
                     switch (item.title) {
@@ -161,14 +153,14 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </div>
               </div>
 
-              {/* Title */}
-              <h3 className={`text-3xl md:text-4xl font-light text-slate-700 mb-6 tracking-wide ${isRightSide ? 'text-left' : 'text-center md:text-left'}`} style={{ fontFamily: 'Playfair Display, serif' }}>
+              {/* Title - Centered */}
+              <h3 className="text-3xl md:text-4xl font-light text-slate-700 mb-6 tracking-wide text-center" style={{ fontFamily: 'Playfair Display, serif' }}>
                 {item.title}
               </h3>
 
-              {/* Location */}
+              {/* Location - Centered */}
               {item.location && (
-                <div className={`mb-8 flex items-center gap-3 text-[#947e63] ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
+                <div className="mb-8 flex items-center justify-center gap-3 text-[#947e63]">
                   <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#947e63]/30 to-[#947e63]/50 flex items-center justify-center">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-[#947e63]">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
@@ -180,34 +172,27 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </div>
               )}
 
-              {/* Ornamental Divider */}
-              <div className={`flex items-center mb-8 ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
+              {/* Ornamental Divider - Centered */}
+              <div className="flex justify-center items-center mb-8">
                 <div className="flex items-center space-x-2">
-                  <div className="w-6 h-0.5 bg-gradient-to-r from-transparent to-[#947e63]/50"></div>
-                  <div className="w-2 h-2 rounded-full bg-[#947e63]/50"></div>
-                  <div className="w-8 h-0.5 bg-gradient-to-r from-[#947e63]/50 to-[#947e63]/50"></div>
-                  <div className="w-3 h-3 border border-[#947e63]/50 transform rotate-45 bg-gradient-to-br from-[#947e63]/20 to-[#947e63]/30"></div>
-                  <div className="w-8 h-0.5 bg-gradient-to-r from-[#947e63]/50 to-[#947e63]/50"></div>
-                  <div className="w-2 h-2 rounded-full bg-[#947e63]/50"></div>
-                  <div className="w-6 h-0.5 bg-gradient-to-l from-transparent to-[#947e63]/50"></div>
+                  <div className="w-6 h-0.5 bg-[#D4AF37]"></div>
+                  <div className="w-2 h-2 rounded-full bg-[#D4AF37]"></div>
+                  <div className="w-8 h-0.5 bg-[#D4AF37]"></div>
+                  <div className="w-3 h-3 border border-[#D4AF37] transform rotate-45 bg-[#D4AF37]/20"></div>
+                  <div className="w-8 h-0.5 bg-[#D4AF37]"></div>
+                  <div className="w-2 h-2 rounded-full bg-[#D4AF37]"></div>
+                  <div className="w-6 h-0.5 bg-[#D4AF37]"></div>
                 </div>
               </div>
 
-              {/* Description */}
+              {/* Description - Centered */}
               {item.description && item.description.trim() !== "" && (
-                <p className={`text-slate-600 text-base md:text-lg leading-relaxed font-light tracking-wide ${isRightSide ? 'text-left' : 'text-center md:text-left'} max-w-md ${isRightSide ? '' : 'md:mx-0 mx-auto'}`} style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-slate-600 text-base md:text-lg leading-relaxed font-light tracking-wide text-center max-w-md mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
                   {item.description}
                 </p>
               )}
 
-              {/* Bottom Decorative Element */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-                <div className="w-8 h-2 bg-gradient-to-r from-transparent via-[#947e63]/40 to-transparent rounded-full opacity-60"></div>
-              </div>
             </div>
-
-            {/* Decorative Footer Border */}
-            <div className="h-1 bg-gradient-to-r from-transparent via-[#947e63]/50 to-transparent"></div>
           </div>
         </div>
       </div>
