@@ -65,8 +65,18 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
       </div>
 
       {/* Event Card */}
-      <div className={`relative md:w-1/2 py-4 ${isRightSide ? 'md:left-1/2' : ''}`}>
-        <div className={`w-full md:w-[22rem] px-4 md:px-8 ${!isRightSide ? 'ml-auto' : ''}`}>
+      <div className={`relative py-4 ${
+        index === 0 ? 'md:w-3/4 md:-left-1/4' : // Ceremonia: 50% más ancho hacia la izquierda
+        index === 1 ? 'md:w-3/4 md:left-1/2' : // Ceremonia Civil: 50% más ancho hacia la derecha desde su posición original  
+        index === 2 ? 'md:w-3/4 md:-left-1/4' : // Recepción: 50% más ancho hacia la izquierda
+        `md:w-1/2 ${isRightSide ? 'md:left-1/2' : ''}`
+      }`}>
+        <div className={`w-full px-4 md:px-8 ${
+          index === 0 ? 'md:w-[33rem] ml-auto' : // Ceremonia: contenido más ancho, alineado a la derecha
+          index === 1 ? 'md:w-[33rem]' : // Ceremonia Civil: contenido más ancho, mantiene posición derecha
+          index === 2 ? 'md:w-[33rem] ml-auto' : // Recepción: contenido más ancho, alineado a la derecha
+          `md:w-[22rem] ${!isRightSide ? 'ml-auto' : ''}`
+        }`}>
           <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2 flex flex-col h-full">
             {/* Content Section */}
             <div className="p-8 md:p-10 relative flex-grow flex flex-col text-center md:text-left">

@@ -356,7 +356,7 @@ export default function ItinerarySection() {
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.1em] uppercase mb-8 garamond-300 relative transition-colors duration-500 ${
             isNightMode ? 'text-white' : 'text-[#8B7355]'
           }`}>
-            Itinerario del Día
+            Itinerario 
           </h2>
           {/* Decorative line below the main title */}
           <div className={`w-24 h-px mx-auto mb-6 transition-colors duration-500 ${

@@ -314,7 +314,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit.
               return (
                 <div 
                   key={index}
-                  className="flex-shrink-0 w-64 h-80 md:w-96 md:h-[28rem] rounded-3xl overflow-hidden transition-all duration-700 ease-out cursor-pointer relative"
+                  className="flex-shrink-0 w-64 h-80 md:w-96 md:h-[28rem] overflow-hidden transition-all duration-700 ease-out cursor-pointer relative"
                   style={{
                     scrollSnapAlign: 'center',
                     ...cardStyle,
@@ -326,17 +326,17 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     {/* Enhanced depth effect for center card */}
                     {isCenterCard && (
                       <>
-                        <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/20 via-[#D4C9B8]/15 to-[#8B7355]/20 rounded-[2.5rem] blur-3xl"></div>
-                        <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/15 via-[#F8F6F3]/10 to-[#8B7355]/15 rounded-[2rem] blur-2xl"></div>
-                        <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/15 to-[#8B7355]/15 rounded-3xl blur-xl"></div>
-                        <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/30 via-transparent to-[#8B7355]/30 rounded-3xl"></div>
+                        <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/20 via-[#D4C9B8]/15 to-[#8B7355]/20 blur-3xl"></div>
+                        <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/15 via-[#F8F6F3]/10 to-[#8B7355]/15 blur-2xl"></div>
+                        <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/15 to-[#8B7355]/15 blur-xl"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/30 via-transparent to-[#8B7355]/30"></div>
                       </>
                     )}
                     
                     {/* Shadow effects for non-center cards */}
                     {!isCenterCard && (
                       <div 
-                        className="absolute inset-0 bg-black/5 rounded-3xl"
+                        className="absolute inset-0 bg-black/5"
                         style={{
                           boxShadow: '0 8px 32px rgba(139, 115, 85, 0.1), 0 4px 16px rgba(139, 115, 85, 0.05)'
                         }}
@@ -344,12 +344,12 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     )}
                     
                     {/* Image container */}
-                    <div className="relative rounded-3xl overflow-hidden h-full">
+                    <div className="relative overflow-hidden h-full">
                       {isCenterCard && (
-                        <div className="absolute -inset-2 bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10 rounded-3xl shadow-elegant"></div>
+                        <div className="absolute -inset-2 bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10 shadow-elegant"></div>
                       )}
                       
-                      <div className="relative w-full h-full bg-white rounded-3xl overflow-hidden shadow-elegant">
+                      <div className="relative w-full h-full bg-white overflow-hidden shadow-elegant">
                         <Image
                           src={photo.src}
                           alt={photo.alt}
