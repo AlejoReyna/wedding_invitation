@@ -9,9 +9,6 @@ export default function MessageSection({ className }: { className?: string }) {
       {/* Content Section */}
       <div className="p-8 md:p-10 relative">
         
-        {/* Decorative Element */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-white/30"></div>
-        
         {/* Title */}
         <h3 className="text-2xl md:text-3xl font-light text-white mb-6 tracking-wide text-center garamond-300">
           Mensaje

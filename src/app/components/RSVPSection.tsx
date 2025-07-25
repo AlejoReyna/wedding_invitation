@@ -178,8 +178,6 @@ export default function RSVPSection() {
               {/* Content Section */}
               <div className="p-8 md:p-10 text-center relative">
                 
-                {/* Decorative Element */}
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-white/30"></div>
                 
                 {/* Welcome message */}
                 <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-8 garamond-300">

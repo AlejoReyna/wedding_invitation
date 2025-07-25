@@ -161,7 +161,7 @@ export default function LocationSection() {
                 {/* Overlay Content */}
                 <div className="absolute bottom-6 left-6 text-white opacity-100 transition-all duration-500 transform translate-y-0">
                   <div className="w-12 h-px bg-white mb-3"></div>
-                  <p className="text-sm tracking-[0.2em] uppercase font-light">Ceremonia Religiosa</p>
+                  <p className="text-sm tracking-[0.2em] uppercase font-light">Iglesia 'Sagrado corazón de Jesús'</p>
                 </div>
               </div>
 
@@ -239,7 +239,7 @@ export default function LocationSection() {
                 {/* Overlay Content */}
                 <div className="absolute bottom-6 left-6 text-white opacity-100 transition-all duration-500 transform translate-y-0">
                   <div className="w-12 h-px bg-white mb-3"></div>
-                  <p className="text-sm tracking-[0.2em] uppercase font-light">Celebración</p>
+                  <p className="text-sm tracking-[0.2em] uppercase font-light">Salón del museo 'Valle del Pilón'</p>
                 </div>
               </div>
 
