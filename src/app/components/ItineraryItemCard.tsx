@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 interface ItineraryItem {
   time: string;
@@ -49,23 +50,22 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
     };
   }, []);
 
-  // Define animation classes based on index
   const getAnimationClasses = () => {
     if (!isCardVisible) {
       // Initial state (hidden) - animations start from the central timeline bar
       if (index === 1) {
         // Ceremonia Civil - starts from center, moves to right
-        return 'opacity-0 -translate-x-8 translate-y-8';
+        return 'opacity-0 -translate-x-8 translate-y-12 scale-95';
       } else if (index === 2) {
         // Recepción - starts from center, moves to left  
-        return 'opacity-0 translate-x-8 translate-y-8';
+        return 'opacity-0 translate-x-8 translate-y-12 scale-95';
       } else {
         // Default animation for first card (Ceremonia)
-        return 'opacity-0 translate-y-8';
+        return 'opacity-0 translate-y-12 scale-95';
       }
     } else {
       // Visible state (all cards appear in their final positions)
-      return 'opacity-100 translate-x-0 translate-y-0';
+      return 'opacity-100 translate-x-0 translate-y-0 scale-100';
     }
   };
 
@@ -73,15 +73,18 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
     <div
       ref={cardRef}
       className={`relative transition-all duration-1000 ease-out ${getAnimationClasses()}`}
-      style={{ transitionDelay: `${index * 150}ms` }}
+      style={{ transitionDelay: `${index * 200}ms` }}
     >
       {/* Timeline Dot */}
-      <div className="absolute left-1/2 top-8 transform -translate-x-1/2 w-6 h-6 bg-[#8B7355] rounded-full border-4 border-white shadow-elegant z-10">
-        <div className="absolute inset-2 bg-[#C4985B] rounded-full"></div>
+      <div className="absolute left-1/2 top-12 transform -translate-x-1/2 w-8 h-8 z-10">
+        <div className="w-full h-full rounded-full bg-gradient-to-br from-[#947e63]/40 to-[#947e63]/60 border-4 border-white shadow-lg">
+          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-[#947e63]/60 to-[#947e63]/80 shadow-inner"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white opacity-60"></div>
+        </div>
       </div>
 
-      {/* Event Card */}
-      <div className={`relative py-4 ${
+      {/* Event Card - Restored Original Layout */}
+      <div className={`relative py-6 ${
         index === 0 ? 'md:w-3/4 md:-left-1/4' : // Ceremonia: 50% más ancho hacia la izquierda
         index === 1 ? 'md:w-3/4 md:left-1/2' : // Ceremonia Civil: 50% más ancho hacia la derecha desde su posición original  
         index === 2 ? 'md:w-3/4 md:-left-1/4' : // Recepción: 50% más ancho hacia la izquierda
@@ -93,49 +96,121 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
           index === 2 ? 'md:w-[33rem] ml-auto' : // Recepción: contenido más ancho, alineado a la derecha
           `md:w-[22rem] ${!isRightSide ? 'ml-auto' : ''}`
         }`}>
-          <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2 flex flex-col h-full">
+          <div className="bg-gradient-to-br from-white via-[#947e63]/5 to-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl border border-[#947e63]/20 transition-all duration-700 transform hover:-translate-y-3 hover:scale-[1.02] group">
+            
+            {/* Decorative Header Border */}
+            <div className="h-1 bg-gradient-to-r from-transparent via-[#947e63]/50 to-transparent"></div>
+            
             {/* Content Section */}
-            <div className="p-8 md:p-10 relative flex-grow flex flex-col text-center md:text-left">
-              {/* Decorative Element */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-stone-300"></div>
+            <div className={`p-8 md:p-12 relative ${isRightSide ? 'text-left' : 'text-center md:text-left'}`}>
+              
+              {/* Ornamental Top Decoration */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-16 h-4 bg-gradient-to-r from-transparent via-[#947e63]/40 to-transparent rounded-full"></div>
+              </div>
+
               {/* Time Display */}
-              <div className="mb-6">
-                <div className="text-4xl md:text-5xl font-light tracking-wider text-[#8B7355] leading-none mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              <div className="mb-8">
+                <div className={`text-5xl md:text-6xl font-extralight tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-[#947e63] to-[#947e63]/80 leading-none mb-3 ${isRightSide ? 'text-left' : 'text-center md:text-left'}`} style={{ fontFamily: 'Playfair Display, serif' }}>
                   {item.displayTime}
                 </div>
-                <div className="text-sm text-stone-600 font-light tracking-[0.1em] uppercase">
-                  {item.time}
+                <div className={`flex ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
+                  <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#947e63]/50 to-transparent"></div>
                 </div>
               </div>
+
+              {/* Event Icon */}
+              <div className={`flex ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'} mb-8`}>
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#947e63]/20 to-[#947e63]/30 flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-500">
+                  {(() => {
+                    switch (item.title) {
+                      case 'Ceremonia':
+                        return (
+                          <Image 
+                            src={require('../../../assets/church.png')} 
+                            alt="Ceremonia" 
+                            width={40} 
+                            height={40} 
+                            className="opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+                          />
+                        );
+                      case 'Ceremonia Civil':
+                        return (
+                          <Image 
+                            src={require('../../../assets/legal-document.png')} 
+                            alt="Ceremonia Civil" 
+                            width={40} 
+                            height={40} 
+                            className="opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+                          />
+                        );
+                      case 'Recepción':
+                        return (
+                          <Image 
+                            src={require('../../../assets/night-club.png')} 
+                            alt="Recepción" 
+                            width={40} 
+                            height={40} 
+                            className="opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+                          />
+                        );
+                      default:
+                        return null;
+                    }
+                  })()}
+                </div>
+              </div>
+
               {/* Title */}
-              <h3 className="text-2xl md:text-3xl font-light text-stone-800 mb-4 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+              <h3 className={`text-3xl md:text-4xl font-light text-slate-700 mb-6 tracking-wide ${isRightSide ? 'text-left' : 'text-center md:text-left'}`} style={{ fontFamily: 'Playfair Display, serif' }}>
                 {item.title}
               </h3>
+
               {/* Location */}
               {item.location && (
-                <div className={`mb-6 flex items-center gap-2 text-[#8B7355] ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                  </svg>
-                  <span className="text-sm font-light tracking-[0.1em]">{item.location}</span>
+                <div className={`mb-8 flex items-center gap-3 text-[#947e63] ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#947e63]/30 to-[#947e63]/50 flex items-center justify-center">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-[#947e63]">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                    </svg>
+                  </div>
+                  <span className="text-sm font-light tracking-wider uppercase opacity-80">
+                    {item.location}
+                  </span>
                 </div>
               )}
-              {/* Divider */}
-              <div className="flex justify-center items-center mb-6">
-                <div className="w-8 h-px bg-stone-300"></div>
-                <div className="w-2 h-2 border border-stone-300 transform rotate-45 mx-4"></div>
-                <div className="w-8 h-px bg-stone-300"></div>
+
+              {/* Ornamental Divider */}
+              <div className={`flex items-center mb-8 ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-0.5 bg-gradient-to-r from-transparent to-[#947e63]/50"></div>
+                  <div className="w-2 h-2 rounded-full bg-[#947e63]/50"></div>
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-[#947e63]/50 to-[#947e63]/50"></div>
+                  <div className="w-3 h-3 border border-[#947e63]/50 transform rotate-45 bg-gradient-to-br from-[#947e63]/20 to-[#947e63]/30"></div>
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-[#947e63]/50 to-[#947e63]/50"></div>
+                  <div className="w-2 h-2 rounded-full bg-[#947e63]/50"></div>
+                  <div className="w-6 h-0.5 bg-gradient-to-l from-transparent to-[#947e63]/50"></div>
+                </div>
               </div>
+
               {/* Description */}
               {item.description && item.description.trim() !== "" && (
-                <p className="text-stone-600 text-sm md:text-base leading-relaxed flex-grow">
+                <p className={`text-slate-600 text-base md:text-lg leading-relaxed font-light tracking-wide ${isRightSide ? 'text-left' : 'text-center md:text-left'} max-w-md ${isRightSide ? '' : 'md:mx-0 mx-auto'}`} style={{ fontFamily: 'Inter, sans-serif' }}>
                   {item.description}
                 </p>
               )}
+
+              {/* Bottom Decorative Element */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+                <div className="w-8 h-2 bg-gradient-to-r from-transparent via-[#947e63]/40 to-transparent rounded-full opacity-60"></div>
+              </div>
             </div>
+
+            {/* Decorative Footer Border */}
+            <div className="h-1 bg-gradient-to-r from-transparent via-[#947e63]/50 to-transparent"></div>
           </div>
         </div>
       </div>
     </div>
   );
-} 
+}
