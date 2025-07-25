@@ -49,14 +49,30 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
     };
   }, []);
 
+  // Define animation classes based on index
+  const getAnimationClasses = () => {
+    if (!isCardVisible) {
+      // Initial state (hidden) - animations start from the central timeline bar
+      if (index === 1) {
+        // Ceremonia Civil - starts from center, moves to right
+        return 'opacity-0 -translate-x-8 translate-y-8';
+      } else if (index === 2) {
+        // Recepción - starts from center, moves to left  
+        return 'opacity-0 translate-x-8 translate-y-8';
+      } else {
+        // Default animation for first card (Ceremonia)
+        return 'opacity-0 translate-y-8';
+      }
+    } else {
+      // Visible state (all cards appear in their final positions)
+      return 'opacity-100 translate-x-0 translate-y-0';
+    }
+  };
+
   return (
     <div
       ref={cardRef}
-      className={`relative transition-all duration-1000 ease-out ${
-        isCardVisible
-          ? 'opacity-100 translate-y-0'
-          : 'opacity-0 translate-y-8'
-      }`}
+      className={`relative transition-all duration-1000 ease-out ${getAnimationClasses()}`}
       style={{ transitionDelay: `${index * 150}ms` }}
     >
       {/* Timeline Dot */}

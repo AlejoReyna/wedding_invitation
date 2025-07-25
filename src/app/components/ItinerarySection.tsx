@@ -226,7 +226,7 @@ export default function ItinerarySection() {
         background: isNightMode ? '#1a1a1a' : 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
       }}
     >
-      {/* Celestial Elements */}
+      {/* Celestial Elements - Siguen el scroll del viewport con efecto parallax */}
       {/* Sol que aparece durante el día */}
       <div 
         className={`absolute celestial-transition animate-celestial-float ${
@@ -234,8 +234,9 @@ export default function ItinerarySection() {
         }`} 
         style={{ 
           zIndex: 1,
-          top: '20%',
-          right: '10%'
+          top: `${20 + (scrollProgress * 40)}%`, // Se mueve hacia abajo del 20% al 60%
+          right: `${10 + (scrollProgress * 30)}%`, // Se mueve hacia la derecha del 10% al 40%
+          transform: `translateX(${scrollProgress * 100}px) translateY(${Math.sin(scrollProgress * Math.PI) * 30}px) rotate(${scrollProgress * 360}deg)` // Movimiento adicional suave con rotación
         }}
       >
         <div className="relative animate-fade-celestial">
@@ -278,8 +279,9 @@ export default function ItinerarySection() {
         style={{ 
           zIndex: 1, 
           animationDelay: '2s',
-          top: '30%',
-          left: '10%'
+          top: `${30 - (scrollProgress * 20)}%`, // Se mueve hacia arriba del 30% al 10%
+          left: `${10 + (scrollProgress * 25)}%`, // Se mueve hacia la derecha del 10% al 35%
+          transform: `translateX(${scrollProgress * -50}px) translateY(${Math.cos(scrollProgress * Math.PI) * 20}px) rotate(${scrollProgress * -180}deg)` // Movimiento contrario al sol con rotación inversa
         }}
       >
         <div className="relative animate-fade-celestial">
