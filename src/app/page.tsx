@@ -194,9 +194,7 @@ export default function Home() {
         <DressCodeSection />
       </div>
       */}
-      <div id="mensaje">
-        <MessageSection />
-      </div>
+    
       <div id="regalos">
         <GiftSection />
       </div>

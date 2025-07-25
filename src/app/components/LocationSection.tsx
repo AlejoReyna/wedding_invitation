@@ -145,7 +145,7 @@ export default function LocationSection() {
               ? 'opacity-100 translate-y-0 md:translate-x-4' 
               : 'opacity-0 translate-y-8 translate-x-0'
           }`} style={{ transitionDelay: '600ms' }}>
-            <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2">
+            <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant-hover border-stone-400 transition-all duration-700 transform -translate-y-2">
               
               {/* Image Section */}
               <div className="relative h-80 md:h-96 overflow-hidden">
@@ -153,13 +153,13 @@ export default function LocationSection() {
                   src={sagradoCorazon}
                   alt="Ceremonia Religiosa"
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent group-hover:from-black/40 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-all duration-700"></div>
                 
                 {/* Overlay Content */}
-                <div className="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                <div className="absolute bottom-6 left-6 text-white opacity-100 transition-all duration-500 transform translate-y-0">
                   <div className="w-12 h-px bg-white mb-3"></div>
                   <p className="text-sm tracking-[0.2em] uppercase font-light">Ceremonia Religiosa</p>
                 </div>
@@ -167,9 +167,6 @@ export default function LocationSection() {
 
               {/* Content Section */}
               <div className="p-10 md:p-12 text-center relative">
-                
-                {/* Decorative Element */}
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-stone-300"></div>
                 
                 {/* Title */}
                 <h3 className="text-3xl md:text-4xl font-light text-stone-800 mb-6 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
@@ -209,10 +206,10 @@ export default function LocationSection() {
                     href="https://www.google.com/maps?client=firefox-b-d&sca_esv=289557ae53a63d3d&uact=5&gs_lp=Egxnd3Mtd2l6LXNlcnAiOWdvb2dsZSBtYXBzIGlnbGVzaWEgc2FncmFkbyBjb3Jhem9uIGRlIGplc3VzIG1vbnRlbW9yZWxvc0gAUABYAHAAeAGQAQCYAQCgAQCqAQC4AQPIAQD4AQGYAgCgAgCYAwCSBwCgBwCyBwC4BwDCBwDIBwA&um=1&ie=UTF-8&fb=1&gl=mx&sa=X&geocode=KafWv5En13yGMVJTeLebkJ03&daddr=Calle+Ignacio+Zaragoza+700,+Centro+de+Montemorelos,+67500+Montemorelos,+N.L."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/btn inline-flex items-center gap-3 px-8 py-4 border border-stone-300 hover:border-stone-500 text-stone-700 hover:text-stone-900 transition-all duration-400 relative overflow-hidden"
+                    className="group/btn inline-flex items-center gap-3 px-8 py-4 border border-stone-500 text-stone-900 transition-all duration-400 relative overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-stone-100 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-400"></div>
-                    <MdDirections className="text-lg relative z-10 transform group-hover/btn:rotate-12 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-stone-100 translate-x-0 transition-transform duration-400"></div>
+                    <MdDirections className="text-lg relative z-10 rotate-12 transition-transform duration-300" />
                     <span className="font-light tracking-[0.1em] uppercase text-sm relative z-10">Ver en Maps</span>
                   </a>
                 </div>
@@ -226,7 +223,7 @@ export default function LocationSection() {
               ? 'opacity-100 translate-y-0 md:-translate-x-4' 
               : 'opacity-0 translate-y-8 translate-x-0'
           }`} style={{ transitionDelay: '800ms' }}>
-            <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2">
+            <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant-hover border-stone-400 transition-all duration-700 transform -translate-y-2">
               
               {/* Image Section */}
               <div className="relative h-80 md:h-96 overflow-hidden">
@@ -234,13 +231,13 @@ export default function LocationSection() {
                   src={museum}
                   alt="Lugar de Recepción"
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent group-hover:from-black/40 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-all duration-700"></div>
                 
                 {/* Overlay Content */}
-                <div className="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                <div className="absolute bottom-6 left-6 text-white opacity-100 transition-all duration-500 transform translate-y-0">
                   <div className="w-12 h-px bg-white mb-3"></div>
                   <p className="text-sm tracking-[0.2em] uppercase font-light">Celebración</p>
                 </div>
@@ -248,9 +245,6 @@ export default function LocationSection() {
 
               {/* Content Section */}
               <div className="p-10 md:p-12 text-center relative">
-                
-                {/* Decorative Element */}
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-stone-300"></div>
                 
                 {/* Title */}
                 <h3 className="text-3xl md:text-4xl font-light text-stone-800 mb-6 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
@@ -290,10 +284,10 @@ export default function LocationSection() {
                     href="https://www.google.com/maps/dir//Prolongaci%C3%B3n+Frontera,+s%2Fn,+Barrio+Parar,+67500+Montemorelos,+N.L./@25.1930478,-99.9006511,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x867cd727ceb145f5:0x1500ee5283da0c71!2m2!1d-99.8182496!2d25.1930706?entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/btn inline-flex items-center gap-3 px-8 py-4 border border-stone-300 hover:border-stone-500 text-stone-700 hover:text-stone-900 transition-all duration-400 relative overflow-hidden"
+                    className="group/btn inline-flex items-center gap-3 px-8 py-4 border border-stone-500 text-stone-900 transition-all duration-400 relative overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-stone-100 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-400"></div>
-                    <MdDirections className="text-lg relative z-10 transform group-hover/btn:rotate-12 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-stone-100 translate-x-0 transition-transform duration-400"></div>
+                    <MdDirections className="text-lg relative z-10 rotate-12 transition-transform duration-300" />
                     <span className="font-light tracking-[0.1em] uppercase text-sm relative z-10">Ver en Maps</span>
                   </a>
                 </div>
