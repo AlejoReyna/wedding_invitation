@@ -193,6 +193,7 @@ export default function Gallery() {
 
   return (
     <section 
+      id="galeria"
       ref={sectionRef}
       className="min-h-screen w-full py-24 px-4 md:px-8 relative overflow-hidden"
       style={{ 
@@ -276,24 +277,26 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit.
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ perspective: '1500px', transitionDelay: '600ms' }}>
           
-          {/* Left Navigation Arrow */}
-          <button 
-            onClick={() => {
-              if (galleryRef.current) {
-                galleryRef.current.scrollBy({
-                  left: -300,
-                  behavior: 'smooth'
-                });
-              }
-            }}
-            className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
-            aria-label="Previous photo"
-            style={{ backdropFilter: 'blur(12px)' }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+          {/* Left Navigation Arrow - Solo visible si no estamos en la primera imagen */}
+          {centerIndex > 0 && (
+            <button 
+              onClick={() => {
+                if (galleryRef.current) {
+                  galleryRef.current.scrollBy({
+                    left: -300,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
+              aria-label="Previous photo"
+              style={{ backdropFilter: 'blur(12px)' }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
 
           {/* Carousel */}
           <div 
@@ -388,24 +391,26 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit.
             })}
           </div>
 
-          {/* Right Navigation Arrow */}
-          <button 
-            onClick={() => {
-              if (galleryRef.current) {
-                galleryRef.current.scrollBy({
-                  left: 300,
-                  behavior: 'smooth'
-                });
-              }
-            }}
-            className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
-            aria-label="Next photo"
-            style={{ backdropFilter: 'blur(12px)' }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          {/* Right Navigation Arrow - Solo visible si no estamos en la última imagen */}
+          {centerIndex < photos.length - 1 && (
+            <button 
+              onClick={() => {
+                if (galleryRef.current) {
+                  galleryRef.current.scrollBy({
+                    left: 300,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
+              aria-label="Next photo"
+              style={{ backdropFilter: 'blur(12px)' }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
         </div>
 
         {/* Enhanced scroll indicator */}

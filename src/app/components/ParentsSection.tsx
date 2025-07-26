@@ -39,9 +39,6 @@ export default function ParentsSection() {
       </div>
 
       <div className="text-center z-10">
-        <div className="mb-8">
-          <Image src="/aa-logo.png" alt="Logo" width={100} height={100} className="mx-auto" />
-        </div>
         <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-8 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
           Con el amor y la bendición de Dios & de nuestros padres
         </p>

@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useTheme } from '../context/ThemeContext';
 
 interface NavigationItem {
@@ -15,6 +16,7 @@ const Navbar = () => {
   const [isInRSVPSection, setIsInRSVPSection] = useState(false);
   const [isInGiftSection, setIsInGiftSection] = useState(false);
   const [isInMessageSection, setIsInMessageSection] = useState(false);
+  const [isInGallerySection, setIsInGallerySection] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isNightMode } = useTheme();
   
@@ -104,6 +106,22 @@ const Navbar = () => {
         }
         setIsInMessageSection(isMessageVisible);
         
+        // Activar cuando el 60% de la altura de Gallery Section sea visible
+        const galleryRect = gallerySection.getBoundingClientRect();
+        let isGalleryVisible = false;
+        if (galleryRect.bottom > 0 && galleryRect.top < windowHeight) {
+          // La sección está al menos parcialmente visible
+          const visibleTop = Math.max(0, galleryRect.top);
+          const visibleBottom = Math.min(windowHeight, galleryRect.bottom);
+          const actualVisibleHeight = visibleBottom - visibleTop;
+          const gallerySixtyPercent = galleryRect.height * 0.6;
+          
+          // Si la sección es más alta que el viewport, usar el mínimo entre el 60% y el viewport
+          const requiredHeight = Math.min(gallerySixtyPercent, windowHeight);
+          isGalleryVisible = actualVisibleHeight >= requiredHeight;
+        }
+        setIsInGallerySection(isGalleryVisible);
+        
       }
 
       setLastScrollY(currentScrollY);
@@ -130,7 +148,7 @@ const Navbar = () => {
     if (!isScrolled) {
       return 'bg-white/10 hover:bg-white/15';
     }
-    
+
     // En todas las demás secciones, es blanco
     return 'bg-white/95 shadow-lg hover:bg-white';
   };
@@ -153,6 +171,11 @@ const Navbar = () => {
     // En la sección de Regalos, el texto se vuelve blanco para contrastar con el fondo rosado.
     if (isInGiftSection) {
       return 'text-white/70 hover:text-white';
+    }
+    
+    // En la sección de galería, usar texto oscuro
+    if (isInGallerySection) {
+      return 'text-[#543c24]/70 hover:text-[#543c24]';
     }
     
     // En la sección hero (cuando no está scrolled), usar texto blanco
@@ -218,7 +241,19 @@ const Navbar = () => {
       return 'bg-white/30';
     }
     
-  
+    // En todas las demás secciones, usar línea decorativa oscura
+    return 'bg-[#543c24]/30';
+  };
+
+  // Función para determinar qué logo usar según la sección
+  const getLogoSrc = () => {
+    // Logo IMG_0340.PNG para hero (cuando no ha scrolled) y RSVP
+    if (!isScrolled || isInRSVPSection) {
+      return '/assets/logos/IMG_0340.PNG';
+    }
+    
+    // Logo IMG_0342.PNG para todas las demás secciones
+    return '/assets/logos/IMG_0342.PNG';
   };
 
   const handleNavClick = (id: string) => {
@@ -235,8 +270,22 @@ const Navbar = () => {
     }`}>
       <div className="max-w-7xl mx-auto">
         {/* Desktop Navigation - Pantallas grandes */}
-        <div className="hidden lg:flex items-center justify-center">
-          <ul className="flex items-center justify-center space-x-8 xl:space-x-12">
+        <div className="hidden lg:flex items-center justify-between">
+          {/* Logo a la izquierda */}
+          <div className="flex items-center">
+            <div className="w-8 h-8 relative">
+              <Image
+                src={getLogoSrc()}
+                alt="Logo"
+                fill
+                className="object-contain transition-all duration-500"
+                sizes="32px"
+              />
+            </div>
+          </div>
+          
+          {/* Navegación centrada */}
+          <ul className="flex items-center justify-center space-x-8 xl:space-x-12 flex-1">
             {navigationItems.map((item, index) => (
               <li key={item.id} className="flex items-center">
                 <a
@@ -253,10 +302,26 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+          
+          {/* Espacio para balancear */}
+          <div className="w-8 h-8"></div>
         </div>
 
         {/* Mobile Navigation - MD and above */}
         <div className="hidden md:flex lg:hidden items-center justify-between">
+          {/* Logo a la izquierda */}
+          <div className="flex items-center">
+            <div className="w-8 h-8 relative">
+              <Image
+                src={getLogoSrc()}
+                alt="Logo"
+                fill
+                className="object-contain transition-all duration-500"
+                sizes="32px"
+              />
+            </div>
+          </div>
+          
           {/* Solo elementos principales en móvil md+ */}
           <ul className="flex items-center space-x-3 sm:space-x-4 text-xs flex-1 justify-center">
             {navigationItems.slice(0, 4).map((item, index) => (
@@ -300,22 +365,16 @@ const Navbar = () => {
 
         {/* Small Mobile Navigation - Solo logo y hamburguesa */}
         <div className="md:hidden flex items-center justify-between w-full">
-          {/* Logo placeholder */}
+          {/* Logo */}
           <div className="flex items-center">
-            <div className={`w-8 h-8 rounded-full border-2 transition-colors duration-500 ${
-              isNightMode ? 'border-white/50' : 
-              isInRSVPSection ? 'border-white/50' : 
-              isInMessageSection ? 'border-white/50' : 
-              isInGiftSection ? 'border-white/50' : 
-              (!isScrolled || isInFooterSection ? 'border-white/50' : 'border-[#543c24]/50')
-            } flex items-center justify-center`}>
-              <span className={`text-xs garamond-300 transition-colors duration-500 ${
-                isNightMode ? 'text-white/70' : 
-                isInRSVPSection ? 'text-white/70' : 
-                isInMessageSection ? 'text-white/70' : 
-                isInGiftSection ? 'text-white/70' : 
-                (!isScrolled || isInFooterSection ? 'text-white/70' : 'text-[#543c24]/70')
-              }`}>L</span>
+            <div className="w-8 h-8 relative">
+              <Image
+                src={getLogoSrc()}
+                alt="Logo"
+                fill
+                className="object-contain transition-all duration-500"
+                sizes="32px"
+              />
             </div>
           </div>
           
