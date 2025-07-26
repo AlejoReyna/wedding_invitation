@@ -4,17 +4,20 @@ import Image from 'next/image';
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, index: number, shape?: string } | null>(null);
-  const [centerIndex, setCenterIndex] = useState(() => {
-    // Set initial index based on screen size
-    if (typeof window !== 'undefined') {
-      return window.innerWidth >= 768 ? 2 : 0;
-    }
-    return 0;
-  });
+  // Fix hydration error by removing window check in initial state
+  const [centerIndex, setCenterIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [animationStep, setAnimationStep] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Add useEffect to set initial centerIndex after component mounts
+  useEffect(() => {
+    // Set initial index based on screen size after component mounts
+    if (window.innerWidth >= 768) {
+      setCenterIndex(2);
+    }
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -379,9 +382,9 @@ export default function Gallery() {
         background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
       }}
     >
-      {/* PNG Flowers Background */}
+      {/* PNG Flowers Background - Updated with color filter */}
       <div className="absolute top-0 left-0 w-full h-48 md:h-56 lg:h-64 overflow-hidden z-[5]">
-        {/* Flores desde la izquierda con animación */}
+        {/* Flores desde la izquierda con animación y filtro de color */}
         <div 
           className={`absolute top-0 left-0 h-full transition-all duration-1200 ease-out ${
             animationStep >= 1 ? 'opacity-40 translate-x-0' : 'opacity-0 -translate-x-16'
@@ -392,6 +395,8 @@ export default function Gallery() {
             backgroundPosition: 'left top',
             backgroundSize: 'auto 100%',
             width: '60%',
+            filter: 'sepia(100%) saturate(150%) hue-rotate(20deg) brightness(0.8)',
+            color: '#947e63',
             transitionDelay: animationStep >= 1 ? '200ms' : '0ms'
           }}
         />
@@ -787,13 +792,28 @@ export default function Gallery() {
         <div className={`text-center mt-16 transition-all duration-1000 ease-out ${
           animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ transitionDelay: '600ms' }}>
-          <p className="text-lg text-stone-600 italic max-w-lg mx-auto garamond-300 leading-relaxed">
-  “ A love like ours could never die, as long as I have you near me ”
-  <br />
-  <small>
-    - A hard day’s night 
-  </small>
-</p>
+          <div 
+            className="relative py-16 px-8"
+            style={{
+              backgroundImage: `url('/png-lineart.png')`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center center',
+              backgroundSize: 'contain',
+              filter: 'sepia(40%) saturate(80%) hue-rotate(5deg) brightness(1.1)',
+            }}
+          >
+            {/* Text content */}
+            <div className="relative z-10">
+              <p className="text-lg text-stone-700 italic max-w-lg mx-auto garamond-300 leading-relaxed font-medium">
+                " A love like ours could never die, as long as I have you near me "
+                <br />
+                <small>
+                  - A hard day's night 
+                </small>
+              </p>
+            </div>
+          </div>
+          
           {/* Enhanced bottom decorative element */}
           <div className="flex justify-center mt-8">
             <div className="relative">

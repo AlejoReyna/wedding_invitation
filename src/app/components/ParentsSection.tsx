@@ -1,10 +1,38 @@
 "use client"
 
 import Image from 'next/image'
+import { useEffect, useState, useRef } from 'react'
 
 export default function ParentsSection() {
+  const [isVisible, setIsVisible] = useState(false)
+  const [showMainText, setShowMainText] = useState(false)
+  const [showParentsCards, setShowParentsCards] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true)
+          // Iniciar animación del texto principal desde la izquierda
+          setTimeout(() => setShowMainText(true), 200)
+          // Mostrar las tarjetas de padres después del texto principal
+          setTimeout(() => setShowParentsCards(true), 1500)
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [isVisible])
+
   return (
     <section 
+      ref={sectionRef}
       className="min-h-[50vh] w-full py-24 px-4 md:px-8 relative overflow-hidden flex items-center justify-center"
       style={{ 
         background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
@@ -50,11 +78,21 @@ export default function ParentsSection() {
           />
         </div>
         <div className="mx-10 flex justify-center items-center">
-          <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-12 text-[#8B7355] italic garamond-300 max-w-4xl ">
-            Con el amor y la bendición de Dios & de nuestros padres
-          </p>
+          <div className="relative overflow-hidden">
+            <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-12 text-[#8B7355] italic garamond-300 max-w-4xl">
+              Con el amor y la bendición de Dios & de nuestros padres
+            </p>
+            <div className={`absolute inset-0 bg-gradient-to-r from-[#fbf9f6] to-[#fbf9f6] transition-all duration-1200 ease-out ${
+              showMainText ? 'translate-x-full' : 'translate-x-0'
+            }`}></div>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className={`relative grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto transition-all duration-800 ease-out ${
+          showParentsCards ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}>
+          {/* Línea divisora sutil en medio */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#C4985B]/30 to-transparent transform -translate-x-1/2 hidden md:block"></div>
+          
           <div className="text-center">
             <h3 className="text-2xl font-semibold tracking-widest uppercase text-[#5c5c5c] mb-4 garamond-300">Papás de la Novia</h3>
             <p className="text-lg text-stone-600 garamond-300">Guillero Alejandro Reyna Muñoz</p>
