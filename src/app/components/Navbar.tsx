@@ -303,151 +303,109 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Menú móvil desplegable para MD+ - elementos secundarios */}
-        <div className={`hidden md:block lg:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
+        {/* TEMPORALMENTE COMENTADO PARA DEBUG - Menú móvil desplegable para MD+ */}
+        {/* <div className={`hidden md:block lg:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
           isMobileMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-        } ${(() => {
-          // DEBUGGING LOGS PARA EL DROPDOWN
-          console.log('=== DROPDOWN STYLE DEBUG ===');
-          console.log('isMobileMenuOpen:', isMobileMenuOpen);
-          
-          let dropdownStyle;
-          if (isNightMode) {
-            dropdownStyle = 'bg-black/98 shadow-xl';
-          } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
-            dropdownStyle = 'bg-black/95 shadow-xl backdrop-blur-lg';
-          } else {
-            dropdownStyle = 'bg-white/98 shadow-xl';
-          }
-          
-          console.log('dropdownStyle result:', dropdownStyle);
-          console.log('============================');
-          
-          return dropdownStyle;
-        })()}`}>
-          <div className={`px-4 py-4 ${(() => {
-              // Background adicional para el contenido para garantizar visibilidad
-              let innerStyle;
-              if (isNightMode) {
-                innerStyle = 'bg-black/95 border-t border-white/10';
-              } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
-                innerStyle = 'bg-black/90 border-t border-white/20';
-              } else {
-                innerStyle = 'bg-white/95 border-t border-[#543c24]/10';
-              }
-              
-              // DEBUGGING LOGS PARA EL DIV INTERNO
-              console.log('=== INNER DIV STYLE DEBUG ===');
-              console.log('innerStyle result:', innerStyle);
-              console.log('isScrolled:', isScrolled);
-              console.log('current conditions for bg-black/90:', !isScrolled || isInRSVPSection || isInFooterSection);
-              console.log('=============================');
-              
-              return innerStyle;
-            })()}`}>
-            <ul className="flex flex-col space-y-3">
-              {navigationItems.slice(4).map((item) => (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.id);
-                    }}
-                    className={`text-xs garamond-300 tracking-[0.15em] transition-colors duration-500 block py-2 px-3 rounded-md ${(() => {
-                      // BACKGROUND INDIVIDUAL PARA CADA LINK
-                      let linkStyle;
-                      if (isNightMode) {
-                        linkStyle = getTextStyle() + ' bg-black/80 hover:bg-black/90';
-                      } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
-                        linkStyle = getTextStyle() + ' bg-black/70 hover:bg-black/80';
-                      } else {
-                        linkStyle = getTextStyle() + ' bg-white/80 hover:bg-white/90';
-                      }
-                      
-                      console.log('Link style for', item.label, ':', linkStyle);
-                      return linkStyle;
-                    })()}`}
-                  >
-                    {item.label.toUpperCase()}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Menú móvil elegante para SM - 50% ancho */}
-        <div className={`md:hidden fixed top-0 right-0 h-full w-1/2 backdrop-blur-xl transition-all duration-500 ease-out z-50 ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        } ${
-          isNightMode ? 'bg-black border-l border-white/20' : 
-          (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-black/95 border-l border-white/20' : 'bg-white border-l border-[#543c24]/20')
         }`}>
-          <div className="flex flex-col h-full">
-            {/* Header del menú */}
-            <div className="flex items-center justify-between p-6 border-b border-current/10">
-              <h2 className={`text-sm garamond-300 tracking-[0.2em] transition-colors duration-500 ${
-                isNightMode ? 'text-white/70' : 
-                (!isScrolled || isInFooterSection || isInRSVPSection ? 'text-white/70' : 'text-[#543c24]/70')
-              }`}>MENÚ</h2>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`p-2 transition-colors duration-500 ${getTextStyle()}`}
-                aria-label="Cerrar menú"
-              >
-                <div className="relative w-5 h-5">
-                  <div className={`absolute top-1/2 left-0 w-full h-0.5 rotate-45 transition-colors duration-500 ${getLineStyle()}`}></div>
-                  <div className={`absolute top-1/2 left-0 w-full h-0.5 -rotate-45 transition-colors duration-500 ${getLineStyle()}`}></div>
-                </div>
-              </button>
-            </div>
-            
-            {/* Lista de navegación */}
-            <div className="flex-1 py-8">
-              <ul className="space-y-6">
-                {navigationItems.map((item) => (
-                  <li key={item.id} className="px-6">
-                    <a
-                      href={`#${item.id}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(item.id);
-                      }}
-                      className={`block text-sm garamond-300 tracking-[0.2em] transition-all duration-500 py-3 border-b border-current/10 group ${
-                        isNightMode ? 'text-white/60 hover:text-white border-white/10' : 
-                        (!isScrolled || isInFooterSection || isInRSVPSection ? 'text-white/60 hover:text-white border-white/10' : 'text-[#543c24]/60 hover:text-[#543c24] border-[#543c24]/10')
-                      }`}
-                    >
-                      <span className="relative">
-                        {item.label.toUpperCase()}
-                        <span className={`absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500 ${
-                          isNightMode ? 'bg-white' : 
-                          (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white' : 'bg-[#543c24]')
-                        }`}></span>
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Elemento decorativo en el footer */}
-            <div className="p-6 border-t border-current/10">
-              <div className="flex items-center justify-center space-x-2">
-                <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
-                  isNightMode ? 'bg-white/30' : 
-                  (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white/30' : 'bg-[#543c24]/30')
-                }`}></div>
-                <div className={`w-8 h-0.5 transition-colors duration-500 ${
-                  isNightMode ? 'bg-white/30' : 
-                  (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white/30' : 'bg-[#543c24]/30')
-                }`}></div>
-                <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
-                  isNightMode ? 'bg-white/30' : 
-                  (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white/30' : 'bg-[#543c24]/30')
-                }`}></div>
+        </div> */}
+
+        {/* Menú móvil elegante para SM - 50% ancho - CONTENEDOR UNIFICADO */}
+        <div className={`md:hidden fixed top-0 right-0 w-1/2 transition-all duration-500 ease-out z-50 ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        } border-l border-[#543c24]/20 bg-white p-6`}
+        style={{
+          backgroundColor: 'white !important',
+          height: '100vh',
+          minHeight: '100vh'
+        }}
+        ref={(el) => {
+          if (el && isMobileMenuOpen) {
+            console.log('=== MOBILE MENU DEBUG ===');
+            console.log('Menu element:', el);
+            console.log('Computed styles:', window.getComputedStyle(el));
+            console.log('Background color:', window.getComputedStyle(el).backgroundColor);
+            console.log('Height:', window.getComputedStyle(el).height);
+            console.log('Width:', window.getComputedStyle(el).width);
+            console.log('Display:', window.getComputedStyle(el).display);
+            console.log('Position:', window.getComputedStyle(el).position);
+            console.log('isMobileMenuOpen:', isMobileMenuOpen);
+            console.log('isScrolled:', isScrolled);
+            console.log('isNightMode:', isNightMode);
+            console.log('isInFooterSection:', isInFooterSection);
+            console.log('isInRSVPSection:', isInRSVPSection);
+            console.log('========================');
+          }
+        }}>
+          
+          {/* Header del menú */}
+          <div className="flex items-center justify-between mb-8 border-b border-[#543c24]/10 pb-6"
+            ref={(el) => {
+              if (el && isMobileMenuOpen) {
+                console.log('=== HEADER DEBUG ===');
+                console.log('Header computed styles:', window.getComputedStyle(el));
+                console.log('Header background:', window.getComputedStyle(el).backgroundColor);
+                console.log('====================');
+              }
+            }}>
+            <h2 className="text-sm garamond-300 tracking-[0.2em] text-[#543c24]/70">
+              MENÚ
+            </h2>
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 text-[#543c24]/70 hover:text-[#543c24]"
+              aria-label="Cerrar menú"
+            >
+              <div className="relative w-5 h-5">
+                <div className="absolute top-1/2 left-0 w-full h-0.5 rotate-45 bg-[#543c24]"></div>
+                <div className="absolute top-1/2 left-0 w-full h-0.5 -rotate-45 bg-[#543c24]"></div>
               </div>
+            </button>
+          </div>
+          
+          {/* Lista de navegación */}
+          <ul className="space-y-6 flex-1"
+            ref={(el) => {
+              if (el && isMobileMenuOpen) {
+                console.log('=== NAV LIST DEBUG ===');
+                console.log('Nav list computed styles:', window.getComputedStyle(el));
+                console.log('Nav list background:', window.getComputedStyle(el).backgroundColor);
+                console.log('Nav list parent background:', el.parentElement ? window.getComputedStyle(el.parentElement).backgroundColor : 'no parent');
+                console.log('=====================');
+              }
+            }}>
+            {navigationItems.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.id);
+                  }}
+                  className="block text-sm garamond-300 tracking-[0.2em] py-3 border-b border-[#543c24]/10 group text-[#543c24]/60 hover:text-[#543c24]"
+                >
+                  <span className="relative">
+                    {item.label.toUpperCase()}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500 bg-[#543c24]"></span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          
+          {/* Elemento decorativo en el footer - posicionado al final */}
+          <div className="absolute bottom-6 left-6 right-6 pt-6 border-t border-[#543c24]/10"
+            ref={(el) => {
+              if (el && isMobileMenuOpen) {
+                console.log('=== FOOTER DEBUG ===');
+                console.log('Footer computed styles:', window.getComputedStyle(el));
+                console.log('Footer background:', window.getComputedStyle(el).backgroundColor);
+                console.log('====================');
+              }
+            }}>
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-1 h-1 rounded-full bg-[#543c24]/30"></div>
+              <div className="w-8 h-0.5 bg-[#543c24]/30"></div>
+              <div className="w-1 h-1 rounded-full bg-[#543c24]/30"></div>
             </div>
           </div>
         </div>
