@@ -22,7 +22,20 @@ interface ItineraryItemCardProps {
 export default function ItineraryItemCard({ item, index }: ItineraryItemCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const isRightSide = index % 2 !== 0;
+
+  // Hook para detectar tamaño de pantalla
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint en Tailwind
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -79,7 +92,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
       style={{ transitionDelay: `${index * 200}ms` }}
     >
       {/* Timeline Dot */}
-      <div className="absolute left-1/2 top-12 transform -translate-x-1/2 w-8 h-8 z-10">
+      <div className="absolute left-1/2 top-12 transform -translate-x-1/2 w-8 h-8 z-10 hidden md:block">
         <div className="w-full h-full rounded-full bg-gradient-to-br from-[#947e63]/40 to-[#947e63]/60 border-4 border-white shadow-lg">
           <div className="absolute inset-2 rounded-full bg-gradient-to-br from-[#947e63]/60 to-[#947e63]/80 shadow-inner"></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white opacity-60"></div>
@@ -107,7 +120,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
               {/* Time Display - Always centered */}
               <div className="mb-8">
                 <div className="text-5xl md:text-6xl font-extralight tracking-widest text-[#947e63] leading-none mb-3 text-center" style={{ fontFamily: 'Playfair Display, serif' }}>
-                  {item.displayTime}
+                  {isMobile ? item.displayTime.replace('°', '') : item.displayTime}
                 </div>
                 <div className="flex justify-center">
                   <div className="w-12 h-0.5 bg-[#D4AF37]"></div>

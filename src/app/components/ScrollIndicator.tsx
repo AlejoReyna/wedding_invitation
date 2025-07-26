@@ -46,7 +46,7 @@ export default function ScrollIndicator() {
   const activePosition = scrollProgress * timelineHeight;
 
   return (
-    <div className="fixed right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-40 pointer-events-none">
+    <div className="fixed right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-40 pointer-events-none hidden md:block">
       <div className="relative">
         {/* Background line */}
         <div 
