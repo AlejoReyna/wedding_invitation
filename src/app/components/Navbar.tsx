@@ -49,20 +49,6 @@ const Navbar = () => {
       const messageSection = document.getElementById('mensaje');
       const gallerySection = document.getElementById('galeria');
 
-      // DEBUG: Verificar que existen las secciones
-      console.log('🔍 DEBUG - Elementos encontrados:', {
-        heroSection: !!heroSection,
-        footerSection: !!footerSection,
-        rsvpSection: !!rsvpSection,
-        giftSection: !!giftSection,
-        messageSection: !!messageSection,
-        gallerySection: !!gallerySection
-      });
-      
-      // DEBUG: Mostrar todos los IDs que existen en el DOM
-      const allIds = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
-      console.log('🏷️ DEBUG - Todos los IDs en el DOM:', allIds);
-
       if (heroSection && footerSection) {
         const heroRect = heroSection.getBoundingClientRect();
         const footerRect = footerSection.getBoundingClientRect();
@@ -143,17 +129,6 @@ const Navbar = () => {
           setIsInGallerySection(false);
         }
         
-        // DEBUG: Estados de las secciones
-        console.log('📋 DEBUG - Estados de secciones:', {
-          isScrolled: heroRect.bottom < 100,
-          isInFooterSection: isFooterVisible,
-          isInRSVPSection: isInRSVPSection,
-          isInGiftSection: isInGiftSection,
-          isInMessageSection: isInMessageSection,
-          isInGallerySection: isInGallerySection,
-          scrollY: currentScrollY
-        });
-        
       }
 
       setLastScrollY(currentScrollY);
@@ -167,39 +142,17 @@ const Navbar = () => {
 
   // Función para determinar el estilo basado en el estado de scroll y modo nocturno
   const getNavbarStyle = () => {
-    let result = '';
-    
     if (isNightMode) {
-      result = 'bg-black/95 shadow-lg hover:bg-black';
-      console.log('🎨 DEBUG - getNavbarStyle: Modo nocturno ->', result);
-      return result;
+      return 'bg-black/95 shadow-lg hover:bg-black';
     }
 
-    // Si está en la sección del footer, es transparente
-    if (isInFooterSection) {
-      result = 'bg-white/10 hover:bg-white/15';
-      console.log('🎨 DEBUG - getNavbarStyle: Footer ->', result);
-      return result;
-    }
-
-    // Si está en la sección RSVP, usar transparente como hero
-    if (isInRSVPSection) {
-      result = 'bg-white/10 hover:bg-white/15';
-      console.log('🎨 DEBUG - getNavbarStyle: RSVP (transparente) ->', result);
-      return result;
-    }
-
-    // Si no ha hecho scroll (está en hero), es transparente
-    if (!isScrolled) {
-      result = 'bg-white/10 hover:bg-white/15';
-      console.log('🎨 DEBUG - getNavbarStyle: Hero ->', result);
-      return result;
+    // Si está en la sección RSVP, Footer o Hero, usar background transparente
+    if (isInRSVPSection || isInFooterSection || !isScrolled) {
+      return 'bg-white/10 hover:bg-white/15';
     }
 
     // En todas las demás secciones, es blanco
-    result = 'bg-white/95 shadow-lg hover:bg-white';
-    console.log('🎨 DEBUG - getNavbarStyle: Default (blanco) ->', result);
-    return result;
+    return 'bg-white/95 shadow-lg hover:bg-white';
   };
 
   const getTextStyle = () => {
@@ -207,13 +160,8 @@ const Navbar = () => {
       return 'text-white/70 hover:text-white';
     }
     
-    // En la sección RSVP, usar texto blanco como en hero
-    if (isInRSVPSection) {
-      return 'text-white/60 hover:text-white';
-    }
-    
-    // En la sección hero (cuando no está scrolled) o footer, usar texto blanco
-    if (!isScrolled || isInFooterSection) {
+    // En la sección RSVP, Footer o Hero, usar texto blanco
+    if (isInRSVPSection || isInFooterSection || !isScrolled) {
       return 'text-white/60 hover:text-white';
     }
     
@@ -226,13 +174,8 @@ const Navbar = () => {
       return 'bg-white';
     }
     
-    // En la sección RSVP, usar línea blanca como en hero
-    if (isInRSVPSection) {
-      return 'bg-white';
-    }
-    
-    // En la sección hero (cuando no está scrolled) o footer, usar línea blanca
-    if (!isScrolled || isInFooterSection) {
+    // En la sección RSVP, Footer o Hero, usar línea blanca
+    if (isInRSVPSection || isInFooterSection || !isScrolled) {
       return 'bg-white';
     }
     
@@ -245,13 +188,8 @@ const Navbar = () => {
       return 'bg-white/30';
     }
     
-    // En la sección RSVP, usar línea decorativa blanca como en hero
-    if (isInRSVPSection) {
-      return 'bg-white/30';
-    }
-    
-    // En la sección hero (cuando no está scrolled) o footer, usar línea decorativa blanca
-    if (!isScrolled || isInFooterSection) {
+    // En la sección RSVP, Footer o Hero, usar línea decorativa blanca
+    if (isInRSVPSection || isInFooterSection || !isScrolled) {
       return 'bg-white/30';
     }
     
@@ -261,8 +199,8 @@ const Navbar = () => {
 
   // Función para determinar qué logo usar según la sección
   const getLogoSrc = () => {
-    // Logo IMG_0340.PNG para hero (cuando no ha scrolled) y RSVP
-    if (!isScrolled || isInRSVPSection) {
+    // Logo IMG_0340.PNG para hero (cuando no ha scrolled), RSVP y Footer
+    if (!isScrolled || isInRSVPSection || isInFooterSection) {
       return '/assets/logos/IMG_0340.PNG';
     }
     
@@ -353,10 +291,7 @@ const Navbar = () => {
                 {index < 3 && (
                   <span className={`ml-2 sm:ml-3 transition-colors duration-500 ${
                     isNightMode ? 'text-white/30' : 
-                    isInRSVPSection ? 'text-white/30' : 
-                    isInMessageSection ? 'text-white/30' : 
-                    isInGiftSection ? 'text-white/30' : 
-                    (!isScrolled || isInFooterSection ? 'text-white/30' : 'text-[#543c24]/30')
+                    (!isScrolled || isInFooterSection || isInRSVPSection ? 'text-white/30' : 'text-[#543c24]/30')
                   }`}>·</span>
                 )}
               </li>
@@ -496,24 +431,15 @@ const Navbar = () => {
               <div className="flex items-center justify-center space-x-2">
                 <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
                   isNightMode ? 'bg-white/30' : 
-                  isInRSVPSection ? 'bg-white/30' : 
-                  isInMessageSection ? 'bg-white/30' : 
-                  isInGiftSection ? 'bg-white/30' : 
-                  (!isScrolled || isInFooterSection ? 'bg-white/30' : 'bg-[#543c24]/30')
+                  (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white/30' : 'bg-[#543c24]/30')
                 }`}></div>
                 <div className={`w-8 h-0.5 transition-colors duration-500 ${
                   isNightMode ? 'bg-white/30' : 
-                  isInRSVPSection ? 'bg-white/30' : 
-                  isInMessageSection ? 'bg-white/30' : 
-                  isInGiftSection ? 'bg-white/30' : 
-                  (!isScrolled || isInFooterSection ? 'bg-white/30' : 'bg-[#543c24]/30')
+                  (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white/30' : 'bg-[#543c24]/30')
                 }`}></div>
                 <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
                   isNightMode ? 'bg-white/30' : 
-                  isInRSVPSection ? 'bg-white/30' : 
-                  isInMessageSection ? 'bg-white/30' : 
-                  isInGiftSection ? 'bg-white/30' : 
-                  (!isScrolled || isInFooterSection ? 'bg-white/30' : 'bg-[#543c24]/30')
+                  (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white/30' : 'bg-[#543c24]/30')
                 }`}></div>
               </div>
             </div>
