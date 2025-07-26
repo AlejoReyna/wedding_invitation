@@ -232,26 +232,99 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
           index === 2 ? 'md:w-[33rem] ml-auto' : 
           `md:w-[22rem] ${!isRightSide ? 'ml-auto' : ''}`
         }`}>
-          {/* Card inspirada en Paul Allen con fondo crema y tipografía elegante */}
-          <div className={`rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-700 transform hover:-translate-y-2 hover:scale-[1.01] group ${
+          {/* Card con textura de cartón de huevo */}
+          <div className={`rounded-lg overflow-hidden transition-all duration-700 transform hover:-translate-y-2 hover:scale-[1.01] group relative ${
             isNightMode 
-              ? 'bg-gray-900 border border-white/20' 
-              : 'bg-[#f8f6f3] border border-[#e6ddd4]'
+              ? 'border border-white/20' 
+              : 'border border-[#d4c4b0]/40'
           }`} style={{
-            backgroundImage: isNightMode ? 'none' : `
-              radial-gradient(circle at 25% 25%, rgba(196, 152, 91, 0.03) 0%, transparent 50%),
-              radial-gradient(circle at 75% 75%, rgba(139, 115, 85, 0.02) 0%, transparent 50%)
-            `
+            // Fondo base con color de cartón
+            backgroundColor: isNightMode ? '#2a2a2a' : '#f0ebe5',
+            // Textura de cartón de huevo con múltiples gradientes radiales
+            backgroundImage: isNightMode 
+              ? `
+                radial-gradient(circle at 8% 15%, rgba(255,255,255,0.05) 1px, transparent 3px),
+                radial-gradient(circle at 23% 8%, rgba(0,0,0,0.15) 1px, transparent 4px),
+                radial-gradient(circle at 41% 22%, rgba(255,255,255,0.03) 1px, transparent 3px),
+                radial-gradient(circle at 67% 12%, rgba(0,0,0,0.12) 1px, transparent 4px),
+                radial-gradient(circle at 84% 25%, rgba(255,255,255,0.04) 1px, transparent 3px),
+                radial-gradient(circle at 15% 45%, rgba(0,0,0,0.1) 1px, transparent 4px),
+                radial-gradient(circle at 38% 58%, rgba(255,255,255,0.05) 1px, transparent 3px),
+                radial-gradient(circle at 62% 41%, rgba(0,0,0,0.13) 1px, transparent 4px),
+                radial-gradient(circle at 78% 63%, rgba(255,255,255,0.03) 1px, transparent 3px),
+                radial-gradient(circle at 92% 48%, rgba(0,0,0,0.11) 1px, transparent 4px),
+                radial-gradient(circle at 12% 78%, rgba(255,255,255,0.04) 1px, transparent 3px),
+                radial-gradient(circle at 34% 85%, rgba(0,0,0,0.14) 1px, transparent 4px),
+                radial-gradient(circle at 56% 72%, rgba(255,255,255,0.05) 1px, transparent 3px),
+                radial-gradient(circle at 74% 89%, rgba(0,0,0,0.12) 1px, transparent 4px),
+                radial-gradient(circle at 89% 76%, rgba(255,255,255,0.03) 1px, transparent 3px),
+                linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.03) 100%)
+              `
+              : `
+                radial-gradient(circle at 8% 15%, rgba(180,147,113,0.3) 1px, transparent 3px),
+                radial-gradient(circle at 23% 8%, rgba(139,115,85,0.25) 1px, transparent 4px),
+                radial-gradient(circle at 41% 22%, rgba(196,152,91,0.2) 1px, transparent 3px),
+                radial-gradient(circle at 67% 12%, rgba(155,131,102,0.28) 1px, transparent 4px),
+                radial-gradient(circle at 84% 25%, rgba(180,147,113,0.22) 1px, transparent 3px),
+                radial-gradient(circle at 15% 45%, rgba(139,115,85,0.26) 1px, transparent 4px),
+                radial-gradient(circle at 38% 58%, rgba(196,152,91,0.24) 1px, transparent 3px),
+                radial-gradient(circle at 62% 41%, rgba(155,131,102,0.27) 1px, transparent 4px),
+                radial-gradient(circle at 78% 63%, rgba(180,147,113,0.21) 1px, transparent 3px),
+                radial-gradient(circle at 92% 48%, rgba(139,115,85,0.25) 1px, transparent 4px),
+                radial-gradient(circle at 12% 78%, rgba(196,152,91,0.23) 1px, transparent 3px),
+                radial-gradient(circle at 34% 85%, rgba(155,131,102,0.29) 1px, transparent 4px),
+                radial-gradient(circle at 56% 72%, rgba(180,147,113,0.24) 1px, transparent 3px),
+                radial-gradient(circle at 74% 89%, rgba(139,115,85,0.26) 1px, transparent 4px),
+                radial-gradient(circle at 89% 76%, rgba(196,152,91,0.22) 1px, transparent 3px),
+                linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(139,115,85,0.05) 100%)
+              `,
+            // Box shadow para profundidad de cartón de huevo
+            boxShadow: isNightMode 
+              ? `
+                inset 2px 2px 4px rgba(0,0,0,0.3),
+                inset -1px -1px 3px rgba(255,255,255,0.02),
+                0 4px 8px rgba(0,0,0,0.4),
+                0 1px 2px rgba(0,0,0,0.2)
+              `
+              : `
+                inset 2px 2px 4px rgba(139,115,85,0.15),
+                inset -1px -1px 3px rgba(255,255,255,0.4),
+                0 4px 8px rgba(139,115,85,0.12),
+                0 1px 2px rgba(139,115,85,0.08)
+              `
           }}>
             
-            {/* Content Section - Estilo Paul Allen */}
-            <div className="p-12 md:p-16 relative text-center">
+            {/* Content Section con overlay para mejorar legibilidad sobre textura */}
+            <div className="p-12 md:p-16 relative text-center z-10">
+              
+              {/* Overlay sutil para mejorar legibilidad del texto sobre cartón */}
+              <div className={`absolute inset-0 rounded-lg transition-all duration-500 ${
+                isNightMode 
+                  ? 'bg-gray-900/20' 
+                  : 'bg-white/30'
+              }`} style={{
+                // Textura adicional de fibra de cartón
+                backgroundImage: isNightMode
+                  ? `
+                    linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.01) 49%, rgba(255,255,255,0.01) 51%, transparent 52%),
+                    linear-gradient(-45deg, transparent 48%, rgba(0,0,0,0.02) 49%, rgba(0,0,0,0.02) 51%, transparent 52%)
+                  `
+                  : `
+                    linear-gradient(45deg, transparent 48%, rgba(139,115,85,0.03) 49%, rgba(139,115,85,0.03) 51%, transparent 52%),
+                    linear-gradient(-45deg, transparent 48%, rgba(196,152,91,0.02) 49%, rgba(196,152,91,0.02) 51%, transparent 52%)
+                  `,
+                backgroundSize: '3px 3px, 4px 4px'
+              }}></div>
 
-              {/* Número de evento con efecto de escritura */}
-              <div className="mb-6 h-4 flex justify-center items-center">
-                <span className={`text-xs tracking-[0.2em] uppercase font-light transition-colors duration-500 ${
-                  isNightMode ? 'text-white/60' : 'text-[#8B7355]/60'
-                }`}>
+              {/* Número de evento con efecto de escritura y mejor contraste */}
+              <div className="mb-6 h-4 flex justify-center items-center relative z-20">
+                <span className={`text-xs tracking-[0.2em] uppercase font-medium transition-colors duration-500 ${
+                  isNightMode ? 'text-white/80' : 'text-[#5a4a3a]/80'
+                }`} style={{
+                  textShadow: isNightMode 
+                    ? '0 1px 2px rgba(0,0,0,0.5)' 
+                    : '0 1px 2px rgba(255,255,255,0.8)'
+                }}>
                   {displayedNumber}
                   {displayedNumber && displayedNumber.length < String(index + 1).padStart(2, '0').length && (
                     <span className="animate-pulse">|</span>
@@ -259,22 +332,51 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </span>
               </div>
 
-              {/* Icono original con animación de aparición */}
-              <div className="mb-8 h-16 flex justify-center items-center">
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full shadow-lg group-hover:scale-110 transition-all duration-500 ${
+              {/* Icono original con textura de cartón y mejor sombra */}
+              <div className="mb-8 h-16 flex justify-center items-center relative z-20">
+                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full group-hover:scale-110 transition-all duration-500 ${
                   showIcon ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                } ${isNightMode ? 'bg-gray-800/50' : 'bg-gradient-to-br from-[#947e63]/20 to-[#947e63]/30'}`}>
+                }`} style={{
+                  backgroundColor: isNightMode ? '#1a1a1a' : '#e8ddd1',
+                  backgroundImage: isNightMode
+                    ? `
+                      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08) 1px, transparent 3px),
+                      radial-gradient(circle at 70% 20%, rgba(0,0,0,0.15) 1px, transparent 3px),
+                      radial-gradient(circle at 20% 70%, rgba(255,255,255,0.06) 1px, transparent 3px),
+                      radial-gradient(circle at 80% 80%, rgba(0,0,0,0.12) 1px, transparent 3px)
+                    `
+                    : `
+                      radial-gradient(circle at 30% 30%, rgba(180,147,113,0.4) 1px, transparent 3px),
+                      radial-gradient(circle at 70% 20%, rgba(139,115,85,0.3) 1px, transparent 3px),
+                      radial-gradient(circle at 20% 70%, rgba(196,152,91,0.25) 1px, transparent 3px),
+                      radial-gradient(circle at 80% 80%, rgba(155,131,102,0.35) 1px, transparent 3px)
+                    `,
+                  boxShadow: isNightMode
+                    ? `
+                      inset 1px 1px 3px rgba(0,0,0,0.4),
+                      inset -1px -1px 2px rgba(255,255,255,0.03),
+                      0 2px 4px rgba(0,0,0,0.3)
+                    `
+                    : `
+                      inset 1px 1px 3px rgba(139,115,85,0.2),
+                      inset -1px -1px 2px rgba(255,255,255,0.5),
+                      0 2px 4px rgba(139,115,85,0.15)
+                    `
+                }}>
                   {getEventIcon()}
                 </div>
               </div>
 
-              {/* Título del evento con efecto de escritura */}
-              <div className="mb-8 h-12 md:h-16 flex justify-center items-center">
+              {/* Título del evento con mejor contraste sobre cartón */}
+              <div className="mb-8 h-12 md:h-16 flex justify-center items-center relative z-20">
                 <h3 className={`text-2xl md:text-3xl font-light tracking-[0.15em] uppercase leading-tight transition-colors duration-500 ${
                   isNightMode ? 'text-white' : 'text-[#2c2826]'
                 }`} style={{ 
                   fontFamily: 'Playfair Display, serif',
-                  letterSpacing: '0.15em'
+                  letterSpacing: '0.15em',
+                  textShadow: isNightMode 
+                    ? '0 2px 4px rgba(0,0,0,0.6)' 
+                    : '0 1px 3px rgba(255,255,255,0.8)'
                 }}>
                   {displayedTitle}
                   {displayedTitle && displayedTitle.length < item.title.length && (
@@ -283,18 +385,27 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </h3>
               </div>
 
-              {/* Línea divisoria con animación */}
-              <div className="flex justify-center mb-8 h-4 items-center">
+              {/* Línea divisoria con textura */}
+              <div className="flex justify-center mb-8 h-4 items-center relative z-20">
                 <div className={`h-px transition-all duration-700 ${
                   showDivider ? 'w-16 opacity-100' : 'w-0 opacity-0'
-                } ${isNightMode ? 'bg-white/30' : 'bg-[#C4985B]/50'}`}></div>
+                } ${isNightMode ? 'bg-white/40' : 'bg-[#8B7355]/60'}`} style={{
+                  boxShadow: isNightMode 
+                    ? '0 1px 2px rgba(0,0,0,0.4)' 
+                    : '0 1px 2px rgba(255,255,255,0.6)'
+                }}></div>
               </div>
 
-              {/* Hora con efecto de escritura */}
-              <div className="mb-8 h-8 md:h-10 flex justify-center items-center">
+              {/* Hora con mejor legibilidad */}
+              <div className="mb-8 h-8 md:h-10 flex justify-center items-center relative z-20">
                 <div className={`text-xl md:text-2xl font-light tracking-[0.1em] transition-colors duration-500 ${
-                  isNightMode ? 'text-white/90' : 'text-[#4a453f]'
-                }`} style={{ fontFamily: 'Playfair Display, serif' }}>
+                  isNightMode ? 'text-white/95' : 'text-[#3a342f]'
+                }`} style={{ 
+                  fontFamily: 'Playfair Display, serif',
+                  textShadow: isNightMode 
+                    ? '0 2px 4px rgba(0,0,0,0.6)' 
+                    : '0 1px 3px rgba(255,255,255,0.7)'
+                }}>
                   {displayedTime}
                   {displayedTime && displayedTime.length < item.time.length && (
                     <span className="animate-pulse">|</span>
@@ -302,12 +413,17 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </div>
               </div>
 
-              {/* Ubicación con efecto de escritura */}
+              {/* Ubicación con mejor contraste */}
               {item.location && (
-                <div className="mb-8 min-h-[2rem] flex justify-center items-center">
+                <div className="mb-8 min-h-[2rem] flex justify-center items-center relative z-20">
                   <div className={`text-sm md:text-base font-light tracking-[0.05em] leading-relaxed transition-colors duration-500 ${
-                    isNightMode ? 'text-white/80' : 'text-[#6b6258]'
-                  }`} style={{ fontFamily: 'Inter, sans-serif' }}>
+                    isNightMode ? 'text-white/85' : 'text-[#5a4f45]'
+                  }`} style={{ 
+                    fontFamily: 'Inter, sans-serif',
+                    textShadow: isNightMode 
+                      ? '0 1px 2px rgba(0,0,0,0.5)' 
+                      : '0 1px 2px rgba(255,255,255,0.6)'
+                  }}>
                     {displayedLocation}
                     {displayedLocation && item.location && displayedLocation.length < item.location.length && (
                       <span className="animate-pulse">|</span>
@@ -316,12 +432,17 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </div>
               )}
 
-              {/* Descripción con efecto de escritura */}
+              {/* Descripción con mejor legibilidad */}
               {item.description && item.description.trim() !== "" && (
-                <div className="mt-6 min-h-[3rem] flex justify-center items-center">
+                <div className="mt-6 min-h-[3rem] flex justify-center items-center relative z-20">
                   <p className={`text-sm font-light tracking-wide leading-relaxed max-w-sm mx-auto transition-colors duration-500 ${
-                    isNightMode ? 'text-white/70' : 'text-[#7a6f63]'
-                  }`} style={{ fontFamily: 'Inter, sans-serif' }}>
+                    isNightMode ? 'text-white/75' : 'text-[#6b5f52]'
+                  }`} style={{ 
+                    fontFamily: 'Inter, sans-serif',
+                    textShadow: isNightMode 
+                      ? '0 1px 2px rgba(0,0,0,0.5)' 
+                      : '0 1px 2px rgba(255,255,255,0.6)'
+                  }}>
                     {displayedDescription}
                     {displayedDescription && displayedDescription.length < item.description.length && (
                       <span className="animate-pulse">|</span>
@@ -330,20 +451,32 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </div>
               )}
 
-              {/* Decoración inferior con animación */}
-              <div className="mt-8 flex justify-center h-4 items-center">
+              {/* Decoración inferior con textura */}
+              <div className="mt-8 flex justify-center h-4 items-center relative z-20">
                 <div className={`flex space-x-1 transition-all duration-500 ${
                   showDots ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
                 }`}>
                   <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
-                    isNightMode ? 'bg-white/20' : 'bg-[#C4985B]/30'
-                  }`}></div>
+                    isNightMode ? 'bg-white/30' : 'bg-[#8B7355]/50'
+                  }`} style={{
+                    boxShadow: isNightMode 
+                      ? '0 1px 2px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1)' 
+                      : '0 1px 2px rgba(139,115,85,0.3), inset 0 1px 1px rgba(255,255,255,0.8)'
+                  }}></div>
                   <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
-                    isNightMode ? 'bg-white/40' : 'bg-[#C4985B]/50'
-                  }`}></div>
+                    isNightMode ? 'bg-white/50' : 'bg-[#8B7355]/70'
+                  }`} style={{
+                    boxShadow: isNightMode 
+                      ? '0 1px 2px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1)' 
+                      : '0 1px 2px rgba(139,115,85,0.3), inset 0 1px 1px rgba(255,255,255,0.8)'
+                  }}></div>
                   <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
-                    isNightMode ? 'bg-white/20' : 'bg-[#C4985B]/30'
-                  }`}></div>
+                    isNightMode ? 'bg-white/30' : 'bg-[#8B7355]/50'
+                  }`} style={{
+                    boxShadow: isNightMode 
+                      ? '0 1px 2px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1)' 
+                      : '0 1px 2px rgba(139,115,85,0.3), inset 0 1px 1px rgba(255,255,255,0.8)'
+                  }}></div>
                 </div>
               </div>
 
