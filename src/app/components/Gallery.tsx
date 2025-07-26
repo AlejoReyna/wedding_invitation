@@ -476,9 +476,12 @@ export default function Gallery() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ transitionDelay: '1000ms' }}>
           <p className="text-lg text-stone-600 italic max-w-lg mx-auto garamond-300 leading-relaxed">
-            &ldquo; A love like ours could never die, as long as I have you near me &rdquo;
-          </p>
-          
+  “ A love like ours could never die, as long as I have you near me ”
+  <br />
+  <small>
+    - A hard day’s night 
+  </small>
+</p>
           {/* Bottom decorative element */}
           <div className="flex justify-center mt-8">
             <div className="w-20 h-20 opacity-30">
