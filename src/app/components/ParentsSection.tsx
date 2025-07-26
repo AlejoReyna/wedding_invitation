@@ -1,5 +1,7 @@
 "use client"
 
+import Image from 'next/image'
+
 export default function ParentsSection() {
   return (
     <section 
@@ -38,6 +40,15 @@ export default function ParentsSection() {
       </div>
 
       <div className="text-center z-10">
+        <div className="mx-10 flex justify-center items-center mb-8">
+          <Image
+            src="/assets/logos/IMG_0342.PNG"
+            alt="AA Logo"
+            width={100}
+            height={100}
+            className="object-contain"
+          />
+        </div>
         <div className="mx-10 flex justify-center items-center">
           <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-12 text-[#8B7355] italic garamond-300 max-w-4xl ">
             Con el amor y la bendición de Dios & de nuestros padres

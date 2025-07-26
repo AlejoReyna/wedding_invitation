@@ -166,9 +166,7 @@ export default function LocationSection() {
                 
                 {/* Time */}
                 <div className="mb-8">
-                  <p className="text-stone-600 text-lg tracking-[0.15em] font-light">
-                    4:00 PM — 5:00 PM
-                  </p>
+ 
                 </div>
                 
                 {/* Divider */}
@@ -189,6 +187,7 @@ export default function LocationSection() {
                   <p className="text-stone-600 text-sm">
                     67500 Montemorelos, N.L.
                   </p>
+
                 </div>
                 
                 {/* Action Button */}
@@ -204,6 +203,8 @@ export default function LocationSection() {
                     <span className="font-light tracking-[0.1em] uppercase text-sm relative z-10">Ver en Maps</span>
                   </a>
                 </div>
+
+              
               </div>
             </div>
           </div>
@@ -242,12 +243,7 @@ export default function LocationSection() {
                   Recepción
                 </h3>
                 
-                {/* Time */}
-                <div className="mb-8">
-                  <p className="text-stone-600 text-lg tracking-[0.15em] font-light">
-                    6:00 PM — 11:00 PM
-                  </p>
-                </div>
+                
                 
                 {/* Divider */}
                 <div className="flex justify-center items-center mb-8">
