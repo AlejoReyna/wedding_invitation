@@ -377,13 +377,28 @@ export default function ItinerarySection() {
 
         {/* Timeline Container */}
         <div className="max-w-4xl mx-auto relative">
-          {/* Vertical Line */}
-          <div className={`absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px transition-all duration-500 opacity-60 ${
-            isNightMode ? 'bg-gradient-to-b from-white/60 via-white/40 to-white/60' : 'bg-gradient-to-b from-[#C4985B] via-[#8B7355] to-[#C4985B]'
-          }`}></div>
+          {/* Vertical Line Segments - connecting timeline dots */}
+          {itineraryItems.map((_, index) => {
+            // Only render line segments between cards (not before first or after last)
+            if (index === itineraryItems.length - 1) return null;
+            
+            return (
+              <div 
+                key={`line-${index}`}
+                className={`absolute left-1/2 transform -translate-x-1/2 w-px transition-all duration-500 opacity-60 ${
+                  isNightMode ? 'bg-gradient-to-b from-white/60 via-white/40 to-white/60' : 'bg-gradient-to-b from-[#C4985B] via-[#8B7355] to-[#C4985B]'
+                } hidden md:block`}
+                style={{
+                  top: `${64 + (index * 224)}px`, // Start after current dot (48px + 16px dot radius)
+                  height: `${160}px`, // Distance between dots (224px - 64px)
+                  zIndex: 1
+                }}
+              />
+            );
+          })}
 
           {/* Events */}
-          <div className="space-y-24 md:space-y-32">
+          <div className="space-y-24 md:space-y-32 relative z-10">
             {itineraryItems.map((item, index) => (
               <ItineraryItemCard key={index} item={item} index={index} />
             ))}
