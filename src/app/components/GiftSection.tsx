@@ -14,47 +14,127 @@ interface GiftCardProps {
 
 function GiftCard({ icon: Icon, title, subtitle, content, details, className = "" }: GiftCardProps) {
   return (
-    <div className={`overflow-hidden rounded-lg shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 h-full ${className}`}
+    <div className={`overflow-hidden rounded-lg transition-all duration-700 transform hover:-translate-y-2 hover:scale-[1.01] group relative border border-[#d4c4b0]/40 h-full ${className}`}
          style={{ 
-           background: 'linear-gradient(145deg, #f7f4e9 0%, #f5f1e4 50%, #f3efdd 100%)',
-           backgroundImage: `radial-gradient(circle at 20% 30%, rgba(139, 115, 85, 0.05) 0%, transparent 60%),
-                             radial-gradient(circle at 80% 70%, rgba(196, 152, 91, 0.03) 0%, transparent 60%)`
+           // Fondo base con color de cartón
+           backgroundColor: '#f0ebe5',
+           // Textura de cartón de huevo con múltiples gradientes radiales
+           backgroundImage: `
+             radial-gradient(circle at 8% 15%, rgba(180,147,113,0.3) 1px, transparent 3px),
+             radial-gradient(circle at 23% 8%, rgba(139,115,85,0.25) 1px, transparent 4px),
+             radial-gradient(circle at 41% 22%, rgba(196,152,91,0.2) 1px, transparent 3px),
+             radial-gradient(circle at 67% 12%, rgba(155,131,102,0.28) 1px, transparent 4px),
+             radial-gradient(circle at 84% 25%, rgba(180,147,113,0.22) 1px, transparent 3px),
+             radial-gradient(circle at 15% 45%, rgba(139,115,85,0.26) 1px, transparent 4px),
+             radial-gradient(circle at 38% 58%, rgba(196,152,91,0.24) 1px, transparent 3px),
+             radial-gradient(circle at 62% 41%, rgba(155,131,102,0.27) 1px, transparent 4px),
+             radial-gradient(circle at 78% 63%, rgba(180,147,113,0.21) 1px, transparent 3px),
+             radial-gradient(circle at 92% 48%, rgba(139,115,85,0.25) 1px, transparent 4px),
+             radial-gradient(circle at 12% 78%, rgba(196,152,91,0.23) 1px, transparent 3px),
+             radial-gradient(circle at 34% 85%, rgba(155,131,102,0.29) 1px, transparent 4px),
+             radial-gradient(circle at 56% 72%, rgba(180,147,113,0.24) 1px, transparent 3px),
+             radial-gradient(circle at 74% 89%, rgba(139,115,85,0.26) 1px, transparent 4px),
+             radial-gradient(circle at 89% 76%, rgba(196,152,91,0.22) 1px, transparent 3px),
+             linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(139,115,85,0.05) 100%)
+           `,
+           // Box shadow para profundidad de cartón de huevo
+           boxShadow: `
+             inset 2px 2px 4px rgba(139,115,85,0.15),
+             inset -1px -1px 3px rgba(255,255,255,0.4),
+             0 4px 8px rgba(139,115,85,0.12),
+             0 1px 2px rgba(139,115,85,0.08)
+           `
          }}>
       
+      {/* Overlay sutil para mejorar legibilidad del texto sobre cartón */}
+      <div className="absolute inset-0 rounded-lg bg-white/30" style={{
+        // Textura adicional de fibra de cartón
+        backgroundImage: `
+          linear-gradient(45deg, transparent 48%, rgba(139,115,85,0.03) 49%, rgba(139,115,85,0.03) 51%, transparent 52%),
+          linear-gradient(-45deg, transparent 48%, rgba(196,152,91,0.02) 49%, rgba(196,152,91,0.02) 51%, transparent 52%)
+        `,
+        backgroundSize: '3px 3px, 4px 4px'
+      }}></div>
+
       {/* Content Section */}
-      <div className="p-8 md:p-10 text-center relative h-full flex flex-col justify-between">
+      <div className="p-8 md:p-10 text-center relative h-full flex flex-col justify-between z-10">
         
         {/* Top section with icon and title */}
         <div className="flex-grow">
           {/* Icon */}
-          <div className="w-16 h-16 mx-auto mb-6 bg-[#8B7355] flex items-center justify-center rounded-md shadow-lg">
-            <Icon className="text-white text-xl" />
+          <div className="w-16 h-16 mx-auto mb-6 rounded-md shadow-lg inline-flex items-center justify-center" style={{
+            backgroundColor: '#e8ddd1',
+            backgroundImage: `
+              radial-gradient(circle at 30% 30%, rgba(180,147,113,0.4) 1px, transparent 3px),
+              radial-gradient(circle at 70% 20%, rgba(139,115,85,0.3) 1px, transparent 3px),
+              radial-gradient(circle at 20% 70%, rgba(196,152,91,0.25) 1px, transparent 3px),
+              radial-gradient(circle at 80% 80%, rgba(155,131,102,0.35) 1px, transparent 3px)
+            `,
+            boxShadow: `
+              inset 1px 1px 3px rgba(139,115,85,0.2),
+              inset -1px -1px 2px rgba(255,255,255,0.5),
+              0 2px 4px rgba(139,115,85,0.15)
+            `
+          }}>
+            <Icon className="text-[#5a4a3a] text-xl" />
           </div>
           
           {/* Title */}
-          <h3 className="text-2xl md:text-3xl font-light text-stone-800 mb-3 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
+          <h3 className="text-2xl md:text-3xl font-light text-[#2c2826] mb-3 tracking-[0.15em] uppercase" 
+              style={{
+                fontFamily: 'Playfair Display, serif',
+                textShadow: '0 1px 3px rgba(255,255,255,0.8)'
+              }}>
             {title}
           </h3>
           
           {/* Subtitle */}
-          <p className="text-stone-600 text-sm font-light tracking-[0.15em] uppercase mb-6">
+          <p className="text-[#5a4a3a]/80 text-sm font-light tracking-[0.15em] uppercase mb-6"
+             style={{
+               textShadow: '0 1px 2px rgba(255,255,255,0.8)'
+             }}>
             {subtitle}
           </p>
           
           {/* Content */}
-          <p className="text-stone-700 text-base leading-relaxed mb-6">
+          <p className="text-[#5a4f45] text-base leading-relaxed mb-6"
+             style={{
+               fontFamily: 'Inter, sans-serif',
+               textShadow: '0 1px 2px rgba(255,255,255,0.6)'
+             }}>
             {content}
           </p>
         </div>
         
         {/* Bottom section with details */}
         {details && (
-          <div className="bg-white/60 backdrop-blur-sm border border-stone-300/50 rounded-lg p-6 shadow-inner">
-            <div className="space-y-3 text-stone-700">
+          <div className="rounded-lg p-6 shadow-inner" style={{
+            backgroundColor: '#f5f0e8',
+            backgroundImage: `
+              radial-gradient(circle at 25% 25%, rgba(180,147,113,0.2) 1px, transparent 3px),
+              radial-gradient(circle at 75% 75%, rgba(139,115,85,0.15) 1px, transparent 3px)
+            `,
+            boxShadow: `
+              inset 1px 1px 3px rgba(139,115,85,0.2),
+              inset -1px -1px 2px rgba(255,255,255,0.6)
+            `,
+            border: '1px solid rgba(212, 196, 176, 0.3)'
+          }}>
+            <div className="space-y-3">
               {details.map((detail: { label: string; value: string }, index: number) => (
                 <div key={index} className="flex justify-between items-center">
-                  <span className="text-stone-600 font-medium tracking-[0.1em] uppercase text-xs">{detail.label}:</span>
-                  <span className="font-semibold font-mono text-stone-800 text-sm">{detail.value}</span>
+                  <span className="text-[#5a4a3a]/80 font-medium tracking-[0.1em] uppercase text-xs"
+                        style={{
+                          textShadow: '0 1px 1px rgba(255,255,255,0.7)'
+                        }}>
+                    {detail.label}:
+                  </span>
+                  <span className="font-semibold font-mono text-[#2c2826] text-sm"
+                        style={{
+                          textShadow: '0 1px 2px rgba(255,255,255,0.8)'
+                        }}>
+                    {detail.value}
+                  </span>
                 </div>
               ))}
             </div>
