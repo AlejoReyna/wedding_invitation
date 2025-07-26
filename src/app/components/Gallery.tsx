@@ -4,7 +4,13 @@ import Image from 'next/image';
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, index: number, shape?: string } | null>(null);
-  const [centerIndex, setCenterIndex] = useState(0);
+  const [centerIndex, setCenterIndex] = useState(() => {
+    // Set initial index based on screen size
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768 ? 2 : 0;
+    }
+    return 0;
+  });
   const [isVisible, setIsVisible] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -94,33 +100,54 @@ export default function Gallery() {
   }, [photos.length]);
 
   useEffect(() => {
-    const centerFirstImageWithPeek = () => {
+    const centerImageWithPeek = () => {
       if (galleryRef.current) {
         const container = galleryRef.current;
         
+        // Check if screen is medium or larger
+        const isMediumOrLarger = window.innerWidth >= 768;
+        const targetIndex = isMediumOrLarger ? 2 : 0; // Third photo (index 2) for md+, first photo for mobile
+        
+        // Update center index immediately
+        setCenterIndex(targetIndex);
+        
         setTimeout(() => {
-          // Simplemente scroll a la posición 0 para mostrar la primera imagen
-          container.scrollLeft = 0;
+          // Calculate responsive card dimensions
+          const cardWidth = isMediumOrLarger ? 384 : 256; // md:w-96 = 384px, w-64 = 256px
+          const gap = isMediumOrLarger ? 32 : 16; // md:gap-8 = 32px, gap-4 = 16px
+          const containerWidth = container.clientWidth;
           
+          // Calculate scroll position to center the target image
+          const scrollPosition = (targetIndex * (cardWidth + gap)) - (containerWidth / 2) + (cardWidth / 2);
+          
+          // Set scroll position
+          container.scrollLeft = Math.max(0, scrollPosition);
+          
+          // Force a scroll event to ensure everything is in sync
           setTimeout(() => {
-            setCenterIndex(0);
             const event = new Event('scroll');
             container.dispatchEvent(event);
-          }, 150);
-        }, 300);
+          }, 50);
+        }, 100);
       }
     };
 
-    const timer = setTimeout(centerFirstImageWithPeek, 400);
+    // Multiple attempts to ensure proper initialization
+    const timer1 = setTimeout(centerImageWithPeek, 100);
+    const timer2 = setTimeout(centerImageWithPeek, 500);
+    const timer3 = setTimeout(centerImageWithPeek, 1000);
     
+    // Handle window resize
     const handleResize = () => {
-      setTimeout(centerFirstImageWithPeek, 200);
+      centerImageWithPeek();
     };
     
     window.addEventListener('resize', handleResize);
     
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -195,7 +222,7 @@ export default function Gallery() {
     <section 
       id="galeria"
       ref={sectionRef}
-      className="min-h-screen w-full py-24 px-4 md:px-8 relative overflow-hidden"
+      className="min-h-screen w-full py-24 relative overflow-hidden"
       style={{ 
         background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
       }}
@@ -232,7 +259,8 @@ export default function Gallery() {
         </svg>
       </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      {/* Header and decorative elements with max-width */}
+      <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8">
         {/* Header with elegant styling */}
         <div className={`text-center mb-16 transition-all duration-2000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -245,10 +273,6 @@ export default function Gallery() {
             </div>
           </div>
 
-          
-          
-          
-          
           {/* Main title */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-4 garamond-300 relative">
             ¡Nos Casamos!
@@ -258,9 +282,8 @@ export default function Gallery() {
           
           {/* Description */}
           <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-4 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </p>
-          
         </div>
 
         {/* Side decorative elements */}
@@ -271,148 +294,156 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit.
         <div className="absolute right-8 top-2/3 w-12 h-12 opacity-20 hidden lg:block">
           <FloralDecoration className="transform rotate-180" />
         </div>
+      </div>
 
-        {/* Carousel Container */}
-        <div className={`relative transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ perspective: '1500px', transitionDelay: '600ms' }}>
-          
-          {/* Left Navigation Arrow - Solo visible si no estamos en la primera imagen */}
-          {centerIndex > 0 && (
-            <button 
-              onClick={() => {
-                if (galleryRef.current) {
-                  galleryRef.current.scrollBy({
-                    left: -300,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-              className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
-              aria-label="Previous photo"
-              style={{ backdropFilter: 'blur(12px)' }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-          )}
-
-          {/* Carousel */}
-          <div 
-            ref={galleryRef}
-            className="flex gap-4 md:gap-8 lg:gap-12 overflow-x-auto scrollbar-hide py-12 -mx-4 md:-mx-8"
-            style={{
-              scrollSnapType: 'x mandatory',
-              scrollPadding: '0 1rem',
-              transformStyle: 'preserve-3d',
-              paddingLeft: 'calc(50vw - 8rem)', // Mobile: 50vw - 8rem (16rem/2), Desktop se ajusta automáticamente
-              paddingRight: 'calc(50vw - 8rem)', 
+      {/* FULL WIDTH CAROUSEL - Outside of max-width container */}
+      <div className={`relative w-screen transition-all duration-2000 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`} style={{ 
+        perspective: '1500px', 
+        transitionDelay: '600ms',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)'
+      }}>
+        
+        {/* Left Navigation Arrow */}
+        {centerIndex > 0 && (
+          <button 
+            onClick={() => {
+              if (galleryRef.current) {
+                galleryRef.current.scrollBy({
+                  left: -300,
+                  behavior: 'smooth'
+                });
+              }
             }}
+            className="hidden md:flex items-center justify-center absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
+            aria-label="Previous photo"
+            style={{ backdropFilter: 'blur(12px)' }}
           >
-            {photos.map((photo, index) => {
-              const isCenterCard = index === centerIndex;
-              const cardStyle = getCardStyle(index, isCenterCard);
-              
-              return (
-                <div 
-                  key={index}
-                  className="flex-shrink-0 w-64 h-80 md:w-96 md:h-[28rem] overflow-hidden transition-all duration-700 ease-out cursor-pointer relative"
-                  style={{
-                    scrollSnapAlign: 'center',
-                    ...cardStyle,
-                    transformStyle: 'preserve-3d',
-                  }}
-                  onClick={() => openModal({ ...photo, shape: 'rectangle' }, index)}
-                >
-                  <div className="relative h-full w-full transition-all duration-700 hover:scale-105">
-                    {/* Enhanced depth effect for center card */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
+
+        {/* Full Width Carousel */}
+        <div 
+          ref={galleryRef}
+          className="flex gap-4 md:gap-8 lg:gap-12 overflow-x-auto scrollbar-hide py-12"
+          style={{
+            scrollSnapType: 'x mandatory',
+            scrollPadding: '0 1rem',
+            transformStyle: 'preserve-3d',
+            paddingLeft: 'calc(50vw - 12rem)',
+            paddingRight: 'calc(50vw - 12rem)',
+          }}
+        >
+          {photos.map((photo, index) => {
+            const isCenterCard = index === centerIndex;
+            const cardStyle = getCardStyle(index, isCenterCard);
+            
+            return (
+              <div 
+                key={index}
+                className="flex-shrink-0 w-64 h-80 md:w-96 md:h-[28rem] overflow-hidden transition-all duration-700 ease-out cursor-pointer relative"
+                style={{
+                  scrollSnapAlign: 'center',
+                  ...cardStyle,
+                  transformStyle: 'preserve-3d',
+                }}
+                onClick={() => openModal({ ...photo, shape: 'rectangle' }, index)}
+              >
+                <div className="relative h-full w-full transition-all duration-700 hover:scale-105">
+                  {/* Enhanced depth effect for center card */}
+                  {isCenterCard && (
+                    <>
+                      <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/20 via-[#D4C9B8]/15 to-[#8B7355]/20 blur-3xl"></div>
+                      <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/15 via-[#F8F6F3]/10 to-[#8B7355]/15 blur-2xl"></div>
+                      <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/15 to-[#8B7355]/15 blur-xl"></div>
+                      <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/30 via-transparent to-[#8B7355]/30"></div>
+                    </>
+                  )}
+                  
+                  {/* Shadow effects for non-center cards */}
+                  {!isCenterCard && (
+                    <div 
+                      className="absolute inset-0 bg-black/5"
+                      style={{
+                        boxShadow: '0 8px 32px rgba(139, 115, 85, 0.1), 0 4px 16px rgba(139, 115, 85, 0.05)'
+                      }}
+                    ></div>
+                  )}
+                  
+                  {/* Image container */}
+                  <div className="relative overflow-hidden h-full">
                     {isCenterCard && (
-                      <>
-                        <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/20 via-[#D4C9B8]/15 to-[#8B7355]/20 blur-3xl"></div>
-                        <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/15 via-[#F8F6F3]/10 to-[#8B7355]/15 blur-2xl"></div>
-                        <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/15 to-[#8B7355]/15 blur-xl"></div>
-                        <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/30 via-transparent to-[#8B7355]/30"></div>
-                      </>
+                      <div className="absolute -inset-2 bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10 shadow-elegant"></div>
                     )}
                     
-                    {/* Shadow effects for non-center cards */}
-                    {!isCenterCard && (
-                      <div 
-                        className="absolute inset-0 bg-black/5"
+                    <div className="relative w-full h-full bg-white overflow-hidden shadow-elegant">
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        className="object-cover transition-all duration-700"
+                        sizes="(max-width: 768px) 18rem, 24rem"
+                        priority={index < 3}
                         style={{
-                          boxShadow: '0 8px 32px rgba(139, 115, 85, 0.1), 0 4px 16px rgba(139, 115, 85, 0.05)'
+                          filter: isCenterCard ? 'brightness(1.05) contrast(1.1) saturate(1.1)' : 'brightness(0.95) contrast(0.98) saturate(0.95)'
                         }}
-                      ></div>
-                    )}
-                    
-                    {/* Image container */}
-                    <div className="relative overflow-hidden h-full">
+                      />
+                      
+                      <div className={`absolute inset-0 transition-all duration-700 ${
+                        isCenterCard 
+                          ? 'bg-gradient-to-br from-transparent via-transparent to-[#8B7355]/5'
+                          : 'bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10'
+                      }`}></div>
+                      
+                      {/* Tap indicator for center card */}
                       {isCenterCard && (
-                        <div className="absolute -inset-2 bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10 shadow-elegant"></div>
+                        <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-elegant">
+                          <svg className="w-4 h-4 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                          </svg>
+                        </div>
                       )}
                       
-                      <div className="relative w-full h-full bg-white overflow-hidden shadow-elegant">
-                        <Image
-                          src={photo.src}
-                          alt={photo.alt}
-                          fill
-                          className="object-cover transition-all duration-700"
-                          sizes="(max-width: 768px) 18rem, 24rem"
-                          priority={index < 3}
-                          style={{
-                            filter: isCenterCard ? 'brightness(1.05) contrast(1.1) saturate(1.1)' : 'brightness(0.95) contrast(0.98) saturate(0.95)'
-                          }}
-                        />
-                        
-                        <div className={`absolute inset-0 transition-all duration-700 ${
-                          isCenterCard 
-                            ? 'bg-gradient-to-br from-transparent via-transparent to-[#8B7355]/5'
-                            : 'bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10'
-                        }`}></div>
-                        
-                        {/* Tap indicator for center card */}
-                        {isCenterCard && (
-                          <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-elegant">
-                            <svg className="w-4 h-4 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                            </svg>
-                          </div>
-                        )}
-                        
-                        {isCenterCard && (
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 pointer-events-none"></div>
-                        )}
-                      </div>
+                      {isCenterCard && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                      )}
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Right Navigation Arrow - Solo visible si no estamos en la última imagen */}
-          {centerIndex < photos.length - 1 && (
-            <button 
-              onClick={() => {
-                if (galleryRef.current) {
-                  galleryRef.current.scrollBy({
-                    left: 300,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-              className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
-              aria-label="Next photo"
-              style={{ backdropFilter: 'blur(12px)' }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          )}
+              </div>
+            );
+          })}
         </div>
 
+        {/* Right Navigation Arrow */}
+        {centerIndex < photos.length - 1 && (
+          <button 
+            onClick={() => {
+              if (galleryRef.current) {
+                galleryRef.current.scrollBy({
+                  left: 300,
+                  behavior: 'smooth'
+                });
+              }
+            }}
+            className="hidden md:flex items-center justify-center absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white text-[#8B7355] hover:text-[#C4985B] transition-all duration-300 p-3 rounded-full shadow-elegant hover:shadow-elegant-hover hover:scale-110"
+            aria-label="Next photo"
+            style={{ backdropFilter: 'blur(12px)' }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Scroll indicator and bottom content with max-width */}
+      <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8">
         {/* Enhanced scroll indicator */}
         <div className={`flex justify-center mt-8 space-x-3 transition-all duration-2000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'

@@ -49,12 +49,23 @@ const Navbar = () => {
       const messageSection = document.getElementById('mensaje');
       const gallerySection = document.getElementById('galeria');
 
-      if (heroSection && footerSection && rsvpSection && giftSection && messageSection && gallerySection) {
+      // DEBUG: Verificar que existen las secciones
+      console.log('🔍 DEBUG - Elementos encontrados:', {
+        heroSection: !!heroSection,
+        footerSection: !!footerSection,
+        rsvpSection: !!rsvpSection,
+        giftSection: !!giftSection,
+        messageSection: !!messageSection,
+        gallerySection: !!gallerySection
+      });
+      
+      // DEBUG: Mostrar todos los IDs que existen en el DOM
+      const allIds = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
+      console.log('🏷️ DEBUG - Todos los IDs en el DOM:', allIds);
+
+      if (heroSection && footerSection) {
         const heroRect = heroSection.getBoundingClientRect();
         const footerRect = footerSection.getBoundingClientRect();
-        const rsvpRect = rsvpSection.getBoundingClientRect();
-        const giftRect = giftSection.getBoundingClientRect();
-        const messageRect = messageSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
         // Se considera que se ha hecho scroll cuando la parte inferior de la sección hero está por encima de la navbar (100px)
@@ -64,63 +75,84 @@ const Navbar = () => {
         const isFooterVisible = footerRect.top < windowHeight * 0.8;
         setIsInFooterSection(isFooterVisible);
 
-        // Activar cuando el 60% de la altura de RSVP sea visible
-        let isRSVPVisible = false;
-        if (rsvpRect.bottom > 0 && rsvpRect.top < windowHeight) {
-          const visibleTop = Math.max(0, rsvpRect.top);
-          const visibleBottom = Math.min(windowHeight, rsvpRect.bottom);
-          const actualVisibleHeight = visibleBottom - visibleTop;
-          const rsvpSixtyPercent = rsvpRect.height * 0.6;
-          const requiredHeight = Math.min(rsvpSixtyPercent, windowHeight);
-          isRSVPVisible = actualVisibleHeight >= requiredHeight;
+        // RSVP Section
+        if (rsvpSection) {
+          const rsvpRect = rsvpSection.getBoundingClientRect();
+          let isRSVPVisible = false;
+          if (rsvpRect.bottom > 0 && rsvpRect.top < windowHeight) {
+            const visibleTop = Math.max(0, rsvpRect.top);
+            const visibleBottom = Math.min(windowHeight, rsvpRect.bottom);
+            const actualVisibleHeight = visibleBottom - visibleTop;
+            const rsvpSixtyPercent = rsvpRect.height * 0.6;
+            const requiredHeight = Math.min(rsvpSixtyPercent, windowHeight);
+            isRSVPVisible = actualVisibleHeight >= requiredHeight;
+          }
+          setIsInRSVPSection(isRSVPVisible);
+        } else {
+          setIsInRSVPSection(false);
         }
-        setIsInRSVPSection(isRSVPVisible);
 
-        // Activar cuando el 60% de la altura de Gift Section sea visible
-        let isGiftVisible = false;
-        if (giftRect.bottom > 0 && giftRect.top < windowHeight) {
-          // La sección está al menos parcialmente visible
-          const visibleTop = Math.max(0, giftRect.top);
-          const visibleBottom = Math.min(windowHeight, giftRect.bottom);
-          const actualVisibleHeight = visibleBottom - visibleTop;
-          const giftSixtyPercent = giftRect.height * 0.6;
-          
-          // Si la sección es más alta que el viewport, usar el mínimo entre el 60% y el viewport
-          const requiredHeight = Math.min(giftSixtyPercent, windowHeight);
-          isGiftVisible = actualVisibleHeight >= requiredHeight;
+        // Gift Section
+        if (giftSection) {
+          const giftRect = giftSection.getBoundingClientRect();
+          let isGiftVisible = false;
+          if (giftRect.bottom > 0 && giftRect.top < windowHeight) {
+            const visibleTop = Math.max(0, giftRect.top);
+            const visibleBottom = Math.min(windowHeight, giftRect.bottom);
+            const actualVisibleHeight = visibleBottom - visibleTop;
+            const giftSixtyPercent = giftRect.height * 0.6;
+            const requiredHeight = Math.min(giftSixtyPercent, windowHeight);
+            isGiftVisible = actualVisibleHeight >= requiredHeight;
+          }
+          setIsInGiftSection(isGiftVisible);
+        } else {
+          setIsInGiftSection(false);
         }
-        setIsInGiftSection(isGiftVisible);
         
-        // Activar cuando el 60% de la altura de Message Section sea visible
-        let isMessageVisible = false;
-        if (messageRect.bottom > 0 && messageRect.top < windowHeight) {
-          // La sección está al menos parcialmente visible
-          const visibleTop = Math.max(0, messageRect.top);
-          const visibleBottom = Math.min(windowHeight, messageRect.bottom);
-          const actualVisibleHeight = visibleBottom - visibleTop;
-          const messageSixtyPercent = messageRect.height * 0.6;
-          
-          // Si la sección es más alta que el viewport, usar el mínimo entre el 60% y el viewport
-          const requiredHeight = Math.min(messageSixtyPercent, windowHeight);
-          isMessageVisible = actualVisibleHeight >= requiredHeight;
+        // Message Section
+        if (messageSection) {
+          const messageRect = messageSection.getBoundingClientRect();
+          let isMessageVisible = false;
+          if (messageRect.bottom > 0 && messageRect.top < windowHeight) {
+            const visibleTop = Math.max(0, messageRect.top);
+            const visibleBottom = Math.min(windowHeight, messageRect.bottom);
+            const actualVisibleHeight = visibleBottom - visibleTop;
+            const messageSixtyPercent = messageRect.height * 0.6;
+            const requiredHeight = Math.min(messageSixtyPercent, windowHeight);
+            isMessageVisible = actualVisibleHeight >= requiredHeight;
+          }
+          setIsInMessageSection(isMessageVisible);
+        } else {
+          setIsInMessageSection(false);
         }
-        setIsInMessageSection(isMessageVisible);
         
-        // Activar cuando el 60% de la altura de Gallery Section sea visible
-        const galleryRect = gallerySection.getBoundingClientRect();
-        let isGalleryVisible = false;
-        if (galleryRect.bottom > 0 && galleryRect.top < windowHeight) {
-          // La sección está al menos parcialmente visible
-          const visibleTop = Math.max(0, galleryRect.top);
-          const visibleBottom = Math.min(windowHeight, galleryRect.bottom);
-          const actualVisibleHeight = visibleBottom - visibleTop;
-          const gallerySixtyPercent = galleryRect.height * 0.6;
-          
-          // Si la sección es más alta que el viewport, usar el mínimo entre el 60% y el viewport
-          const requiredHeight = Math.min(gallerySixtyPercent, windowHeight);
-          isGalleryVisible = actualVisibleHeight >= requiredHeight;
+        // Gallery Section
+        if (gallerySection) {
+          const galleryRect = gallerySection.getBoundingClientRect();
+          let isGalleryVisible = false;
+          if (galleryRect.bottom > 0 && galleryRect.top < windowHeight) {
+            const visibleTop = Math.max(0, galleryRect.top);
+            const visibleBottom = Math.min(windowHeight, galleryRect.bottom);
+            const actualVisibleHeight = visibleBottom - visibleTop;
+            const gallerySixtyPercent = galleryRect.height * 0.6;
+            const requiredHeight = Math.min(gallerySixtyPercent, windowHeight);
+            isGalleryVisible = actualVisibleHeight >= requiredHeight;
+          }
+          setIsInGallerySection(isGalleryVisible);
+        } else {
+          setIsInGallerySection(false);
         }
-        setIsInGallerySection(isGalleryVisible);
+        
+        // DEBUG: Estados de las secciones
+        console.log('📋 DEBUG - Estados de secciones:', {
+          isScrolled: heroRect.bottom < 100,
+          isInFooterSection: isFooterVisible,
+          isInRSVPSection: isInRSVPSection,
+          isInGiftSection: isInGiftSection,
+          isInMessageSection: isInMessageSection,
+          isInGallerySection: isInGallerySection,
+          scrollY: currentScrollY
+        });
         
       }
 
@@ -135,22 +167,39 @@ const Navbar = () => {
 
   // Función para determinar el estilo basado en el estado de scroll y modo nocturno
   const getNavbarStyle = () => {
+    let result = '';
+    
     if (isNightMode) {
-      return 'bg-black/95 shadow-lg hover:bg-black';
+      result = 'bg-black/95 shadow-lg hover:bg-black';
+      console.log('🎨 DEBUG - getNavbarStyle: Modo nocturno ->', result);
+      return result;
     }
 
     // Si está en la sección del footer, es transparente
     if (isInFooterSection) {
-      return 'bg-white/10 hover:bg-white/15';
+      result = 'bg-white/10 hover:bg-white/15';
+      console.log('🎨 DEBUG - getNavbarStyle: Footer ->', result);
+      return result;
+    }
+
+    // Si está en la sección RSVP, usar transparente como hero
+    if (isInRSVPSection) {
+      result = 'bg-white/10 hover:bg-white/15';
+      console.log('🎨 DEBUG - getNavbarStyle: RSVP (transparente) ->', result);
+      return result;
     }
 
     // Si no ha hecho scroll (está en hero), es transparente
     if (!isScrolled) {
-      return 'bg-white/10 hover:bg-white/15';
+      result = 'bg-white/10 hover:bg-white/15';
+      console.log('🎨 DEBUG - getNavbarStyle: Hero ->', result);
+      return result;
     }
 
     // En todas las demás secciones, es blanco
-    return 'bg-white/95 shadow-lg hover:bg-white';
+    result = 'bg-white/95 shadow-lg hover:bg-white';
+    console.log('🎨 DEBUG - getNavbarStyle: Default (blanco) ->', result);
+    return result;
   };
 
   const getTextStyle = () => {
@@ -158,32 +207,17 @@ const Navbar = () => {
       return 'text-white/70 hover:text-white';
     }
     
-    // En la sección RSVP, el texto se vuelve blanco para contrastar con el fondo verde.
+    // En la sección RSVP, usar texto blanco como en hero
     if (isInRSVPSection) {
-      return 'text-white/70 hover:text-white';
+      return 'text-white/60 hover:text-white';
     }
     
-    // En la sección de Mensaje, el texto se vuelve blanco.
-    if (isInMessageSection) {
-      return 'text-white/70 hover:text-white';
-    }
-    
-    // En la sección de Regalos, el texto se vuelve blanco para contrastar con el fondo rosado.
-    if (isInGiftSection) {
-      return 'text-white/70 hover:text-white';
-    }
-    
-    // En la sección de galería, usar texto oscuro
-    if (isInGallerySection) {
-      return 'text-[#543c24]/70 hover:text-[#543c24]';
-    }
-    
-    // En la sección hero (cuando no está scrolled), usar texto blanco
+    // En la sección hero (cuando no está scrolled) o footer, usar texto blanco
     if (!isScrolled || isInFooterSection) {
       return 'text-white/60 hover:text-white';
     }
     
-    // En todas las demás secciones, usar texto #543c24
+    // En todas las demás secciones, usar texto oscuro
     return 'text-[#543c24]/70 hover:text-[#543c24]';
   };
 
@@ -192,27 +226,17 @@ const Navbar = () => {
       return 'bg-white';
     }
     
-    // En la sección RSVP, la línea decorativa se vuelve blanca.
+    // En la sección RSVP, usar línea blanca como en hero
     if (isInRSVPSection) {
       return 'bg-white';
     }
     
-    // En la sección de Mensaje, la línea decorativa se vuelve blanca.
-    if (isInMessageSection) {
-      return 'bg-white';
-    }
-    
-    // En la sección de Regalos, la línea decorativa se vuelve blanca.
-    if (isInGiftSection) {
-      return 'bg-white';
-    }
-    
-    // En la sección hero (cuando no está scrolled), usar línea blanca
+    // En la sección hero (cuando no está scrolled) o footer, usar línea blanca
     if (!isScrolled || isInFooterSection) {
       return 'bg-white';
     }
     
-    // En todas las demás secciones, usar línea #543c24
+    // En todas las demás secciones, usar línea oscura
     return 'bg-[#543c24]';
   };
 
@@ -221,22 +245,12 @@ const Navbar = () => {
       return 'bg-white/30';
     }
     
-    // En la sección RSVP, la línea decorativa secundaria se vuelve blanca y semitransparente.
+    // En la sección RSVP, usar línea decorativa blanca como en hero
     if (isInRSVPSection) {
       return 'bg-white/30';
     }
     
-    // En la sección de Mensaje, la línea decorativa secundaria se vuelve blanca y semitransparente.
-    if (isInMessageSection) {
-      return 'bg-white/30';
-    }
-    
-    // En la sección de Regalos, la línea decorativa secundaria se vuelve blanca y semitransparente.
-    if (isInGiftSection) {
-      return 'bg-white/30';
-    }
-    
-    // En la sección hero (cuando no está scrolled), usar línea decorativa blanca
+    // En la sección hero (cuando no está scrolled) o footer, usar línea decorativa blanca
     if (!isScrolled || isInFooterSection) {
       return 'bg-white/30';
     }
@@ -427,20 +441,14 @@ const Navbar = () => {
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         } ${
           isNightMode ? 'bg-black border-l border-white/20' : 
-          isInRSVPSection ? 'bg-[#818368] border-l border-white/20' : 
-          isInMessageSection ? 'bg-[#d0aca4] border-l border-white/20' : 
-          isInGiftSection ? 'bg-[#e8c4bc] border-l border-white/20' : 
-          (!isScrolled || isInFooterSection ? 'bg-black/95 border-l border-white/20' : 'bg-white border-l border-[#543c24]/20')
+          (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-black/95 border-l border-white/20' : 'bg-white border-l border-[#543c24]/20')
         }`}>
           <div className="flex flex-col h-full">
             {/* Header del menú */}
             <div className="flex items-center justify-between p-6 border-b border-current/10">
               <h2 className={`text-sm garamond-300 tracking-[0.2em] transition-colors duration-500 ${
                 isNightMode ? 'text-white/70' : 
-                isInRSVPSection ? 'text-white/70' : 
-                isInMessageSection ? 'text-white/70' : 
-                isInGiftSection ? 'text-white/70' : 
-                (!isScrolled || isInFooterSection ? 'text-white/70' : 'text-[#543c24]/70')
+                (!isScrolled || isInFooterSection || isInRSVPSection ? 'text-white/70' : 'text-[#543c24]/70')
               }`}>MENÚ</h2>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -467,20 +475,14 @@ const Navbar = () => {
                       }}
                       className={`block text-sm garamond-300 tracking-[0.2em] transition-all duration-500 py-3 border-b border-current/10 group ${
                         isNightMode ? 'text-white/60 hover:text-white border-white/10' : 
-                        isInRSVPSection ? 'text-white/60 hover:text-white border-white/10' : 
-                        isInMessageSection ? 'text-white/60 hover:text-white border-white/10' : 
-                        isInGiftSection ? 'text-white/60 hover:text-white border-white/10' : 
-                        (!isScrolled || isInFooterSection ? 'text-white/60 hover:text-white border-white/10' : 'text-[#543c24]/60 hover:text-[#543c24] border-[#543c24]/10')
+                        (!isScrolled || isInFooterSection || isInRSVPSection ? 'text-white/60 hover:text-white border-white/10' : 'text-[#543c24]/60 hover:text-[#543c24] border-[#543c24]/10')
                       }`}
                     >
                       <span className="relative">
                         {item.label.toUpperCase()}
                         <span className={`absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-500 ${
                           isNightMode ? 'bg-white' : 
-                          isInRSVPSection ? 'bg-white' : 
-                          isInMessageSection ? 'bg-white' : 
-                          isInGiftSection ? 'bg-white' : 
-                          (!isScrolled || isInFooterSection ? 'bg-white' : 'bg-[#543c24]')
+                          (!isScrolled || isInFooterSection || isInRSVPSection ? 'bg-white' : 'bg-[#543c24]')
                         }`}></span>
                       </span>
                     </a>
