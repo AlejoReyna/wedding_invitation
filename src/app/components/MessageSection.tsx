@@ -4,7 +4,7 @@ import { FaPenFancy } from 'react-icons/fa';
 // Componente MessageCard adaptado al estilo RSVP
 export default function MessageSection({ className }: { className?: string }) {
   return (
-    <div className={`bg-white/10 backdrop-blur-md border border-white/20 shadow-elegant hover:shadow-elegant-hover hover:border-white/40 transition-all duration-700 transform hover:-translate-y-2 ${className}`}>
+    <div className={` mx-8 md:mx-0 bg-white/10 backdrop-blur-md border border-white/20 shadow-elegant hover:shadow-elegant-hover hover:border-white/40 transition-all duration-700 transform hover:-translate-y-2 ${className}`}>
       
       {/* Content Section */}
       <div className="p-8 md:p-10 relative">
@@ -16,7 +16,9 @@ export default function MessageSection({ className }: { className?: string }) {
         
         {/* Subtitle */}
         <p className="text-white/80 text-sm font-light tracking-[0.15em] uppercase mb-6 text-center">
-          Comparte tus buenos deseos
+          Comparte tus 
+          <br />
+          buenos deseos
         </p>
         
         {/* Divider */}

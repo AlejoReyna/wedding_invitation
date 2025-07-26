@@ -116,9 +116,9 @@ export default function GiftSection() {
 
   const bankDetails = [
     { label: "Banco", value: "BBVA" },
-    { label: "Cuenta", value: "1234 5678 9012 3456" },
-    { label: "CLABE", value: "012345678901234567" },
-    { label: "Titular", value: "Andrea & Aldo" }
+    { label: "CLABE", value: "012 180 01571801772 5" },
+    { label: "Tarjeta", value: "4152 3143 6348 6377" },
+    { label: "Titular", value: "Aldo Berlanga Mendoza" }
   ];
 
   return (
@@ -236,7 +236,7 @@ export default function GiftSection() {
               icon={FaCreditCard}
               title="Transferencia"
               subtitle="Bancaria"
-              content="Para tu comodidad, puedes realizar una transferencia bancaria directa a nuestra cuenta."
+              content="Puedes realizar una transferencia bancaria directa a nuestra cuenta."
               details={bankDetails}
             />
           </div>

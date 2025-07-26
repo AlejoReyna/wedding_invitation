@@ -139,15 +139,12 @@ export default function RSVPSection() {
           }`} style={{ transitionDelay: '600ms' }}>
             
             {/* Main message */}
-            <div className="mb-6 text-center">
+            <div className="text-center">
               {/* Confirma tu asistencia title */}
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-white mb-8 garamond-300 relative">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-white  garamond-300 relative">
                 CONFIRMA TU ASISTENCIA
               </h2>
-              
-              <p className="text-lg md:text-xl font-light text-white/90 italic garamond-300 max-w-lg mx-auto leading-relaxed">
-                Nos encantaría celebrar este momento especial contigo
-              </p>
+            
             </div>
 
             {/* Content without card container */}
@@ -158,12 +155,6 @@ export default function RSVPSection() {
                 ¡Te esperamos!
               </p>
               
-              {/* Divider */}
-              <div className="flex justify-center items-center mb-8">
-                <div className="w-8 h-px bg-white/30"></div>
-                <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
-                <div className="w-8 h-px bg-white/30"></div>
-              </div>
               
               {/* Buttons */}
               <div className="flex flex-col gap-4 items-center">
