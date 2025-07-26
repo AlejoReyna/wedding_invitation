@@ -91,7 +91,7 @@ export default function RSVPSection() {
       ref={sectionRef}
       className="min-h-screen w-full relative overflow-hidden flex items-center justify-center py-12"
       style={{
-        backgroundImage: `url('/hero.jpeg')`,
+        backgroundImage: `url('/carousel/c-1.jpeg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
@@ -134,7 +134,7 @@ export default function RSVPSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           
           {/* Left Column: Text Content */}
-          <div className={`transition-all duration-2000 ease-out ${
+          <div className={`flex flex-col justify-center min-h-[60vh] transition-all duration-2000 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`} style={{ transitionDelay: '600ms' }}>
             

@@ -9,7 +9,7 @@ export default function MinimalFooter() {
         {/* Nombre */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-light text-white mb-2">
-            Alexis Reyna
+            Design in progress almost finished
           </h2>
           <div className="w-16 h-px bg-gray-600 mx-auto"></div>
         </div>
