@@ -27,10 +27,20 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
   const { isNightMode } = useTheme();
   const isRightSide = index % 2 !== 0;
 
+  // Estados para el efecto de escritura
+  const [displayedNumber, setDisplayedNumber] = useState('');
+  const [displayedTitle, setDisplayedTitle] = useState('');
+  const [displayedTime, setDisplayedTime] = useState('');
+  const [displayedLocation, setDisplayedLocation] = useState('');
+  const [displayedDescription, setDisplayedDescription] = useState('');
+  const [showIcon, setShowIcon] = useState(false);
+  const [showDivider, setShowDivider] = useState(false);
+  const [showDots, setShowDots] = useState(false);
+
   // Hook para detectar tamaño de pantalla
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768); // md breakpoint en Tailwind
+      setIsMobile(window.innerWidth < 768);
     };
     
     checkScreenSize();
@@ -39,20 +49,89 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // Función para crear efecto de escritura
+  const typeWriter = (text: string, setter: (value: string) => void, delay: number = 50) => {
+    return new Promise<void>((resolve) => {
+      let i = 0;
+      const timer = setInterval(() => {
+        setter(text.slice(0, i + 1));
+        i++;
+        if (i >= text.length) {
+          clearInterval(timer);
+          resolve();
+        }
+      }, delay);
+    });
+  };
+
+  // Función para animar todos los elementos secuencialmente
+  const animateCard = async () => {
+    // Reset todos los estados
+    setDisplayedNumber('');
+    setDisplayedTitle('');
+    setDisplayedTime('');
+    setDisplayedLocation('');
+    setDisplayedDescription('');
+    setShowIcon(false);
+    setShowDivider(false);
+    setShowDots(false);
+
+    // Pequeño delay inicial
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    // 1. Número del evento
+    const eventNumber = String(index + 1).padStart(2, '0');
+    await typeWriter(eventNumber, setDisplayedNumber, 100);
+    
+    // 2. Mostrar icono con pequeño delay
+    await new Promise(resolve => setTimeout(resolve, 200));
+    setShowIcon(true);
+    
+    // 3. Título del evento
+    await new Promise(resolve => setTimeout(resolve, 300));
+    await typeWriter(item.title, setDisplayedTitle, 80);
+    
+    // 4. Mostrar línea divisoria
+    await new Promise(resolve => setTimeout(resolve, 200));
+    setShowDivider(true);
+    
+    // 5. Hora
+    await new Promise(resolve => setTimeout(resolve, 300));
+    await typeWriter(item.time, setDisplayedTime, 60);
+    
+    // 6. Ubicación (si existe)
+    if (item.location) {
+      await new Promise(resolve => setTimeout(resolve, 400));
+      await typeWriter(item.location, setDisplayedLocation, 40);
+    }
+    
+    // 7. Descripción (si existe)
+    if (item.description && item.description.trim() !== "") {
+      await new Promise(resolve => setTimeout(resolve, 400));
+      await typeWriter(item.description, setDisplayedDescription, 30);
+    }
+    
+    // 8. Puntos decorativos finales
+    await new Promise(resolve => setTimeout(resolve, 300));
+    setShowDots(true);
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !isCardVisible) {
             setIsCardVisible(true);
-            if (cardRef.current) {
-              observer.unobserve(cardRef.current);
-            }
+            // Iniciar animación de escritura después de que la card sea visible
+            setTimeout(() => {
+              animateCard();
+            }, index * 200); // Delay escalonado para cada card
           }
         });
       },
       {
-        threshold: 0.2,
+        threshold: 0.3, // Card debe estar 30% visible para activar
+        rootMargin: '-50px' // Margen para activar un poco después
       }
     );
 
@@ -66,23 +145,18 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [index, isCardVisible]);
 
   const getAnimationClasses = () => {
     if (!isCardVisible) {
-      // Initial state (hidden) - animations start from the central timeline bar
       if (index === 1) {
-        // Ceremonia Civil - starts from center, moves to right
         return 'opacity-0 -translate-x-8 translate-y-12 scale-95';
       } else if (index === 2) {
-        // Recepción - starts from center, moves to left  
         return 'opacity-0 translate-x-8 translate-y-12 scale-95';
       } else {
-        // Default animation for first card (Ceremonia)
         return 'opacity-0 translate-y-12 scale-95';
       }
     } else {
-      // Visible state (all cards appear in their final positions)
       return 'opacity-100 translate-x-0 translate-y-0 scale-100';
     }
   };
@@ -164,7 +238,6 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
               ? 'bg-gray-900 border border-white/20' 
               : 'bg-[#f8f6f3] border border-[#e6ddd4]'
           }`} style={{
-            // Textura sutil similar a papel de carta elegante
             backgroundImage: isNightMode ? 'none' : `
               radial-gradient(circle at 25% 25%, rgba(196, 152, 91, 0.03) 0%, transparent 50%),
               radial-gradient(circle at 75% 75%, rgba(139, 115, 85, 0.02) 0%, transparent 50%)
@@ -174,75 +247,94 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
             {/* Content Section - Estilo Paul Allen */}
             <div className="p-12 md:p-16 relative text-center">
 
-              {/* Número de evento pequeño en la parte superior */}
-              <div className="mb-6">
-                <span className={`text-xs tracking-[0.2em] uppercase font-light ${
+              {/* Número de evento con efecto de escritura */}
+              <div className="mb-6 h-4 flex justify-center items-center">
+                <span className={`text-xs tracking-[0.2em] uppercase font-light transition-colors duration-500 ${
                   isNightMode ? 'text-white/60' : 'text-[#8B7355]/60'
                 }`}>
-                  {String(index + 1).padStart(2, '0')}
+                  {displayedNumber}
+                  {displayedNumber && displayedNumber.length < String(index + 1).padStart(2, '0').length && (
+                    <span className="animate-pulse">|</span>
+                  )}
                 </span>
               </div>
 
-              {/* Icono original con fondo circular */}
-              <div className="mb-8">
+              {/* Icono original con animación de aparición */}
+              <div className="mb-8 h-16 flex justify-center items-center">
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full shadow-lg group-hover:scale-110 transition-all duration-500 ${
-                  isNightMode ? 'bg-gray-800/50' : 'bg-gradient-to-br from-[#947e63]/20 to-[#947e63]/30'
-                }`}>
+                  showIcon ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                } ${isNightMode ? 'bg-gray-800/50' : 'bg-gradient-to-br from-[#947e63]/20 to-[#947e63]/30'}`}>
                   {getEventIcon()}
                 </div>
               </div>
 
-              {/* Título del evento - Estilo Paul Allen (mayúsculas, espaciado) */}
-              <h3 className={`text-2xl md:text-3xl font-light tracking-[0.15em] uppercase mb-8 leading-tight transition-colors duration-500 ${
-                isNightMode ? 'text-white' : 'text-[#2c2826]'
-              }`} style={{ 
-                fontFamily: 'Playfair Display, serif',
-                letterSpacing: '0.15em'
-              }}>
-                {item.title}
-              </h3>
-
-              {/* Línea divisoria elegante */}
-              <div className="flex justify-center mb-8">
-                <div className={`w-16 h-px transition-colors duration-500 ${
-                  isNightMode ? 'bg-white/30' : 'bg-[#C4985B]/50'
-                }`}></div>
+              {/* Título del evento con efecto de escritura */}
+              <div className="mb-8 h-12 md:h-16 flex justify-center items-center">
+                <h3 className={`text-2xl md:text-3xl font-light tracking-[0.15em] uppercase leading-tight transition-colors duration-500 ${
+                  isNightMode ? 'text-white' : 'text-[#2c2826]'
+                }`} style={{ 
+                  fontFamily: 'Playfair Display, serif',
+                  letterSpacing: '0.15em'
+                }}>
+                  {displayedTitle}
+                  {displayedTitle && displayedTitle.length < item.title.length && (
+                    <span className="animate-pulse">|</span>
+                  )}
+                </h3>
               </div>
 
-              {/* Hora - Estilo Paul Allen */}
-              <div className="mb-8">
+              {/* Línea divisoria con animación */}
+              <div className="flex justify-center mb-8 h-4 items-center">
+                <div className={`h-px transition-all duration-700 ${
+                  showDivider ? 'w-16 opacity-100' : 'w-0 opacity-0'
+                } ${isNightMode ? 'bg-white/30' : 'bg-[#C4985B]/50'}`}></div>
+              </div>
+
+              {/* Hora con efecto de escritura */}
+              <div className="mb-8 h-8 md:h-10 flex justify-center items-center">
                 <div className={`text-xl md:text-2xl font-light tracking-[0.1em] transition-colors duration-500 ${
                   isNightMode ? 'text-white/90' : 'text-[#4a453f]'
                 }`} style={{ fontFamily: 'Playfair Display, serif' }}>
-                  {item.time}
+                  {displayedTime}
+                  {displayedTime && displayedTime.length < item.time.length && (
+                    <span className="animate-pulse">|</span>
+                  )}
                 </div>
               </div>
 
-              {/* Ubicación - Estilo Paul Allen */}
+              {/* Ubicación con efecto de escritura */}
               {item.location && (
-                <div className="mb-8">
+                <div className="mb-8 min-h-[2rem] flex justify-center items-center">
                   <div className={`text-sm md:text-base font-light tracking-[0.05em] leading-relaxed transition-colors duration-500 ${
                     isNightMode ? 'text-white/80' : 'text-[#6b6258]'
                   }`} style={{ fontFamily: 'Inter, sans-serif' }}>
-                    {item.location}
+                    {displayedLocation}
+                    {displayedLocation && item.location && displayedLocation.length < item.location.length && (
+                      <span className="animate-pulse">|</span>
+                    )}
                   </div>
                 </div>
               )}
 
-              {/* Descripción si existe */}
+              {/* Descripción con efecto de escritura */}
               {item.description && item.description.trim() !== "" && (
-                <div className="mt-6">
+                <div className="mt-6 min-h-[3rem] flex justify-center items-center">
                   <p className={`text-sm font-light tracking-wide leading-relaxed max-w-sm mx-auto transition-colors duration-500 ${
                     isNightMode ? 'text-white/70' : 'text-[#7a6f63]'
                   }`} style={{ fontFamily: 'Inter, sans-serif' }}>
-                    {item.description}
+                    {displayedDescription}
+                    {displayedDescription && displayedDescription.length < item.description.length && (
+                      <span className="animate-pulse">|</span>
+                    )}
                   </p>
                 </div>
               )}
 
-              {/* Decoración inferior sutil */}
-              <div className="mt-8 flex justify-center">
-                <div className="flex space-x-1">
+              {/* Decoración inferior con animación */}
+              <div className="mt-8 flex justify-center h-4 items-center">
+                <div className={`flex space-x-1 transition-all duration-500 ${
+                  showDots ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                }`}>
                   <div className={`w-1 h-1 rounded-full transition-colors duration-500 ${
                     isNightMode ? 'bg-white/20' : 'bg-[#C4985B]/30'
                   }`}></div>
