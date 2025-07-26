@@ -12,6 +12,7 @@ export default function Gallery() {
     return 0;
   });
   const [isVisible, setIsVisible] = useState(false);
+  const [animationStep, setAnimationStep] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -19,8 +20,20 @@ export default function Gallery() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !isVisible) {
             setIsVisible(true);
+            // Secuencia de animación
+            // Paso 1: Fade in del texto principal desde la izquierda (inmediato)
+            setAnimationStep(1);
+            
+            // Paso 2: Extensión de la barra (después de 800ms)
+            setTimeout(() => setAnimationStep(2), 800);
+            
+            // Paso 3: Aparición del texto desde la línea hacia arriba (después de 1400ms)
+            setTimeout(() => setAnimationStep(3), 1400);
+            
+            // Paso 4: Resto de elementos (después de 2000ms)
+            setTimeout(() => setAnimationStep(4), 2000);
           }
         });
       },
@@ -40,7 +53,7 @@ export default function Gallery() {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [isVisible]);
 
   const photos = [
     { src: '/carousel/c-1.jpeg', alt: 'Andrea & Aldo - Recuerdo 1' },
@@ -262,46 +275,62 @@ export default function Gallery() {
       {/* Header and decorative elements with max-width */}
       <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8">
         {/* Header with elegant styling */}
-        <div className={`text-center mb-16 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`} style={{ transitionDelay: '200ms' }}>
+        <div className="text-center mb-16">
           
           {/* Decorative top element */}
-          <div className="flex justify-center mb-8">
+          <div className={`flex justify-center mb-8 transition-all duration-1000 ease-out ${
+            animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             <div className="w-16 h-16 opacity-40">
               <FloralDecoration />
             </div>
           </div>
 
           {/* Main title */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-4 garamond-300 relative">
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-2 garamond-300 relative transition-all duration-1000 ease-out ${
+            animationStep >= 1 ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-8'
+          }`}>
             ¡Nos Casamos!
           </h2>
-          {/* Decorative line */}
-          <div className="w-80 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
           
-          {/* Description */}
-          <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-4 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
-           Hoy, mañana y siempre, elegimos amarnos.
-          </p>
+          {/* Decorative line with extension animation */}
+          <div className="flex justify-center mb-3">
+            <div 
+              className={`h-px bg-[#C4985B] opacity-60 transition-all duration-1000 ease-out ${
+                animationStep >= 2 ? 'w-60' : 'w-0'
+              }`}
+            ></div>
+          </div>
+          
+          {/* Description with slide up from line animation */}
+          <div className="relative overflow-hidden">
+            <p className={`text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-4 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto transition-all duration-800 ease-out ${
+              animationStep >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
+             Hoy, mañana y siempre, <br/> elegimos amarnos.
+            </p>
+          </div>
         </div>
 
         {/* Side decorative elements */}
-        <div className="absolute left-8 top-1/3 w-12 h-12 opacity-20 hidden lg:block">
+        <div className={`absolute left-8 top-1/3 w-12 h-12 opacity-20 hidden lg:block transition-all duration-1000 ease-out ${
+          animationStep >= 4 ? 'opacity-20 translate-x-0' : 'opacity-0 -translate-x-4'
+        }`}>
           <FloralDecoration />
         </div>
         
-        <div className="absolute right-8 top-2/3 w-12 h-12 opacity-20 hidden lg:block">
+        <div className={`absolute right-8 top-2/3 w-12 h-12 opacity-20 hidden lg:block transition-all duration-1000 ease-out ${
+          animationStep >= 4 ? 'opacity-20 translate-x-0' : 'opacity-0 translate-x-4'
+        }`}>
           <FloralDecoration className="transform rotate-180" />
         </div>
       </div>
 
       {/* FULL WIDTH CAROUSEL - Outside of max-width container */}
-      <div className={`relative w-screen transition-all duration-2000 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      <div className={`relative w-screen transition-all duration-1200 ease-out ${
+        animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`} style={{ 
-        perspective: '1500px', 
-        transitionDelay: '600ms',
+        perspective: '1500px',
         marginLeft: 'calc(-50vw + 50%)',
         marginRight: 'calc(-50vw + 50%)'
       }}>
@@ -445,9 +474,9 @@ export default function Gallery() {
       {/* Scroll indicator and bottom content with max-width */}
       <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8">
         {/* Enhanced scroll indicator */}
-        <div className={`flex justify-center mt-8 space-x-3 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '800ms' }}>
+        <div className={`flex justify-center mt-8 space-x-3 transition-all duration-1000 ease-out ${
+          animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '300ms' }}>
           {photos.map((_, index) => (
             <button
               key={index}
@@ -472,9 +501,9 @@ export default function Gallery() {
         </div>
 
         {/* Bottom quote */}
-        <div className={`text-center mt-16 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '1000ms' }}>
+        <div className={`text-center mt-16 transition-all duration-1000 ease-out ${
+          animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`} style={{ transitionDelay: '600ms' }}>
           <p className="text-lg text-stone-600 italic max-w-lg mx-auto garamond-300 leading-relaxed">
   “ A love like ours could never die, as long as I have you near me ”
   <br />
