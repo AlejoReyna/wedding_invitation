@@ -44,9 +44,9 @@ export default function ParentsSection() {
           <Image
             src="/assets/logos/IMG_0342.PNG"
             alt="AA Logo"
-            width={100}
-            height={100}
-            className="object-contain"
+            width={80}
+            height={80}
+            className="object-contain opacity-40"
           />
         </div>
         <div className="mx-10 flex justify-center items-center">
