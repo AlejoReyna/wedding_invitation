@@ -8,7 +8,7 @@ import ItinerarySection from './components/ItinerarySection';
 import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
 import ParentsSection from './components/ParentsSection';
-
+import DressCodeSection from './components/DressCodeSection';
 import { ThemeProvider } from './context/ThemeContext';
 import HeroSection from './components/HeroSection';
 
@@ -29,11 +29,11 @@ export default function Home() {
       <div id="ubicacion">
         <LocationSection />
       </div>
-      {/*
+      
       <div id="dresscode">
         <DressCodeSection />
       </div>
-      */}
+      
     
       <div id="regalos">
         <GiftSection />

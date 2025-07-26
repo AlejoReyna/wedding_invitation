@@ -50,26 +50,16 @@ export default function DressCodeSection() {
     </svg>
   );
 
-  // Elegant clothing icons using SVG
-  const FormalSuit = () => (
-    <svg className="w-12 h-16" viewBox="0 0 48 64" fill="none">
-      <path d="M12 8 Q24 4 36 8 L34 20 Q24 16 14 20 Z" fill="#8B7355" opacity="0.8"/>
-      <path d="M14 20 L14 50 Q24 52 34 50 L34 20" stroke="#8B7355" strokeWidth="2" fill="#9B8366" opacity="0.6"/>
-      <path d="M18 22 L18 48" stroke="#C4985B" strokeWidth="1" opacity="0.7"/>
-      <path d="M30 22 L30 48" stroke="#C4985B" strokeWidth="1" opacity="0.7"/>
-      <circle cx="20" cy="28" r="1.5" fill="#8B7355"/>
-      <circle cx="28" cy="28" r="1.5" fill="#8B7355"/>
-    </svg>
+  // Dress code icon using the provided image
+  const DressCodeIcon = () => (
+    <img 
+      src="/dresscode_icon.png" 
+      alt="Dress Code Icon" 
+      className="w-32 h-44 object-contain"
+    />
   );
 
-  const ElegantDress = () => (
-    <svg className="w-12 h-16" viewBox="0 0 48 64" fill="none">
-      <path d="M18 8 Q24 6 30 8 L28 18 Q24 16 20 18 Z" fill="#8B7355" opacity="0.8"/>
-      <path d="M20 18 Q12 25 8 40 Q12 50 24 52 Q36 50 40 40 Q36 25 28 18" fill="#9B8366" opacity="0.6"/>
-      <path d="M20 18 L28 18 Q24 22 24 26" stroke="#C4985B" strokeWidth="1.5" opacity="0.7"/>
-      <path d="M16 35 Q24 38 32 35" stroke="#8B7355" strokeWidth="1" opacity="0.6"/>
-    </svg>
-  );
+
 
   return (
     <section 
@@ -117,32 +107,8 @@ export default function DressCodeSection() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`} style={{ transitionDelay: '200ms' }}>
           
-          {/* Decorative top element */}
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 opacity-40">
-              <FloralDecoration />
-            </div>
-          </div>
+      
 
-          {/* Subtitle */}
-          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
-            CÓDIGO DE VESTIMENTA
-          </p>
-          
-          {/* Decorative line */}
-          <div className="w-24 h-px mx-auto mb-6 bg-[#C4985B] opacity-60"></div>
-          
-          {/* Main title */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
-            Dress Code
-          </h2>
-          
-          {/* Bottom decorative element */}
-          <div className="flex justify-center items-center mt-6">
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-          </div>
         </div>
 
         {/* Side decorative elements */}
@@ -165,43 +131,32 @@ export default function DressCodeSection() {
             {/* Content Section */}
             <div className="p-10 md:p-12 text-center relative">
               
-              {/* Decorative Element */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-stone-300"></div>
+
               
-              {/* Icons */}
-              <div className="flex justify-center items-center space-x-12 mb-10">
-                <div className="flex flex-col items-center group">
-                  <div className="transform group-hover:scale-110 transition-transform duration-300 mb-3">
-                    <FormalSuit />
-                  </div>
-                  <p className="text-stone-600 text-sm tracking-[0.1em] uppercase font-light">Formal</p>
-                </div>
-                
-                <div className="w-px h-16 bg-stone-300"></div>
-                
-                <div className="flex flex-col items-center group">
-                  <div className="transform group-hover:scale-110 transition-transform duration-300 mb-3">
-                    <ElegantDress />
-                  </div>
-                  <p className="text-stone-600 text-sm tracking-[0.1em] uppercase font-light">Elegante</p>
-                </div>
-              </div>
-              
-              {/* Divider */}
+              {/* Dress Code Icon */}
               <div className="flex justify-center items-center mb-8">
-                <div className="w-8 h-px bg-stone-300"></div>
-                <div className="w-2 h-2 border border-stone-300 transform rotate-45 mx-4"></div>
-                <div className="w-8 h-px bg-stone-300"></div>
+                <div className="transform group-hover:scale-110 transition-transform duration-300">
+                  <DressCodeIcon />
+                </div>
               </div>
+              
+              {/* Subtitle */}
+              <p className="text-lg md:text-xl font-light tracking-wide text-[#5c5c5c] mb-8" style={{fontFamily: 'Georgia, serif'}}>
+                Vestimenta formal
+              </p>
               
               {/* Message */}
-              <div className="space-y-6">
-                <p className="text-stone-800 text-2xl md:text-3xl font-light tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
-                  Lo importante es que estés cómodo
+              <div className="space-y-6 text-center">
+                <p className="text-stone-800 text-base md:text-lg leading-relaxed max-w-2xl mx-auto" style={{fontFamily: 'Georgia, serif'}}>
+                  Querida familia y amigos, el blanco está reservado para la novia. Les agradecemos elegir otros colores para que ella brille con todo su esplendor.
                 </p>
                 
-                <p className="text-stone-600 text-base md:text-lg leading-relaxed max-w-lg mx-auto">
-                  Vístete con elegancia y comodidad para celebrar este día especial junto a nosotros
+                <p className="text-stone-800 text-base md:text-lg leading-relaxed max-w-2xl mx-auto" style={{fontFamily: 'Georgia, serif'}}>
+                  Con mucho amor hemos planeado una celebración íntima. Les pedimos amablemente que este evento sea solo para adultos.
+                </p>
+                
+                <p className="text-stone-800 text-lg md:text-xl font-bold tracking-wide mt-8" style={{fontFamily: 'Georgia, serif'}}>
+                  No niños
                 </p>
               </div>
               
