@@ -87,17 +87,28 @@ const Navbar = () => {
 
   // Función para determinar el estilo basado en el estado de scroll y modo nocturno
   const getNavbarStyle = () => {
+    let style;
     if (isNightMode) {
-      return 'bg-black/95 shadow-lg hover:bg-black';
+      style = 'bg-black/95 shadow-lg hover:bg-black';
+    } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
+      // Si está en la sección RSVP, Footer o Hero, usar background transparente
+      style = 'bg-white/10 hover:bg-white/15';
+    } else {
+      // En todas las demás secciones, es blanco
+      style = 'bg-white/95 shadow-lg hover:bg-white';
     }
-
-    // Si está en la sección RSVP, Footer o Hero, usar background transparente
-    if (isInRSVPSection || isInFooterSection || !isScrolled) {
-      return 'bg-white/10 hover:bg-white/15';
-    }
-
-    // En todas las demás secciones, es blanco
-    return 'bg-white/95 shadow-lg hover:bg-white';
+    
+    // DEBUGGING LOGS PARA EL NAVBAR
+    console.log('=== NAVBAR STYLE DEBUG ===');
+    console.log('isNightMode:', isNightMode);
+    console.log('isInRSVPSection:', isInRSVPSection);
+    console.log('isInFooterSection:', isInFooterSection);
+    console.log('isScrolled:', isScrolled);
+    console.log('isMobileMenuOpen:', isMobileMenuOpen);
+    console.log('getNavbarStyle result:', style);
+    console.log('=========================');
+    
+    return style;
   };
 
   const getTextStyle = () => {
@@ -295,8 +306,45 @@ const Navbar = () => {
         {/* Menú móvil desplegable para MD+ - elementos secundarios */}
         <div className={`hidden md:block lg:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
           isMobileMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-        } ${getNavbarStyle()}`}>
-          <div className="px-4 py-4 border-t border-white/10">
+        } ${(() => {
+          // DEBUGGING LOGS PARA EL DROPDOWN
+          console.log('=== DROPDOWN STYLE DEBUG ===');
+          console.log('isMobileMenuOpen:', isMobileMenuOpen);
+          
+          let dropdownStyle;
+          if (isNightMode) {
+            dropdownStyle = 'bg-black/98 shadow-xl';
+          } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
+            dropdownStyle = 'bg-black/95 shadow-xl backdrop-blur-lg';
+          } else {
+            dropdownStyle = 'bg-white/98 shadow-xl';
+          }
+          
+          console.log('dropdownStyle result:', dropdownStyle);
+          console.log('============================');
+          
+          return dropdownStyle;
+        })()}`}>
+          <div className={`px-4 py-4 ${(() => {
+              // Background adicional para el contenido para garantizar visibilidad
+              let innerStyle;
+              if (isNightMode) {
+                innerStyle = 'bg-black/95 border-t border-white/10';
+              } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
+                innerStyle = 'bg-black/90 border-t border-white/20';
+              } else {
+                innerStyle = 'bg-white/95 border-t border-[#543c24]/10';
+              }
+              
+              // DEBUGGING LOGS PARA EL DIV INTERNO
+              console.log('=== INNER DIV STYLE DEBUG ===');
+              console.log('innerStyle result:', innerStyle);
+              console.log('isScrolled:', isScrolled);
+              console.log('current conditions for bg-black/90:', !isScrolled || isInRSVPSection || isInFooterSection);
+              console.log('=============================');
+              
+              return innerStyle;
+            })()}`}>
             <ul className="flex flex-col space-y-3">
               {navigationItems.slice(4).map((item) => (
                 <li key={item.id}>
@@ -306,7 +354,20 @@ const Navbar = () => {
                       e.preventDefault();
                       handleNavClick(item.id);
                     }}
-                    className={`text-xs garamond-300 tracking-[0.15em] transition-colors duration-500 block py-2 ${getTextStyle()}`}
+                    className={`text-xs garamond-300 tracking-[0.15em] transition-colors duration-500 block py-2 px-3 rounded-md ${(() => {
+                      // BACKGROUND INDIVIDUAL PARA CADA LINK
+                      let linkStyle;
+                      if (isNightMode) {
+                        linkStyle = getTextStyle() + ' bg-black/80 hover:bg-black/90';
+                      } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
+                        linkStyle = getTextStyle() + ' bg-black/70 hover:bg-black/80';
+                      } else {
+                        linkStyle = getTextStyle() + ' bg-white/80 hover:bg-white/90';
+                      }
+                      
+                      console.log('Link style for', item.label, ':', linkStyle);
+                      return linkStyle;
+                    })()}`}
                   >
                     {item.label.toUpperCase()}
                   </a>

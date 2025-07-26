@@ -38,9 +38,11 @@ export default function ParentsSection() {
       </div>
 
       <div className="text-center z-10">
-        <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-8 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
-          Con el amor y la bendición de Dios & de nuestros padres
-        </p>
+        <div className="mx-10 flex justify-center items-center">
+          <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-12 text-[#8B7355] italic garamond-300 max-w-4xl ">
+            Con el amor y la bendición de Dios & de nuestros padres
+          </p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
             <h3 className="text-2xl font-semibold tracking-widest uppercase text-[#5c5c5c] mb-4 garamond-300">Papás de la Novia</h3>

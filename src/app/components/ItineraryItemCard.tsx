@@ -104,12 +104,12 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
             {/* Content Section */}
             <div className="p-8 md:p-12 relative">
 
-              {/* Time Display - Maintained original alignment */}
+              {/* Time Display - Always centered */}
               <div className="mb-8">
-                <div className={`text-5xl md:text-6xl font-extralight tracking-widest text-[#947e63] leading-none mb-3 ${isRightSide ? 'text-left' : 'text-center md:text-left'}`} style={{ fontFamily: 'Playfair Display, serif' }}>
+                <div className="text-5xl md:text-6xl font-extralight tracking-widest text-[#947e63] leading-none mb-3 text-center" style={{ fontFamily: 'Playfair Display, serif' }}>
                   {item.displayTime}
                 </div>
-                <div className={`flex ${isRightSide ? 'justify-start' : 'justify-center md:justify-start'}`}>
+                <div className="flex justify-center">
                   <div className="w-12 h-0.5 bg-[#D4AF37]"></div>
                 </div>
               </div>
@@ -175,18 +175,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
                 </div>
               )}
 
-              {/* Ornamental Divider - Centered */}
-              <div className="flex justify-center items-center mb-8">
-                <div className="flex items-center space-x-2">
-                  <div className="w-6 h-0.5 bg-[#D4AF37]"></div>
-                  <div className="w-2 h-2 rounded-full bg-[#D4AF37]"></div>
-                  <div className="w-8 h-0.5 bg-[#D4AF37]"></div>
-                  <div className="w-3 h-3 border border-[#D4AF37] transform rotate-45 bg-[#D4AF37]/20"></div>
-                  <div className="w-8 h-0.5 bg-[#D4AF37]"></div>
-                  <div className="w-2 h-2 rounded-full bg-[#D4AF37]"></div>
-                  <div className="w-6 h-0.5 bg-[#D4AF37]"></div>
-                </div>
-              </div>
+
 
               {/* Description - Centered */}
               {item.description && item.description.trim() !== "" && (
