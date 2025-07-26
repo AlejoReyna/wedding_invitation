@@ -377,25 +377,50 @@ export default function ItinerarySection() {
 
         {/* Timeline Container */}
         <div className="max-w-4xl mx-auto relative">
-          {/* Vertical Line Segments - connecting timeline dots */}
-          {itineraryItems.map((_, index) => {
-            // Only render line segments between cards (not before first or after last)
-            if (index === itineraryItems.length - 1) return null;
-            
-            return (
+          {/* Desktop: Timeline line connecting all dots */}
+          <div 
+            className={`absolute left-1/2 transform -translate-x-1/2 w-px transition-all duration-500 opacity-60 ${
+              isNightMode ? 'bg-gradient-to-b from-white/60 via-white/40 to-white/60' : 'bg-gradient-to-b from-[#C4985B] via-[#8B7355] to-[#C4985B]'
+            } hidden md:block`}
+            style={{
+              top: '3rem', // Start from first dot
+              height: 'calc(100% - 6rem)', // Go through entire container minus padding
+              zIndex: 1
+            }}
+          />
+          
+          {/* Mobile: Timeline line connecting all cards */}
+          <div 
+            className={`absolute left-1/2 transform -translate-x-1/2 w-px transition-all duration-500 opacity-40 ${
+              isNightMode ? 'bg-gradient-to-b from-white/50 via-white/30 to-white/50' : 'bg-gradient-to-b from-[#C4985B] via-[#8B7355] to-[#C4985B]'
+            } md:hidden`}
+            style={{
+              top: '2rem',
+              height: 'calc(100% - 4rem)',
+              zIndex: 1
+            }}
+          />
+          
+          {/* Mobile: Timeline dots */}
+          <div className="md:hidden">
+            {itineraryItems.map((_, index) => (
               <div 
-                key={`line-${index}`}
-                className={`absolute left-1/2 transform -translate-x-1/2 w-px transition-all duration-500 opacity-60 ${
-                  isNightMode ? 'bg-gradient-to-b from-white/60 via-white/40 to-white/60' : 'bg-gradient-to-b from-[#C4985B] via-[#8B7355] to-[#C4985B]'
-                } hidden md:block`}
+                key={index}
+                className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 z-10"
                 style={{
-                  top: `${64 + (index * 224)}px`, // Start after current dot (48px + 16px dot radius)
-                  height: `${160}px`, // Distance between dots (224px - 64px)
-                  zIndex: 1
+                  top: `${3 + (index * 24)}rem`, // Position dots at 3rem, 27rem, 51rem
                 }}
-              />
-            );
-          })}
+              >
+                <div className={`w-full h-full rounded-full border-2 shadow-lg transition-colors duration-500 ${
+                  isNightMode ? 'bg-gray-800 border-white/60' : 'bg-white border-[#947e63]/60'
+                }`}>
+                  <div className={`absolute inset-1 rounded-full transition-colors duration-500 ${
+                    isNightMode ? 'bg-white/20' : 'bg-[#947e63]/40'
+                  }`}></div>
+                </div>
+              </div>
+            ))}
+          </div>
 
           {/* Events */}
           <div className="space-y-24 md:space-y-32 relative z-10">
