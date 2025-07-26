@@ -1,12 +1,10 @@
 "use client"
-import Image from 'next/image';
 import LocationSection from './components/LocationSection';
 
 import GiftSection from './components/GiftSection';
 import RSVPSection from './components/RSVPSection';
 import MinimalistFooter from './components/Footer';
 import ItinerarySection from './components/ItinerarySection';
-import CountdownTimer from '../components/CountdownTimer';
 import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
 import ParentsSection from './components/ParentsSection';

@@ -14,9 +14,6 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isInFooterSection, setIsInFooterSection] = useState(false);
   const [isInRSVPSection, setIsInRSVPSection] = useState(false);
-  const [isInGiftSection, setIsInGiftSection] = useState(false);
-  const [isInMessageSection, setIsInMessageSection] = useState(false);
-  const [isInGallerySection, setIsInGallerySection] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isNightMode } = useTheme();
   
@@ -45,9 +42,6 @@ const Navbar = () => {
       const heroSection = document.getElementById('hero-section');
       const footerSection = document.getElementById('footer');
       const rsvpSection = document.getElementById('rsvp');
-      const giftSection = document.getElementById('regalos');
-      const messageSection = document.getElementById('mensaje');
-      const gallerySection = document.getElementById('galeria');
 
       if (heroSection && footerSection) {
         const heroRect = heroSection.getBoundingClientRect();
@@ -78,56 +72,7 @@ const Navbar = () => {
           setIsInRSVPSection(false);
         }
 
-        // Gift Section
-        if (giftSection) {
-          const giftRect = giftSection.getBoundingClientRect();
-          let isGiftVisible = false;
-          if (giftRect.bottom > 0 && giftRect.top < windowHeight) {
-            const visibleTop = Math.max(0, giftRect.top);
-            const visibleBottom = Math.min(windowHeight, giftRect.bottom);
-            const actualVisibleHeight = visibleBottom - visibleTop;
-            const giftSixtyPercent = giftRect.height * 0.6;
-            const requiredHeight = Math.min(giftSixtyPercent, windowHeight);
-            isGiftVisible = actualVisibleHeight >= requiredHeight;
-          }
-          setIsInGiftSection(isGiftVisible);
-        } else {
-          setIsInGiftSection(false);
-        }
-        
-        // Message Section
-        if (messageSection) {
-          const messageRect = messageSection.getBoundingClientRect();
-          let isMessageVisible = false;
-          if (messageRect.bottom > 0 && messageRect.top < windowHeight) {
-            const visibleTop = Math.max(0, messageRect.top);
-            const visibleBottom = Math.min(windowHeight, messageRect.bottom);
-            const actualVisibleHeight = visibleBottom - visibleTop;
-            const messageSixtyPercent = messageRect.height * 0.6;
-            const requiredHeight = Math.min(messageSixtyPercent, windowHeight);
-            isMessageVisible = actualVisibleHeight >= requiredHeight;
-          }
-          setIsInMessageSection(isMessageVisible);
-        } else {
-          setIsInMessageSection(false);
-        }
-        
-        // Gallery Section
-        if (gallerySection) {
-          const galleryRect = gallerySection.getBoundingClientRect();
-          let isGalleryVisible = false;
-          if (galleryRect.bottom > 0 && galleryRect.top < windowHeight) {
-            const visibleTop = Math.max(0, galleryRect.top);
-            const visibleBottom = Math.min(windowHeight, galleryRect.bottom);
-            const actualVisibleHeight = visibleBottom - visibleTop;
-            const gallerySixtyPercent = galleryRect.height * 0.6;
-            const requiredHeight = Math.min(gallerySixtyPercent, windowHeight);
-            isGalleryVisible = actualVisibleHeight >= requiredHeight;
-          }
-          setIsInGallerySection(isGalleryVisible);
-        } else {
-          setIsInGallerySection(false);
-        }
+
         
       }
 

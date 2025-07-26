@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { FaWhatsapp, FaCalendarPlus } from 'react-icons/fa';
 import MessageSection from './MessageSection';
 

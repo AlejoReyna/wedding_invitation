@@ -282,7 +282,7 @@ export default function Gallery() {
           
           {/* Description */}
           <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-4 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+           Hoy, mañana y siempre, elegimos amarnos.
           </p>
         </div>
 
@@ -476,7 +476,7 @@ export default function Gallery() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ transitionDelay: '1000ms' }}>
           <p className="text-lg text-stone-600 italic max-w-lg mx-auto garamond-300 leading-relaxed">
-            &ldquo;En cada mirada encontramos el infinito, en cada sonrisa, la eternidad&rdquo;
+            &ldquo; A love like ours could never die, as long as I have you near me &rdquo;
           </p>
           
           {/* Bottom decorative element */}
