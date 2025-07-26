@@ -126,15 +126,13 @@ export default function DressCodeSection() {
         }`} style={{ transitionDelay: '600ms' }}>
           
           {/* Clothing icons container */}
-          <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2 max-w-2xl mx-auto">
+          <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2 max-w-2xl mx-auto min-h-[600px] flex items-center">
             
             {/* Content Section */}
-            <div className="p-10 md:p-12 text-center relative">
-              
-
+            <div className="p-10 md:p-12 text-center relative w-full">
               
               {/* Dress Code Icon */}
-              <div className="flex justify-center items-center mb-8">
+              <div className="flex justify-center items-center mb-8 mt-14">
                 <div className="transform group-hover:scale-110 transition-transform duration-300">
                   <DressCodeIcon />
                 </div>
