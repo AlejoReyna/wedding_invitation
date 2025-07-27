@@ -156,7 +156,7 @@ export default function DressCodeSection() {
                   Con mucho amor hemos planeado una celebración íntima. Les pedimos amablemente que este evento sea solo para adultos.
                 </p>
                 
-                <p className="text-stone-800 text-lg md:text-2xl font-bold tracking-wide mt-8" style={{fontFamily: 'Georgia, serif'}}>
+                <p className="text-stone-800 text-2xl md:text-4xl font-bold tracking-wide mt-8" style={{fontFamily: 'Georgia, serif'}}>
                   NO NIÑOS
                 </p>
               </div>

@@ -179,7 +179,7 @@ export default function LocationSection() {
                 {/* Location */}
                 <div className="space-y-2 mb-10">
                   <p className="text-stone-800 text-lg font-medium tracking-wide">
-                    Iglesia del Sagrado Corazón
+                    Iglesia Sagrado Corazón de Jesús
                   </p>
                   <p className="text-stone-600 text-sm leading-relaxed">
                     Calle Ignacio Zaragoza 700, Centro de Montemorelos
@@ -255,7 +255,7 @@ export default function LocationSection() {
                 {/* Location */}
                 <div className="space-y-2 mb-10">
                   <p className="text-stone-800 text-lg font-medium tracking-wide">
-                    Museo de Montemorelos
+                    Museo histórico &apos;Valle del Pilón&apos;
                   </p>
                   <p className="text-stone-600 text-sm leading-relaxed">
                     Prolongación Frontera, s/n, Barrio Parar

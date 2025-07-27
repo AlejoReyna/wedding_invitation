@@ -29,21 +29,21 @@ export default function ItinerarySection() {
       displayTime: "03:30",
       title: "Misa",
       description: "",
-      location: "Iglesia del Sagrado Corazón"
+      location: "Iglesia 'Sagrado corazón de Jesús'"
     },
     {
       time: "6:00 PM - 7:00 PM",
       displayTime: "06:00",
       title: "Ceremonia Civil",
       description: "",
-      location: "Museo de Montemorelos"
+      location: "Museo histórico 'Valle del Pilón'"
     },
     {
       time: "7:00 PM - 1:00 AM",
       displayTime: "07:00",
       title: "Recepción",
       description: "",
-      location: "Salón Terraza, Museo de Montemorelos"
+      location: "Museo histórico 'Valle del Pilón'"
     }
   ], []);
 
