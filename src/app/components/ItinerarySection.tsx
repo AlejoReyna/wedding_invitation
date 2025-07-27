@@ -32,14 +32,14 @@ export default function ItinerarySection() {
       location: "Iglesia 'Sagrado corazón de Jesús'"
     },
     {
-      time: "6:00 PM - 7:00 PM",
+      time: "6:00 PM",
       displayTime: "06:00",
       title: "Ceremonia Civil",
       description: "",
       location: "Museo histórico 'Valle del Pilón'"
     },
     {
-      time: "7:00 PM - 1:00 AM",
+      time: "7:00 PM ",
       displayTime: "07:00",
       title: "Recepción",
       description: "",
