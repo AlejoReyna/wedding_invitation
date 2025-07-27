@@ -161,7 +161,7 @@ export default function LocationSection() {
                 
                 {/* Title */}
                 <h3 className="text-3xl md:text-4xl font-light text-stone-800 mb-6 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
-                  Ceremonia
+                  Ceremonia religiosa
                 </h3>
                 
                 {/* Time */}
