@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function DressCodeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -52,9 +53,11 @@ export default function DressCodeSection() {
 
   // Dress code icon using the provided image
   const DressCodeIcon = () => (
-    <img 
+    <Image 
       src="/dresscode_icon.png" 
       alt="Dress Code Icon" 
+      width={128}
+      height={176}
       className="w-32 h-44 object-contain"
     />
   );
@@ -139,8 +142,8 @@ export default function DressCodeSection() {
               </div>
               
               {/* Subtitle */}
-              <p className="text-lg md:text-xl font-light tracking-wide text-[#5c5c5c] mb-8" style={{fontFamily: 'Georgia, serif'}}>
-                Vestimenta formal
+              <p className="text-lg md:text-2xl font-light tracking-wide text-[#5c5c5c] mb-8" style={{fontFamily: 'Georgia, serif'}}>
+                ETIQUETA FORMAL
               </p>
               
               {/* Message */}
@@ -153,8 +156,8 @@ export default function DressCodeSection() {
                   Con mucho amor hemos planeado una celebración íntima. Les pedimos amablemente que este evento sea solo para adultos.
                 </p>
                 
-                <p className="text-stone-800 text-lg md:text-xl font-bold tracking-wide mt-8" style={{fontFamily: 'Georgia, serif'}}>
-                  No niños
+                <p className="text-stone-800 text-lg md:text-2xl font-bold tracking-wide mt-8" style={{fontFamily: 'Georgia, serif'}}>
+                  NO NIÑOS
                 </p>
               </div>
               

@@ -805,10 +805,10 @@ export default function Gallery() {
             {/* Text content */}
             <div className="relative z-10">
               <p className="text-lg text-stone-700 italic max-w-lg mx-auto garamond-300 leading-relaxed font-medium">
-                " A love like ours could never die, as long as I have you near me "
+                &ldquo; A love like ours could never die, as long as I have you near me &rdquo;
                 <br />
                 <small>
-                  - A hard day's night 
+                  - The Beatles, 1964
                 </small>
               </p>
             </div>

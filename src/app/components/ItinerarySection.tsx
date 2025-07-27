@@ -27,7 +27,7 @@ export default function ItinerarySection() {
     {
       time: "03:30 PM",
       displayTime: "03:30",
-      title: "Ceremonia",
+      title: "Misa",
       description: "",
       location: "Iglesia del Sagrado Corazón"
     },

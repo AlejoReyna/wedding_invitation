@@ -95,7 +95,7 @@ export default function ParentsSection() {
           
           <div className="text-center">
             <h3 className="text-2xl font-semibold tracking-widest uppercase text-[#5c5c5c] mb-4 garamond-300">Papás de la Novia</h3>
-            <p className="text-lg text-stone-600 garamond-300">Guillero Alejandro Reyna Muñoz</p>
+            <p className="text-lg text-stone-600 garamond-300">Guillermo Alejandro Reyna Muñoz</p>
             <p className="text-lg text-stone-600 garamond-300">Norma Irene Sánchez Ibarra</p>
           </div>
           <div className="text-center">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import church from '../../../assets/church.png';
 import legalDocument from '../../../assets/legal-document.png';
@@ -23,7 +23,7 @@ interface ItineraryItemCardProps {
 export default function ItineraryItemCard({ item, index }: ItineraryItemCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isCardVisible, setIsCardVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+
   const { isNightMode } = useTheme();
   const isRightSide = index % 2 !== 0;
 
@@ -37,17 +37,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
   const [showDivider, setShowDivider] = useState(false);
   const [showDots, setShowDots] = useState(false);
 
-  // Hook para detectar tamaño de pantalla
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+
 
   // Función para crear efecto de escritura
   const typeWriter = (text: string, setter: (value: string) => void, delay: number = 50) => {
@@ -65,7 +55,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
   };
 
   // Función para animar todos los elementos secuencialmente
-  const animateCard = async () => {
+  const animateCard = useCallback(async () => {
     // Reset todos los estados
     setDisplayedNumber('');
     setDisplayedTitle('');
@@ -114,7 +104,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
     // 8. Puntos decorativos finales
     await new Promise(resolve => setTimeout(resolve, 300));
     setShowDots(true);
-  };
+  }, [index, item.title, item.time, item.location, item.description]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -145,7 +135,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
         observer.unobserve(currentRef);
       }
     };
-  }, [index, isCardVisible]);
+  }, [index, isCardVisible, animateCard]);
 
   const getAnimationClasses = () => {
     if (!isCardVisible) {
