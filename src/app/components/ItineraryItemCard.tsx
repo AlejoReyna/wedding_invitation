@@ -154,6 +154,16 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
   // Función para obtener el icono original según el evento
   const getEventIcon = () => {
     switch (item.title) {
+      case 'Misa':
+        return (
+          <Image 
+            src={church} 
+            alt="Misa" 
+            width={40} 
+            height={40} 
+            className="opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+          />
+        );
       case 'Ceremonia':
         return (
           <Image 
@@ -181,7 +191,7 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
             alt="Recepción" 
             width={40} 
             height={40} 
-            className="opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+            className="opacity-80 group-hover:opacity-100 transition-opacity duration-300 brightness-0 invert" 
           />
         );
       default:

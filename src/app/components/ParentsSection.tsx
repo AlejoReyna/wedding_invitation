@@ -80,11 +80,19 @@ export default function ParentsSection() {
         <div className="mx-10 flex justify-center items-center">
           <div className="relative overflow-hidden">
             <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-12 text-[#8B7355] italic garamond-300 max-w-4xl">
-              Con el amor y la bendición de Dios & de nuestros padres
+              Con el amor,
+              <br/>
+              la bendición de Dios,
+              <br/> y de nuestros padres.
             </p>
-            <div className={`absolute inset-0 bg-gradient-to-r from-[#fbf9f6] to-[#fbf9f6] transition-all duration-1200 ease-out ${
-              showMainText ? 'translate-x-full' : 'translate-x-0'
-            }`}></div>
+            <div 
+              className={`absolute inset-0 transition-all duration-1200 ease-out ${
+                showMainText ? 'translate-x-full' : 'translate-x-0'
+              }`}
+              style={{
+                background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
+              }}
+            ></div>
           </div>
         </div>
         <div className={`relative grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto transition-all duration-800 ease-out ${
