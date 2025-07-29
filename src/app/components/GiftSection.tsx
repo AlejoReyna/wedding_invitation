@@ -268,16 +268,10 @@ export default function GiftSection() {
           </h2>
           
           {/* Message */}
-          <p className="text-stone-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-light mb-8">
+          <p className="text-stone-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-8 font-light mb-8">
             Tu presencia es nuestro regalo más preciado. Si deseas honrarnos con un obsequio, te ofrecemos estas opciones con profunda gratitud.
           </p>
           
-          {/* Bottom decorative element */}
-          <div className="flex justify-center items-center mt-6">
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-            <div className="mx-3 text-[#C4985B] text-lg opacity-60">♡</div>
-            <div className="w-8 h-px bg-[#C4985B] opacity-40"></div>
-          </div>
         </div>
 
         {/* Side decorative elements */}
