@@ -534,26 +534,7 @@ export default function Gallery() {
         background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
       }}
     >
-      {/* PNG Flowers Background - Updated with color filter */}
-      <div className="absolute top-0 left-0 w-full h-48 md:h-56 lg:h-64 overflow-hidden z-[5]">
-        {/* Flores desde la izquierda con animación y filtro de color */}
-        <div 
-          className={`absolute top-0 left-0 h-full transition-all duration-1200 ease-out ${
-            animationStep >= 1 ? 'opacity-40 translate-x-0' : 'opacity-0 -translate-x-16'
-          }`}
-          style={{
-            backgroundImage: `url('/png_flowers.png')`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'left top',
-            backgroundSize: 'auto 100%',
-            width: '60%',
-            filter: 'sepia(100%) saturate(150%) hue-rotate(20deg) brightness(0.8)',
-            color: '#947e63',
-            transitionDelay: animationStep >= 1 ? '200ms' : '0ms',
-            pointerEvents: 'none' // DEBUG: Ensure decorative elements don't block touch
-          }}
-        />
-      </div>
+
 
       {/* Enhanced organic texture overlay */}
       <div className="absolute inset-0 opacity-[0.03] z-[2] pointer-events-none"> {/* DEBUG: Added pointer-events-none */}
@@ -634,6 +615,20 @@ export default function Gallery() {
       
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none"> {/* DEBUG: Added pointer-events-none */}
+        {/* Flowers asset positioned at top center with low z-index */}
+        <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-48 h-48 opacity-50 z-[1]">
+          <Image
+            src="/assets/flowers_1.png"
+            alt="Decorative flowers"
+            width={192}
+            height={192}
+            className="object-contain w-full h-full"
+            style={{
+              filter: 'sepia(40%) saturate(80%) hue-rotate(5deg) brightness(1.1)'
+            }}
+          />
+        </div>
+        
         {/* Large corner decorations */}
         <div className="absolute top-12 left-12 w-24 h-24 opacity-15">
           <FloralDecoration variant="large" className="text-[#8B7355]" />
@@ -691,7 +686,7 @@ export default function Gallery() {
         <div className="text-center mb-16">
           
           {/* Enhanced decorative top element */}
-          <div className={`flex justify-center mb-8 transition-all duration-1000 ease-out ${
+          <div className={`flex justify-center mb-16 transition-all duration-1000 ease-out ${
             animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <div className="relative">
