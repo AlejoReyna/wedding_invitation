@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
 import { FaCreditCard, FaEnvelope } from 'react-icons/fa';
+import Image from 'next/image';
 
 // Componente GiftCard premium
 interface GiftCardProps {
@@ -247,10 +248,19 @@ export default function GiftSection() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`} style={{ transitionDelay: '200ms' }}>
           
-          {/* Decorative top element */}
+          {/* Gift asset */}
           <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 opacity-40">
-              <FloralDecoration />
+            <div className="w-32 h-32 md:w-40 md:h-40 opacity-50">
+              <Image
+                src="/assets/gift_asset.png"
+                alt="Gift icon"
+                width={160}
+                height={160}
+                className="object-contain w-full h-full"
+                style={{
+                  filter: 'sepia(40%) saturate(80%) hue-rotate(5deg) brightness(1.1)'
+                }}
+              />
             </div>
           </div>
 
@@ -316,14 +326,7 @@ export default function GiftSection() {
           </div>
         </div>
 
-        {/* Bottom decorative element */}
-        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '1000ms' }}>
-          <div className="w-20 h-20 opacity-30">
-            <FloralDecoration />
-          </div>
-        </div>
+
       </div>
 
       <style jsx>{`
