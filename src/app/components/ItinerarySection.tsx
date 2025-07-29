@@ -321,25 +321,7 @@ export default function ItinerarySection() {
         />
       </div>
 
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-20" style={{ zIndex: 3 }}>
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <pattern id="itineraryPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-              <path 
-                d="M20,20 Q40,30 60,20 Q80,10 100,25" 
-                stroke="#8B7355" 
-                strokeWidth="0.5" 
-                fill="none" 
-                opacity="0.3"
-              />
-              <circle cx="30" cy="25" r="1" fill="#C4985B" opacity="0.2"/>
-              <circle cx="70" cy="22" r="0.8" fill="#9B8366" opacity="0.3"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#itineraryPattern)"/>
-        </svg>
-      </div>
+
 
       <div className="max-w-6xl mx-auto relative" style={{ zIndex: 10 }}>
         {/* Header with elegant styling */}
