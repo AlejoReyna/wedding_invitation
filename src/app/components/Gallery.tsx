@@ -807,10 +807,10 @@ export default function Gallery() {
             touchAction: 'pan-x',
             WebkitOverflowScrolling: 'touch'
           }}
-          onTouchStart={(e) => {
+          onTouchStart={() => {
             console.log('🎯 CAROUSEL TOUCH START - Direct handler');
           }}
-          onTouchMove={(e) => {
+          onTouchMove={() => {
             console.log('🎯 CAROUSEL TOUCH MOVE - Direct handler');
           }}
         >
@@ -831,7 +831,7 @@ export default function Gallery() {
                   console.log('🖼️ CARD CLICKED:', index);
                   openModal({ ...photo, shape: 'rectangle' }, index);
                 }}
-                onTouchStart={(e) => {
+                onTouchStart={() => {
                   console.log('🎯 CARD TOUCH START:', index);
                 }}
               >

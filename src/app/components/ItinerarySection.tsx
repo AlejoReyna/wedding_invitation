@@ -2,6 +2,7 @@
 import ItineraryItemCard from './ItineraryItemCard';
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import Image from 'next/image';
 
 interface ItineraryItem {
   time: string;
@@ -322,10 +323,11 @@ export default function ItinerarySection() {
           {/* Clock Asset - Above the title like in Gallery */}
           <div className="flex justify-center mb-16">
             <div className="w-24 h-24 md:w-32 md:h-32 relative">
-              <img 
+              <Image 
                 src="/assets/clock.png" 
                 alt="Reloj decorativo" 
-                className="w-full h-full object-contain opacity-80 transition-opacity duration-500 hover:opacity-100"
+                fill
+                className="object-contain opacity-80 transition-opacity duration-500 hover:opacity-100"
               />
             </div>
           </div>
