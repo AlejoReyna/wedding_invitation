@@ -70,10 +70,17 @@ export default function Gallery() {
 
   useEffect(() => {
     const handleScroll = () => {
+      console.log('🔄 SCROLL EVENT TRIGGERED');
       if (galleryRef.current) {
         const container = galleryRef.current;
         const scrollLeft = container.scrollLeft;
         const containerWidth = container.clientWidth;
+        
+        console.log('📏 Scroll Data:', {
+          scrollLeft,
+          containerWidth,
+          scrollWidth: container.scrollWidth
+        });
         
         const centerX = scrollLeft + (containerWidth / 2);
         
@@ -95,12 +102,14 @@ export default function Gallery() {
           }
         }
         
+        console.log('🎯 Center Index Updated:', closestIndex);
         setCenterIndex(closestIndex);
       }
     };
 
     const galleryElement = galleryRef.current;
     if (galleryElement) {
+      console.log('✅ Adding scroll listener to gallery');
       galleryElement.addEventListener('scroll', handleScroll);
       
       const initialCheck = () => {
@@ -111,9 +120,140 @@ export default function Gallery() {
       
       initialCheck();
       
-      return () => galleryElement.removeEventListener('scroll', handleScroll);
+      return () => {
+        console.log('🧹 Removing scroll listener');
+        galleryElement.removeEventListener('scroll', handleScroll);
+      };
     }
   }, [photos.length]);
+
+  // DEBUG: Add touch event listeners
+  useEffect(() => {
+    const galleryElement = galleryRef.current;
+    if (!galleryElement) return;
+
+    console.log('🎮 SETTING UP TOUCH DEBUG LISTENERS');
+
+    const handleTouchStart = (e: TouchEvent) => {
+      console.log('👆 TOUCH START:', {
+        touches: e.touches.length,
+        target: e.target,
+        targetTag: (e.target as HTMLElement)?.tagName,
+        targetClass: (e.target as HTMLElement)?.className,
+        clientX: e.touches[0]?.clientX,
+        clientY: e.touches[0]?.clientY
+      });
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      console.log('👆 TOUCH MOVE:', {
+        touches: e.touches.length,
+        clientX: e.touches[0]?.clientX,
+        clientY: e.touches[0]?.clientY,
+        prevented: e.defaultPrevented
+      });
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      console.log('👆 TOUCH END:', {
+        target: e.target,
+        targetTag: (e.target as HTMLElement)?.tagName
+      });
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      console.log('🖱️ POINTER DOWN:', {
+        pointerType: e.pointerType,
+        target: e.target,
+        targetTag: (e.target as HTMLElement)?.tagName,
+        targetClass: (e.target as HTMLElement)?.className
+      });
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
+      console.log('🖱️ POINTER MOVE:', {
+        pointerType: e.pointerType,
+        clientX: e.clientX,
+        clientY: e.clientY
+      });
+    };
+
+    // Add all event listeners
+    galleryElement.addEventListener('touchstart', handleTouchStart, { passive: false });
+    galleryElement.addEventListener('touchmove', handleTouchMove, { passive: false });
+    galleryElement.addEventListener('touchend', handleTouchEnd, { passive: false });
+    galleryElement.addEventListener('pointerdown', handlePointerDown);
+    galleryElement.addEventListener('pointermove', handlePointerMove);
+
+    // Also check for mouse events
+    const handleMouseDown = (e: MouseEvent) => {
+      console.log('🖱️ MOUSE DOWN:', {
+        target: e.target,
+        targetTag: (e.target as HTMLElement)?.tagName,
+        targetClass: (e.target as HTMLElement)?.className,
+        button: e.button
+      });
+    };
+
+    galleryElement.addEventListener('mousedown', handleMouseDown);
+
+    return () => {
+      console.log('🧹 Removing touch debug listeners');
+      galleryElement.removeEventListener('touchstart', handleTouchStart);
+      galleryElement.removeEventListener('touchmove', handleTouchMove);
+      galleryElement.removeEventListener('touchend', handleTouchEnd);
+      galleryElement.removeEventListener('pointerdown', handlePointerDown);
+      galleryElement.removeEventListener('pointermove', handlePointerMove);
+      galleryElement.removeEventListener('mousedown', handleMouseDown);
+    };
+  }, []);
+
+  // DEBUG: Check CSS properties
+  useEffect(() => {
+    const galleryElement = galleryRef.current;
+    if (!galleryElement) return;
+
+    console.log('🎨 CHECKING CSS PROPERTIES:');
+    const styles = window.getComputedStyle(galleryElement);
+    console.log({
+      touchAction: styles.touchAction,
+      overflowX: styles.overflowX,
+      overflowY: styles.overflowY,
+      pointerEvents: styles.pointerEvents,
+      userSelect: styles.userSelect,
+      zIndex: styles.zIndex,
+      position: styles.position
+    });
+
+    // Check for overlapping elements
+    const rect = galleryElement.getBoundingClientRect();
+    console.log('📐 Gallery Element Rect:', rect);
+
+    // Check for elements with higher z-index that might be blocking
+    const allElements = document.querySelectorAll('*');
+    const overlappingElements: Element[] = [];
+
+    allElements.forEach(el => {
+      const elStyles = window.getComputedStyle(el);
+      const elZIndex = parseInt(elStyles.zIndex) || 0;
+      
+      if (elZIndex > 10 && el !== galleryElement && !galleryElement.contains(el)) {
+        const elRect = el.getBoundingClientRect();
+        // Check if it overlaps with gallery
+        if (!(elRect.right < rect.left || 
+              elRect.left > rect.right || 
+              elRect.bottom < rect.top || 
+              elRect.top > rect.bottom)) {
+          overlappingElements.push(el);
+        }
+      }
+    });
+
+    if (overlappingElements.length > 0) {
+      console.log('⚠️ POTENTIAL BLOCKING ELEMENTS:', overlappingElements);
+    }
+
+  }, [animationStep]);
 
   useEffect(() => {
     const centerImageWithPeek = () => {
@@ -123,6 +263,8 @@ export default function Gallery() {
         // Check if screen is medium or larger
         const isMediumOrLarger = window.innerWidth >= 768;
         const targetIndex = isMediumOrLarger ? 2 : 0; // Third photo (index 2) for md+, first photo for mobile
+        
+        console.log('🎯 Centering image:', { targetIndex, isMediumOrLarger });
         
         // Update center index immediately
         setCenterIndex(targetIndex);
@@ -135,6 +277,13 @@ export default function Gallery() {
           
           // Calculate scroll position to center the target image
           const scrollPosition = (targetIndex * (cardWidth + gap)) - (containerWidth / 2) + (cardWidth / 2);
+          
+          console.log('📐 Scroll calculation:', {
+            cardWidth,
+            gap,
+            containerWidth,
+            scrollPosition: Math.max(0, scrollPosition)
+          });
           
           // Set scroll position
           container.scrollLeft = Math.max(0, scrollPosition);
@@ -155,6 +304,7 @@ export default function Gallery() {
     
     // Handle window resize
     const handleResize = () => {
+      console.log('📱 WINDOW RESIZE');
       centerImageWithPeek();
     };
     
@@ -169,11 +319,13 @@ export default function Gallery() {
   }, []);
 
   const openModal = (photo: { src: string, alt: string, shape: string }, index: number) => {
+    console.log('🖼️ OPENING MODAL:', { photo, index });
     setSelectedImage({ ...photo, index });
     document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
+    console.log('❌ CLOSING MODAL');
     setSelectedImage(null);
     document.body.style.overflow = 'auto';
   };
@@ -397,13 +549,14 @@ export default function Gallery() {
             width: '60%',
             filter: 'sepia(100%) saturate(150%) hue-rotate(20deg) brightness(0.8)',
             color: '#947e63',
-            transitionDelay: animationStep >= 1 ? '200ms' : '0ms'
+            transitionDelay: animationStep >= 1 ? '200ms' : '0ms',
+            pointerEvents: 'none' // DEBUG: Ensure decorative elements don't block touch
           }}
         />
       </div>
 
       {/* Enhanced organic texture overlay */}
-      <div className="absolute inset-0 opacity-[0.03] z-[2]">
+      <div className="absolute inset-0 opacity-[0.03] z-[2] pointer-events-none"> {/* DEBUG: Added pointer-events-none */}
         <div 
           className="absolute inset-0" 
           style={{
@@ -417,7 +570,7 @@ export default function Gallery() {
       </div>
 
       {/* Enhanced background pattern with rose petal motifs */}
-      <div className="absolute inset-0 opacity-25">
+      <div className="absolute inset-0 opacity-25 pointer-events-none"> {/* DEBUG: Added pointer-events-none */}
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
           <defs>
             <pattern id="galleryPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
@@ -480,7 +633,7 @@ export default function Gallery() {
       </div>
       
       {/* Floating decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none"> {/* DEBUG: Added pointer-events-none */}
         {/* Large corner decorations */}
         <div className="absolute top-12 left-12 w-24 h-24 opacity-15">
           <FloralDecoration variant="large" className="text-[#8B7355]" />
@@ -533,7 +686,7 @@ export default function Gallery() {
       </div>
 
       {/* Header and decorative elements with max-width */}
-      <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8">
+      <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8 pointer-events-none"> {/* DEBUG: Added pointer-events-none to header */}
         {/* Header with elegant styling */}
         <div className="text-center mb-16">
           
@@ -627,6 +780,7 @@ export default function Gallery() {
         {centerIndex > 0 && (
           <button 
             onClick={() => {
+              console.log('⬅️ LEFT ARROW CLICKED');
               if (galleryRef.current) {
                 galleryRef.current.scrollBy({
                   left: -300,
@@ -654,6 +808,15 @@ export default function Gallery() {
             transformStyle: 'preserve-3d',
             paddingLeft: 'calc(50vw - 12rem)',
             paddingRight: 'calc(50vw - 12rem)',
+            // DEBUG: Add explicit touch-action
+            touchAction: 'pan-x',
+            WebkitOverflowScrolling: 'touch'
+          }}
+          onTouchStart={(e) => {
+            console.log('🎯 CAROUSEL TOUCH START - Direct handler');
+          }}
+          onTouchMove={(e) => {
+            console.log('🎯 CAROUSEL TOUCH MOVE - Direct handler');
           }}
         >
           {photos.map((photo, index) => {
@@ -669,23 +832,29 @@ export default function Gallery() {
                   ...cardStyle,
                   transformStyle: 'preserve-3d',
                 }}
-                onClick={() => openModal({ ...photo, shape: 'rectangle' }, index)}
+                onClick={() => {
+                  console.log('🖼️ CARD CLICKED:', index);
+                  openModal({ ...photo, shape: 'rectangle' }, index);
+                }}
+                onTouchStart={(e) => {
+                  console.log('🎯 CARD TOUCH START:', index);
+                }}
               >
                 <div className="relative h-full w-full transition-all duration-700 hover:scale-105">
                   {/* Enhanced depth effect for center card */}
                   {isCenterCard && (
                     <>
-                      <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/20 via-[#D4C9B8]/15 to-[#8B7355]/20 blur-3xl"></div>
-                      <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/15 via-[#F8F6F3]/10 to-[#8B7355]/15 blur-2xl"></div>
-                      <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/15 to-[#8B7355]/15 blur-xl"></div>
-                      <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/30 via-transparent to-[#8B7355]/30"></div>
+                      <div className="absolute -inset-8 bg-gradient-to-br from-[#C4985B]/20 via-[#D4C9B8]/15 to-[#8B7355]/20 blur-3xl pointer-events-none"></div>
+                      <div className="absolute -inset-6 bg-gradient-to-br from-[#C4985B]/15 via-[#F8F6F3]/10 to-[#8B7355]/15 blur-2xl pointer-events-none"></div>
+                      <div className="absolute -inset-4 bg-gradient-to-br from-[#C4985B]/15 to-[#8B7355]/15 blur-xl pointer-events-none"></div>
+                      <div className="absolute -inset-1 bg-gradient-to-br from-[#C4985B]/30 via-transparent to-[#8B7355]/30 pointer-events-none"></div>
                     </>
                   )}
                   
                   {/* Shadow effects for non-center cards */}
                   {!isCenterCard && (
                     <div 
-                      className="absolute inset-0 bg-black/5"
+                      className="absolute inset-0 bg-black/5 pointer-events-none"
                       style={{
                         boxShadow: '0 8px 32px rgba(139, 115, 85, 0.1), 0 4px 16px rgba(139, 115, 85, 0.05)'
                       }}
@@ -695,7 +864,7 @@ export default function Gallery() {
                   {/* Image container */}
                   <div className="relative overflow-hidden h-full">
                     {isCenterCard && (
-                      <div className="absolute -inset-2 bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10 shadow-elegant"></div>
+                      <div className="absolute -inset-2 bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10 shadow-elegant pointer-events-none"></div>
                     )}
                     
                     <div className="relative w-full h-full bg-white overflow-hidden shadow-elegant">
@@ -703,7 +872,7 @@ export default function Gallery() {
                         src={photo.src}
                         alt={photo.alt}
                         fill
-                        className="object-cover transition-all duration-700"
+                        className="object-cover transition-all duration-700 pointer-events-none" // DEBUG: Added pointer-events-none to image
                         sizes="(max-width: 768px) 18rem, 24rem"
                         priority={index < 3}
                         style={{
@@ -711,7 +880,7 @@ export default function Gallery() {
                         }}
                       />
                       
-                      <div className={`absolute inset-0 transition-all duration-700 ${
+                      <div className={`absolute inset-0 transition-all duration-700 pointer-events-none ${
                         isCenterCard 
                           ? 'bg-gradient-to-br from-transparent via-transparent to-[#8B7355]/5'
                           : 'bg-gradient-to-br from-stone-800/5 via-transparent to-stone-800/10'
@@ -719,7 +888,7 @@ export default function Gallery() {
                       
                       {/* Tap indicator for center card */}
                       {isCenterCard && (
-                        <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-elegant">
+                        <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-elegant pointer-events-none">
                           <svg className="w-4 h-4 text-[#8B7355]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                           </svg>
@@ -741,6 +910,7 @@ export default function Gallery() {
         {centerIndex < photos.length - 1 && (
           <button 
             onClick={() => {
+              console.log('➡️ RIGHT ARROW CLICKED');
               if (galleryRef.current) {
                 galleryRef.current.scrollBy({
                   left: 300,
@@ -769,6 +939,7 @@ export default function Gallery() {
             <button
               key={index}
               onClick={() => {
+                console.log('🔘 DOT INDICATOR CLICKED:', index);
                 if (galleryRef.current) {
                   const card = galleryRef.current.children[index] as HTMLElement;
                   card.scrollIntoView({
@@ -789,19 +960,22 @@ export default function Gallery() {
         </div>
 
         {/* Bottom quote */}
-        <div className={`text-center mt-16 transition-all duration-1000 ease-out ${
+        <div className={`text-center mt-16 transition-all duration-1000 ease-out pointer-events-none ${
           animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ transitionDelay: '600ms' }}>
-          <div 
-            className="relative py-16 px-8"
-            style={{
-              backgroundImage: `url('/png-lineart.png')`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center center',
-              backgroundSize: 'contain',
-              filter: 'sepia(40%) saturate(80%) hue-rotate(5deg) brightness(1.1)',
-            }}
-          >
+          <div className="relative py-16 px-8">
+            {/* Background image with opacity */}
+            <div 
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url('/png-lineart.png')`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center center',
+                backgroundSize: 'contain',
+                filter: 'sepia(40%) saturate(80%) hue-rotate(5deg) brightness(1.1)',
+                opacity: 0.3,
+              }}
+            />
             {/* Text content */}
             <div className="relative z-10">
               <p className="text-lg text-stone-700 italic max-w-lg mx-auto garamond-300 leading-relaxed font-medium">
