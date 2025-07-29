@@ -26,8 +26,8 @@ export default function ItinerarySection() {
   // Define itinerary items first so we can use them in other functions
   const itineraryItems: ItineraryItem[] = useMemo(() => [
     {
-      time: "03:30 PM",
-      displayTime: "03:30",
+      time: "3:30 PM",
+      displayTime: "3:30",
       title: "Misa",
       description: "",
       location: "Iglesia 'Sagrado corazón de Jesús'"

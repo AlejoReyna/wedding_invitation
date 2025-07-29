@@ -189,14 +189,7 @@ export default function RSVPSection() {
           </div>
         </div>
 
-        {/* Bottom decorative element */}
-        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '1000ms' }}>
-          <div className="w-20 h-20 opacity-30">
-            <FloralDecoration />
-          </div>
-        </div>
+
       </div>
 
       <style jsx>{`
