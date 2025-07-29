@@ -130,8 +130,8 @@ export default function RSVPSection() {
         }`} style={{ transitionDelay: '200ms' }}>
         </div>
 
-        {/* Grid Layout: 1 row, 2 columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        {/* Grid Layout: 1 row, 3 columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 items-start">
           
           {/* Left Column: Text Content */}
           <div className={`flex flex-col justify-center min-h-[60vh] transition-all duration-2000 ease-out ${
@@ -179,6 +179,11 @@ export default function RSVPSection() {
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Center Column: Empty space for the couple */}
+          <div className="hidden lg:block">
+            {/* Espacio libre para mostrar la pareja */}
           </div>
 
           {/* Right Column: Message Block */}
