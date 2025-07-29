@@ -327,13 +327,16 @@ export default function ItinerarySection() {
         {/* Header with elegant styling */}
         <div className="text-center mb-20 transition-all duration-2000 ease-out opacity-100 translate-y-0" style={{ transitionDelay: '200ms' }}>
           
-          {/* Decorative top element */}
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 opacity-40">
-              <FloralDecoration />
+          {/* Clock Asset - Above the title like in Gallery */}
+          <div className="flex justify-center mb-16">
+            <div className="w-24 h-24 md:w-32 md:h-32 relative">
+              <img 
+                src="/assets/clock.png" 
+                alt="Reloj decorativo" 
+                className="w-full h-full object-contain opacity-80 transition-opacity duration-500 hover:opacity-100"
+              />
             </div>
           </div>
-
         
           
           {/* Main title replaced with 'Itinerario del Día', color from subtitle, font size from Cronograma */}

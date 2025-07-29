@@ -191,7 +191,9 @@ export default function ItineraryItemCard({ item, index }: ItineraryItemCardProp
             alt="Recepción" 
             width={40} 
             height={40} 
-            className="opacity-80 group-hover:opacity-100 transition-opacity duration-300 brightness-0 invert" 
+            className={`opacity-80 group-hover:opacity-100 transition-opacity duration-300 ${
+              isNightMode ? 'brightness-0 invert' : 'brightness-0'
+            }`} 
           />
         );
       default:
