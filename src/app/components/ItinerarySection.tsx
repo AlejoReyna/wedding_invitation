@@ -299,15 +299,7 @@ export default function ItinerarySection() {
         </div>
       </div>
 
-      {/* Decorative Background Elements */}
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 2 }}>
-        <div className={`absolute top-20 right-10 w-24 h-24 border rounded-full ${
-          isNightMode ? 'border-white/20' : 'border-[#d4c4b0]/20'
-        }`}></div>
-        <div className={`absolute bottom-32 left-8 w-16 h-16 border rounded-full ${
-          isNightMode ? 'border-white/20' : 'border-[#d4c4b0]/20'
-        }`}></div>
-      </div>
+
 
       {/* Subtle organic texture overlay */}
       <div className="absolute inset-0 opacity-[0.02]" style={{ zIndex: 3 }}>
@@ -415,12 +407,7 @@ export default function ItinerarySection() {
           </div>
         </div>
 
-        {/* Bottom decorative element */}
-        <div className={`flex justify-center mt-16 transition-all duration-2000 ease-out opacity-100 translate-y-0`} style={{ transitionDelay: '1200ms' }}>
-          <div className="w-20 h-20 opacity-30">
-            <FloralDecoration />
-          </div>
-        </div>
+
       </div>
 
       <style jsx>{`
