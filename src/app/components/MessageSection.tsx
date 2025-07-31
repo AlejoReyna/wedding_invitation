@@ -11,11 +11,11 @@ export default function MessageSection({ className }: { className?: string }) {
         
         {/* Title */}
         <h3 className="text-2xl md:text-3xl font-light text-white mb-6 tracking-wide text-center garamond-300">
-          Mensaje
+          MENSAJE
         </h3>
         
         {/* Subtitle */}
-        <p className="text-white/80 text-sm font-light tracking-[0.15em] uppercase mb-6 text-center">
+        <p className="text-white/80 text-sm font-light tracking-[0.15em] uppercase mb-6 text-center garamond-300">
           Comparte tus 
           <br />
           buenos deseos
@@ -31,7 +31,7 @@ export default function MessageSection({ className }: { className?: string }) {
         {/* Form */}
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase">
+            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase garamond-300">
               Nombre
             </label>
             <input 
@@ -42,7 +42,7 @@ export default function MessageSection({ className }: { className?: string }) {
           </div>
           
           <div>
-            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase">
+            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase garamond-300">
               Correo electrónico
             </label>
             <input 
@@ -53,7 +53,7 @@ export default function MessageSection({ className }: { className?: string }) {
           </div>
           
           <div>
-            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase">
+            <label className="block text-xs font-light text-white/80 mb-2 tracking-[0.1em] uppercase garamond-300">
               Mensaje
             </label>
             <textarea 
