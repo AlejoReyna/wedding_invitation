@@ -129,44 +129,76 @@ export default function DressCodeSection() {
         }`} style={{ transitionDelay: '600ms' }}>
           
           {/* Clothing icons container */}
-          <div className="bg-white overflow-hidden border-l-4 border-stone-200 shadow-elegant hover:shadow-elegant-hover hover:border-stone-400 transition-all duration-700 transform hover:-translate-y-2 max-w-2xl mx-auto min-h-[600px] flex items-center">
+          <div className="overflow-hidden border border-stone-200/50 transition-all duration-700 transform hover:-translate-y-2 hover:scale-[1.01] max-w-2xl mx-auto min-h-[600px] flex items-center group" style={{
+            // Fondo base blanco con textura de cartón
+            backgroundColor: '#ffffff',
+            // Textura de cartón sutil sobre blanco
+            backgroundImage: `
+              linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(139,115,85,0.03) 100%),
+              linear-gradient(45deg, rgba(180,147,113,0.02) 0%, rgba(139,115,85,0.01) 100%)
+            `,
+            // Box shadow para profundidad de cartón de huevo sobre blanco
+            boxShadow: `
+              inset 2px 2px 4px rgba(139,115,85,0.08),
+              inset -1px -1px 3px rgba(255,255,255,0.6),
+              0 4px 8px rgba(139,115,85,0.1),
+              0 1px 2px rgba(139,115,85,0.06)
+            `
+          }}>
             
             {/* Content Section */}
-            <div className="p-10 md:p-12 text-center relative w-full">
+            <div className="p-10 md:p-12 text-center relative w-full z-10">
+              
+              {/* Overlay sutil para textura de cartón sobre blanco */}
+              <div className="absolute inset-0 bg-white/10 transition-all duration-500" style={{
+                // Textura adicional de fibra de cartón sobre blanco
+                backgroundImage: `
+                  linear-gradient(45deg, transparent 49%, rgba(139,115,85,0.015) 50%, rgba(139,115,85,0.015) 51%, transparent 52%),
+                  linear-gradient(-45deg, transparent 49%, rgba(196,152,91,0.008) 50%, rgba(196,152,91,0.008) 51%, transparent 52%)
+                `,
+                backgroundSize: '6px 6px, 8px 8px'
+              }}></div>
               
               {/* Dress Code Icon */}
-              <div className="flex justify-center items-center mb-8 mt-14">
+              <div className="flex justify-center items-center mb-8 mt-14 relative z-20">
                 <div className="transform group-hover:scale-110 transition-transform duration-300">
                   <DressCodeIcon />
                 </div>
               </div>
               
               {/* Subtitle */}
-              <p className="text-lg md:text-2xl font-light tracking-wide text-[#5c5c5c] mb-8" style={{fontFamily: 'Georgia, serif'}}>
+              <p className="text-lg md:text-2xl font-light tracking-wide text-[#5c5c5c] mb-8 relative z-20" style={{
+                fontFamily: 'Georgia, serif',
+                textShadow: '0 1px 2px rgba(255,255,255,0.5)'
+              }}>
                 ETIQUETA FORMAL
               </p>
               
               {/* Message */}
-              <div className="space-y-6 text-center">
-                <p className="text-stone-800 text-base md:text-lg leading-relaxed max-w-2xl mx-auto" style={{fontFamily: 'Georgia, serif'}}>
+              <div className="space-y-6 text-center relative z-20">
+                <p className="text-stone-700 text-base md:text-lg leading-relaxed max-w-2xl mx-auto" style={{
+                  fontFamily: 'Georgia, serif',
+                  textShadow: '0 1px 2px rgba(255,255,255,0.3)'
+                }}>
                   Querida familia y amigos, el blanco está reservado para la novia. Les agradecemos elegir otros colores para que ella brille con todo su esplendor.
                 </p>
                 
-                <p className="text-stone-800 text-base md:text-lg leading-relaxed max-w-2xl mx-auto" style={{fontFamily: 'Georgia, serif'}}>
+                <p className="text-stone-700 text-base md:text-lg leading-relaxed max-w-2xl mx-auto" style={{
+                  fontFamily: 'Georgia, serif',
+                  textShadow: '0 1px 2px rgba(255,255,255,0.3)'
+                }}>
                   Con mucho amor hemos planeado una celebración íntima. Les pedimos amablemente que este evento sea solo para adultos.
                 </p>
                 
-                <p className="text-stone-800 text-2xl md:text-4xl font-bold tracking-wide mt-8" style={{fontFamily: 'Georgia, serif'}}>
+                <p className="text-stone-800 text-2xl md:text-4xl font-bold tracking-wide mt-8" style={{
+                  fontFamily: 'Georgia, serif',
+                  textShadow: '0 1px 2px rgba(255,255,255,0.4)'
+                }}>
                   NO NIÑOS
                 </p>
               </div>
               
-              {/* Bottom decorative element */}
-              <div className="mt-10 flex justify-center">
-                <div className="w-16 h-16 opacity-30">
-                  <FloralDecoration />
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
