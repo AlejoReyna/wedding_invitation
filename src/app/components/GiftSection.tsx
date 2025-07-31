@@ -19,24 +19,10 @@ function GiftCard({ icon: Icon, title, subtitle, content, details, className = "
          style={{ 
            // Fondo base con color de cartón
            backgroundColor: '#f0ebe5',
-           // Textura de cartón de huevo con múltiples gradientes radiales
+           // Textura de cartón sutil sin puntos
            backgroundImage: `
-             radial-gradient(circle at 8% 15%, rgba(180,147,113,0.3) 1px, transparent 3px),
-             radial-gradient(circle at 23% 8%, rgba(139,115,85,0.25) 1px, transparent 4px),
-             radial-gradient(circle at 41% 22%, rgba(196,152,91,0.2) 1px, transparent 3px),
-             radial-gradient(circle at 67% 12%, rgba(155,131,102,0.28) 1px, transparent 4px),
-             radial-gradient(circle at 84% 25%, rgba(180,147,113,0.22) 1px, transparent 3px),
-             radial-gradient(circle at 15% 45%, rgba(139,115,85,0.26) 1px, transparent 4px),
-             radial-gradient(circle at 38% 58%, rgba(196,152,91,0.24) 1px, transparent 3px),
-             radial-gradient(circle at 62% 41%, rgba(155,131,102,0.27) 1px, transparent 4px),
-             radial-gradient(circle at 78% 63%, rgba(180,147,113,0.21) 1px, transparent 3px),
-             radial-gradient(circle at 92% 48%, rgba(139,115,85,0.25) 1px, transparent 4px),
-             radial-gradient(circle at 12% 78%, rgba(196,152,91,0.23) 1px, transparent 3px),
-             radial-gradient(circle at 34% 85%, rgba(155,131,102,0.29) 1px, transparent 4px),
-             radial-gradient(circle at 56% 72%, rgba(180,147,113,0.24) 1px, transparent 3px),
-             radial-gradient(circle at 74% 89%, rgba(139,115,85,0.26) 1px, transparent 4px),
-             radial-gradient(circle at 89% 76%, rgba(196,152,91,0.22) 1px, transparent 3px),
-             linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(139,115,85,0.05) 100%)
+             linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(139,115,85,0.05) 100%),
+             linear-gradient(45deg, rgba(180,147,113,0.03) 0%, rgba(139,115,85,0.02) 100%)
            `,
            // Box shadow para profundidad de cartón de huevo
            boxShadow: `
@@ -51,10 +37,10 @@ function GiftCard({ icon: Icon, title, subtitle, content, details, className = "
       <div className="absolute inset-0 rounded-lg bg-white/30" style={{
         // Textura adicional de fibra de cartón
         backgroundImage: `
-          linear-gradient(45deg, transparent 48%, rgba(139,115,85,0.03) 49%, rgba(139,115,85,0.03) 51%, transparent 52%),
-          linear-gradient(-45deg, transparent 48%, rgba(196,152,91,0.02) 49%, rgba(196,152,91,0.02) 51%, transparent 52%)
+          linear-gradient(45deg, transparent 49%, rgba(139,115,85,0.02) 50%, rgba(139,115,85,0.02) 51%, transparent 52%),
+          linear-gradient(-45deg, transparent 49%, rgba(196,152,91,0.01) 50%, rgba(196,152,91,0.01) 51%, transparent 52%)
         `,
-        backgroundSize: '3px 3px, 4px 4px'
+        backgroundSize: '6px 6px, 8px 8px'
       }}></div>
 
       {/* Content Section */}
@@ -66,10 +52,7 @@ function GiftCard({ icon: Icon, title, subtitle, content, details, className = "
           <div className="w-16 h-16 mx-auto mb-6 rounded-md shadow-lg inline-flex items-center justify-center" style={{
             backgroundColor: '#e8ddd1',
             backgroundImage: `
-              radial-gradient(circle at 30% 30%, rgba(180,147,113,0.4) 1px, transparent 3px),
-              radial-gradient(circle at 70% 20%, rgba(139,115,85,0.3) 1px, transparent 3px),
-              radial-gradient(circle at 20% 70%, rgba(196,152,91,0.25) 1px, transparent 3px),
-              radial-gradient(circle at 80% 80%, rgba(155,131,102,0.35) 1px, transparent 3px)
+              linear-gradient(45deg, rgba(180,147,113,0.15) 0%, rgba(139,115,85,0.10) 100%)
             `,
             boxShadow: `
               inset 1px 1px 3px rgba(139,115,85,0.2),
@@ -112,8 +95,7 @@ function GiftCard({ icon: Icon, title, subtitle, content, details, className = "
           <div className="rounded-lg p-6 shadow-inner" style={{
             backgroundColor: '#f5f0e8',
             backgroundImage: `
-              radial-gradient(circle at 25% 25%, rgba(180,147,113,0.2) 1px, transparent 3px),
-              radial-gradient(circle at 75% 75%, rgba(139,115,85,0.15) 1px, transparent 3px)
+              linear-gradient(135deg, rgba(180,147,113,0.05) 0%, rgba(139,115,85,0.03) 100%)
             `,
             boxShadow: `
               inset 1px 1px 3px rgba(139,115,85,0.2),
