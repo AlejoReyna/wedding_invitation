@@ -368,162 +368,7 @@ export default function Gallery() {
     };
   };
 
-  // Enhanced decorative floral elements with rose petal shapes
-  const FloralDecoration = ({ className = "", variant = "default" }) => {
-    if (variant === "large") {
-      return (
-        <svg className={`w-full h-full ${className}`} viewBox="0 0 120 120" fill="none">
-          {/* Large rose petal shapes */}
-          <path 
-            d="M60,30 Q45,45 50,65 Q60,70 70,65 Q75,45 60,30 Z" 
-            stroke="#8B7355" 
-            strokeWidth="1.2"
-            fill="none"
-            opacity="0.4"
-          />
-          <path 
-            d="M35,50 Q25,65 35,80 Q45,85 55,75 Q60,60 45,50 Q35,50 35,50 Z" 
-            stroke="#C4985B" 
-            strokeWidth="1"
-            fill="none"
-            opacity="0.3"
-          />
-          <path 
-            d="M75,55 Q85,40 95,50 Q100,65 90,75 Q75,80 65,70 Q60,55 75,55 Z" 
-            stroke="#9B8366" 
-            strokeWidth="1"
-            fill="none"
-            opacity="0.35"
-          />
-          <path 
-            d="M60,75 Q50,85 60,95 Q70,100 80,90 Q85,75 75,65 Q60,60 60,75 Z" 
-            stroke="#D4A971" 
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.25"
-          />
-          {/* Center detail */}
-          <circle cx="60" cy="60" r="2" stroke="#8B7355" strokeWidth="0.5" fill="none" opacity="0.4"/>
-        </svg>
-      );
-    }
-    
-    if (variant === "small") {
-      return (
-        <svg className={`w-full h-full ${className}`} viewBox="0 0 60 60" fill="none">
-          {/* Small rose petal */}
-          <path 
-            d="M30,15 Q20,25 25,35 Q30,40 35,35 Q40,25 30,15 Z" 
-            stroke="#8B7355" 
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.5"
-          />
-          <path 
-            d="M15,35 Q10,45 20,50 Q30,45 25,35 Q15,30 15,35 Z" 
-            stroke="#C4985B" 
-            strokeWidth="0.6"
-            fill="none"
-            opacity="0.4"
-          />
-          <path 
-            d="M35,40 Q45,35 45,45 Q40,55 30,50 Q25,40 35,40 Z" 
-            stroke="#9B8366" 
-            strokeWidth="0.6"
-            fill="none"
-            opacity="0.3"
-          />
-        </svg>
-      );
-    }
-    
-    if (variant === "vine") {
-      return (
-        <svg className={`w-full h-full ${className}`} viewBox="0 0 200 60" fill="none">
-          {/* Rose petals arranged as vine */}
-          <path 
-            d="M20,30 Q15,20 25,15 Q35,20 30,30 Q25,35 20,30 Z" 
-            stroke="#8B7355" 
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.4"
-          />
-          <path 
-            d="M60,35 Q55,25 65,20 Q75,25 70,35 Q65,40 60,35 Z" 
-            stroke="#C4985B" 
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.35"
-          />
-          <path 
-            d="M100,25 Q95,15 105,10 Q115,15 110,25 Q105,30 100,25 Z" 
-            stroke="#9B8366" 
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.3"
-          />
-          <path 
-            d="M140,40 Q135,30 145,25 Q155,30 150,40 Q145,45 140,40 Z" 
-            stroke="#D4A971" 
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.25"
-          />
-          <path 
-            d="M180,30 Q175,20 185,15 Q195,20 190,30 Q185,35 180,30 Z" 
-            stroke="#8B7355" 
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.3"
-          />
-          {/* Connecting stems */}
-          <path d="M30,30 Q45,35 60,35" stroke="#8B7355" strokeWidth="0.4" opacity="0.2" fill="none"/>
-          <path d="M70,35 Q85,30 100,25" stroke="#8B7355" strokeWidth="0.4" opacity="0.2" fill="none"/>
-          <path d="M110,25 Q125,32 140,40" stroke="#8B7355" strokeWidth="0.4" opacity="0.2" fill="none"/>
-          <path d="M150,40 Q165,35 180,30" stroke="#8B7355" strokeWidth="0.4" opacity="0.2" fill="none"/>
-        </svg>
-      );
-    }
-    
-    // Default variant - single rose petal cluster
-    return (
-      <svg className={`w-full h-full ${className}`} viewBox="0 0 80 80" fill="none">
-        {/* Central rose petal */}
-        <path 
-          d="M40,20 Q30,30 35,45 Q40,50 45,45 Q50,30 40,20 Z" 
-          stroke="#8B7355" 
-          strokeWidth="1"
-          fill="none"
-          opacity="0.6"
-        />
-        {/* Side petals */}
-        <path 
-          d="M25,35 Q15,45 20,60 Q25,65 35,60 Q40,45 30,35 Q25,30 25,35 Z" 
-          stroke="#9B8366" 
-          strokeWidth="0.8"
-          fill="none"
-          opacity="0.5"
-        />
-        <path 
-          d="M55,35 Q65,25 75,35 Q80,50 70,60 Q60,65 50,55 Q45,40 55,35 Z" 
-          stroke="#C4985B" 
-          strokeWidth="0.8"
-          fill="none"
-          opacity="0.4"
-        />
-        {/* Bottom petal */}
-        <path 
-          d="M40,55 Q30,65 40,75 Q50,80 60,70 Q65,55 55,45 Q40,40 40,55 Z" 
-          stroke="#D4A971" 
-          strokeWidth="0.8"
-          fill="none"
-          opacity="0.3"
-        />
-        {/* Center */}
-        <circle cx="40" cy="40" r="1.5" stroke="#8B7355" strokeWidth="0.5" fill="none" opacity="0.4"/>
-      </svg>
-    );
-  };
+
 
   return (
     <section 
@@ -550,158 +395,16 @@ export default function Gallery() {
         />
       </div>
 
-      {/* Enhanced background pattern with rose petal motifs */}
-      <div className="absolute inset-0 opacity-25 pointer-events-none"> {/* DEBUG: Added pointer-events-none */}
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <pattern id="galleryPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-              {/* Rose petal shapes in pattern */}
-              <path 
-                d="M30,20 Q25,30 30,40 Q35,45 40,40 Q45,30 40,20 Q35,15 30,20 Z" 
-                stroke="#8B7355" 
-                strokeWidth="0.4" 
-                fill="none" 
-                opacity="0.3"
-              />
-              <path 
-                d="M70,50 Q65,60 70,70 Q75,75 80,70 Q85,60 80,50 Q75,45 70,50 Z" 
-                stroke="#C4985B" 
-                strokeWidth="0.3" 
-                fill="none" 
-                opacity="0.25"
-              />
-              <path 
-                d="M90,25 Q85,35 90,45 Q95,50 100,45 Q105,35 100,25 Q95,20 90,25 Z" 
-                stroke="#9B8366" 
-                strokeWidth="0.3" 
-                fill="none" 
-                opacity="0.2"
-              />
-              {/* Small petal accents */}
-              <path 
-                d="M15,60 Q10,65 15,70 Q20,72 22,68 Q25,62 20,58 Q15,56 15,60 Z" 
-                stroke="#D4A971" 
-                strokeWidth="0.25" 
-                fill="none" 
-                opacity="0.18"
-              />
-              {/* Connecting stems */}
-              <path d="M40,35 Q55,45 70,55" stroke="#8B7355" strokeWidth="0.2" opacity="0.15" fill="none"/>
-              <path d="M80,60 Q85,40 90,35" stroke="#8B7355" strokeWidth="0.2" opacity="0.15" fill="none"/>
-            </pattern>
-            
-            <pattern id="galleryPatternSecondary" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-              {/* Smaller rose petals */}
-              <path 
-                d="M25,25 Q20,30 25,35 Q30,38 35,35 Q40,30 35,25 Q30,22 25,25 Z" 
-                stroke="#9B8366" 
-                strokeWidth="0.25" 
-                fill="none" 
-                opacity="0.2"
-              />
-              <path 
-                d="M50,55 Q45,60 50,65 Q55,68 60,65 Q65,60 60,55 Q55,52 50,55 Z" 
-                stroke="#C4985B" 
-                strokeWidth="0.2" 
-                fill="none" 
-                opacity="0.15"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#galleryPattern)"/>
-          <rect width="100%" height="100%" fill="url(#galleryPatternSecondary)" opacity="0.6"/>
-        </svg>
-      </div>
+
       
-      {/* Floating decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none"> {/* DEBUG: Added pointer-events-none */}
-        {/* Flowers asset positioned at top center with low z-index */}
-        <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-48 h-48 opacity-50 z-[1]">
-          <Image
-            src="/assets/flowers_1.png"
-            alt="Decorative flowers"
-            width={192}
-            height={192}
-            className="object-contain w-full h-full"
-            style={{
-              filter: 'sepia(40%) saturate(80%) hue-rotate(5deg) brightness(1.1)'
-            }}
-          />
-        </div>
-        
-        {/* Large corner decorations */}
-        <div className="absolute top-12 left-12 w-24 h-24 opacity-15">
-          <FloralDecoration variant="large" className="text-[#8B7355]" />
-        </div>
-        <div className="absolute top-20 right-16 w-20 h-20 opacity-12">
-          <FloralDecoration variant="default" className="transform rotate-45" />
-        </div>
-        <div className="absolute bottom-24 left-20 w-16 h-16 opacity-18">
-          <FloralDecoration variant="small" className="transform -rotate-30" />
-        </div>
-        <div className="absolute bottom-16 right-12 w-28 h-28 opacity-10">
-          <FloralDecoration variant="large" className="transform rotate-180" />
-        </div>
-        
-        {/* Mid-level decorative vines */}
-        <div className="absolute top-1/3 left-0 w-48 h-12 opacity-15">
-          <FloralDecoration variant="vine" className="transform rotate-12" />
-        </div>
-        <div className="absolute top-2/3 right-0 w-56 h-12 opacity-12">
-          <FloralDecoration variant="vine" className="transform -rotate-12 scale-x-[-1]" />
-        </div>
-        <div className="absolute top-1/2 left-1/4 w-40 h-10 opacity-8">
-          <FloralDecoration variant="vine" className="transform rotate-45" />
-        </div>
-        
-        {/* Small scattered elements */}
-        <div className="absolute top-1/4 left-1/3 w-8 h-8 opacity-20">
-          <FloralDecoration variant="small" />
-        </div>
-        <div className="absolute top-3/4 left-2/3 w-10 h-10 opacity-15">
-          <FloralDecoration variant="small" className="transform rotate-90" />
-        </div>
-        <div className="absolute top-1/2 right-1/4 w-12 h-12 opacity-12">
-          <FloralDecoration variant="default" className="transform rotate-270" />
-        </div>
-        <div className="absolute top-1/6 left-3/4 w-6 h-6 opacity-25">
-          <FloralDecoration variant="small" className="transform -rotate-45" />
-        </div>
-        <div className="absolute bottom-1/3 left-1/2 w-14 h-14 opacity-10">
-          <FloralDecoration variant="default" className="transform rotate-135" />
-        </div>
-        
-        {/* Additional subtle elements for mobile */}
-        <div className="absolute top-16 left-1/2 w-8 h-8 opacity-15 md:hidden">
-          <FloralDecoration variant="small" />
-        </div>
-        <div className="absolute bottom-32 right-1/3 w-10 h-10 opacity-12 md:hidden">
-          <FloralDecoration variant="small" className="transform rotate-60" />
-        </div>
-      </div>
+
 
       {/* Header and decorative elements with max-width */}
       <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8 pointer-events-none"> {/* DEBUG: Added pointer-events-none to header */}
         {/* Header with elegant styling */}
         <div className="text-center mb-16">
           
-          {/* Enhanced decorative top element */}
-          <div className={`flex justify-center mb-16 transition-all duration-1000 ease-out ${
-            animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}>
-            <div className="relative">
-              <div className="w-16 h-16 opacity-40">
-                <FloralDecoration />
-              </div>
-              {/* Additional side elements */}
-              <div className="absolute -left-12 top-2 w-8 h-8 opacity-20">
-                <FloralDecoration variant="small" className="transform rotate-45" />
-              </div>
-              <div className="absolute -right-12 top-2 w-8 h-8 opacity-20">
-                <FloralDecoration variant="small" className="transform -rotate-45" />
-              </div>
-            </div>
-          </div>
+
 
           {/* Main title */}
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-2 garamond-300 relative transition-all duration-1000 ease-out ${
@@ -729,37 +432,7 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Enhanced side decorative elements */}
-        <div className={`absolute left-8 top-1/3 w-12 h-12 opacity-20 hidden lg:block transition-all duration-1000 ease-out ${
-          animationStep >= 4 ? 'opacity-20 translate-x-0' : 'opacity-0 -translate-x-4'
-        }`}>
-          <FloralDecoration />
-        </div>
-        
-        <div className={`absolute right-8 top-2/3 w-12 h-12 opacity-20 hidden lg:block transition-all duration-1000 ease-out ${
-          animationStep >= 4 ? 'opacity-20 translate-x-0' : 'opacity-0 translate-x-4'
-        }`}>
-          <FloralDecoration className="transform rotate-180" />
-        </div>
-        
-        {/* Additional medium decorative elements */}
-        <div className={`absolute left-4 top-1/2 w-8 h-8 opacity-15 hidden md:block transition-all duration-1000 ease-out ${
-          animationStep >= 4 ? 'opacity-15 translate-x-0' : 'opacity-0 -translate-x-4'
-        }`} style={{ transitionDelay: '200ms' }}>
-          <FloralDecoration variant="small" className="transform rotate-90" />
-        </div>
-        
-        <div className={`absolute right-4 top-1/4 w-10 h-10 opacity-12 hidden md:block transition-all duration-1000 ease-out ${
-          animationStep >= 4 ? 'opacity-12 translate-x-0' : 'opacity-0 translate-x-4'
-        }`} style={{ transitionDelay: '400ms' }}>
-          <FloralDecoration variant="default" className="transform rotate-270" />
-        </div>
-        
-        <div className={`absolute left-6 bottom-1/4 w-14 h-14 opacity-10 hidden lg:block transition-all duration-1000 ease-out ${
-          animationStep >= 4 ? 'opacity-10 translate-x-0' : 'opacity-0 -translate-x-4'
-        }`} style={{ transitionDelay: '600ms' }}>
-          <FloralDecoration variant="large" className="transform rotate-45" />
-        </div>
+
       </div>
 
       {/* FULL WIDTH CAROUSEL - Outside of max-width container */}
@@ -983,28 +656,7 @@ export default function Gallery() {
             </div>
           </div>
           
-          {/* Enhanced bottom decorative element */}
-          <div className="flex justify-center mt-8">
-            <div className="relative">
-              <div className="w-20 h-20 opacity-30">
-                <FloralDecoration />
-              </div>
-              {/* Surrounding vine elements */}
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-32 h-6 opacity-15">
-                <FloralDecoration variant="vine" />
-              </div>
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-4 opacity-18">
-                <FloralDecoration variant="vine" className="transform rotate-180" />
-              </div>
-              {/* Corner accents */}
-              <div className="absolute -left-8 top-0 w-6 h-6 opacity-20">
-                <FloralDecoration variant="small" className="transform rotate-45" />
-              </div>
-              <div className="absolute -right-8 top-0 w-6 h-6 opacity-20">
-                <FloralDecoration variant="small" className="transform -rotate-45" />
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
 
