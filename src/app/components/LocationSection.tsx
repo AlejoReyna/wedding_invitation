@@ -48,9 +48,6 @@ export default function LocationSection() {
       />
       <path d="M25,35 Q30,25 35,35 Q30,45 25,35" fill="#9B8366" opacity="0.5"/>
       <path d="M45,45 Q50,35 55,45 Q50,55 45,45" fill="#C4985B" opacity="0.4"/>
-      <circle cx="40" cy="40" r="2.5" fill="#D4A971" opacity="0.6"/>
-      <circle cx="32" cy="38" r="1" fill="#8B7355" opacity="0.4"/>
-      <circle cx="48" cy="42" r="1" fill="#8B7355" opacity="0.4"/>
     </svg>
   );
 
@@ -85,8 +82,6 @@ export default function LocationSection() {
                 fill="none" 
                 opacity="0.3"
               />
-              <circle cx="30" cy="25" r="1" fill="#C4985B" opacity="0.2"/>
-              <circle cx="70" cy="22" r="0.8" fill="#9B8366" opacity="0.3"/>
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#locationPattern)"/>
