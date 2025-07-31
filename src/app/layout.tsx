@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Andrea & Aldo - Nuestra boda",
   description: "Celebra con nosotros nuestra boda el 18 de Octubre",
-  themeColor: "#ffffff", // Color por defecto
+  // Remover themeColor y statusBarStyle para permitir control dinámico
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    // Remover statusBarStyle para permitir control dinámico
   },
 };
 

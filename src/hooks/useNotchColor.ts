@@ -4,11 +4,13 @@ import { useEffect, useRef } from 'react';
 interface UseNotchColorProps {
   heroColor?: string;
   defaultColor?: string;
+  isNightMode?: boolean;
 }
 
 export const useNotchColor = ({ 
   heroColor = '#878074', 
-  defaultColor = '#ffffff' 
+  defaultColor = '#ffffff',
+  isNightMode = false
 }: UseNotchColorProps = {}) => {
   const heroSectionRef = useRef<HTMLElement>(null);
 
@@ -24,7 +26,9 @@ export const useNotchColor = ({
         document.getElementsByTagName('head')[0].appendChild(metaThemeColor);
       }
       
-      metaThemeColor.setAttribute('content', color);
+      // En modo nocturno, forzar color negro para el status bar
+      const finalColor = isNightMode ? '#000000' : color;
+      metaThemeColor.setAttribute('content', finalColor);
       
       // También actualizar para dispositivos Apple específicamente
       let metaAppleStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
@@ -35,19 +39,47 @@ export const useNotchColor = ({
         document.getElementsByTagName('head')[0].appendChild(metaAppleStatusBar);
       }
       
-      // Determinar el estilo basado en el color
-      const isLightColor = isColorLight(color);
-      metaAppleStatusBar.setAttribute('content', isLightColor ? 'black-translucent' : 'default');
+      // Determinar el estilo del status bar basado en el color de fondo
+      let statusBarStyle: string;
+      
+      if (isNightMode) {
+        // En modo nocturno, usar texto blanco sobre fondo oscuro
+        statusBarStyle = 'black-translucent';
+      } else {
+        // En modo normal, usar lógica basada en el color
+        const isLightColor = isColorLight(color);
+        // Si el fondo es claro, usar texto oscuro (default)
+        // Si el fondo es oscuro, usar texto claro (black-translucent)
+        statusBarStyle = isLightColor ? 'default' : 'black-translucent';
+      }
+      
+      metaAppleStatusBar.setAttribute('content', statusBarStyle);
+      
+      // Asegurar que existe el meta tag de viewport para PWA
+      let metaViewport = document.querySelector('meta[name="viewport"]');
+      if (!metaViewport) {
+        metaViewport = document.createElement('meta');
+        metaViewport.setAttribute('name', 'viewport');
+        metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover');
+        document.getElementsByTagName('head')[0].appendChild(metaViewport);
+      } else {
+        // Asegurar que viewport-fit=cover está incluido
+        const currentContent = metaViewport.getAttribute('content') || '';
+        if (!currentContent.includes('viewport-fit=cover')) {
+          metaViewport.setAttribute('content', currentContent + ', viewport-fit=cover');
+        }
+      }
     };
 
     // Función auxiliar para determinar si un color es claro u oscuro
     const isColorLight = (color: string): boolean => {
       const hex = color.replace('#', '');
-      const r = parseInt(hex.substr(0, 2), 16);
-      const g = parseInt(hex.substr(2, 2), 16);
-      const b = parseInt(hex.substr(4, 2), 16);
-      const brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-      return brightness > 128;
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      // Usar la fórmula de luminancia relativa más precisa
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      return luminance > 0.5;
     };
 
     // Configurar Intersection Observer
@@ -70,10 +102,21 @@ export const useNotchColor = ({
       }
     );
 
+    // Forzar la aplicación inicial del color
+    updateThemeColor(defaultColor);
+    
     // Observar la sección Hero si existe
     const currentRef = heroSectionRef.current;
     if (currentRef) {
       observer.observe(currentRef);
+    }
+    
+    // Para iOS, forzar un repaint del status bar
+    if (typeof window !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      // Pequeño delay para asegurar que los meta tags se apliquen
+      setTimeout(() => {
+        updateThemeColor(defaultColor);
+      }, 100);
     }
 
     // Cleanup
@@ -85,7 +128,7 @@ export const useNotchColor = ({
       // Restaurar color por defecto al desmontar
       updateThemeColor(defaultColor);
     };
-  }, [heroColor, defaultColor]);
+  }, [heroColor, defaultColor, isNightMode]);
 
   return heroSectionRef;
 };
