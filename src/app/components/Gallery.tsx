@@ -406,6 +406,24 @@ export default function Gallery() {
           
 
 
+          {/* Flowers decoration above title */}
+          <div className={`flex justify-center mb-6 transition-all duration-1000 ease-out ${
+            animationStep >= 1 ? 'opacity-100 -translate-y-0' : 'opacity-0 -translate-y-4'
+          }`}>
+            <div className="w-20 h-20 md:w-24 md:h-24 relative">
+              <Image
+                src="/assets/legal_assets/flowers_s2.png"
+                alt="Decorative flowers"
+                fill
+                className="object-contain"
+                style={{
+                  filter: 'sepia(20%) saturate(90%) hue-rotate(10deg) brightness(1.05)',
+                  opacity: 0.8
+                }}
+              />
+            </div>
+          </div>
+
           {/* Main title */}
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-2 garamond-300 relative transition-all duration-1000 ease-out ${
             animationStep >= 1 ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-8'
@@ -632,16 +650,16 @@ export default function Gallery() {
           animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ transitionDelay: '600ms' }}>
           <div className="relative py-16 px-8">
-            {/* Background image with opacity */}
+            {/* Background image with realhands */}
             <div 
               className="absolute inset-0"
               style={{
-                backgroundImage: `url('/png-lineart.png')`,
+                backgroundImage: `url('/assets/legal_assets/realhands_s2.png')`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center center',
                 backgroundSize: 'contain',
-                filter: 'sepia(40%) saturate(80%) hue-rotate(5deg) brightness(1.1)',
-                opacity: 0.3,
+                filter: 'sepia(30%) saturate(70%) hue-rotate(15deg) brightness(1.05)',
+                opacity: 0.4,
               }}
             />
             {/* Text content */}
