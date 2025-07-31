@@ -15,7 +15,7 @@ export default function RSVPSection() {
   // Hook para cambiar el color del status bar cuando RSVP está visible
   const rsvpSectionRef = useStatusBarSection({
     sectionId: 'rsvp',
-    color: '#878074', // Mismo color que Hero section
+    color: '#4c4c48', // Mismo color que Hero section
     defaultColor: isNightMode ? '#000000' : '#ffffff', // Color basado en el tema
     isNightMode // Pasar el estado del tema
   });

@@ -10,7 +10,7 @@ const HeroSection = () => {
   // Hook para cambiar el color del status bar cuando Hero está visible
   const heroSectionRef = useStatusBarSection({
     sectionId: 'hero',
-    color: '#878074', // Color específico para la sección Hero
+    color: '#4c4c48', // Color específico para la sección Hero
     defaultColor: isNightMode ? '#000000' : '#ffffff', // Color basado en el tema
     isNightMode // Pasar el estado del tema
   });

@@ -153,14 +153,19 @@ const Navbar = () => {
     return 'bg-[#543c24]/30';
   };
 
-  // Función para determinar qué logo usar según la sección
+  // Función para determinar qué logo usar según la sección y modo nocturno
   const getLogoSrc = () => {
-    // Logo IMG_0340.PNG para hero (cuando no ha scrolled), RSVP y Footer
+    // En modo nocturno, siempre usar IMG_0340.PNG
+    if (isNightMode) {
+      return '/assets/logos/IMG_0340.PNG';
+    }
+    
+    // En modo normal: Logo IMG_0340.PNG para hero (cuando no ha scrolled), RSVP y Footer
     if (!isScrolled || isInRSVPSection || isInFooterSection) {
       return '/assets/logos/IMG_0340.PNG';
     }
     
-    // Logo IMG_0342.PNG para todas las demás secciones
+    // Logo IMG_0342.PNG para todas las demás secciones en modo normal
     return '/assets/logos/IMG_0342.PNG';
   };
 
