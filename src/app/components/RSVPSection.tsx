@@ -2,10 +2,23 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaWhatsapp, FaCalendarPlus } from 'react-icons/fa';
 import MessageSection from './MessageSection';
+import { useStatusBarSection } from '../../hooks/useStatusBarManager';
+import { useTheme } from '../context/ThemeContext';
 
 export default function RSVPSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  
+  // Obtener el estado del tema
+  const { isNightMode } = useTheme();
+  
+  // Hook para cambiar el color del status bar cuando RSVP está visible
+  const rsvpSectionRef = useStatusBarSection({
+    sectionId: 'rsvp',
+    color: '#878074', // Mismo color que Hero section
+    defaultColor: isNightMode ? '#000000' : '#ffffff', // Color basado en el tema
+    isNightMode // Pasar el estado del tema
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,7 +101,12 @@ export default function RSVPSection() {
 
   return (
     <section 
-      ref={sectionRef}
+      ref={(el) => {
+        sectionRef.current = el;
+        if (rsvpSectionRef) {
+          (rsvpSectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        }
+      }}
       className="min-h-screen w-full relative overflow-hidden flex items-center justify-center py-12"
       style={{
         backgroundImage: `url('/carousel/c-1.jpeg')`,

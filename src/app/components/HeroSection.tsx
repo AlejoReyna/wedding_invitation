@@ -1,15 +1,16 @@
 "use client"
 import CountdownTimer from '../../components/CountdownTimer';
-import { useNotchColor } from '../../hooks/useNotchColor';
+import { useStatusBarSection } from '../../hooks/useStatusBarManager';
 import { useTheme } from '../context/ThemeContext';
 
 const HeroSection = () => {
   // Obtener el estado del tema
   const { isNightMode } = useTheme();
   
-  // Hook para cambiar el color del notch cuando Hero está visible
-  const heroSectionRef = useNotchColor({
-    heroColor: '#878074', // Color específico para la sección Hero
+  // Hook para cambiar el color del status bar cuando Hero está visible
+  const heroSectionRef = useStatusBarSection({
+    sectionId: 'hero',
+    color: '#878074', // Color específico para la sección Hero
     defaultColor: isNightMode ? '#000000' : '#ffffff', // Color basado en el tema
     isNightMode // Pasar el estado del tema
   });
