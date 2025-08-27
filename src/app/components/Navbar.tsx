@@ -86,15 +86,17 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   // Función para determinar el estilo basado en el estado de scroll y modo nocturno
-  const getNavbarStyle = () => {
-    let style;
-    if (isNightMode) {
-      style = 'bg-black/95 shadow-lg hover:bg-black';
-    } else if (isInRSVPSection || isInFooterSection || !isScrolled) {
-      // Si está en la sección RSVP, Footer o Hero, usar background transparente
-      style = 'bg-white/10 hover:bg-white/15';
-    } else {
-      // En todas las demás secciones, es blanco
+      const getNavbarStyle = () => {
+      let style;
+      // Priorizar el estilo transparente en hero, RSVP y footer, independientemente del modo nocturno
+      if (isInRSVPSection || isInFooterSection || !isScrolled) {
+        // En secciones especiales, siempre transparente
+        style = 'bg-white/10 hover:bg-white/15';
+      } else if (isNightMode) {
+        // Aplicar modo nocturno solo cuando no estamos en las secciones especiales
+        style = 'bg-black/95 shadow-lg hover:bg-black';
+      } else {
+        // En todas las demás secciones, es blanco
       style = 'bg-white/95 shadow-lg hover:bg-white';
     }
     

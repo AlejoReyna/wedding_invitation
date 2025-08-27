@@ -1,4 +1,5 @@
 "use client"
+import { useEffect } from 'react';
 import CountdownTimer from '../../components/CountdownTimer';
 import { useStatusBarSection } from '../../hooks/useStatusBarManager';
 import { useTheme } from '../context/ThemeContext';
@@ -14,6 +15,25 @@ const HeroSection = () => {
     defaultColor: isNightMode ? '#000000' : '#ffffff', // Color basado en el tema
     isNightMode // Pasar el estado del tema
   });
+  
+  // Efecto adicional para forzar la actualización del status bar en iOS
+  useEffect(() => {
+    // Para iOS, forzar un repaint inicial del status bar
+    if (typeof window !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      // Pequeño delay para asegurar que los meta tags se apliquen correctamente
+      setTimeout(() => {
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+          const currentColor = metaThemeColor.getAttribute('content');
+          // Forzar un repaint cambiando temporalmente el color y restaurándolo
+          metaThemeColor.setAttribute('content', '#000000');
+          setTimeout(() => {
+            metaThemeColor.setAttribute('content', currentColor || '#4c4c48');
+          }, 50);
+        }
+      }, 300);
+    }
+  }, [isNightMode]);
 
   return (
     <section 
