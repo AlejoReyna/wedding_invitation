@@ -22,7 +22,6 @@ const Navbar = () => {
     { id: 'itinerario', label: 'Itinerario' },
     { id: 'ubicacion', label: 'Ubicación' },
     { id: 'dresscode', label: 'Dress Code' },
-    { id: 'mensaje', label: 'Mensaje' },
     { id: 'rsvp', label: 'Confirmar' }
   ];
 

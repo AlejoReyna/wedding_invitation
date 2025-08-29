@@ -410,7 +410,7 @@ export default function Gallery() {
           <div className={`flex justify-center mb-6 transition-all duration-1000 ease-out ${
             animationStep >= 1 ? 'opacity-100 -translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
-            <div className="w-20 h-20 md:w-24 md:h-24 relative">
+            <div className="w-48 h-20 relative">
               <Image
                 src="/assets/legal_assets/flowers_s2.png"
                 alt="Decorative flowers"
