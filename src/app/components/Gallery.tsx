@@ -271,14 +271,17 @@ export default function Gallery() {
         
         setTimeout(() => {
           // Calculate responsive card dimensions
+          const isLarge = window.innerWidth >= 1024; // lg breakpoint
           const cardWidth = isMediumOrLarger ? 384 : 256; // md:w-96 = 384px, w-64 = 256px
-          const gap = isMediumOrLarger ? 32 : 16; // md:gap-8 = 32px, gap-4 = 16px
+          const gap = isLarge ? 48 : (isMediumOrLarger ? 32 : 16); // lg:gap-12 = 48px, md:gap-8 = 32px, gap-4 = 16px
           const containerWidth = container.clientWidth;
           
           // Calculate scroll position to center the target image
           const scrollPosition = (targetIndex * (cardWidth + gap)) - (containerWidth / 2) + (cardWidth / 2);
           
           console.log('📐 Scroll calculation:', {
+            isLarge,
+            isMediumOrLarger,
             cardWidth,
             gap,
             containerWidth,
@@ -696,15 +699,15 @@ export default function Gallery() {
             </svg>
           </button>
           
-          <div className="relative w-full h-full flex items-center justify-center p-8">
-            <div className="relative max-w-5xl max-h-full rounded-2xl overflow-hidden shadow-elegant">
+          <div className="relative w-full h-full flex items-center justify-center p-4 md:p-8">
+            <div className="relative w-full h-full max-w-6xl max-h-full rounded-2xl overflow-hidden shadow-elegant">
               <Image 
                 src={selectedImage.src} 
                 alt={selectedImage.alt} 
-                width={1200}
-                height={800}
-                className="object-contain w-full h-full"
+                fill
+                className="object-contain"
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
               />
             </div>
           </div>
