@@ -78,7 +78,7 @@ export default function ParentsSection() {
           />
         </div>
         <div className="mx-10 flex justify-center items-center">
-          <div className="relative overflow-hidden">
+          <div className="relative">
             <p className="text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-12 text-[#8B7355] italic garamond-300 max-w-4xl">
               Con el amor,
               <br/>
@@ -86,11 +86,10 @@ export default function ParentsSection() {
               <br/> y de nuestros padres.
             </p>
             <div 
-              className={`absolute inset-0 transition-all duration-1200 ease-out ${
-                showMainText ? 'translate-x-full' : 'translate-x-0'
-              }`}
+              className="absolute inset-0 transition-all duration-1200 ease-out"
               style={{
-                background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)'
+                background: 'linear-gradient(135deg, #fbf9f6 0%, #f8f6f3 35%, #f5f2ee 70%, #f9f7f4 100%)',
+                clipPath: showMainText ? 'inset(0 0 0 100%)' : 'inset(0 0 0 0%)'
               }}
             ></div>
           </div>
