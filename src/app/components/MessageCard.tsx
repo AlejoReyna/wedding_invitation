@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FaHeart, FaEnvelope } from 'react-icons/fa';
 
 // Web3Forms configuration
-const WEB3FORMS_ACCESS_KEY = 'fcf764d7-a6dc-4846-843e-a591e89d60a8';
+const WEB3FORMS_ACCESS_KEY = '9e04209b-b0b4-4883-82ab-a4f939af7198';
 
 interface MessageCardProps {
   className?: string;

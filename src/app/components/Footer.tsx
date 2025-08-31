@@ -13,8 +13,8 @@ export default function Footer() {
         }
       },
       {
-        threshold: 0.3, // Se activa cuando el 30% del footer es visible
-        rootMargin: '0px 0px -50px 0px' // Se activa un poco antes
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
       }
     );
 
@@ -31,83 +31,97 @@ export default function Footer() {
   }, [isVisible]);
 
   return (
-    <footer ref={footerRef} className="bg-black text-white">
-      <div className="max-w-4xl mx-auto px-8 py-16 pb-8">
-        {/* Grid layout: Logo left, CTA right */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Left: Brand/Logo */}
-          <div className={`transition-all duration-800 delay-500 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+    <footer ref={footerRef} className="bg-black text-white relative overflow-hidden">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-black/90"></div>
+      
+      <div className="relative max-w-6xl mx-auto px-8 py-20">
+        {/* Main content layout */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
+          
+          {/* Left side - Developer info */}
+          <div className={`transition-all duration-1000 ease-out ${
+            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
           }`}>
-            <p className="text-white/70 text-sm md:text-base leading-relaxed font-light mb-4">
-              Diseño y código elaborado por:
-            </p>
-            <h2 className="text-3xl md:text-4xl mb-3 tracking-tight font-mono font-light">
-              <span className="bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text text-transparent">
-                Alexis Reyna
-              </span>
-            </h2>
-            <div className="text-sm text-gray-400 uppercase tracking-tight font-mono font-light">
-              Full-Stack Developer
+            <div className="space-y-3">
+              <p className="text-white/50 text-sm font-light tracking-wide">
+                Diseño y código elaborado por:
+              </p>
+              <h2 className="text-4xl md:text-5xl font-extralight tracking-tight">
+                <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  Alexis Reyna
+                </span>
+              </h2>
+              <p className="text-white/70 text-sm font-mono tracking-widest uppercase">
+                Full-Stack Developer
+              </p>
             </div>
           </div>
 
-          {/* Right: CTA Button */}
-          <div className={`flex justify-end transition-all duration-800 delay-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          {/* Right side - CTA and Social */}
+          <div className={`flex flex-col items-end space-y-8 transition-all duration-1000 delay-300 ease-out ${
+            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
           }`}>
-            <button className="relative inline-flex items-center gap-2 text-xs bg-gray-700/30 hover:bg-gray-600/40 text-gray-300 hover:text-white px-4 py-3 rounded-lg border border-gray-600/30 transition-all duration-500 font-mono group">
-              <div className="flex flex-col items-start leading-tight">
-                <span>Let&apos;s talk</span>
-                <span className="text-[0.65rem] text-gray-400 italic">(in a human way)</span>
-              </div>
-              <ArrowRight className="h-4 w-4 mt-0.5 group-hover:translate-x-1 transition-transform duration-200" />
-            </button>
+            
+            {/* CTA Button */}
+            <div className="group">
+              <button className="relative inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 rounded-xl px-6 py-4 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-white/10">
+                <div className="flex flex-col items-start text-left">
+                  <span className="text-white font-medium text-base">Let's talk</span>
+                  <span className="text-white/50 text-xs italic font-light">(in a human way)</span>
+                </div>
+                <ArrowRight className="h-4 w-4 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
+              </button>
+            </div>
+
+            {/* Social Icons */}
+            <div className={`flex gap-4 transition-all duration-1000 delay-500 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>
+              <a 
+                href="https://github.com/alexisreyna" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-white/10"
+                aria-label="GitHub"
+              >
+                <Github size={18} />
+              </a>
+              
+              <a 
+                href="https://linkedin.com/in/alexisreyna" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-white/10"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={18} />
+              </a>
+              
+              <a 
+                href="https://wa.me/525512345678" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-white/10"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle size={18} />
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Social icons centered below */}
-        <div className={`flex justify-center gap-6 mt-12 transition-all duration-800 delay-[1500ms] ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+        {/* Minimal bottom separator */}
+        <div className={`mt-16 pt-8 border-t border-white/5 transition-all duration-1000 delay-700 ${
+          isVisible ? 'opacity-100' : 'opacity-0'
         }`}>
-          <a 
-            href="https://github.com/alexisreyna" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full border border-white/20 text-white/60 hover:text-white hover:border-white/40 transition-all duration-300 hover:scale-110"
-            aria-label="GitHub"
-          >
-            <Github size={18} />
-          </a>
-          
-          <a 
-            href="https://linkedin.com/in/alexisreyna" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full border border-white/20 text-white/60 hover:text-white hover:border-white/40 transition-all duration-300 hover:scale-110"
-            aria-label="LinkedIn"
-          >
-            <Linkedin size={18} />
-          </a>
-          
-          <a 
-            href="https://wa.me/525512345678" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full border border-white/20 text-white/60 hover:text-white hover:border-white/40 transition-all duration-300 hover:scale-110"
-            aria-label="WhatsApp"
-          >
-            <MessageCircle size={18} />
-          </a>
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
         </div>
       </div>
 
-      {/* Copyright minimalista */}
-      <div className={`border-t border-white/10 py-4 transition-all duration-800 delay-[3000ms] ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-      }`}>
-       
-      </div>
+      {/* Subtle decorative elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-white/[0.02] to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-white/[0.01] to-transparent rounded-full blur-3xl"></div>
     </footer>
   );
 }
