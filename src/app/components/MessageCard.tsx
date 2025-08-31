@@ -77,17 +77,12 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
             
             {/* Subtitle */}
             <div className="mb-8">
-              <p className="text-[#845845]/80 text-lg tracking-[0.15em] font-light garamond-300">
+              <p className="text-[#845845]/80 text-2xl tracking-[0.15em] font-light garamond-300">
                 Comparte tus buenos deseos
               </p>
             </div>
             
-            {/* Divider */}
-            <div className="flex justify-center items-center mb-8">
-              <div className="w-8 h-px bg-[#c59c8e]"></div>
-              <div className="w-2 h-2 border border-[#c59c8e] transform rotate-45 mx-4"></div>
-              <div className="w-8 h-px bg-[#c59c8e]"></div>
-            </div>
+
           </div>
 
           {/* Form Section */}
