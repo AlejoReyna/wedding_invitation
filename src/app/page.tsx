@@ -1,6 +1,5 @@
 "use client"
 import LocationSection from './components/LocationSection';
-
 import GiftSection from './components/GiftSection';
 import RSVPSection from './components/RSVPSection';
 import MinimalistFooter from './components/Footer';

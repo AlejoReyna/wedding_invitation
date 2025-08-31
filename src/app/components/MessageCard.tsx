@@ -11,50 +11,63 @@ interface MessageCardProps {
 
 export default function MessageCard({ className = '' }: MessageCardProps) {
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  
+  console.log('🎯 MessageCard rendered. Current formStatus:', formStatus);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevenir el envío normal del formulario
+    console.log('🔥 FORM SUBMITTED - Starting submission process');
+    
     setFormStatus('loading');
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
+    
     try {
+      const form = e.currentTarget;
+      const formData = new FormData(form);
+      
+      // Log form data for debugging
+      console.log('📝 Form data being sent:');
+      for (let [key, value] of formData.entries()) {
+        console.log(`  ${key}: ${value}`);
+      }
+      
+      // Send to Web3Forms exactly as they specify
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          name: formData.get('name'),
-          email: formData.get('email'),
-          message: formData.get('message'),
-          subject: 'Nuevo mensaje de invitación de boda',
-          from_name: formData.get('name'),
-          replyto: formData.get('email')
-        })
+        body: formData
       });
-
+      
       const result = await response.json();
+      console.log('📬 Web3Forms response:', result);
       
       if (result.success) {
+        console.log('✅ Message sent successfully!');
         setFormStatus('success');
+        
+        // Reset form
         form.reset();
-        // Reset form status after 5 seconds
-        setTimeout(() => setFormStatus('idle'), 5000);
+        
+        // Reset status after 5 seconds
+        setTimeout(() => {
+          console.log('🔄 Resetting status to idle');
+          setFormStatus('idle');
+        }, 5000);
       } else {
+        console.error('❌ Web3Forms error:', result.message);
         setFormStatus('error');
-        console.error('Web3Forms error:', result);
-        // Reset error status after 5 seconds
-        setTimeout(() => setFormStatus('idle'), 5000);
+        
+        // Reset to idle after 5 seconds
+        setTimeout(() => {
+          setFormStatus('idle');
+        }, 5000);
       }
     } catch (error) {
+      console.error('❌ Network error:', error);
       setFormStatus('error');
-      console.error('Form submission error:', error);
-      // Reset error status after 5 seconds
-      setTimeout(() => setFormStatus('idle'), 5000);
+      
+      // Reset to idle after 5 seconds
+      setTimeout(() => {
+        setFormStatus('idle');
+      }, 5000);
     }
   };
 
@@ -81,18 +94,22 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
                 Comparte tus buenos deseos
               </p>
             </div>
-            
-
           </div>
 
-          {/* Form Section */}
-          <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-            {/* Hidden access key field for Web3Forms */}
+          {/* Web3Forms Standard Form */}
+          <form 
+            action="https://api.web3forms.com/submit" 
+            method="POST"
+            onSubmit={handleSubmit}
+            className="space-y-6 relative z-10"
+          >
+            {/* Web3Forms required hidden fields */}
             <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
             <input type="hidden" name="subject" value="Nuevo mensaje de invitación de boda" />
-            <input type="hidden" name="from_name" value="Formulario de Invitación de Boda" />
+            <input type="hidden" name="from_name" value="Invitación de Boda" />
             
             <div className="space-y-6">
+              {/* Name Field */}
               <div className="group/input">
                 <label htmlFor="name" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
                   Nombre
@@ -110,6 +127,7 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
                 </div>
               </div>
 
+              {/* Email Field */}
               <div className="group/input">
                 <label htmlFor="email" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
                   Correo electrónico
@@ -127,6 +145,7 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
                 </div>
               </div>
 
+              {/* Message Field */}
               <div className="group/input">
                 <label htmlFor="message" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">
                   Mensaje
@@ -145,7 +164,7 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
               </div>
             </div>
 
-            {/* Action Button */}
+            {/* Submit Button */}
             <div className="pt-6">
               <button
                 type="submit"
@@ -160,19 +179,40 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
               </button>
             </div>
 
-            {/* Status messages */}
-            <div className="min-h-[24px] flex items-center justify-center pt-4">
-              {formStatus === 'success' && (
-                <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-2 rounded-full garamond-300 text-sm">
-                  <FaHeart className="text-xs" />
-                  <span>¡Mensaje enviado con éxito!</span>
+            {/* Status Messages */}
+            <div className="min-h-[60px] flex items-center justify-center pt-4">
+              <div className="text-center w-full">
+                {/* Debug info */}
+                <div className="text-xs text-gray-400 mb-2">
+                  Status: {formStatus}
                 </div>
-              )}
-              {formStatus === 'error' && (
-                <div className="flex items-center gap-2 text-red-600 bg-red-50 px-4 py-2 rounded-full garamond-300 text-sm">
-                  <span>Error al enviar. Intenta de nuevo.</span>
-                </div>
-              )}
+                
+                {formStatus === 'loading' && (
+                  <div className="flex items-center justify-center gap-2 text-blue-600 bg-blue-50 px-6 py-3 rounded-full garamond-300 text-lg font-bold">
+                    <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                    <span>Enviando mensaje...</span>
+                  </div>
+                )}
+                
+                {formStatus === 'success' && (
+                  <div className="flex items-center justify-center gap-2 text-green-600 bg-green-50 px-6 py-3 rounded-full garamond-300 text-lg font-bold animate-pulse">
+                    <FaHeart className="text-lg animate-bounce" />
+                    <span>¡Mensaje enviado con éxito!</span>
+                  </div>
+                )}
+                
+                {formStatus === 'error' && (
+                  <div className="flex items-center justify-center gap-2 text-red-600 bg-red-50 px-6 py-3 rounded-full garamond-300 text-lg font-bold">
+                    <span>❌ Error al enviar. Inténtalo de nuevo.</span>
+                  </div>
+                )}
+                
+                {formStatus === 'idle' && (
+                  <div className="text-gray-400 text-sm">
+                    Completa el formulario y envía tu mensaje
+                  </div>
+                )}
+              </div>
             </div>
           </form>
         </div>
