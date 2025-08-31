@@ -18,13 +18,14 @@ export default function Footer() {
       }
     );
 
-    if (footerRef.current) {
-      observer.observe(footerRef.current);
+    const currentFooterRef = footerRef.current;
+    if (currentFooterRef) {
+      observer.observe(currentFooterRef);
     }
 
     return () => {
-      if (footerRef.current) {
-        observer.unobserve(footerRef.current);
+      if (currentFooterRef) {
+        observer.unobserve(currentFooterRef);
       }
     };
   }, [isVisible]);
@@ -57,7 +58,7 @@ export default function Footer() {
           }`}>
             <button className="relative inline-flex items-center gap-2 text-xs bg-gray-700/30 hover:bg-gray-600/40 text-gray-300 hover:text-white px-4 py-3 rounded-lg border border-gray-600/30 transition-all duration-500 font-mono group">
               <div className="flex flex-col items-start leading-tight">
-                <span>Let's talk</span>
+                <span>Let&apos;s talk</span>
                 <span className="text-[0.65rem] text-gray-400 italic">(in a human way)</span>
               </div>
               <ArrowRight className="h-4 w-4 mt-0.5 group-hover:translate-x-1 transition-transform duration-200" />

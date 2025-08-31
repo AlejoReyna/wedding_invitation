@@ -70,17 +70,12 @@ export default function Gallery() {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log('🔄 SCROLL EVENT TRIGGERED');
       if (galleryRef.current) {
         const container = galleryRef.current;
         const scrollLeft = container.scrollLeft;
         const containerWidth = container.clientWidth;
         
-        console.log('📏 Scroll Data:', {
-          scrollLeft,
-          containerWidth,
-          scrollWidth: container.scrollWidth
-        });
+      
         
         const centerX = scrollLeft + (containerWidth / 2);
         
@@ -102,14 +97,12 @@ export default function Gallery() {
           }
         }
         
-        console.log('🎯 Center Index Updated:', closestIndex);
         setCenterIndex(closestIndex);
       }
     };
 
     const galleryElement = galleryRef.current;
     if (galleryElement) {
-      console.log('✅ Adding scroll listener to gallery');
       galleryElement.addEventListener('scroll', handleScroll);
       
       const initialCheck = () => {
@@ -121,61 +114,34 @@ export default function Gallery() {
       initialCheck();
       
       return () => {
-        console.log('🧹 Removing scroll listener');
         galleryElement.removeEventListener('scroll', handleScroll);
       };
     }
   }, [photos.length]);
 
-  // DEBUG: Add touch event listeners
+  // Touch event listeners for debugging (removed console logs)
   useEffect(() => {
     const galleryElement = galleryRef.current;
     if (!galleryElement) return;
 
-    console.log('🎮 SETTING UP TOUCH DEBUG LISTENERS');
-
-    const handleTouchStart = (e: TouchEvent) => {
-      console.log('👆 TOUCH START:', {
-        touches: e.touches.length,
-        target: e.target,
-        targetTag: (e.target as HTMLElement)?.tagName,
-        targetClass: (e.target as HTMLElement)?.className,
-        clientX: e.touches[0]?.clientX,
-        clientY: e.touches[0]?.clientY
-      });
+    const handleTouchStart = () => {
+      // Touch start handler
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      console.log('👆 TOUCH MOVE:', {
-        touches: e.touches.length,
-        clientX: e.touches[0]?.clientX,
-        clientY: e.touches[0]?.clientY,
-        prevented: e.defaultPrevented
-      });
+    const handleTouchMove = () => {
+      // Touch move handler
     };
 
-    const handleTouchEnd = (e: TouchEvent) => {
-      console.log('👆 TOUCH END:', {
-        target: e.target,
-        targetTag: (e.target as HTMLElement)?.tagName
-      });
+    const handleTouchEnd = () => {
+      // Touch end handler
     };
 
-    const handlePointerDown = (e: PointerEvent) => {
-      console.log('🖱️ POINTER DOWN:', {
-        pointerType: e.pointerType,
-        target: e.target,
-        targetTag: (e.target as HTMLElement)?.tagName,
-        targetClass: (e.target as HTMLElement)?.className
-      });
+    const handlePointerDown = () => {
+      // Pointer down handler
     };
 
-    const handlePointerMove = (e: PointerEvent) => {
-      console.log('🖱️ POINTER MOVE:', {
-        pointerType: e.pointerType,
-        clientX: e.clientX,
-        clientY: e.clientY
-      });
+    const handlePointerMove = () => {
+      // Pointer move handler
     };
 
     // Add all event listeners
@@ -186,19 +152,13 @@ export default function Gallery() {
     galleryElement.addEventListener('pointermove', handlePointerMove);
 
     // Also check for mouse events
-    const handleMouseDown = (e: MouseEvent) => {
-      console.log('🖱️ MOUSE DOWN:', {
-        target: e.target,
-        targetTag: (e.target as HTMLElement)?.tagName,
-        targetClass: (e.target as HTMLElement)?.className,
-        button: e.button
-      });
+    const handleMouseDown = () => {
+      // Mouse down handler
     };
 
     galleryElement.addEventListener('mousedown', handleMouseDown);
 
     return () => {
-      console.log('🧹 Removing touch debug listeners');
       galleryElement.removeEventListener('touchstart', handleTouchStart);
       galleryElement.removeEventListener('touchmove', handleTouchMove);
       galleryElement.removeEventListener('touchend', handleTouchEnd);
@@ -208,26 +168,13 @@ export default function Gallery() {
     };
   }, []);
 
-  // DEBUG: Check CSS properties
+  // Check CSS properties (removed console logs)
   useEffect(() => {
     const galleryElement = galleryRef.current;
     if (!galleryElement) return;
 
-    console.log('🎨 CHECKING CSS PROPERTIES:');
-    const styles = window.getComputedStyle(galleryElement);
-    console.log({
-      touchAction: styles.touchAction,
-      overflowX: styles.overflowX,
-      overflowY: styles.overflowY,
-      pointerEvents: styles.pointerEvents,
-      userSelect: styles.userSelect,
-      zIndex: styles.zIndex,
-      position: styles.position
-    });
-
     // Check for overlapping elements
     const rect = galleryElement.getBoundingClientRect();
-    console.log('📐 Gallery Element Rect:', rect);
 
     // Check for elements with higher z-index that might be blocking
     const allElements = document.querySelectorAll('*');
@@ -249,56 +196,41 @@ export default function Gallery() {
       }
     });
 
-    if (overlappingElements.length > 0) {
-      console.log('⚠️ POTENTIAL BLOCKING ELEMENTS:', overlappingElements);
-    }
-
   }, [animationStep]);
 
   useEffect(() => {
-    const centerImageWithPeek = () => {
-      if (galleryRef.current) {
-        const container = galleryRef.current;
-        
-        // Check if screen is medium or larger
-        const isMediumOrLarger = window.innerWidth >= 768;
-        const targetIndex = isMediumOrLarger ? 2 : 0; // Third photo (index 2) for md+, first photo for mobile
-        
-        console.log('🎯 Centering image:', { targetIndex, isMediumOrLarger });
-        
-        // Update center index immediately
-        setCenterIndex(targetIndex);
-        
-        setTimeout(() => {
-          // Calculate responsive card dimensions
-          const isLarge = window.innerWidth >= 1024; // lg breakpoint
-          const cardWidth = isMediumOrLarger ? 384 : 256; // md:w-96 = 384px, w-64 = 256px
-          const gap = isLarge ? 48 : (isMediumOrLarger ? 32 : 16); // lg:gap-12 = 48px, md:gap-8 = 32px, gap-4 = 16px
-          const containerWidth = container.clientWidth;
-          
-          // Calculate scroll position to center the target image
-          const scrollPosition = (targetIndex * (cardWidth + gap)) - (containerWidth / 2) + (cardWidth / 2);
-          
-          console.log('📐 Scroll calculation:', {
-            isLarge,
-            isMediumOrLarger,
-            cardWidth,
-            gap,
-            containerWidth,
-            scrollPosition: Math.max(0, scrollPosition)
-          });
-          
-          // Set scroll position
-          container.scrollLeft = Math.max(0, scrollPosition);
-          
-          // Force a scroll event to ensure everything is in sync
-          setTimeout(() => {
-            const event = new Event('scroll');
-            container.dispatchEvent(event);
-          }, 50);
-        }, 100);
-      }
-    };
+            const centerImageWithPeek = () => {
+          if (galleryRef.current) {
+            const container = galleryRef.current;
+            
+            // Check if screen is medium or larger
+            const isMediumOrLarger = window.innerWidth >= 768;
+            const targetIndex = isMediumOrLarger ? 2 : 0; // Third photo (index 2) for md+, first photo for mobile
+            
+            // Update center index immediately
+            setCenterIndex(targetIndex);
+            
+            setTimeout(() => {
+              // Calculate responsive card dimensions
+              const isLarge = window.innerWidth >= 1024; // lg breakpoint
+              const cardWidth = isMediumOrLarger ? 384 : 256; // md:w-96 = 384px, w-64 = 256px
+              const gap = isLarge ? 48 : (isMediumOrLarger ? 32 : 16); // lg:gap-12 = 48px, md:gap-8 = 32px, gap-4 = 16px
+              const containerWidth = container.clientWidth;
+              
+              // Calculate scroll position to center the target image
+              const scrollPosition = (targetIndex * (cardWidth + gap)) - (containerWidth / 2) + (cardWidth / 2);
+              
+              // Set scroll position
+              container.scrollLeft = Math.max(0, scrollPosition);
+              
+              // Force a scroll event to ensure everything is in sync
+              setTimeout(() => {
+                const event = new Event('scroll');
+                container.dispatchEvent(event);
+              }, 50);
+            }, 100);
+          }
+        };
 
     // Multiple attempts to ensure proper initialization
     const timer1 = setTimeout(centerImageWithPeek, 100);
@@ -307,7 +239,6 @@ export default function Gallery() {
     
     // Handle window resize
     const handleResize = () => {
-      console.log('📱 WINDOW RESIZE');
       centerImageWithPeek();
     };
     
@@ -322,13 +253,11 @@ export default function Gallery() {
   }, []);
 
   const openModal = (photo: { src: string, alt: string, shape: string }, index: number) => {
-    console.log('🖼️ OPENING MODAL:', { photo, index });
     setSelectedImage({ ...photo, index });
     document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
-    console.log('❌ CLOSING MODAL');
     setSelectedImage(null);
     document.body.style.overflow = 'auto';
   };
@@ -469,7 +398,6 @@ export default function Gallery() {
         {centerIndex > 0 && (
           <button 
             onClick={() => {
-              console.log('⬅️ LEFT ARROW CLICKED');
               if (galleryRef.current) {
                 galleryRef.current.scrollBy({
                   left: -300,
@@ -502,10 +430,10 @@ export default function Gallery() {
             WebkitOverflowScrolling: 'touch'
           }}
           onTouchStart={() => {
-            console.log('🎯 CAROUSEL TOUCH START - Direct handler');
+            // Carousel touch start handler
           }}
           onTouchMove={() => {
-            console.log('🎯 CAROUSEL TOUCH MOVE - Direct handler');
+            // Carousel touch move handler
           }}
         >
           {photos.map((photo, index) => {
@@ -522,11 +450,10 @@ export default function Gallery() {
                   transformStyle: 'preserve-3d',
                 }}
                 onClick={() => {
-                  console.log('🖼️ CARD CLICKED:', index);
                   openModal({ ...photo, shape: 'rectangle' }, index);
                 }}
                 onTouchStart={() => {
-                  console.log('🎯 CARD TOUCH START:', index);
+                  // Card touch start handler
                 }}
               >
                 <div className="relative h-full w-full transition-all duration-700 hover:scale-105">
@@ -599,7 +526,6 @@ export default function Gallery() {
         {centerIndex < photos.length - 1 && (
           <button 
             onClick={() => {
-              console.log('➡️ RIGHT ARROW CLICKED');
               if (galleryRef.current) {
                 galleryRef.current.scrollBy({
                   left: 300,
@@ -628,7 +554,6 @@ export default function Gallery() {
             <button
               key={index}
               onClick={() => {
-                console.log('🔘 DOT INDICATOR CLICKED:', index);
                 if (galleryRef.current) {
                   const card = galleryRef.current.children[index] as HTMLElement;
                   card.scrollIntoView({
@@ -661,8 +586,8 @@ export default function Gallery() {
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center center',
                 backgroundSize: 'contain',
-                filter: 'sepia(30%) saturate(70%) hue-rotate(15deg) brightness(1.05)',
-                opacity: 0.4,
+                filter: 'sepia(60%) saturate(120%) hue-rotate(25deg) brightness(1.1) contrast(1.05)',
+                opacity: 0.15,
               }}
             />
             {/* Text content */}

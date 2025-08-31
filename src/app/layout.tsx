@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,14 +13,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Andrea & Aldo - Nuestra boda",
+  title: "Nuestra boda",
   description: "Celebra con nosotros nuestra boda el 18 de Octubre",
-  // Remover themeColor y statusBarStyle para permitir control dinámico
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
   appleWebApp: {
     capable: true,
     // Remover statusBarStyle para permitir control dinámico
   },
+  icons: {
+    icon: "/assets/logos/IMG_0340.PNG",
+    apple: "/assets/logos/IMG_0340.PNG",
+    shortcut: "/assets/logos/IMG_0340.PNG",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

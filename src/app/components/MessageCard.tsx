@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import { FaHeart, FaEnvelope } from 'react-icons/fa';
 
+// Web3Forms configuration
+const WEB3FORMS_ACCESS_KEY = 'fcf764d7-a6dc-4846-843e-a591e89d60a8';
+
 interface MessageCardProps {
   className?: string;
 }
@@ -24,10 +27,13 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          access_key: 'fcf764d7-a6dc-4846-843e-a591e89d60a8',
+          access_key: WEB3FORMS_ACCESS_KEY,
           name: formData.get('name'),
           email: formData.get('email'),
-          message: formData.get('message')
+          message: formData.get('message'),
+          subject: 'Nuevo mensaje de invitación de boda',
+          from_name: formData.get('name'),
+          replyto: formData.get('email')
         })
       });
 
@@ -36,13 +42,19 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
       if (result.success) {
         setFormStatus('success');
         form.reset();
+        // Reset form status after 5 seconds
+        setTimeout(() => setFormStatus('idle'), 5000);
       } else {
         setFormStatus('error');
+        console.error('Web3Forms error:', result);
+        // Reset error status after 5 seconds
+        setTimeout(() => setFormStatus('idle'), 5000);
       }
-    }
-    catch(error){
-      console.error('Error al enviar el mensaje:', error);
+    } catch (error) {
       setFormStatus('error');
+      console.error('Form submission error:', error);
+      // Reset error status after 5 seconds
+      setTimeout(() => setFormStatus('idle'), 5000);
     }
   };
 
@@ -80,6 +92,11 @@ export default function MessageCard({ className = '' }: MessageCardProps) {
 
           {/* Form Section */}
           <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+            {/* Hidden access key field for Web3Forms */}
+            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+            <input type="hidden" name="subject" value="Nuevo mensaje de invitación de boda" />
+            <input type="hidden" name="from_name" value="Formulario de Invitación de Boda" />
+            
             <div className="space-y-6">
               <div className="group/input">
                 <label htmlFor="name" className="block text-[#707556] font-light mb-3 garamond-300 text-sm tracking-wide">

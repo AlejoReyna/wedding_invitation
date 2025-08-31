@@ -33,8 +33,8 @@ export default function ItinerarySection() {
       location: "Iglesia 'Sagrado corazón de Jesús'"
     },
     {
-      time: "6:00 PM",
-      displayTime: "06:00",
+      time: "6:30 PM",
+      displayTime: "06:30",
       title: "Ceremonia Civil",
       description: "",
       location: "Museo histórico 'Valle del Pilón'"
@@ -125,45 +125,19 @@ export default function ItinerarySection() {
       clampedProgress > 0.2 // User has scrolled significantly into the section content
     );
     
-    // DEBUGGING LOGS
-    console.log('=== ITINERARY SCROLL DEBUG ===');
-    console.log('windowHeight:', windowHeight);
-    console.log('sectionHeight:', sectionHeight);
-    console.log('sectionTop:', sectionTop);
-    console.log('sectionBottom:', sectionBottom);
-    console.log('clampedProgress:', clampedProgress);
-    console.log('currentCardIndex:', currentCardIndex);
-    console.log('current card:', itineraryItems[currentCardIndex]?.title || 'none');
-    console.log('isVisible conditions:');
-    console.log('  - sectionTop <= windowHeight * 0.3:', sectionTop <= windowHeight * 0.3, '(', sectionTop, '<=', windowHeight * 0.3, ')');
-    console.log('  - sectionBottom >= windowHeight * 0.7:', sectionBottom >= windowHeight * 0.7, '(', sectionBottom, '>=', windowHeight * 0.7, ')');
-    console.log('  - clampedProgress > 0.2:', clampedProgress > 0.2);
-    console.log('isVisible result:', isVisible);
-    console.log('==============================');
-    
+   
     setIsSectionVisible(isVisible);
     setScrollProgress(clampedProgress);
     
-  }, [isClient, windowHeight, currentCardIndex, itineraryItems]);
+  }, [isClient, windowHeight]);
 
   // Update night mode based on current card - activate when reaching "Recepción" card
   useEffect(() => {
-    // DEBUGGING LOGS FOR NIGHT MODE
-    console.log('=== NIGHT MODE DEBUG ===');
-    console.log('hasInitialized:', hasInitialized);
-    console.log('isSectionVisible:', isSectionVisible);
-    console.log('currentCardIndex:', currentCardIndex);
-    console.log('current card title:', itineraryItems[currentCardIndex]?.title || 'none');
-    console.log('scrollProgress:', scrollProgress);
-    console.log('current isNightMode:', isNightMode);
-    
     if (!hasInitialized) {
-      console.log('NIGHT MODE: Not initialized yet, skipping');
       return;
     }
     
     if (!isSectionVisible) {
-      console.log('NIGHT MODE: Section not visible, setting to day mode');
       setIsNightMode(false);
       return;
     }
@@ -172,15 +146,9 @@ export default function ItinerarySection() {
     const currentCard = itineraryItems[currentCardIndex];
     const isReceptionCard = currentCard?.title === 'Recepción';
     
-    console.log('NIGHT MODE: isReceptionCard:', isReceptionCard, 'for card:', currentCard?.title);
-    
     if (isReceptionCard !== isNightMode) {
-      console.log('NIGHT MODE: Changing mode from', isNightMode, 'to', isReceptionCard);
       setIsNightMode(isReceptionCard);
-    } else {
-      console.log('NIGHT MODE: No change needed, staying', isNightMode);
     }
-    console.log('========================');
   }, [currentCardIndex, setIsNightMode, isSectionVisible, hasInitialized, isNightMode, itineraryItems, scrollProgress]);
 
   // Listen to normal page scroll

@@ -102,7 +102,7 @@ export default function RSVPSection() {
   return (
     <section 
       ref={(el) => {
-        sectionRef.current = el;
+        sectionRef.current = el as HTMLDivElement;
         if (rsvpSectionRef) {
           (rsvpSectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
         }

@@ -85,12 +85,12 @@ const HeroSection = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center animate-fade-in-center animate-delay-1200">
+        <div className="text-center animate-fade-in-center animate-delay-1200 ">
           <a
             href="#rsvp"
             className="group inline-flex items-center px-6 sm:px-8 py-2.5 sm:py-3 bg-black/50 backdrop-blur-sm border border-white/40 text-white/95 hover:bg-black/70 hover:border-white/60 transition-all duration-500 text-sm sm:text-base"
           >
-            <span className="garamond-300 rounded-lg tracking-[0.15em] sm:tracking-[0.2em]">
+            <span className="garamond-300 tracking-[0.15em] sm:tracking-[0.2em]">
               CONFIRMA TU ASISTENCIA
             </span>
           </a>
