@@ -163,13 +163,7 @@ export default function LocationSection() {
                 <div className="mb-8">
  
                 </div>
-                
-                {/* Divider */}
-                <div className="flex justify-center items-center mb-8">
-                  <div className="w-8 h-px bg-stone-300"></div>
-                  <div className="w-2 h-2 border border-stone-300 transform rotate-45 mx-4"></div>
-                  <div className="w-8 h-px bg-stone-300"></div>
-                </div>
+              
                 
                 {/* Location */}
                 <div className="space-y-2 mb-10">
@@ -237,15 +231,7 @@ export default function LocationSection() {
                 <h3 className="text-3xl md:text-4xl font-light text-stone-800 mb-6 tracking-wide" style={{fontFamily: 'Georgia, serif'}}>
                   Recepción
                 </h3>
-                
-                
-                
-                {/* Divider */}
-                <div className="flex justify-center items-center mb-8">
-                  <div className="w-8 h-px bg-stone-300"></div>
-                  <div className="w-2 h-2 border border-stone-300 transform rotate-45 mx-4"></div>
-                  <div className="w-8 h-px bg-stone-300"></div>
-                </div>
+            
                 
                 {/* Location */}
                 <div className="space-y-2 mb-10">
