@@ -111,12 +111,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Minimal bottom separator */}
-        <div className={`mt-16 pt-8 border-t border-white/5 transition-all duration-1000 delay-700 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}>
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        </div>
+
       </div>
 
       {/* Subtle decorative elements */}

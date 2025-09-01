@@ -236,7 +236,7 @@ export default function GiftSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-8 garamond-300 relative">
             Regalos
           </h2>
-          <p className="text-stone-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-8 font-light mb-8">
+          <p className="text-center text-stone-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-light mb-8">
             Tu presencia es nuestro regalo más preciado. Si deseas honrarnos con un obsequio, te ofrecemos estas opciones con profunda gratitud.
           </p>
         </div>
