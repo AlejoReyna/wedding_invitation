@@ -250,7 +250,7 @@ export default function GiftSection() {
           
           {/* Gift asset */}
           <div className="flex justify-center mb-8">
-            <div className="w-32 h-32 md:w-40 md:h-40 opacity-50">
+            <div className="w-40 h-40 md:w-68 md:h-40 opacity-50">
               <Image
                 src="/assets/gift_asset.png"
                 alt="Gift icon"
@@ -265,7 +265,7 @@ export default function GiftSection() {
           </div>
 
           {/* Subtitle */}
-          <p className="text-xs md:text-sm font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
+          <p className="text-xs md:text-xl font-light tracking-[0.4em] uppercase mb-6 text-[#8B7355] italic garamond-300">
             SI DESEAS OBSEQUIARNOS
           </p>
           

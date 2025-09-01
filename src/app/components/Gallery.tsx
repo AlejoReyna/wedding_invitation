@@ -8,8 +8,10 @@ export default function Gallery() {
   const [centerIndex, setCenterIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [animationStep, setAnimationStep] = useState(0);
+  const [quoteVisible, setQuoteVisible] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const quoteRef = useRef<HTMLDivElement>(null);
 
   // Add useEffect to set initial centerIndex after component mounts
   useEffect(() => {
@@ -26,17 +28,14 @@ export default function Gallery() {
           if (entry.isIntersecting && !isVisible) {
             setIsVisible(true);
             // Secuencia de animación
-            // Paso 1: Fade in del texto principal desde la izquierda (inmediato)
+            // Paso 1: Extensión de la barra (inmediato)
             setAnimationStep(1);
             
-            // Paso 2: Extensión de la barra (después de 800ms)
-            setTimeout(() => setAnimationStep(2), 800);
+            // Paso 2: Aparición del título y descripción desde la línea (después de 700ms)
+            setTimeout(() => setAnimationStep(2), 700);
             
-            // Paso 3: Aparición del texto desde la línea hacia arriba (después de 1400ms)
-            setTimeout(() => setAnimationStep(3), 1400);
-            
-            // Paso 4: Resto de elementos (después de 2000ms)
-            setTimeout(() => setAnimationStep(4), 2000);
+            // Paso 3: Resto de elementos (después de 1200ms)
+            setTimeout(() => setAnimationStep(3), 1200);
           }
         });
       },
@@ -57,6 +56,36 @@ export default function Gallery() {
       }
     };
   }, [isVisible]);
+
+  // Observer para la cita de The Beatles
+  useEffect(() => {
+    const quoteObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !quoteVisible) {
+            setQuoteVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '-50px'
+      }
+    );
+
+    const currentQuoteRef = quoteRef.current;
+    if (currentQuoteRef) {
+      quoteObserver.observe(currentQuoteRef);
+    }
+
+    return () => {
+      if (currentQuoteRef) {
+        quoteObserver.unobserve(currentQuoteRef);
+      }
+    };
+  }, [quoteVisible]);
+
+
 
   const photos = [
     { src: '/carousel/c-1.jpeg', alt: 'Andrea & Aldo - Recuerdo 1' },
@@ -342,7 +371,7 @@ export default function Gallery() {
           <div className={`flex justify-center mb-6 transition-all duration-1000 ease-out ${
             animationStep >= 1 ? 'opacity-100 -translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
-            <div className="w-48 h-20 relative">
+            <div className="w-68 h-24 relative">
               <Image
                 src="/assets/legal_assets/flowers_s2.png"
                 alt="Decorative flowers"
@@ -356,26 +385,28 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Main title */}
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-2 garamond-300 relative transition-all duration-1000 ease-out ${
-            animationStep >= 1 ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-8'
-          }`}>
-            ¡Nos Casamos!
-          </h2>
-          
-          {/* Decorative line with extension animation */}
+          {/* Main title - emerges upward from divider */}
+          <div className="relative overflow-hidden">
+            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.3em] uppercase text-[#5c5c5c] mb-2 garamond-300 relative transition-all duration-500 ease-out ${
+              animationStep >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}>
+              ¡Nos Casamos!
+            </h2>
+          </div>
+
+          {/* Decorative line with extension animation - appears first */}
           <div className="flex justify-center mb-3">
             <div 
-              className={`h-px bg-[#C4985B] opacity-60 transition-all duration-1000 ease-out ${
-                animationStep >= 2 ? 'w-60' : 'w-0'
+              className={`h-px bg-[#C4985B] opacity-60 transition-all duration-700 ease-out origin-left ${
+                animationStep >= 1 ? 'w-60 scale-x-100' : 'w-60 scale-x-0'
               }`}
             ></div>
           </div>
           
-          {/* Description with slide up from line animation */}
+          {/* Description - emerges downward from divider */}
           <div className="relative overflow-hidden">
-            <p className={`text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-4 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto transition-all duration-800 ease-out ${
-              animationStep >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            <p className={`text-lg md:text-xl font-light tracking-[0.1em] uppercase mb-4 text-[#8B7355] italic garamond-300 max-w-2xl mx-auto transition-all duration-500 ease-out ${
+              animationStep >= 2 ? 'opacity-100 -translate-y-0' : 'opacity-0 -translate-y-6'
             }`}>
              Hoy, mañana y siempre, <br/> elegimos amarnos.
             </p>
@@ -387,7 +418,7 @@ export default function Gallery() {
 
       {/* FULL WIDTH CAROUSEL - Outside of max-width container */}
       <div className={`relative w-screen transition-all duration-1200 ease-out ${
-        animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        animationStep >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`} style={{ 
         perspective: '1500px',
         marginLeft: 'calc(-50vw + 50%)',
@@ -548,7 +579,7 @@ export default function Gallery() {
       <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-8">
         {/* Enhanced scroll indicator */}
         <div className={`flex justify-center mt-8 space-x-3 transition-all duration-1000 ease-out ${
-          animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          animationStep >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`} style={{ transitionDelay: '300ms' }}>
           {photos.map((_, index) => (
             <button
@@ -574,9 +605,12 @@ export default function Gallery() {
         </div>
 
         {/* Bottom quote */}
-        <div className={`text-center mt-16 transition-all duration-1000 ease-out pointer-events-none ${
-          animationStep >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '600ms' }}>
+        <div 
+          ref={quoteRef}
+          className={`text-center mt-16 transition-all duration-1000 ease-out pointer-events-none ${
+            quoteVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           <div className="relative py-16 px-8">
             {/* Background image with realhands */}
             <div 
