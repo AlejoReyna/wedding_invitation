@@ -146,7 +146,6 @@ export default function MessageSection({ className }: { className?: string }) {
               className="group/btn inline-flex items-center gap-3 px-6 py-3 border border-white/30 hover:border-white/50 text-white hover:text-white transition-all duration-400 relative overflow-hidden w-full justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <div className="absolute inset-0 bg-white/10 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-400"></div>
-              <FaPenFancy className="text-sm relative z-10 transform group-hover/btn:rotate-12 transition-transform duration-300" />
               <span className="font-light tracking-[0.1em] uppercase text-xs relative z-10">
                 {formStatus === 'loading' ? 'Enviando...' : 'Enviar Mensaje'}
               </span>
