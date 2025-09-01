@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import { FaPenFancy, FaHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 
 // Web3Forms configuration
 const WEB3FORMS_ACCESS_KEY = '9e04209b-b0b4-4883-82ab-a4f939af7198';

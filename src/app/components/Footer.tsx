@@ -36,8 +36,6 @@ const defaultBrand: BrandInfo = {
   logoSrc: "/assets/logos/IMG_0340.PNG",
 };
 
-const defaultSections: FooterSection[] = [];
-
 const defaultSocial: SocialItem[] = [
   { label: "GitHub", href: "https://github.com/AlejoReyna", icon: <FiGithub />, ariaLabel: "GitHub" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/alexis-alberto-reyna-sánchez-6953102b4", icon: <FiLinkedin />, ariaLabel: "LinkedIn" },
@@ -47,11 +45,9 @@ const defaultSocial: SocialItem[] = [
 
 export default function Footer({
   brand = defaultBrand,
-  sections = defaultSections,
   social = defaultSocial,
   className = "",
 }: FooterProps) {
-  const year = new Date().getFullYear();
   const [isVisible, setIsVisible] = useState(false);
   const [displayText, setDisplayText] = useState("");
   const footerRef = useRef<HTMLElement>(null);
@@ -99,7 +95,7 @@ export default function Footer({
         <div className="grid gap-12 md:grid-cols-12">
           {/* Marca */}
           <div className="md:col-span-4 flex flex-col gap-6">
-            <BrandMark href={brand.href} name={brand.name} slogan={brand.slogan} logoSrc={brand.logoSrc} />
+            <BrandMark href={brand.href} name={brand.name} slogan={brand.slogan} />
             <SocialRow items={social} />
           </div>
 
@@ -124,12 +120,10 @@ function BrandMark({
   href,
   name,
   slogan,
-  logoSrc = "/assets/logos/IMG_0340.PNG",
 }: {
   href?: string;
   name: string;
   slogan?: string;
-  logoSrc?: string;
 }) {
   const Mark = (
     <div className="flex items-center gap-3">
