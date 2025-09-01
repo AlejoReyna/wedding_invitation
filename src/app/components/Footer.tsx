@@ -67,7 +67,7 @@ export default function Footer() {
             <div className="group">
               <button className="relative inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 rounded-xl px-6 py-4 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-white/10">
                 <div className="flex flex-col items-start text-left">
-                  <span className="text-white font-medium text-base">Let's talk</span>
+                  <span className="text-white font-medium text-base">Let&apos;s talk</span>
                   <span className="text-white/50 text-xs italic font-light">(in a human way)</span>
                 </div>
                 <ArrowRight className="h-4 w-4 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />

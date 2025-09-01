@@ -170,6 +170,10 @@ export default function RSVPSection() {
               
               {/* Welcome message */}
               <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-8 garamond-300">
+                Para nosotros es muy importante tu presencia es por eso que te pedimos confirmar tu asistencia antes del 15 de septiembre.
+              </p>
+              
+              <p className="text-lg md:text-xl font-light text-white/90 tracking-wide mb-8 garamond-300">
                 ¡Te esperamos!
               </p>
               
@@ -179,7 +183,7 @@ export default function RSVPSection() {
                 <button 
                   className="group inline-flex items-center gap-3 px-8 py-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-light tracking-[0.1em] hover:bg-white/25 hover:border-white/50 transition-all duration-400 relative overflow-hidden garamond-300 uppercase text-sm shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full justify-center"
                   onClick={() => {
-                    window.open('https://wa.me/528132382398?text=Por%20favor%20escribe%20tu%20nombre%20y%20cuantas%20personas%20confirmas', '_blank');
+                    window.open('https://wa.me/528132382398?text=Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Andrea%20%26%20Aldo%20el%2018%20de%20octubre%20del%202025.%20💍%0ALos%20nombres%20de%20las%20personas%20confirmadas%20en%20esta%20invitación%20son%3A%20____________', '_blank');
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
