@@ -79,7 +79,7 @@ export default function Footer() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
               <a 
-                href="https://github.com/alexisreyna" 
+                href="https://github.com/AlejoReyna" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-white/10"
@@ -99,7 +99,7 @@ export default function Footer() {
               </a>
               
               <a 
-                href="https://wa.me/525512345678" 
+                href="https://wa.me/528140490960" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-white/10"

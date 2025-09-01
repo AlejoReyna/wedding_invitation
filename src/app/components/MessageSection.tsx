@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FaPenFancy, FaHeart } from 'react-icons/fa';
 
 // Web3Forms configuration
-const WEB3FORMS_ACCESS_KEY = 'fcf764d7-a6dc-4846-843e-a591e89d60a8';
+const WEB3FORMS_ACCESS_KEY = '9e04209b-b0b4-4883-82ab-a4f939af7198';
 
 // Componente MessageSection con funcionalidad Web3Forms y estética RSVP
 export default function MessageSection({ className }: { className?: string }) {
@@ -85,12 +85,7 @@ export default function MessageSection({ className }: { className?: string }) {
           buenos deseos
         </p>
         
-        {/* Divider */}
-        <div className="flex justify-center items-center mb-6">
-          <div className="w-8 h-px bg-white/30"></div>
-          <div className="w-2 h-2 border border-white/30 transform rotate-45 mx-4"></div>
-          <div className="w-8 h-px bg-white/30"></div>
-        </div>
+        
         
         {/* Web3Forms Form */}
         <form 
